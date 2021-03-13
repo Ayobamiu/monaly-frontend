@@ -1,13 +1,131 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "Poppins", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.custom-p {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  /* or 150% */
+
+  text-align: center;
+  letter-spacing: 0.75px;
+
+  /* Grayscale / Body */
+
+  color: #4e4b66;
+}
+.small-p {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 16px;
+  /* or 145% */
+
+  letter-spacing: 0.75px;
+
+  /* Grayscale / Body */
+
+  color: #4e4b66;
+}
+.action-p {
+  /* Desktop / Link X-Small */
+
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 24px;
+  /* identical to box height, or 171% */
+
+  letter-spacing: 0.75px;
+}
+.notify-p {
+  /* Desktop / Link X-Small */
+
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 16px;
+  /* identical to box height, or 114% */
+
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.25px;
+}
+.success-p {
+  /* Success / Dark */
+
+  color: #00966d;
+}
+.error-p {
+  /* Error / Dark */
+
+  color: #c30052;
+}
+.mb-20 {
+  margin-bottom: 20px;
+}
+.mt-30 {
+  margin-top: 30px;
+}
+.mb-30 {
+  margin-bottom: 30px;
+}
+.primary-btn {
+  width: 100%;
+  height: 56px;
+  /* Monaly primary */
+
+  background: #ef476f;
+  border: 2px solid #ef476f;
+  box-sizing: border-box;
+  border-radius: 40px;
+  color: #f7f7fc;
+  /* //styleName: Desktop / Link Small; */
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: 0.75px;
+  text-align: center;
+  outline: none;
+}
+.primary-inverse-btn {
+  outline: none;
+  width: 100%;
+  height: 56px;
+  /* Monaly primary */
+
+  background: transparent;
+  border: 2px solid #ef476f;
+
+  box-sizing: border-box;
+  border-radius: 40px;
+  color: #ef476f;
+  /* //styleName: Desktop / Link Small; */
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: 0.75px;
+  text-align: center;
+  margin: 10px 0;
+}
+.monaly-primary {
+  color: #ef476f;
 }

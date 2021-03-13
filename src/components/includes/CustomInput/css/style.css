@@ -1,0 +1,102 @@
+.custom-input {
+  height: 63px;
+  width: 100%;
+  background: #eff0f7;
+  border-radius: 16px;
+  padding: 0 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between !important; */
+  /* align-items: center;  */
+  justify-content: center;
+  margin: 10px 0;
+  text-align: left;
+}
+.custom-input label {
+  /* Desktop / Text X-Small */
+
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  /* identical to box height, or 157% */
+
+  letter-spacing: 0.25px;
+
+  /* Grayscale / Label */
+
+  color: #6e7191;
+}
+.custom-input .input-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.custom-input.active {
+  background-color: transparent;
+  border: solid 2px;
+  /* Desktop / Text Small */
+
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 28px;
+  /* identical to box height, or 175% */
+
+  letter-spacing: 0.75px;
+
+  /* Grayscale / Title-Active */
+
+  color: #040408;
+}
+.custom-input.active input {
+  color: #040408;
+}
+.custom-input.error {
+  border: solid 2px red;
+  background-color: rgba(255, 0, 0, 0.02);
+  /* Desktop / Text Small */
+}
+.custom-input.error label {
+  color: red;
+}
+.error {
+  color: red;
+}
+.custom-input.success {
+  border: solid 2px green;
+  background-color: rgba(0, 255, 0, 0.02);
+  /* Desktop / Text Small */
+}
+.custom-input.success label {
+  color: green;
+}
+.success {
+  color: green;
+}
+.custom-input input {
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  /* font-size: 30px; */
+  /* Desktop / Text Small */
+
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 28px;
+  /* identical to box height, or 175% */
+
+  letter-spacing: 0.75px;
+
+  /* Grayscale / Placeholder */
+
+  color: #a0a3bd;
+  margin-right: auto;
+}
