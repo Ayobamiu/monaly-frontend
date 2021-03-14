@@ -5,14 +5,3 @@
   justify-content: center;
   align-items: center;
 }
-#signuppage .form-box {
-  width: 458px;
-  height: auto;
-  background: #ffffff;
-  border-radius: 8px;
-  text-align: center;
-  padding: 30px 54px;
-  box-sizing: border-box;
-  margin-top: 30px;
-  margin-bottom: 30px;
-}

@@ -4,7 +4,12 @@ import jwt from "jsonwebtoken";
 
 const slice = createSlice({
   name: "user",
-  initialState: { profile: {}, userName: {} },
+  initialState: {
+    profile: {},
+    userName: { status: null },
+    startReset: { status: null },
+    reset: { status: null },
+  },
   reducers: {
     userRequested: (user, action) => {
       user.loading = true;
@@ -30,6 +35,49 @@ const slice = createSlice({
     checkUserNameFailed: (user, action) => {
       user.userName.loading = false;
       user.userName.status = { message: "Username taken", color: "#c30052" };
+    },
+    resetInitializeStart: (user, action) => {
+      user.startReset.loading = true;
+      user.startReset.status = {
+        message: "Sending link to your email",
+        color: "blue",
+      };
+    },
+    resetInitializeSuccess: (user, action) => {
+      user.startReset.loading = false;
+      user.startReset.status = {
+        message: action.payload.message,
+        color: "#00966d",
+        status: "success",
+      };
+    },
+    resetInitializeFailed: (user, action) => {
+      user.startReset.loading = false;
+      user.startReset.status = {
+        message: action.payload.response.data.error,
+        color: "#c30052",
+      };
+    },
+    resetStart: (user, action) => {
+      user.reset.loading = true;
+      user.reset.status = {
+        message: "Changing your password ",
+        color: "blue",
+      };
+    },
+    resetSuccess: (user, action) => {
+      user.reset.loading = false;
+      user.reset.status = {
+        message: action.payload.message,
+        color: "#00966d",
+      };
+    },
+    resetFailed: (user, action) => {
+      user.reset.loading = false;
+      user.reset.status = {
+        message: action.payload.response.data.error,
+        color: "#c30052",
+      };
     },
     signUpStart: (user, action) => {
       user.loading = true;
@@ -89,6 +137,12 @@ export const {
   checkUserNameFailed,
   checkUserNameStart,
   checkUserNameSuccess,
+  resetInitializeStart,
+  resetInitializeSuccess,
+  resetInitializeFailed,
+  resetStart,
+  resetSuccess,
+  resetFailed,
 } = slice.actions;
 
 export default slice.reducer;
@@ -131,17 +185,35 @@ export const logUserIn = (email, password) => (dispatch) => {
     })
   );
 };
-export const logUserOut = () => (dispatch) => {
+export const initializePasswordReset = (email) => (dispatch) => {
   dispatch(
     apiCallBegan({
-      url: "auth/users/logout",
+      url: "auth/start-reset-password",
       method: "post",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("authToken"),
-      },
-      onSuccess: authRemoved.type,
+      data: { email },
+      onStart: resetInitializeStart.type,
+      onSuccess: resetInitializeSuccess.type,
+      onError: resetInitializeFailed.type,
     })
   );
+};
+export const passwordReset = (token, password_one, password_two) => (
+  dispatch
+) => {
+  dispatch(
+    apiCallBegan({
+      url: `auth/reset-password/${token}`,
+      method: "patch",
+      data: { password_one, password_two },
+      onStart: resetStart.type,
+      onSuccess: resetSuccess.type,
+      onError: resetFailed.type,
+    })
+  );
+};
+export const logUserOut = () => (dispatch) => {
+  window.location = "/";
+  return localStorage.removeItem("authToken");
 };
 
 export const loadLoggedInUser = () => (dispatch, getState) => {
@@ -163,6 +235,7 @@ export const getLoggedInUser = () => {
   if (token) {
     var decoded = jwt.verify(token, "myjwtsecretkey");
     return decoded;
+    console.log(token);
   }
   return null;
 };
@@ -173,3 +246,7 @@ export const status = (state) => state.app.user.status;
 export const loading = (state) => state.app.user.loading;
 export const userNamestatus = (state) => state.app.user.userName.status;
 export const userNameloading = (state) => state.app.user.userName.loading;
+export const startResetstatus = (state) => state.app.user.startReset.status;
+export const startResetloading = (state) => state.app.user.startReset.loading;
+export const resetStatus = (state) => state.app.user.reset.status;
+export const resetLoading = (state) => state.app.user.reset.loading;

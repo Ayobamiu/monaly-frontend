@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import hide from "../../../assets/images/hide.png";
+import Close from "../../../assets/images/Close.png";
 
 import "./css/style.css";
 
@@ -14,13 +15,14 @@ const CustomInput = ({
 }) => {
   const [inputType, setInputType] = useState(type);
   const [showLabel, setShowLabel] = useState(false);
+  const [showClose, setShowClose] = useState(false);
   const [error, setError] = useState(null);
 
   return (
     <>
       <div className="custom-input" id={id}>
-        {showLabel && <label htmlFor={placeholder}>{placeholder}</label>}
         <div className="input-inner">
+          {showLabel && <label htmlFor={placeholder}>{placeholder}</label>}
           <input
             type={inputType}
             placeholder={placeholder}
@@ -28,10 +30,15 @@ const CustomInput = ({
             security="true"
             onChange={(e) => {
               onChange(e);
+              if (e.target.value.length !== 0) {
+                setShowLabel(true);
+              }
+              if (e.target.value.length === 0) {
+                setShowLabel(false);
+              }
             }}
             required={required}
             onFocus={() => {
-              setShowLabel(true);
               document.getElementById(id).classList.add("active");
             }}
             onBlur={() => {
@@ -39,20 +46,34 @@ const CustomInput = ({
               document.getElementById(id).classList.remove("active");
             }}
           />
-          {secured && (
-            <img
-              src={hide}
-              onClick={() => {
-                if (inputType === "text") {
-                  setInputType("password");
-                } else {
-                  setInputType("text");
-                }
-              }}
-              alt=""
-            />
-          )}
         </div>
+ 
+        {!secured ? (
+          <img
+            src={Close}
+            onClick={() => {
+              if (inputType === "text") {
+                setInputType("password");
+              } else {
+                setInputType("text");
+              }
+            }}
+            id="close"
+            alt=""
+          />
+        ) : (
+          <img
+            src={hide}
+            onClick={() => {
+              if (inputType === "text") {
+                setInputType("password");
+              } else {
+                setInputType("text");
+              }
+            }}
+            alt=""
+          />
+        )}
       </div>
       {error && (
         <div

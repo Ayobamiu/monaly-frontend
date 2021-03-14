@@ -7,11 +7,15 @@ import {
 import HomePage from "./screens/HomePage/HomePage";
 import SignIn from "./screens/SignIn/SignIn";
 import SignUp from "./screens/SignUp/SignUp";
+import StartResetPassword from "./screens/StartResetPassword/StartResetPassword";
+import ResetPassword from "./screens/ResetPassword/ResetPassword";
 
 const MainRoute = () => {
   return (
     <Router>
       <Switch>
+        <Route component={StartResetPassword} path="/start-reset-password" />
+        <Route component={ResetPassword} path="/reset-password/:token" />
         <Route component={SignIn} path="/sign-in" />
         <Route component={SignUp} path="/sign-up" />
         <Route component={HomePage} path="/" />
@@ -21,3 +25,5 @@ const MainRoute = () => {
 };
 
 export default MainRoute;
+// https://monaly-app.herokuapp.com/terms-of-service
+// https://monaly-app.herokuapp.com/privacy-policy

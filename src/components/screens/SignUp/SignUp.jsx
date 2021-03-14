@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./css/style.css";
 import monaly_logo from "../../../assets/images/monaly_logo.png";
 import CustomInput from "../../includes/CustomInput/CustomInput";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   loading,
@@ -44,9 +44,9 @@ const SignUp = () => {
     <div id="signuppage">
       <div className="form-box">
         <Link to="/">
-          <img src={monaly_logo} alt="" />
+          <img src={monaly_logo} alt="" className="mb-32" />
         </Link>
-        <p className="custom-p mb-30">
+        <p className="custom-p mb-48">
           Let’s create some powerful links, Sign up to get started.
         </p>
         <form action="sign-up" onSubmit={handleSignUp}>
@@ -83,26 +83,28 @@ const SignUp = () => {
             required={true}
             id="userName"
           />
-          <div style={{ display: "flex" }}>
-            {loadingUserName && (
-              <div
-                class="spinner-border spinner-border-sm monaly-primary"
-                role="status"
-              >
-                <span class="visually-hidden">Loading...</span>
-              </div>
-            )}
-            {statusUsername && userName && (
-              <span
-                style={{
-                  color: statusUsername && statusUsername.color,
-                }}
-                className="notify-p"
-              >
-                &nbsp; {statusUsername && statusUsername.message}
-              </span>
-            )}
-          </div>
+          {statusUsername && (
+            <div style={{ display: "flex", margin: 0 }}>
+              {loadingUserName && (
+                <div
+                  class="spinner-border spinner-border-sm monaly-primary"
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              )}
+              {statusUsername && userName && (
+                <span
+                  style={{
+                    color: statusUsername && statusUsername.color,
+                  }}
+                  className="notify-p"
+                >
+                  &nbsp; {statusUsername && statusUsername.message}
+                </span>
+              )}
+            </div>
+          )}
           <CustomInput
             onChange={(e) => setPassword(e.target.value)}
             secured={true}
@@ -111,11 +113,11 @@ const SignUp = () => {
             required={true}
             id="password"
           />
-          <p className="small-p mb-30">
+          <p className="small-p mb-48">
             By using this service you are agreeing to the terms of service and
             privacy policy.
           </p>
-          <button className="primary-btn" type="submit">
+          <button className="primary-btn mb-16" type="submit">
             {!loadingUser ? (
               "Sign Up"
             ) : (
@@ -129,13 +131,15 @@ const SignUp = () => {
               style={{
                 color: userStatus && userStatus.color,
               }}
-              className="notify-p"
+              className="notify-p mb-8"
             >
               {userStatus && userStatus.message}...
             </span>
           )}
         </form>
-        <button className="primary-inverse-btn">Sign up with Google</button>
+        <button className="primary-inverse-btn mb-32">
+          Sign up with Google
+        </button>
         <p className="action-p">
           Already have an account? &nbsp;
           <Link to="/sign-in" className="monaly-primary">
