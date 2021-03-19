@@ -9,6 +9,7 @@ import SignIn from "./screens/SignIn/SignIn";
 import SignUp from "./screens/SignUp/SignUp";
 import StartResetPassword from "./screens/StartResetPassword/StartResetPassword";
 import ResetPassword from "./screens/ResetPassword/ResetPassword";
+import DashBoard from "./screens/DashBoard/DashBoard";
 
 const MainRoute = () => {
   return (
@@ -18,6 +19,7 @@ const MainRoute = () => {
         <Route component={ResetPassword} path="/reset-password/:token" />
         <Route component={SignIn} path="/sign-in" />
         <Route component={SignUp} path="/sign-up" />
+        <Route component={DashBoard} path="/dashboard" />
         <Route component={HomePage} path="/" />
       </Switch>
     </Router>

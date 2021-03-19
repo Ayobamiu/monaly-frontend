@@ -235,7 +235,6 @@ export const getLoggedInUser = () => {
   if (token) {
     var decoded = jwt.verify(token, "myjwtsecretkey");
     return decoded;
-    console.log(token);
   }
   return null;
 };

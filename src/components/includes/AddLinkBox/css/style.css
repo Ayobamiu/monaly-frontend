@@ -1,0 +1,37 @@
+.add-link-box .switch-and-delete {
+  flex: 0 0 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.add-link-box .inputs-and-media {
+  width: 60%;
+}
+.add-link-box .inputs-and-media .text-icon {
+  display: flex;
+  justify-content: space-between;
+}
+.add-link-box .inputs-and-media .text-icon input {
+  border: none;
+  outline: none;
+}
+
+.form-check-input {
+  width: 42.67px;
+  height: 24px;
+  margin-top: 0.25em;
+  background-color: #fff;
+  /* border: 1px solid #ef476f; */
+}
+.form-check-input:checked {
+  background-color: #ef476f;
+  border-color: #ef476f;
+}
+.form-switch .form-check-input {
+  width: 42.67px;
+  margin-left: -2.5em;
+  background-position: left center;
+  border-radius: 2em;
+  transition: background-position 0.15s ease-in-out;
+}

@@ -76,9 +76,10 @@ const SignIn = () => {
             </span>
           )}
         </form>
-        <button className="primary-inverse-btn mb-32">
+        <div className="mb-32"></div>
+        {/* <button className="primary-inverse-btn mb-32">
           Sign in with Google
-        </button>
+        </button> */}
         <p className="action-p mb-32">
           Forgot your password?&nbsp;
           <Link to="/start-reset-password">Click to reset</Link>

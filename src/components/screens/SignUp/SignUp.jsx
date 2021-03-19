@@ -137,9 +137,10 @@ const SignUp = () => {
             </span>
           )}
         </form>
-        <button className="primary-inverse-btn mb-32">
+        <div className="mb-32"></div>
+        {/* <button className="primary-inverse-btn mb-32">
           Sign up with Google
-        </button>
+        </button> */}
         <p className="action-p">
           Already have an account? &nbsp;
           <Link to="/sign-in" className="monaly-primary">

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import show from "../../../assets/images/show.png";
 import hide from "../../../assets/images/hide.png";
 import Close from "../../../assets/images/Close.png";
 
@@ -17,6 +18,7 @@ const CustomInput = ({
   const [showLabel, setShowLabel] = useState(false);
   const [showClose, setShowClose] = useState(false);
   const [error, setError] = useState(null);
+  const [secureTextImage, setSecureTextImage] = useState(hide);
 
   return (
     <>
@@ -47,7 +49,7 @@ const CustomInput = ({
             }}
           />
         </div>
- 
+
         {!secured ? (
           <img
             src={Close}
@@ -63,12 +65,14 @@ const CustomInput = ({
           />
         ) : (
           <img
-            src={hide}
+            src={secureTextImage}
             onClick={() => {
               if (inputType === "text") {
                 setInputType("password");
+                setSecureTextImage(hide);
               } else {
                 setInputType("text");
+                setSecureTextImage(show);
               }
             }}
             alt=""

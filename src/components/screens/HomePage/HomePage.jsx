@@ -31,6 +31,11 @@ const HomePage = () => {
             )}
             {loggedInUser && (
               <li>
+                <Link to="/dashboard">Dashboard</Link>
+              </li>
+            )}
+            {loggedInUser && (
+              <li>
                 <button
                   className="btn btn-primary"
                   onClick={() => dispatch(logUserOut())}
