@@ -63,6 +63,12 @@
   height: 96px;
   width: 96px;
   border-radius: 50%;
+  background-color: black;
+  margin: auto;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .profile-pic-sub {
   height: 96px;
@@ -84,12 +90,12 @@
 }
 .monaly-logo {
   cursor: pointer;
-  position: sticky;
+  /* position: sticky;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   display: block;
-  width: 100px;
+  width: 100px; */
 }
 .fixed-logo-box {
   position: sticky;

@@ -72,7 +72,7 @@ const AddLinkBox = ({
             id={`checkbox${_id}`}
             onChange={(e) => {
               setCheckedStatus(e.target.checked);
-              onChangeSwitch(e.target.value);
+              onChangeSwitch(e.target.checked ? "true" : "false");
             }}
             title="Toggle Visibility"
             checked={checkedStatus}
@@ -82,7 +82,7 @@ const AddLinkBox = ({
           src={bin}
           alt=""
           title="Delete"
-          onClick={(e) => onClickDelete(e)}
+          onClick={(e) => onClickDelete()}
         />
       </div>
     </div>

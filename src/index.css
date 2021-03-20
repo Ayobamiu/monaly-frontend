@@ -274,6 +274,13 @@ code {
 .monaly-primary {
   color: #ef476f;
 }
+.monaly-primary-bg {
+  background-color: #ef476f;
+}
+.success-bg {
+  background: #00ba88;
+  color: #fcfcfc;
+}
 .push-to-center {
   display: flex;
   justify-content: center;
@@ -293,6 +300,7 @@ code {
   overflow: hidden;
   padding: 16px 32px;
   margin: 12px 0;
+  box-shadow: 0px 4px 32px rgba(0, 0, 0, 0.1);
 }
 .opaque {
   opacity: 0.5 !important;
@@ -314,4 +322,105 @@ code {
   border-top: solid 3px transparent;
   border-radius: 50%;
   animation: rotate 1.5s linear infinite;
+}
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
+.relative {
+  position: relative;
+}
+.popup-edit-profile {
+  position: absolute;
+  width: 367px;
+  height: auto;
+  background: #ffffff;
+  box-shadow: 0px 4px 32px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  left: calc(100% + 10px);
+  /* top: calc(100% + 10px); */
+  z-index: 2;
+  padding: 12px;
+}
+.popup {
+  position: absolute;
+  width: 367px;
+  height: auto;
+  background: #ffffff;
+  box-shadow: 0px 4px 32px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  right: 0px;
+  top: calc(100% + 10px);
+  z-index: 2;
+  padding: 12px;
+}
+.popup-edit-profile button {
+  padding: 12px 24px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 28px;
+  /* identical to box height, or 156% */
+  letter-spacing: 0.75px;
+  text-align: left;
+
+  color: #000000;
+  background-color: transparent;
+  border: none;
+}
+.popup-edit-profile button:hover {
+  /* monaly hover */
+
+  background: #fff9fa;
+  border-radius: 40px;
+}
+.popup button {
+  padding: 12px 24px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 28px;
+  /* identical to box height, or 156% */
+  letter-spacing: 0.75px;
+  text-align: left;
+
+  color: #000000;
+  background-color: transparent;
+  border: none;
+}
+.popup button:hover {
+  /* monaly hover */
+
+  background: #fff9fa;
+  border-radius: 40px;
+}
+.qrbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: transparent;
+}
+.modal-dialog.qrmodal {
+  width: 300px;
+  height: 400px;
+  background: #fcfcfc;
+  /* background-color: blue; */
+  border-radius: 5px;
+
+  box-shadow: 0px 4px 32px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+.modal-dialog.qrmodal .modal-content {
+  height: 100%;
+  background-color: transparent;
+  border: none;
+}
+.hide {
+  display: none;
+}
+.cursor{
+  cursor: pointer;
 }

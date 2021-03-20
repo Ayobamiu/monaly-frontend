@@ -36,9 +36,28 @@ const slice = createSlice({
       customLinks.list.unshift(action.payload);
       customLinks.loading = false;
       customLinks.status = "Added successfully";
-      window.location.reload();
+      // window.location.reload();
     },
     customLinkAddFailed: (customLinks, action) => {
+      customLinks.loading = false;
+      customLinks.status = "Failed";
+    },
+    customLinkUpdateStart: (customLinks, action) => {
+      customLinks.loading = true;
+      customLinks.status = "loading";
+    },
+    customLinkUpdated: (customLinks, action) => {
+      const index = customLinks.list.findIndex(
+        (item) => item._id === action.payload.customLink._id
+      );
+      customLinks.list[index].link = action.payload.customLink.link;
+      customLinks.list[index].title = action.payload.customLink.title;
+      customLinks.list[index].visible = action.payload.customLink.visible;
+      customLinks.loading = false;
+      customLinks.status = "Updated successfully";
+      // window.location.reload();
+    },
+    customLinkUpdateFailed: (customLinks, action) => {
       customLinks.loading = false;
       customLinks.status = "Failed";
     },
@@ -70,6 +89,9 @@ export const {
   customLinkAddStart,
   customLinkAddFailed,
   customLinkRemoved,
+  customLinkUpdateStart,
+  customLinkUpdated,
+  customLinkUpdateFailed,
 } = slice.actions;
 
 export default slice.reducer;
@@ -110,6 +132,7 @@ export const addcustomLink = (customLink) =>
     headers: {
       Authorization: "Bearer " + localStorage.getItem("authToken"),
     },
+    onStart: customLinkAddStart.type,
     onSuccess: customLinkAdded.type,
     onError: customLinkAddFailed.type,
   });
@@ -122,6 +145,19 @@ export const removecustomLink = (customLinkId) =>
       Authorization: "Bearer " + localStorage.getItem("authToken"),
     },
     onSuccess: customLinkRemoved.type,
+  });
+
+export const updateCustomLink = (customLinkId, customLink) =>
+  apiCallBegan({
+    url: "/custom-links/" + customLinkId,
+    method: "patch",
+    data: customLink,
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("authToken"),
+    },
+    onStart: customLinkUpdateStart.type,
+    onSuccess: customLinkUpdated.type,
+    onError: customLinkUpdateFailed.type,
   });
 
 export const customLinks = (state) => state.app.customLinks.list;

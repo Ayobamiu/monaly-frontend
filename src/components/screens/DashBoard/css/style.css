@@ -63,7 +63,14 @@
   height: calc(100vh - 96px);
   padding: 64px 96px;
   overflow-y: scroll;
+  position: relative;
 }
+#dashboard .edit-screen .content .left-top {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
 #dashboard .edit-screen .content::-webkit-scrollbar {
   display: none;
 }

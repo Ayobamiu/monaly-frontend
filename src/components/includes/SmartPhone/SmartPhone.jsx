@@ -1,6 +1,7 @@
 import React from "react";
 import "./css/style.css";
 import profilepic from "../../../assets/images/profilepic.svg";
+import picp from "../../../assets/images/picp.jpg";
 import monaly_logo from "../../../assets/images/monaly_logo.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -19,19 +20,33 @@ const SmartPhone = ({ customLinks, initialsOnProfile }) => {
     <div class="smartphone">
       <div class="content">
         {currentUser.profilePhoto ? (
-          <img src={profilepic} alt="" className="profile-pic mt-32" />
+          <div className="profile-pic mt-32">
+            <img
+              src={currentUser.profilePhoto}
+              alt="My photo"
+              title="Profile"
+              width="100%"
+            />
+          </div>
         ) : (
-          <div className="profile-pic-sub mt-32">{initialsOnProfile}</div>
+          <div className="profile-pic-sub mt-32" title="Profile">
+            {initialsOnProfile}
+          </div>
         )}
         <p className="profile-pic-p mb-16">@{currentUser.userName}</p>
-        {customLinks.map((customLink) => (
-          <PreviewButton
-            backgroundColor="green"
-            color="white"
-            title={customLink.title}
-            key={customLink._id}
-          />
-        ))}
+        {customLinks.map((customLink) => {
+          if (customLink.visible) {
+            return (
+              <PreviewButton
+                backgroundColor="green"
+                color="white"
+                title={customLink.title}
+                link={customLink.link}
+                key={customLink._id}
+              />
+            );
+          }
+        })}
 
         <div className="mtb-16">
           <FontAwesomeIcon
@@ -65,7 +80,7 @@ const SmartPhone = ({ customLinks, initialsOnProfile }) => {
 
 const PreviewButton = ({ color, backgroundColor, title, link }) => {
   return (
-    <a href={link}>
+    <a href={`http://${link}`} target="_blank">
       <button
         className="custom-link-btn mb-8"
         style={{ color, backgroundColor }}
