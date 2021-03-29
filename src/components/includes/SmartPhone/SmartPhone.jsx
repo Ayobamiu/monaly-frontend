@@ -10,21 +10,61 @@ import {
   faLinkedinIn,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
-import { getLoggedInUser } from "../../../store/authSlice";
-import { customLinksError } from "../../../store/customLinkSlice";
+import { getLoggedInUser, user } from "../../../store/authSlice";
+import {
+  customLinksError,
+  loadingcustomLinks,
+  viewCustomLink,
+} from "../../../store/customLinkSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  matchLightSocialIcon,
+  matchSocialColor,
+} from "../../../assets/js/controls";
+import { Link } from "react-router-dom";
+import { viewsocialMedia } from "../../../store/sociaMediaSampleSlice";
 
-const SmartPhone = ({ customLinks, initialsOnProfile }) => {
+const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
   const currentUser = getLoggedInUser().user;
+  const loadingLinks = useSelector(loadingcustomLinks);
+  const userProfile = useSelector(user);
 
+  const dispatch = useDispatch();
+
+  const PreviewButton = ({
+    color,
+    backgroundColor,
+    title,
+    link,
+    className,
+    _id,
+  }) => {
+    return (
+      <a
+        href={`http://${link}`}
+        target="_blank"
+        onClick={() => {
+          dispatch(viewCustomLink(_id));
+        }}
+      >
+        <button
+          className={`custom-link-btn mb-8 ${className}`}
+          style={{ color, backgroundColor }}
+        >
+          {title}
+        </button>
+      </a>
+    );
+  };
   return (
     <div class="smartphone">
       <div class="content">
-        {currentUser.profilePhoto ? (
+        {userProfile.profilePhoto ? (
           <div className="profile-pic mt-32">
             <img
-              src={currentUser.profilePhoto}
+              src={userProfile.profilePhoto}
               alt="My photo"
-              title="Profile"
+              title="Profile Photo"
               width="100%"
             />
           </div>
@@ -33,7 +73,14 @@ const SmartPhone = ({ customLinks, initialsOnProfile }) => {
             {initialsOnProfile}
           </div>
         )}
-        <p className="profile-pic-p mb-16">@{currentUser.userName}</p>
+        <p className="profile-pic-p mb-16">@{userProfile.userName}</p>
+        {loadingLinks && (
+          <div>
+            <PreviewButton className="loading" />
+            <PreviewButton className="loading" />
+            <PreviewButton className="loading" />
+          </div>
+        )}
         {customLinks.map((customLink) => {
           if (customLink.visible) {
             return (
@@ -43,51 +90,53 @@ const SmartPhone = ({ customLinks, initialsOnProfile }) => {
                 title={customLink.title}
                 link={customLink.link}
                 key={customLink._id}
+                _id={customLink._id}
               />
             );
           }
         })}
 
         <div className="mtb-16">
-          <FontAwesomeIcon
-            icon={faFacebookF}
-            className="icon"
-            title="Facebook"
-          />
-          <FontAwesomeIcon
-            icon={faLinkedinIn}
-            className="icon"
-            title="LinkedIn"
-          />
-          <FontAwesomeIcon
-            icon={faInstagram}
-            className="icon"
-            title="Instagram"
-          />
-          <FontAwesomeIcon icon={faYoutube} className="icon" title="YouTube" />
+          {customSocials.map((social) => (
+            <a
+              href={social.link}
+              target="_blank"
+              onClick={() => {
+                dispatch(viewsocialMedia(social._id));
+              }}
+            >
+              <FontAwesomeIcon
+                icon={matchLightSocialIcon(
+                  social &&
+                    social.mediaPlatformSample &&
+                    social.mediaPlatformSample.name
+                )}
+                className="icon"
+                title={
+                  social &&
+                  social.mediaPlatformSample &&
+                  social.mediaPlatformSample.name
+                }
+                color={matchSocialColor(
+                  social &&
+                    social.mediaPlatformSample &&
+                    social.mediaPlatformSample.name
+                )}
+              />
+            </a>
+          ))}
         </div>
-        <img
-          src={monaly_logo}
-          alt="Monaly Logo"
-          className="monaly-logo mb-32"
-          height="16px"
-          title="Get started with Monaly"
-        />
+        <Link to="/">
+          <img
+            src={monaly_logo}
+            alt="Monaly Logo"
+            className="monaly-logo mb-32"
+            height="16px"
+            title="Get started with Monaly"
+          />
+        </Link>
       </div>
     </div>
-  );
-};
-
-const PreviewButton = ({ color, backgroundColor, title, link }) => {
-  return (
-    <a href={`http://${link}`} target="_blank">
-      <button
-        className="custom-link-btn mb-8"
-        style={{ color, backgroundColor }}
-      >
-        {title}
-      </button>
-    </a>
   );
 };
 

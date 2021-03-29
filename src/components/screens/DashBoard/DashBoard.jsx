@@ -18,7 +18,7 @@ import AddLinkBox from "../../includes/AddLinkBox/AddLink";
 import SmartPhone from "../../includes/SmartPhone/SmartPhone";
 import { Modal } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faAngleDown, faTimes } from "@fortawesome/free-solid-svg-icons";
 import {
   loadcustomLinks,
   customLinks as Links,
@@ -28,10 +28,34 @@ import {
   removecustomLink,
 } from "../../../store/customLinkSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { getLoggedInUser } from "../../../store/authSlice";
+import {
+  getLoggedInUser,
+  updateUserProfile,
+  uploadUserPhotos,
+} from "../../../store/authSlice";
 import PreviewScreen from "../../includes/PreviewScreen/PreviewScreen";
 import QRCode from "qrcode.react";
-import { copyToClipboard, downloadQR } from "../../../assets/js/controls";
+import {
+  checkUserHasSocial,
+  copyToClipboard,
+  downloadQR,
+  matchSocialColor,
+  matchSocialIcon,
+  socialIcons,
+} from "../../../assets/js/controls";
+
+import {
+  loadsocialMediaSamples,
+  socialMediaSamples,
+  addsocialMedia,
+  userSocials,
+  loadUserSocials,
+} from "../../../store/sociaMediaSampleSlice";
+import {
+  loadLoggedInUser,
+  user,
+  deleteProfilePhoto,
+} from "../../../store/authSlice";
 
 const DashBoard = () => {
   const onClickNavItem = (id) => {
@@ -42,29 +66,51 @@ const DashBoard = () => {
     });
     item.classList.add("active");
   };
-  const NavigationItem = ({ index, title }) => {
+
+  const NavigationItem = ({ index, title, forHtml, selected }) => {
     return (
       <div
         onClick={() => onClickNavItem(index)}
-        className={`nav-item mb-32 mrl-16 nav-item-${index} nav-p ${
+        className={`nav-item mb-32 mrl-16 cursor nav-item-${index} nav-p ${
           index === "1" && "active"
         }`}
         title={title}
+        id={`${forHtml}-tab`}
+        data-bs-toggle="tab"
+        data-bs-target={`#${forHtml}`}
+        type="button"
+        role="tab"
+        aria-controls={forHtml}
+        aria-selected={selected}
       >
         {title}
       </div>
     );
   };
+
   const dispatch = useDispatch();
   const [good, setGood] = useState(false);
+  const userProfile = useSelector(user);
+  console.log("userProfile", userProfile);
   const currentCustomLinks = useSelector(Links);
+  const currentSocialMediaSamples = useSelector(socialMediaSamples);
+  const currentUserSocials = useSelector(userSocials);
   const loadingLinks = useSelector(loadingcustomLinks);
+  const [inputPlaceholder, setInputPlaceholder] = useState("");
+  const [currentSocialMediaSampleId, setCurrentSocialMediaSampleId] = useState(
+    ""
+  );
+  const [newSocialLink, setNewSocialLink] = useState("");
   useEffect(() => {
     dispatch(loadcustomLinks());
+    dispatch(loadsocialMediaSamples());
+    dispatch(loadUserSocials());
+    dispatch(loadLoggedInUser());
   }, [good]);
   const currentUser = getLoggedInUser().user;
   const [modal, setModal] = useState(false);
 
+  console.log(currentUser);
   const toggle = () => setModal(!modal);
 
   const addEmptyCustomLink = () => {
@@ -100,6 +146,30 @@ const DashBoard = () => {
     setTimeout(() => {
       setAlert(false);
     }, 1000);
+  };
+
+  const handleShowArrowDown = (index, item) => {
+    const allArrowDowns = document.querySelectorAll(".social-icon-angle");
+    const targetArrowDown = document.querySelector(
+      `.social-icon-angle-${index}`
+    );
+    const targetInput = document.querySelector(".social-input");
+    setInputPlaceholder(item.name);
+    setCurrentSocialMediaSampleId(item._id);
+    if (targetArrowDown.classList.contains("hide")) {
+      for (let index = 0; index < allArrowDowns.length; index++) {
+        const item = allArrowDowns[index];
+        item.classList.add("hide");
+      }
+      targetArrowDown.classList.remove("hide");
+      targetInput.classList.remove("hide");
+    } else {
+      for (let index = 0; index < allArrowDowns.length; index++) {
+        const item = allArrowDowns[index];
+        item.classList.add("hide");
+      }
+      targetInput.classList.add("hide");
+    }
   };
 
   return (
@@ -187,18 +257,16 @@ const DashBoard = () => {
               {showPopupForEditProfile && (
                 <div className="popup-edit-profile">
                   <button
-                    onClick={(e) => {
-                      copyToClipboard(
-                        e,
-                        `https://mona.ly/${currentUser.userName}`
-                      );
-                      showSuccessAlert();
-                    }}
+                    data-bs-toggle="tab"
+                    data-bs-target="#appearance"
+                    type="button"
+                    class="nav-item active"
+                    role="tab"
+                    aria-controls="appearance"
+                    aria-selected="false"
+                    id="appearance-tab"
                   >
-                    Copy your monaly URL
-                  </button>
-                  <button onClick={toggleQrModal}>
-                    Download my monaly QR code
+                    Edit profile
                   </button>
                 </div>
               )}
@@ -207,38 +275,208 @@ const DashBoard = () => {
           <div className="edit-screen">
             <div className="top-bar">
               <div className="nav">
-                <NavigationItem index="1" title="Links" />
-                <NavigationItem index="2" title="Appearance" />
-                <NavigationItem index="3" title="Settings" />
+                <NavigationItem index="1" title="Links" forHtml="links" />
+                <NavigationItem
+                  index="2"
+                  title="Appearance"
+                  forHtml="appearance"
+                />
+                <NavigationItem index="3" title="Settings" forHtml="settings" />
               </div>
             </div>
-            <div className="content">
-              {loadingLinks && <div className="loader left-top"></div>}
-              <form action="Add new Custom link">
-                <button
-                  className="link-btn mb-32"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    addEmptyCustomLink();
-                  }}
-                  type="submit"
+            <div className="wider-content">
+              <div className="content tab-content">
+                <div
+                  className="tab-pane fade show active"
+                  id="links"
+                  role="tabpanel"
+                  aria-labelledby="links-tab"
                 >
-                  Add New Link
-                </button>
-              </form>
-              <PreviewScreen data={currentCustomLinks} />
+                  <div className="metric">
+                    <div className="metric-box">
+                      <p>Clicks</p>
+                      <h2>{userProfile.clickCount}</h2>
+                    </div>
+                    <div className="metric-box">
+                      <p>CTR</p>
+                      <h2>10%</h2>
+                    </div>
+                  </div>
+                  <div className="add-social-box">
+                    <h4>Add social media links</h4>
+                    {currentSocialMediaSamples.map((icon, index) => (
+                      <div className="social-icon-item" key={index}>
+                        {icon && (
+                          <FontAwesomeIcon
+                            icon={matchSocialIcon(icon.name)}
+                            className="social-icon cursor"
+                            color={matchSocialColor(icon.name)}
+                            onClick={() => handleShowArrowDown(index, icon)}
+                          />
+                        )}
+                        <FontAwesomeIcon
+                          icon={faAngleDown}
+                          color="#EF476F"
+                          className={`social-icon-angle hide social-icon-angle-${index}`}
+                        />
+                      </div>
+                    ))}
+
+                    <div className="social-input hide">
+                      <form
+                        action="Add Social Media Platform"
+                        onSubmit={(e) => {
+                          e.preventDefault();
+
+                          const dataToSubmit = {
+                            mediaPlatformSample: currentSocialMediaSampleId,
+                            link: newSocialLink,
+                          };
+                          dispatch(addsocialMedia(dataToSubmit));
+                        }}
+                      >
+                        <input
+                          type="url"
+                          placeholder={
+                            checkUserHasSocial(
+                              inputPlaceholder,
+                              currentUserSocials
+                            ) || `${inputPlaceholder} URL`
+                          }
+                          required
+                          onChange={(e) => {
+                            e.preventDefault();
+                            setNewSocialLink(e.target.value);
+                          }}
+                        />
+                        <button type="submit">Save</button>
+                      </form>
+                    </div>
+                  </div>
+                  <form action="Add new Custom link">
+                    <button
+                      className="link-btn mb-32"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        addEmptyCustomLink();
+                      }}
+                      type="submit"
+                    >
+                      Add New Link
+                    </button>
+                  </form>
+                  {loadingLinks && (
+                    <>
+                      <div className="add-link-box loading"></div>
+                      <div className="add-link-box loading"></div>
+                      <div className="add-link-box loading"></div>
+                    </>
+                  )}
+                  <PreviewScreen data={currentCustomLinks} />
+                </div>
+                <div
+                  class="tab-pane fade"
+                  id="appearance"
+                  role="tabpanel"
+                  aria-labelledby="appearance-tab"
+                >
+                  <h2>Profile</h2>
+                  {userProfile.profilePhoto ? (
+                    <div className="avatar">
+                      <img
+                        src={userProfile.profilePhoto}
+                        alt=""
+                        height="100%"
+                        title="Profile Photo"
+                      />
+                    </div>
+                  ) : (
+                    <div className="avatar"> {initialsOnProfile}</div>
+                  )}
+                  <div className="image-btns">
+                    <label
+                      htmlFor="file-upload"
+                      className="cursor"
+                      title="Pick A Profile Photo"
+                    >
+                      <input
+                        type="file"
+                        name=""
+                        id="file-upload"
+                        className="custom-file-input"
+                        onChange={(e) => {
+                          e.preventDefault();
+                          console.log("Clicked ", e.target.files[0]);
+                          const newFormData = new FormData();
+                          newFormData.append("profilePhoto", e.target.files[0]);
+                          dispatch(uploadUserPhotos(newFormData));
+                        }}
+                      />
+                      Pick an image
+                    </label>
+                    <button
+                      className=" inactive"
+                      title="Remove Profile Photo"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        dispatch(deleteProfilePhoto());
+                      }}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder={userProfile.userName || "Profile Title"}
+                    className="add-profile-title"
+                    title="Change Username"
+                    name="userName"
+                    onChange={(e) => {
+                      e.preventDefault();
+                      dispatch(updateUserProfile({ userName: e.target.value }));
+                    }}
+                  />
+                  <textarea
+                    name="bio"
+                    id="bio"
+                    cols="60"
+                    rows="10"
+                    title="Change Bio"
+                    placeholder={userProfile.bio || "Bio"}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      dispatch(updateUserProfile({ bio: e.target.value }));
+                    }}
+                  ></textarea>
+                </div>
+                <div
+                  class="tab-pane fade"
+                  id="settings"
+                  role="tabpanel"
+                  aria-labelledby="settings-tab"
+                >
+                  ...
+                </div>
+              </div>
             </div>
           </div>
           <div className="preview-screen">
             <div className="top-bar">
               <div className="user-link nav-p">
-                <span>
-                  <b>My monaly:</b>mona.ly/{currentUser.userName}
+                <span title="Your Monaly Link">
+                  <b>My monaly: </b>
+                  <a
+                    className="nav-p"
+                    href={`https://mona.ly/${currentUser.userName}`}
+                  >
+                    <u>mona.ly/{currentUser.userName}</u>
+                  </a>
                 </span>
                 <div className="share-btn relative">
                   <button
                     className="primary-btn custom-btn-sm "
                     onClick={togglePopUp}
+                    title="Share Your Monaly Link"
                   >
                     share
                   </button>
@@ -265,6 +503,7 @@ const DashBoard = () => {
             </div>
             <div className="phone-preview">
               <SmartPhone
+                customSocials={currentUserSocials}
                 customLinks={currentCustomLinks}
                 initialsOnProfile={initialsOnProfile}
               />

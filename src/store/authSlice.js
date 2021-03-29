@@ -79,6 +79,20 @@ const slice = createSlice({
         color: "#c30052",
       };
     },
+    photoUploadStart: (user, action) => {
+      user.loading = true;
+      user.status = { message: "Updating profile", color: "blue" };
+    },
+    userProfileUpdated: (user, action) => {
+      user.loading = false;
+      user.profile = action.payload;
+      user.status = { message: "Updated user profile", color: "#00966d" };
+    },
+    photoUploadFailed: (user, action) => {
+      user.loading = false;
+      user.error = action.payload.response.data.error;
+      user.status = { message: "Update failed", color: "#c30052" };
+    },
     signUpStart: (user, action) => {
       user.loading = true;
       user.loggedIn = false;
@@ -143,6 +157,9 @@ export const {
   resetStart,
   resetSuccess,
   resetFailed,
+  photoUploadStart,
+  userProfileUpdated,
+  photoUploadFailed,
 } = slice.actions;
 
 export default slice.reducer;
@@ -170,6 +187,50 @@ export const signUserUp = (firstName, lastName, email, userName, password) => (
       onStart: signUpStart.type,
       onSuccess: signUpSuccess.type,
       onError: signUpFailed.type,
+    })
+  );
+};
+export const updateUserProfile = (updateData) => (dispatch) => {
+  dispatch(
+    apiCallBegan({
+      url: "/auth/me",
+      method: "patch",
+      data: updateData,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("authToken"),
+      },
+      onStart: photoUploadStart.type,
+      onSuccess: userProfileUpdated.type,
+      onError: photoUploadFailed.type,
+    })
+  );
+};
+export const uploadUserPhotos = (photdata) => (dispatch) => {
+  dispatch(
+    apiCallBegan({
+      url: "/auth/me/images",
+      method: "post",
+      data: photdata,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("authToken"),
+      },
+      onStart: photoUploadStart.type,
+      onSuccess: userProfileUpdated.type,
+      onError: photoUploadFailed.type,
+    })
+  );
+};
+export const deleteProfilePhoto = () => (dispatch) => {
+  dispatch(
+    apiCallBegan({
+      url: "/auth/me/profilePhoto",
+      method: "delete",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("authToken"),
+      },
+      onStart: photoUploadStart.type,
+      onSuccess: userProfileUpdated.type,
+      onError: photoUploadFailed.type,
     })
   );
 };

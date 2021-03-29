@@ -137,6 +137,12 @@ export const addcustomLink = (customLink) =>
     onError: customLinkAddFailed.type,
   });
 
+export const viewCustomLink = (id) =>
+  apiCallBegan({
+    url: "/custom-links/" + id,
+    method: "get",
+  });
+
 export const removecustomLink = (customLinkId) =>
   apiCallBegan({
     url: "/custom-links/" + customLinkId,
