@@ -44,6 +44,9 @@ code {
   margin-top: 96px;
   margin-bottom: 96px;
 }
+.h-25-900 {
+  height: 34px;
+}
 @media screen and (max-width: 900px) {
   .form-box {
     width: 100%;
@@ -61,7 +64,7 @@ code {
   }
   .h-25-900 {
     height: 25px;
-   }
+  }
 }
 
 .header-p {
