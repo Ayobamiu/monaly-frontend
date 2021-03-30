@@ -13,6 +13,12 @@
   margin: 8px 0;
   text-align: left;
 }
+@media screen and (max-width: 900px) {
+  .custom-input {
+    height: 56px;
+    padding: 0 24px;
+  }
+}
 .custom-input label {
   /* Desktop / Text X-Small */
 

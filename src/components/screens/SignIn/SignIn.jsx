@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./css/style.css";
-import monaly_logo from "../../../assets/images/monaly_logo.png";
+import monaly_logo from "../../../assets/images/monaly_logo.svg";
 import Checkbox from "../../../assets/images/Checkbox.png";
 import CustomInput from "../../includes/CustomInput/CustomInput";
 import { Link } from "react-router-dom";
@@ -31,10 +31,10 @@ const SignIn = () => {
     <div id="signinpage">
       <div className="form-box">
         <Link to="/">
-          <img src={monaly_logo} alt="" className="mb-32" />
+          <img src={monaly_logo} alt="" className="mb-32 h-25-900"  />
         </Link>
-        <p className="custom-p mb-48">
-          Welcome Back, Let’s get back to creating links.
+        <p className="header-p mb-48 mb-32-900">
+          Login in to your monaly account!
         </p>
         <form action="sign-in" onSubmit={handleSignIn}>
           <CustomInput
@@ -52,9 +52,9 @@ const SignIn = () => {
             required={true}
             id="password"
           />
-          <div className="remember-password mt-16 mb-48">
+          <div className="remember-password mt-16 mb-48 mb-32-900">
             <img src={Checkbox} alt="" className="mr-8" />
-            <p className="action-p m-0">Remember password</p>
+            <p className="action-p m-0">Remember me</p>
           </div>
           <button className="primary-btn mb-16" type="submit">
             {!loadingUser ? (
@@ -81,13 +81,14 @@ const SignIn = () => {
           Sign in with Google
         </button> */}
         <p className="action-p mb-32">
-          Forgot your password?&nbsp;
-          <Link to="/start-reset-password">Click to reset</Link>
+          <Link to="/start-reset-password" className="custom-p">
+            <u>Forgot your password?</u>
+          </Link>
         </p>
         <p className="action-p mb-32">
           Don’t have an account?&nbsp;
-          <Link to="/sign-up" className="monaly-primary">
-            Sign up here
+          <Link to="/sign-up" className="dark-action-p">
+            Create one
           </Link>
         </p>
       </div>

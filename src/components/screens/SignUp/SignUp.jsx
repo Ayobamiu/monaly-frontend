@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./css/style.css";
-import monaly_logo from "../../../assets/images/monaly_logo.png";
+import monaly_logo from "../../../assets/images/monaly_logo.svg";
 import CustomInput from "../../includes/CustomInput/CustomInput";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -44,10 +44,10 @@ const SignUp = () => {
     <div id="signuppage">
       <div className="form-box">
         <Link to="/">
-          <img src={monaly_logo} alt="" className="mb-32" />
+          <img src={monaly_logo} alt="" className="mb-32 h-25-900" />
         </Link>
-        <p className="custom-p mb-48">
-          Let’s create some powerful links, Sign up to get started.
+        <p className="header-p mb-48 mb-32-900">
+          Let’s help you create an account!
         </p>
         <form action="sign-up" onSubmit={handleSignUp}>
           <CustomInput
@@ -113,7 +113,7 @@ const SignUp = () => {
             required={true}
             id="password"
           />
-          <p className="small-p mb-48">
+          <p className="small-p mb-48 mb-32-900">
             By using this service you are agreeing to the terms of service and
             privacy policy.
           </p>
@@ -137,14 +137,14 @@ const SignUp = () => {
             </span>
           )}
         </form>
-        <div className="mb-32"></div>
+        <div className="mb-32 hide-900"></div>
         {/* <button className="primary-inverse-btn mb-32">
           Sign up with Google
         </button> */}
         <p className="action-p">
           Already have an account? &nbsp;
-          <Link to="/sign-in" className="monaly-primary">
-            Log in here
+          <Link to="/sign-in" className="dark-action-p">
+            Login here
           </Link>
         </p>
       </div>

@@ -8,7 +8,7 @@ import "./css/style.css";
 const CustomInput = ({
   onChange,
   icon,
-  secured,
+  secured, 
   placeholder,
   type,
   id,
