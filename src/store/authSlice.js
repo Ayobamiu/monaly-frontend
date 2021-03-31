@@ -9,8 +9,19 @@ const slice = createSlice({
     userName: { status: null },
     startReset: { status: null },
     reset: { status: null },
+    visitorView: {},
   },
   reducers: {
+    visitorViewRequested: (user, action) => {
+      user.loading = true;
+    },
+    visitorViewReceived: (user, action) => {
+      user.visitorView = action.payload;
+      user.loading = false;
+    },
+    visitorViewRequestFailed: (user, action) => {
+      user.loading = false;
+    },
     userRequested: (user, action) => {
       user.loading = true;
     },
@@ -160,6 +171,9 @@ export const {
   photoUploadStart,
   userProfileUpdated,
   photoUploadFailed,
+  visitorViewRequested,
+  visitorViewReceived,
+  visitorViewRequestFailed,
 } = slice.actions;
 
 export default slice.reducer;
@@ -291,6 +305,17 @@ export const loadLoggedInUser = () => (dispatch, getState) => {
   );
 };
 
+export const loadVisitorScreen = (userName) => (dispatch, getState) => {
+  dispatch(
+    apiCallBegan({
+      url: `users/${userName}`,
+      onStart: visitorViewRequested.type,
+      onSuccess: visitorViewReceived.type,
+      onError: visitorViewRequestFailed.type,
+    })
+  );
+};
+
 export const getLoggedInUser = () => {
   const token = localStorage.getItem("authToken");
   if (token) {
@@ -300,6 +325,7 @@ export const getLoggedInUser = () => {
   return null;
 };
 
+export const visitorViewData = (state) => state.app.user.visitorView;
 export const user = (state) => state.app.user.profile;
 export const error = (state) => state.app.user.error;
 export const status = (state) => state.app.user.status;

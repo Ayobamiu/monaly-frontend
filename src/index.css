@@ -185,6 +185,9 @@ code {
 .m-0 {
   margin: 0;
 }
+.mt-8 {
+  margin-top: 8px;
+}
 .mb-8 {
   margin-bottom: 8px;
 }
@@ -200,6 +203,10 @@ code {
 .mrl-16 {
   margin-right: 16px;
   margin-left: 16px;
+}
+.mtb-8 {
+  margin-bottom: 8px;
+  margin-top: 8px;
 }
 .mtb-16 {
   margin-bottom: 16px;
@@ -256,6 +263,7 @@ code {
 .primary-btn:active {
   transform: scale(1.1);
 }
+
 .custom-link-btn:active {
   transform: scale(1.002);
 }

@@ -1,0 +1,147 @@
+/* The device with borders */
+#visitorsScreen {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+}
+
+/* The screen (or content) of the device */
+#visitorsScreen .wider-content-top {
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  /* height: calc(100vh -50px); */
+  height: 100%;
+}
+#visitorsScreen .wider-content-bottom {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #ffffff;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 16px;
+}
+#visitorsScreen .content {
+  width: 482px;
+  height: 100vh;
+  margin: auto;
+  text-align: center;
+  padding: 72px 0;
+  box-sizing: border-box;
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+#visitorsScreen .wider-content-top::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+#visitorsScreen .wider-content-top {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+#visitorsScreen .bio-p {
+  width: 50%;
+  margin: 16px auto;
+  margin-bottom: 32px;
+  text-align: center;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+  /* or 129% */
+
+  text-align: center;
+  letter-spacing: 0.75px;
+
+  /* color: #FFFFFF; */
+}
+#visitorsScreen .profile-pic {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  background-color: black;
+  margin: auto;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#visitorsScreen .profile-pic-sub {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  background-color: rgb(0, 0, 0);
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  font-size: 30px;
+  color: white;
+}
+#visitorsScreen .icon {
+  margin: 0 8px;
+  font-size: 15px;
+  cursor: pointer;
+}
+#visitorsScreen .monaly-logo {
+  cursor: pointer;
+  display: block;
+}
+#visitorsScreen .visitors-link-btn:active {
+  transform: scale(1.002);
+}
+#visitorsScreen .visitors-link-btn {
+  width: 100%;
+  height: 64px;
+  /* Monaly primary */
+
+  box-sizing: border-box;
+  border: none;
+  border-radius: 16px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 34px;
+  /* identical to box height, or 283% */
+
+  letter-spacing: 0.75px;
+
+  outline: none;
+}
+@media screen and (max-width: 900px) {
+  #visitorsScreen .content {
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+    padding: 32px 8px;
+    box-sizing: border-box;
+  }
+  #visitorsScreen .visitors-link-btn {
+    width: 100%;
+    height: 45px;
+    border-radius: 8px;
+  }
+
+  #visitorsScreen .profile-pic {
+    height: 96px;
+    width: 96px;
+  }
+  #visitorsScreen .profile-pic-sub {
+    height: 96px;
+    width: 96px;
+  }
+  #visitorsScreen .bio-p {
+    width: 80%;
+    margin: 8px auto;
+    margin-bottom: 16px;
+    font-size: 12px;
+    line-height: 20px;
+  }
+}
