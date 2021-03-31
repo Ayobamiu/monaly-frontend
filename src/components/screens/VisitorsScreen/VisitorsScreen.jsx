@@ -64,7 +64,20 @@ const VisitorsScreen = (props) => {
     <div id="visitorsScreen">
       <div className="wider-content-top">
         <div className="content">
-          <div className="profile-pic-sub mt-32">{initialsOnProfile}</div>
+          {visitorData.profilePhoto ? (
+            <div className="profile-pic mt-32">
+              <img
+                src={visitorData.profilePhoto}
+                alt="My photo"
+                title="Profile Photo"
+                width="100%"
+              />
+            </div>
+          ) : (
+            <div className="profile-pic-sub mt-32" title="Profile">
+              {initialsOnProfile}
+            </div>
+          )}{" "}
           <p className="profile-pic-p mb-16">@{visitorData.userName}</p>
           <p className="custom-p bio-p mb-16">{visitorData.bio} </p>
           <div>
@@ -80,7 +93,7 @@ const VisitorsScreen = (props) => {
                 if (customLink.visible) {
                   return (
                     <PreviewButton
-                      backgroundColor="green"
+                      backgroundColor="#3AE09A"
                       color="white"
                       title={customLink.title}
                       link={customLink.link}
