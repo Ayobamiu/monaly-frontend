@@ -92,15 +92,18 @@ const slice = createSlice({
     },
     photoUploadStart: (user, action) => {
       user.loading = true;
+      // user.loadingUpdate = true;
       user.status = { message: "Updating profile", color: "blue" };
     },
     userProfileUpdated: (user, action) => {
       user.loading = false;
+      // user.loadingUpdate = false;
       user.profile = action.payload;
       user.status = { message: "Updated user profile", color: "#00966d" };
     },
     photoUploadFailed: (user, action) => {
       user.loading = false;
+      // user.loadingUpdate = false;
       user.error = action.payload.response.data.error;
       user.status = { message: "Update failed", color: "#c30052" };
     },
@@ -316,6 +319,21 @@ export const loadVisitorScreen = (userName) => (dispatch, getState) => {
   );
 };
 
+export const storeVisitorLocation = (
+  userName,
+  visitorLocation,
+  country,
+  city
+) => (dispatch, getState) => {
+  dispatch(
+    apiCallBegan({
+      url: `users/${userName}/save-visitor-location`,
+      method: "post",
+      data: { visitorLocation, country, city },
+    })
+  );
+};
+
 export const getLoggedInUser = () => {
   const token = localStorage.getItem("authToken");
   if (token) {
@@ -329,6 +347,7 @@ export const visitorViewData = (state) => state.app.user.visitorView;
 export const user = (state) => state.app.user.profile;
 export const error = (state) => state.app.user.error;
 export const status = (state) => state.app.user.status;
+// export const loadingUpdate = (state) => state.app.user.loadingUpdate;
 export const loading = (state) => state.app.user.loading;
 export const userNamestatus = (state) => state.app.user.userName.status;
 export const userNameloading = (state) => state.app.user.userName.loading;

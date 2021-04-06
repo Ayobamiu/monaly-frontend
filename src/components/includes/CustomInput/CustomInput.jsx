@@ -8,7 +8,7 @@ import "./css/style.css";
 const CustomInput = ({
   onChange,
   icon,
-  secured, 
+  secured,
   placeholder,
   type,
   id,
@@ -42,10 +42,19 @@ const CustomInput = ({
             required={required}
             onFocus={() => {
               document.getElementById(id).classList.add("active");
+              const closeIcon = document.querySelector(`#${id} #close`);
+              if (closeIcon) {
+                closeIcon.style.display = "block";
+              }
             }}
             onBlur={() => {
               setShowLabel(false);
               document.getElementById(id).classList.remove("active");
+              const closes = document.querySelectorAll("#close");
+              for (let index = 0; index < closes.length; index++) {
+                const close = closes[index];
+                close.style.display = "none";
+              }
             }}
           />
         </div>
@@ -54,14 +63,11 @@ const CustomInput = ({
           <img
             src={Close}
             onClick={() => {
-              if (inputType === "text") {
-                setInputType("password");
-              } else {
-                setInputType("text");
-              }
+              document.querySelector(`#${id} input`).value = "";
             }}
             id="close"
             alt=""
+            className="cursor"
           />
         ) : (
           <img

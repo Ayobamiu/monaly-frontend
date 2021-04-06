@@ -49,8 +49,8 @@ code {
 }
 @media screen and (max-width: 900px) {
   .form-box {
-    width: 100%;
-    border-radius: unset;
+    /* width: 100%; */
+    /* border-radius: unset; */
     padding: 72px 24px;
     box-sizing: border-box;
     margin-top: unset;
@@ -58,6 +58,12 @@ code {
   }
   .mb-32-900 {
     margin-bottom: 32px !important;
+  }
+  .mb-16-900 {
+    margin-bottom: 16px !important;
+  }
+  .fsz-14-900 {
+    font-size: 14px;
   }
   .hide-900 {
     display: none;
@@ -73,7 +79,7 @@ code {
   font-family: Poppins;
   font-style: normal;
   font-weight: normal;
-  font-size: 24px;
+  font-size: 32px;
   line-height: 32px;
   /* or 133% */
 
@@ -256,6 +262,26 @@ code {
   text-align: center;
   outline: none;
 }
+.primary-btn-inverse {
+  width: 100%;
+  height: 56px;
+  /* Monaly primary */
+
+  background: #ffffff;
+  border: 2px solid #d6d8e7;
+  box-sizing: border-box;
+  border-radius: 40px;
+  color: #ef476f;
+  /* //styleName: Desktop / Link Small; */
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: 0.75px;
+  text-align: center;
+  outline: none;
+}
 .inactive {
   transform: scale(0.9);
   opacity: 0.5;
@@ -358,18 +384,7 @@ code {
   height: 100vh;
   background: #e5e5e5;
 }
-.add-link-box {
-  min-height: 122px;
-  width: 100%;
-  border-radius: 16px;
-  background-color: #ffffff;
-  display: flex;
-  justify-content: space-between;
-  overflow: hidden;
-  padding: 16px 32px;
-  margin: 12px 0;
-  box-shadow: 0px 4px 32px rgba(0, 0, 0, 0.1);
-}
+
 .opaque {
   opacity: 0.5 !important;
 }
@@ -400,7 +415,7 @@ input::-ms-clear {
 }
 .popup-edit-profile {
   position: absolute;
-  width: 367px;
+  width: 365.21px;
   height: auto;
   background: #ffffff;
   box-shadow: 0px 4px 32px rgba(0, 0, 0, 0.1);
@@ -422,6 +437,22 @@ input::-ms-clear {
   z-index: 2;
   padding: 12px;
 }
+.popup-edit-profile div {
+  padding: 12px 24px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  /* identical to box height, or 156% */
+
+  letter-spacing: 0.75px;
+
+  color: #000000;
+  background-color: transparent;
+  border: none;
+  display: block;
+}
 .popup-edit-profile button {
   padding: 12px 24px;
   font-family: Poppins;
@@ -436,6 +467,7 @@ input::-ms-clear {
   color: #000000;
   background-color: transparent;
   border: none;
+  display: block;
 }
 .popup-edit-profile button:hover {
   /* monaly hover */
@@ -526,6 +558,12 @@ input::-ms-clear {
   /* Adding animation */
   animation: loading 1s infinite;
 }
+@media screen and (max-width: 500px) {
+  .form-box {
+    width: 100%;
+    border-radius: unset;
+  }
+}
 /* Loading Animation */
 @keyframes loading {
   100% {
@@ -537,4 +575,10 @@ input::-ms-clear {
 }
 a {
   color: currentColor;
+}
+.no-underline {
+  text-decoration: none;
+}
+.no-underline:hover {
+  text-decoration: none;
 }

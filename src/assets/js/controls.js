@@ -99,3 +99,10 @@ export const checkUserHasSocial = (socialMediaName, userSocials) => {
   );
   return found ? found.link : found;
 };
+
+export const clickThroughRatio = (user) => {
+  const ctratio = user.clickCount / user.viewCount;
+  return Math.ceil(ctratio * 100) || 0;
+};
+
+export const siteUrl = "monaly-app.herokuapp.com/";

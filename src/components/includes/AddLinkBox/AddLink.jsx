@@ -11,7 +11,7 @@ const AddLinkBox = ({
   link,
   visible,
   _id,
-  onChangeLink,
+  onChangeLink, 
   onChangeTitle,
   onChangeSwitch,
   onClickDelete,
@@ -22,7 +22,7 @@ const AddLinkBox = ({
     <div className={`add-link-box  ${!checkedStatus && `opaque`}`}>
       <div className="inputs-and-media space-between flex-column">
         <div>
-          <div className="text-icon custom-p">
+          <div className="text-icon custom-p fsz-14-900">
             <input
               type="text"
               placeholder={title || "Title"}
@@ -40,7 +40,7 @@ const AddLinkBox = ({
               title="Edit Title"
             />
           </div>
-          <div className="text-icon custom-p">
+          <div className="text-icon custom-p fsz-14-900">
             <input
               type="text"
               placeholder={link || "Paste link here"}

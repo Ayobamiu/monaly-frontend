@@ -29,21 +29,21 @@ const slice = createSlice({
       customLinks.loading = false;
     },
     customLinkAddStart: (customLinks, action) => {
-      customLinks.loading = true;
+      customLinks.loadingUpdate = true;
       customLinks.status = "loading";
     },
     customLinkAdded: (customLinks, action) => {
       customLinks.list.unshift(action.payload);
-      customLinks.loading = false;
+      customLinks.loadingUpdate = false;
       customLinks.status = "Added successfully";
       // window.location.reload();
     },
     customLinkAddFailed: (customLinks, action) => {
-      customLinks.loading = false;
+      customLinks.loadingUpdate = false;
       customLinks.status = "Failed";
     },
     customLinkUpdateStart: (customLinks, action) => {
-      customLinks.loading = true;
+      customLinks.loadingUpdate = true;
       customLinks.status = "loading";
     },
     customLinkUpdated: (customLinks, action) => {
@@ -53,27 +53,27 @@ const slice = createSlice({
       customLinks.list[index].link = action.payload.customLink.link;
       customLinks.list[index].title = action.payload.customLink.title;
       customLinks.list[index].visible = action.payload.customLink.visible;
-      customLinks.loading = false;
+      customLinks.loadingUpdate = false;
       customLinks.status = "Updated successfully";
       // window.location.reload();
     },
     customLinkUpdateFailed: (customLinks, action) => {
-      customLinks.loading = false;
+      customLinks.loadingUpdate = false;
       customLinks.status = "Failed";
     },
     customLinkRemoveStart: (customLinks, action) => {
-      customLinks.loading = true;
+      customLinks.loadingUpdate = true;
       customLinks.status = "Failed";
     },
     customLinkRemoved: (customLinks, action) => {
       customLinks.list.pop(
         (customLink) => customLink._id !== action.payload._id
       );
-      customLinks.loading = false;
+      customLinks.loadingUpdate = false;
       window.location.reload();
     },
     customLinkRemoveFailed: (customLinks, action) => {
-      customLinks.loading = false;
+      customLinks.loadingUpdate = false;
     },
   },
 });
@@ -168,5 +168,7 @@ export const updateCustomLink = (customLinkId, customLink) =>
 
 export const customLinks = (state) => state.app.customLinks.list;
 export const customLink = (state) => state.app.customLinks.customLink;
+export const loadingUpdateCustomLinks = (state) =>
+  state.app.customLinks.loadingUpdate;
 export const loadingcustomLinks = (state) => state.app.customLinks.loading;
 export const customLinksError = (state) => state.app.customLinks.error;

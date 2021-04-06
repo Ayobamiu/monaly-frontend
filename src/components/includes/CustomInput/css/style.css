@@ -66,6 +66,8 @@
 .custom-input.active #close {
   display: block;
   margin: auto;
+  z-index: 5;
+  position: relative;
 }
 .custom-input.error {
   border: solid 2px red;

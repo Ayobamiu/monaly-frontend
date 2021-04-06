@@ -1,3 +1,16 @@
+.add-link-box {
+  min-height: 122px;
+  width: 100%;
+  border-radius: 16px;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 16px 32px;
+  margin: 12px 0;
+  box-shadow: 0px 4px 32px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
 .add-link-box .switch-and-delete {
   flex: 0 0 100px;
   display: flex;
@@ -34,4 +47,47 @@
   background-position: left center;
   border-radius: 2em;
   transition: background-position 0.15s ease-in-out;
+}
+@media screen and (max-width: 900px) {
+  .add-link-box {
+    min-height: 122px;
+    width: 100%;
+    padding: 16px;
+    box-sizing: border-box;
+  }
+  .add-link-box .switch-and-delete {
+    flex: 0 0 50px;
+  }
+  .add-link-box .inputs-and-media {
+    flex: 1 0 80%;
+  }
+  .add-link-box .inputs-and-media .text-icon {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .add-link-box .inputs-and-media .text-icon input {
+    border: none;
+    outline: none;
+    width: 100%;
+  }
+
+  .form-check-input {
+    width: 42.67px;
+    height: 24px;
+    margin-top: 0.25em;
+    background-color: #fff;
+    /* border: 1px solid #ef476f; */
+  }
+  .form-check-input:checked {
+    background-color: #ef476f;
+    border-color: #ef476f;
+  }
+  .form-switch .form-check-input {
+    width: 42.67px;
+    margin-left: -2.5em;
+    background-position: left center;
+    border-radius: 2em;
+    transition: background-position 0.15s ease-in-out;
+  }
 }

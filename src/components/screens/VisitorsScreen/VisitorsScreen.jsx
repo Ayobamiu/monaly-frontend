@@ -1,18 +1,12 @@
-import {
-  faFacebook,
-  faFacebookF,
-  faFacebookSquare,
-  faLinkedinIn,
-  faTwitter,
-} from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import "./css/style.css";
 import monaly_logo from "../../../assets/images/monaly_logo.svg";
 import { Link } from "react-router-dom";
 import {
   loading,
   loadVisitorScreen,
+  storeVisitorLocation,
   visitorViewData,
 } from "../../../store/authSlice";
 import { viewsocialMedia } from "../../../store/sociaMediaSampleSlice";
@@ -22,12 +16,69 @@ import {
   matchLightSocialIcon,
   matchSocialColor,
 } from "../../../assets/js/controls";
+import { getAddress, ipLookUp } from "../../../assets/js/getAddress";
 
 const VisitorsScreen = (props) => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  const divRref = useRef(null);
+
+  useEffect(async () => {
     dispatch(loadVisitorScreen(props.match.params.userName));
+    divRref.current.scrollIntoView({ behavior: "smooth" });
+
+    if ("geolocation" in navigator) {
+      // check if geolocation is supported/enabled on current browser
+      navigator.geolocation.getCurrentPosition(
+        async function success(position) {
+          // for when getting location is a success
+          // getAddress(position.coords.latitude, position.coords.longitude);
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          const addressFrom = await getAddress(latitude, longitude);
+          dispatch(
+            storeVisitorLocation(
+              props.match.params.userName,
+              addressFrom.currentLocation,
+              addressFrom.country,
+              addressFrom.city
+            )
+          );
+        },
+        async function error(error_message) {
+          // for when getting location results in an error
+          console.error(
+            "An error has occured while retrieving" + "location",
+            error_message
+          );
+          const getIp = await ipLookUp();
+          const latitude = getIp.data.lat;
+          const longitude = getIp.data.lon;
+          const addressFrom = await getAddress(latitude, longitude);
+          dispatch(
+            storeVisitorLocation(
+              props.match.params.userName,
+              addressFrom.currentLocation,
+              addressFrom.country,
+              addressFrom.city
+            )
+          );
+        }
+      );
+    } else {
+      const getIp = await ipLookUp();
+      const latitude = getIp.data.lat;
+      const longitude = getIp.data.lon;
+      const addressFrom = await getAddress(latitude, longitude);
+      dispatch(
+        storeVisitorLocation(
+          props.match.params.userName,
+          addressFrom.currentLocation,
+          addressFrom.country,
+          addressFrom.city
+        )
+      );
+    }
   }, []);
   const visitorData = useSelector(visitorViewData);
   const loadingLinks = useSelector(loading);
@@ -60,6 +111,7 @@ const VisitorsScreen = (props) => {
       </a>
     );
   };
+
   return (
     <div id="visitorsScreen">
       <div className="wider-content-top">
@@ -77,7 +129,7 @@ const VisitorsScreen = (props) => {
             <div className="profile-pic-sub mt-32" title="Profile">
               {initialsOnProfile}
             </div>
-          )}{" "}
+          )}
           <p className="profile-pic-p mb-16">@{visitorData.userName}</p>
           <p className="custom-p bio-p mb-16">{visitorData.bio} </p>
           <div>
@@ -104,41 +156,41 @@ const VisitorsScreen = (props) => {
                 }
               })}
           </div>
+          <div className="mt-32">
+            {visitorData.socialMediaplatforms &&
+              visitorData.socialMediaplatforms.map((social) => (
+                <a
+                  href={social.link}
+                  target="_blank"
+                  onClick={() => {
+                    dispatch(viewsocialMedia(social._id));
+                  }}
+                >
+                  <FontAwesomeIcon
+                    icon={matchLightSocialIcon(
+                      social &&
+                        social.mediaPlatformSample &&
+                        social.mediaPlatformSample.name
+                    )}
+                    className="icon"
+                    title={
+                      social &&
+                      social.mediaPlatformSample &&
+                      social.mediaPlatformSample.name
+                    }
+                    color={matchSocialColor(
+                      social &&
+                        social.mediaPlatformSample &&
+                        social.mediaPlatformSample.name
+                    )}
+                    style={{ fontSize: "24px" }}
+                  />
+                </a>
+              ))}
+          </div>
         </div>
       </div>
-      <div className="wider-content-bottom">
-        <div className="mtb-8">
-          {visitorData.socialMediaplatforms &&
-            visitorData.socialMediaplatforms.map((social) => (
-              <a
-                href={social.link}
-                target="_blank"
-                onClick={() => {
-                  dispatch(viewsocialMedia(social._id));
-                }}
-              >
-                <FontAwesomeIcon
-                  icon={matchLightSocialIcon(
-                    social &&
-                      social.mediaPlatformSample &&
-                      social.mediaPlatformSample.name
-                  )}
-                  className="icon"
-                  title={
-                    social &&
-                    social.mediaPlatformSample &&
-                    social.mediaPlatformSample.name
-                  }
-                  color={matchSocialColor(
-                    social &&
-                      social.mediaPlatformSample &&
-                      social.mediaPlatformSample.name
-                  )}
-                  style={{ fontSize: "24px" }}
-                />
-              </a>
-            ))}
-        </div>
+      <div className="wider-content-bottom" ref={divRref}>
         <Link to="/">
           <img
             src={monaly_logo}

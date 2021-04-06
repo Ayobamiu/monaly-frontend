@@ -25,7 +25,7 @@ import { Link } from "react-router-dom";
 import { viewsocialMedia } from "../../../store/sociaMediaSampleSlice";
 
 const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
-  const currentUser = getLoggedInUser().user;
+  const currentUser = getLoggedInUser() && getLoggedInUser().user;
   const loadingLinks = useSelector(loadingcustomLinks);
   const userProfile = useSelector(user);
 
@@ -97,9 +97,10 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
         })}
 
         <div className="mtb-16">
-          {customSocials.map((social) => (
+          {customSocials.map((social, index) => (
             <a
               href={social.link}
+              key={index}
               target="_blank"
               onClick={() => {
                 dispatch(viewsocialMedia(social._id));
@@ -126,11 +127,14 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
             </a>
           ))}
         </div>
+      </div>
+
+      <div className="red">
         <Link to="/">
           <img
             src={monaly_logo}
             alt="Monaly Logo"
-            className="monaly-logo mb-32"
+            className="monaly-logo"
             height="16px"
             title="Get started with Monaly"
           />
