@@ -8,6 +8,9 @@
 .mobile-top-nav {
   display: none;
 }
+#dashboard:active + .popup-edit-profile {
+  display: none;
+}
 #dashboard .side-bar {
   flex: 132px;
   flex-grow: 0;
@@ -101,6 +104,8 @@
 #dashboard .edit-screen .wider-content {
   overflow-y: scroll;
   position: relative;
+  padding: 64px;
+  height: calc(100vh - 96px);
 }
 #dashboard .edit-screen .wider-content::before {
   display: none;
@@ -127,9 +132,8 @@
   z-index: 0;
 }
 #dashboard .edit-screen .content {
-  width: 477px;
+  width: 100%;
   height: calc(100vh - 96px);
-  padding: 64px 0;
   margin: auto;
   position: relative;
   z-index: 1;
@@ -141,13 +145,13 @@
 }
 
 #dashboard .edit-screen .wider-content::-webkit-scrollbar {
-  display: none;
+  /* display: none; */
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
 #dashboard .edit-screen .wider-content {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  /* -ms-overflow-style: none; IE and Edge */
+  /* scrollbar-width: none; Firefox */
 }
 
 #dashboard .preview-screen {
@@ -216,6 +220,15 @@
   font-size: 15px;
   position: relative;
 }
+.popup-edit-profile {
+  display: none;
+}
+.popup {
+  display: none;
+}
+/* .link-to-user-profile:hover + .popup-edit-profile {
+  display: block;
+} */
 .new-notification {
   position: absolute;
   top: 2.5px;
@@ -227,9 +240,12 @@
   background: #00ba88;
 }
 #appearance {
+}
+
+#appearance .appearance-box {
   height: auto;
   /* height: 479px; */
-  width: 502px;
+  width: 100%;
   margin: auto;
 
   background: #ffffff;
@@ -240,8 +256,8 @@
   padding: 32px;
   position: relative;
   /* text-align: center; */
-}
-#appearance .appearance-box {
+  margin-bottom: 60px;
+  min-height: 100px;
 }
 #appearance h2 {
   font-family: Poppins;
@@ -256,9 +272,9 @@
   /* Grayscale / Title-Active */
 
   color: #14142b;
-  position: absolute;
-  left: 32px;
-  top: 1.33%;
+  /* position: absolute; */
+  /* left: 32px; */
+  /* top: 1.33%; */
 }
 #appearance .avatar {
   height: 102.85713958740234px;
@@ -270,7 +286,8 @@
 
   background: #ef476f;
   border-radius: 80px;
-  margin: auto;
+  /* margin: auto; */
+  margin-right: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -283,7 +300,6 @@
   line-height: 16px;
   /* or 114% */
 
-  display: flex;
   align-items: center;
   text-align: center;
   letter-spacing: 0.25px;
@@ -294,7 +310,7 @@
 }
 #appearance .image-btns {
   width: 300px;
-  margin: auto;
+  /* margin: auto 10px; */
   display: flex;
   justify-content: flex-start;
   margin-top: 16px;
@@ -302,7 +318,7 @@
   align-items: center;
 }
 #appearance .image-btns button:first-child {
-  margin: 8px;
+  margin: 8px 16px;
   /* Desktop / Link X-Small */
 
   font-family: Poppins;
@@ -331,7 +347,7 @@
   display: none;
 }
 #appearance .image-btns label {
-  margin: 8px;
+  margin: 8px 16px;
   /* Desktop / Link X-Small */
 
   font-family: Poppins;
@@ -358,7 +374,7 @@
 }
 #appearance .add-profile-title {
   height: 64px;
-  width: 439px;
+  width: 100%;
   margin: 32px auto;
   display: block;
   background: #eff0f7;
@@ -385,7 +401,7 @@
 }
 #appearance textarea {
   height: 128px;
-  width: 439px;
+  width: 100%;
   border-radius: 16px;
   margin: auto;
   display: block;
@@ -410,13 +426,118 @@
 
   color: #a0a3bd;
 }
+#appearance .style-items {
+  display: flex;
+  height: 389px;
+  width: 100%;
+  justify-content: space-between;
+  padding: 32px;
+}
+#appearance .style-item {
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
+  text-align: center;
+}
+#appearance .style-item .input-container {
+  position: relative;
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* margin-bottom: 12px; */
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 28px;
+  /* identical to box height, or 175% */
+
+  letter-spacing: 0.75px;
+  display: inline-block;
+
+  color: #000000;
+}
+#appearance .style-item input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  /* height: 0; */
+  /* width: 0; */
+}
+#appearance .style-item .checkmark {
+  height: 16px;
+  width: 16px;
+  background-color: #eee;
+  border-radius: 50%;
+  margin-right: 8px;
+  display: inline-block;
+  /* top: 3px; */
+  transform: translateY(3px);
+}
+#appearance .style-item input:checked ~ .checkmark {
+  background-color: #ccc;
+  background-image: url("../../../../assets/images/Checkbox.svg");
+}
+#appearance .style-item .phone {
+  opacity: 0.2;
+  padding: 0 12px;
+  padding-top: 60px;
+}
+#appearance .style-item .phone .phone-stack {
+  /* opacity: 0.2; */
+  width: 119.28px;
+  height: 21.69px;
+
+  /* gray inactive */
+
+  background: #6e7191;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+#appearance .style-item .phone.phone-grids {
+  opacity: 0.2;
+  padding: 0;
+  padding-top: 60px;
+}
+#appearance .style-item .phone.phone-mixed {
+  opacity: 0.2;
+  padding: 0 10px;
+  padding-top: 60px;
+}
+#appearance .style-item .phone .phone-grid {
+  width: 50.6px;
+  height: 79.52px;
+  /* gray toggle inactive */
+
+  background: #6e7191;
+  border-radius: 4px;
+  margin: 4px;
+  display: inline-block;
+}
+#appearance .style-item input:checked ~ .phone {
+  opacity: 1;
+}
+#appearance .style-item .phone {
+  height: 272.8915710449219px;
+  width: 150px;
+  border-radius: 24px;
+  border: 5px solid #6e7191;
+  box-sizing: border-box;
+  border-radius: 24px;
+}
 #links .metric {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 #links .metric-box {
   height: 180px;
-  width: 222.5px;
+  flex: 0 49%;
   border-radius: 16px;
   background: #ffffff;
   /* Soft Dropshadow */
@@ -456,7 +577,7 @@
 #links .add-social-box {
   padding: 16px;
   min-height: 122px;
-  width: 477px;
+  width: 100%;
   border-radius: 16px;
 
   background: #ffffff;
@@ -582,6 +703,7 @@
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  margin-top: 16px;
 }
 #appearance .textarea-count span {
   /* Desktop / Text X-Small */

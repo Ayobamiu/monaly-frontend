@@ -50,6 +50,7 @@ import {
   matchSocialIcon,
   clickThroughRatio,
   siteUrl,
+  matchLightSocialIcon,
 } from "../../../assets/js/controls";
 
 import {
@@ -111,6 +112,29 @@ const DashBoard = (props) => {
     );
   };
 
+  const editpopUpToggler = document.querySelector(".link-to-user-profile");
+  const sharepopUpToggler = document.querySelector(".share-button-toggler");
+  const sharepopUp = document.querySelector(".popup");
+  const editpopUp = document.querySelector(".popup-edit-profile");
+  if (editpopUpToggler) {
+    editpopUpToggler.onclick = () => {
+      editpopUp.style.display = "block";
+    };
+  }
+  if (sharepopUpToggler) {
+    sharepopUpToggler.onclick = () => {
+      sharepopUp.style.display = "block";
+    };
+  }
+  window.onclick = function (e) {
+    if (e.target !== editpopUp && e.target !== editpopUpToggler) {
+      editpopUp.style.display = "none";
+    }
+    if (e.target !== sharepopUp && e.target !== sharepopUpToggler) {
+      sharepopUp.style.display = "none";
+    }
+    // console.log("clicked");
+  };
   const initialsOnProfile =
     currentUser &&
     currentUser.firstName &&
@@ -178,103 +202,7 @@ const DashBoard = (props) => {
       </NavLink>
     );
   };
-  const Appearance = () => {
-    // return (
-    //  );
-  };
-  const LinkCo = () => {
-    return (
-      <div>
-        <div id="links">
-          <div className="metric">
-            <div
-              className="metric-box"
-              title="Count of all clicks on your links"
-            >
-              <p>Clicks</p>
-              <h2>{userProfile.clickCount || 0}</h2>
-            </div>
-            <div
-              className="metric-box"
-              title="Percentage of visitors that clicks at least a link after visiting your page"
-            >
-              <p>CTR</p>
-              <h2>{clickThroughRatio(userProfile)}%</h2>
-            </div>
-          </div>
-          <div className="add-social-box">
-            <h4>Add social media links</h4>
-            {currentSocialMediaSamples.map((icon, index) => (
-              <div className="social-icon-item" key={index}>
-                {icon && (
-                  <FontAwesomeIcon
-                    icon={matchSocialIcon(icon.name)}
-                    className="social-icon cursor"
-                    color={matchSocialColor(icon.name)}
-                    onClick={() => handleShowArrowDown(index, icon)}
-                  />
-                )}
-                <FontAwesomeIcon
-                  icon={faAngleDown}
-                  color="#EF476F"
-                  className={`social-icon-angle hide social-icon-angle-${index}`}
-                />
-              </div>
-            ))}
 
-            <div className="social-input hide">
-              <form
-                action="Add Social Media Platform"
-                onSubmit={(e) => {
-                  e.preventDefault();
-
-                  const dataToSubmit = {
-                    mediaPlatformSample: currentSocialMediaSampleId,
-                    link: newSocialLink,
-                  };
-                  dispatch(addsocialMedia(dataToSubmit));
-                }}
-              >
-                <input
-                  type="url"
-                  placeholder={
-                    checkUserHasSocial(inputPlaceholder, currentUserSocials) ||
-                    `${inputPlaceholder} URL`
-                  }
-                  required
-                  onChange={(e) => {
-                    e.preventDefault();
-                    setNewSocialLink(e.target.value);
-                  }}
-                />
-                <button type="submit">Save</button>
-              </form>
-            </div>
-          </div>
-          <form action="Add new Custom link">
-            <button
-              className="link-btn mb-32 mb-16-900"
-              onClick={(e) => {
-                e.preventDefault();
-                addEmptyCustomLink();
-              }}
-              type="submit"
-            >
-              Add New Link
-            </button>
-          </form>
-          {loadingLinks && (
-            <>
-              <div className="add-link-box loading"></div>
-              <div className="add-link-box loading"></div>
-              <div className="add-link-box loading"></div>
-            </>
-          )}
-          <PreviewScreen data={currentCustomLinks} />
-        </div>
-      </div>
-    );
-  };
   return (
     <>
       <div className="mobile-top-nav">
@@ -368,37 +296,37 @@ const DashBoard = (props) => {
                 {initialsOnProfile}
                 <span className="new-notification"></span>
               </div>
-              {showPopupForEditProfile && (
-                <div className="popup-edit-profile">
-                  <div
-                    class="dark-action-p"
-                    onClick={() => {
-                      setShowPopupForEditProfile(false);
-                    }}
-                  >
-                    @{userProfile.userName}
-                  </div>
-
-                  <Link
-                    to={`${path}/appearance`}
-                    onClick={() => {
-                      setShowPopupForEditProfile(false);
-                    }}
-                    className="no-underline"
-                  >
-                    <button class="nav-item active">Edit your profile</button>
-                  </Link>
-                  <button
-                    class="nav-item active"
-                    onClick={() => {
-                      setShowPopupForEditProfile(false);
-                      dispatch(logUserOut());
-                    }}
-                  >
-                    Logout
-                  </button>
+              {/* {showPopupForEditProfile && ( */}
+              <div className="popup-edit-profile">
+                <div
+                  class="dark-action-p"
+                  onClick={() => {
+                    setShowPopupForEditProfile(false);
+                  }}
+                >
+                  @{userProfile.userName}
                 </div>
-              )}
+
+                <Link
+                  to={`${path}/appearance`}
+                  onClick={() => {
+                    setShowPopupForEditProfile(false);
+                  }}
+                  className="no-underline"
+                >
+                  <button class="nav-item active">Edit your profile</button>
+                </Link>
+                <button
+                  class="nav-item active"
+                  onClick={() => {
+                    setShowPopupForEditProfile(false);
+                    dispatch(logUserOut());
+                  }}
+                >
+                  Logout
+                </button>
+              </div>
+              {/* )} */}
             </div>
           </div>
           <div className="edit-screen">
@@ -418,18 +346,110 @@ const DashBoard = (props) => {
             <div className="wider-content">
               <div className="content tab-content">
                 <Redirect from={`${path}`} to={`${path}/links`} />
-                <Route path={`${path}/links`} component={LinkCo} />
+                <Route path={`${path}/links`}>
+                  <div>
+                    <div id="links">
+                      <div className="metric">
+                        <div
+                          className="metric-box"
+                          title="Count of all clicks on your links"
+                        >
+                          <p>Clicks</p>
+                          <h2>{userProfile.clickCount || 0}</h2>
+                        </div>
+                        <div
+                          className="metric-box"
+                          title="Percentage of visitors that clicks at least a link after visiting your page"
+                        >
+                          <p>CTR</p>
+                          <h2>{clickThroughRatio(userProfile)}%</h2>
+                        </div>
+                      </div>
+                      <div className="add-social-box">
+                        <h4>Add social media links</h4>
+                        {currentSocialMediaSamples.map((icon, index) => (
+                          <div className="social-icon-item" key={index}>
+                            {icon && (
+                              <FontAwesomeIcon
+                                icon={matchSocialIcon(icon.name)}
+                                className="social-icon cursor"
+                                color={matchSocialColor(icon.name)}
+                                onClick={() => handleShowArrowDown(index, icon)}
+                              />
+                            )}
+                            <FontAwesomeIcon
+                              icon={faAngleDown}
+                              color="#EF476F"
+                              className={`social-icon-angle hide social-icon-angle-${index}`}
+                            />
+                          </div>
+                        ))}
+
+                        <div className="social-input hide">
+                          <form
+                            action="Add Social Media Platform"
+                            onSubmit={(e) => {
+                              e.preventDefault();
+
+                              const dataToSubmit = {
+                                mediaPlatformSample: currentSocialMediaSampleId,
+                                link: newSocialLink,
+                              };
+                              dispatch(addsocialMedia(dataToSubmit));
+                            }}
+                          >
+                            <input
+                              type="url"
+                              placeholder={
+                                checkUserHasSocial(
+                                  inputPlaceholder,
+                                  currentUserSocials
+                                ) || `${inputPlaceholder} URL`
+                              }
+                              required
+                              onChange={(e) => {
+                                e.preventDefault();
+                                setNewSocialLink(e.target.value);
+                              }}
+                            />
+                            <button type="submit">Save</button>
+                          </form>
+                        </div>
+                      </div>
+                      <form action="Add new Custom link">
+                        <button
+                          className="link-btn mb-32 mb-16-900"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            addEmptyCustomLink();
+                          }}
+                          type="submit"
+                        >
+                          Add New Link
+                        </button>
+                      </form>
+                      {loadingLinks && (
+                        <>
+                          <div className="add-link-box loading"></div>
+                          <div className="add-link-box loading"></div>
+                          <div className="add-link-box loading"></div>
+                        </>
+                      )}
+                      <PreviewScreen data={currentCustomLinks} />
+                    </div>
+                  </div>
+                </Route>
                 <Route path={`${path}/appearance`}>
                   <div>
                     <div id="appearance">
-                      <h2>Profile</h2>
+                      <h2>Profile settings</h2>
                       <div className="appearance-box">
                         <div
                           style={{
                             display: "flex",
-                            padding: "40px 0",
+                            padding: "40px 0 16px 0",
                             alignItems: "center",
-                            justifyContent: "center",
+                            justifyContent: "flex-start",
                           }}
                         >
                           {userProfile.profilePhoto ? (
@@ -522,6 +542,67 @@ const DashBoard = (props) => {
                           <span>{targetTextareaLength || 0}/80</span>
                         </div>
                       </div>
+
+                      <h2>Link display style</h2>
+                      <div className="appearance-box">
+                        <div className="style-items">
+                          <div className="style-item">
+                            <input
+                              type="radio"
+                              name="styleSelect"
+                              id="check"
+                              // checked
+                              defaultChecked
+                            />
+                            <span class="checkmark"></span>
+                            <label class="input-container" htmlFor="check">
+                              Stacked
+                            </label>
+                            <div className="phone">
+                              <div className="phone-stack"></div>
+                              <div className="phone-stack"></div>
+                              <div className="phone-stack"></div>
+                              <div className="phone-stack"></div>
+                              <div className="phone-stack"></div>
+                            </div>
+                          </div>
+                          <div className="style-item">
+                            <input
+                              type="radio"
+                              name="styleSelect"
+                              id="check1"
+                            />
+                            <span class="checkmark"></span>
+                            <label class="input-container" htmlFor="check1">
+                              Gallery
+                            </label>
+                            <div className="phone phone-grids">
+                              <div className="phone-grid"></div>
+                              <div className="phone-grid"></div>
+                              <div className="phone-grid"></div>
+                              <div className="phone-grid"></div>
+                            </div>
+                          </div>
+                          <div className="style-item">
+                            <input
+                              type="radio"
+                              name="styleSelect"
+                              id="check2"
+                            />
+                            <span class="checkmark"></span>
+                            <label class="input-container" htmlFor="check2">
+                              Mixed
+                            </label>
+                            <div className="phone phone-mixed">
+                              <div className="phone-grid"></div>
+                              <div className="phone-grid"></div>
+                              <div className="phone-stack"></div>
+                              <div className="phone-stack"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div style={{ height: "100px" }}></div>
                     </div>
                   </div>
                 </Route>
@@ -546,36 +627,36 @@ const DashBoard = (props) => {
                 </span>
                 <div className="share-btn relative">
                   <button
-                    className="primary-btn-inverse custom-btn-sm "
+                    className="primary-btn-inverse custom-btn-sm share-button-toggler"
                     onClick={togglePopUp}
                     title="Share Your Monaly Link"
                   >
                     Share
                   </button>
-                  {showPopup && (
-                    <div className="popup">
-                      <button
-                        onClick={(e) => {
-                          copyToClipboard(
-                            e,
-                            `${siteUrl}${currentUser && currentUser.userName}`
-                          );
-                          showSuccessAlert();
-                          setShowPopup(false);
-                        }}
-                      >
-                        Copy your monaly URL
-                      </button>
-                      <button
-                        onClick={() => {
-                          toggleQrModal();
-                          setShowPopup(false);
-                        }}
-                      >
-                        Download my monaly QR code
-                      </button>
-                    </div>
-                  )}
+                  {/* {showPopup && ( */}
+                  <div className="popup">
+                    <button
+                      onClick={(e) => {
+                        copyToClipboard(
+                          e,
+                          `${siteUrl}${currentUser && currentUser.userName}`
+                        );
+                        showSuccessAlert();
+                        setShowPopup(false);
+                      }}
+                    >
+                      Copy your monaly URL
+                    </button>
+                    <button
+                      onClick={() => {
+                        toggleQrModal();
+                        setShowPopup(false);
+                      }}
+                    >
+                      Download my monaly QR code
+                    </button>
+                  </div>
+                  {/* )} */}
                 </div>
               </div>
             </div>

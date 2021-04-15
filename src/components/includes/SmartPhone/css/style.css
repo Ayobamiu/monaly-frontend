@@ -1,13 +1,13 @@
 /* The device with borders */
 .smartphone {
   position: relative;
-  width: 276px;
-  height: 524.4px;
+  width: 270px;
+  height: 535px;
   margin: auto;
-  border: 5px black solid;
-  border-top-width: 5px;
-  border-bottom-width: 5px;
-  border-radius: 42px;
+  border: 10px #14142b solid;
+  border-top-width: 10px;
+  border-bottom-width: 10px;
+  border-radius: 48px;
   overflow: hidden;
 }
 
@@ -70,8 +70,8 @@
   scrollbar-width: none; /* Firefox */
 }
 .profile-pic {
-  height: 96px;
-  width: 96px;
+  height: 73.71px;
+  width: 73.71px;
   border-radius: 50%;
   background-color: black;
   margin: auto;
@@ -82,8 +82,8 @@
   border: none;
 }
 .profile-pic-sub {
-  height: 96px;
-  width: 96px;
+  height: 73.71px;
+  width: 73.71px;
   border-radius: 50%;
   background-color: rgb(0, 0, 0);
   margin: auto;
@@ -98,6 +98,8 @@
   margin: 0 8px;
   font-size: 15px;
   cursor: pointer;
+  border-radius: 4px;
+  overflow: hidden;
 }
 .monaly-logo {
   cursor: pointer;

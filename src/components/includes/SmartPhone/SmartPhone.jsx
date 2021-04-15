@@ -2,7 +2,7 @@ import React from "react";
 import "./css/style.css";
 import profilepic from "../../../assets/images/profilepic.svg";
 import picp from "../../../assets/images/picp.jpg";
-import monaly_logo from "../../../assets/images/monaly_logo.svg";
+import monaly_logo from "../../../assets/images/pinkLogo.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebookF,
@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   matchLightSocialIcon,
   matchSocialColor,
+  matchSocialIcon,
 } from "../../../assets/js/controls";
 import { Link } from "react-router-dom";
 import { viewsocialMedia } from "../../../store/sociaMediaSampleSlice";
@@ -34,6 +35,7 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
   const PreviewButton = ({
     color,
     backgroundColor,
+    borderRadius,
     title,
     link,
     className,
@@ -49,7 +51,7 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
       >
         <button
           className={`custom-link-btn mb-8 ${className}`}
-          style={{ color, backgroundColor }}
+          style={{ color, backgroundColor, borderRadius }}
         >
           {title}
         </button>
@@ -73,7 +75,10 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
             {initialsOnProfile}
           </div>
         )}
-        <p className="profile-pic-p mb-16">@{userProfile.userName}</p>
+        <p className="profile-pic-p mb-8">
+          {userProfile.profileTitle || "@" + userProfile.userName}
+        </p>
+        <p className="small-p mb-8 text-center">{userProfile.bio}</p>
         {loadingLinks && (
           <div>
             <PreviewButton className="loading" />
@@ -85,8 +90,9 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
           if (customLink.visible) {
             return (
               <PreviewButton
-                backgroundColor="green"
-                color="white"
+                backgroundColor="#B9E3C6"
+                color="#262626"
+                borderRadius="4px"
                 title={customLink.title}
                 link={customLink.link}
                 key={customLink._id}
@@ -107,7 +113,7 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
               }}
             >
               <FontAwesomeIcon
-                icon={matchLightSocialIcon(
+                icon={matchSocialIcon(
                   social &&
                     social.mediaPlatformSample &&
                     social.mediaPlatformSample.name
@@ -118,11 +124,7 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
                   social.mediaPlatformSample &&
                   social.mediaPlatformSample.name
                 }
-                color={matchSocialColor(
-                  social &&
-                    social.mediaPlatformSample &&
-                    social.mediaPlatformSample.name
-                )}
+                color="#6E7191"
               />
             </a>
           ))}

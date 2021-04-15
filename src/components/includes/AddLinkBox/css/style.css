@@ -23,7 +23,7 @@
 }
 .add-link-box .inputs-and-media .text-icon {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 .add-link-box .inputs-and-media .text-icon input {
   border: none;
