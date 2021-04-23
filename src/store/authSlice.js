@@ -10,6 +10,7 @@ const slice = createSlice({
     startReset: { status: null },
     reset: { status: null },
     visitorView: {},
+    stackStyle: "stacked",
   },
   reducers: {
     visitorViewRequested: (user, action) => {

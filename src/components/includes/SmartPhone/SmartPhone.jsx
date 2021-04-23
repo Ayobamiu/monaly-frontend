@@ -78,7 +78,7 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
         <p className="profile-pic-p mb-8">
           {userProfile.profileTitle || "@" + userProfile.userName}
         </p>
-        <p className="small-p mb-8 text-center">{userProfile.bio}</p>
+        <p className="small-p mb-24 text-center">{userProfile.bio}</p>
         {loadingLinks && (
           <div>
             <PreviewButton className="loading" />

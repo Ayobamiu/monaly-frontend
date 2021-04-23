@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { ReactComponent as Logo } from "../../../assets/images/linkIcon.svg";
 
 import "./css/style.css";
 
 import monalydashboardlogo from "../../../assets/images/Vector.svg";
 import Comment from "../../../assets/images/Comment.svg";
 import Notification from "../../../assets/images/Notification.svg";
+import AppearanceIcon from "../../../assets/images/AppearanceIcon.svg";
+import SettingsIcon from "../../../assets/images/Settings.svg";
+import ForwardArrow from "../../../assets/images/ForwardArrow.svg";
+import NotificationMobile from "../../../assets/images/NotificationMobile.svg";
 import shareLinkIconBox from "../../../assets/images/shareLinkIconBox.svg";
 import colorLinkedIn from "../../../assets/images/colorLinkedIn.svg";
 import colorInstagram from "../../../assets/images/colorInstagram.svg";
@@ -25,7 +30,15 @@ import {
 import SmartPhone from "../../includes/SmartPhone/SmartPhone";
 import { Modal } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDown, faTimes } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleDown,
+  faLink,
+  faSmileBeam,
+  faTimes,
+  faCog,
+  faArrowRight,
+} from "@fortawesome/free-solid-svg-icons";
+import { faSmile } from "@fortawesome/free-regular-svg-icons";
 import {
   loadcustomLinks,
   customLinks as Links,
@@ -67,6 +80,7 @@ import {
   loading,
 } from "../../../store/authSlice";
 // import { getWhereUserIsLocated } from "../../../assets/js/getAddress";
+import themeOneBackground from "../../../assets/images/themeOne.png";
 
 const DashBoard = (props) => {
   const Settings = () => {
@@ -202,15 +216,79 @@ const DashBoard = (props) => {
       </NavLink>
     );
   };
+  const BottomNavigationItem = ({ title, to, icon }) => {
+    return (
+      <NavLink
+        to={`${url}/${to}`}
+        activeClassName="active"
+        title={title}
+        className="mobile-bottom-nav-item"
+      >
+        <FontAwesomeIcon
+          icon={icon}
+          alt={title}
+          title={title}
+          className="mobile-bottom-nav-item-icon"
+        />
+        <span>{title}</span>
+      </NavLink>
+    );
+  };
 
   return (
-    <>
+    <div id="mobile-holder">
       <div className="mobile-top-nav">
-        <Link to="/">
+        <Link to="/" className="mr-auto">
           <img src={monalydashboardlogo} alt="" height="28.46px" />
         </Link>
-        <span>mona.ly/{currentUser && currentUser.userName}</span>
-        <img src={menu_right} alt="" />
+        <img src={NotificationMobile} alt="" title="Notification" />
+
+        {/* <img src={menu_right} alt="" /> */}
+        <div className="user-round-avatar-small">BP</div>
+      </div>
+      <div className="mobile-top-nav-share-box">
+        <span title="Your Monaly Link">
+          <b>My monaly:&nbsp;</b>
+          <a
+            href={`https://${siteUrl}${currentUser && currentUser.userName}`}
+            target="_blank"
+          >
+            <u> mona.ly/{currentUser && currentUser.userName}</u>
+          </a>
+        </span>
+        <div className="share-btn relative">
+          <button
+            className="primary-btn-inverse custom-btn-xsm share-button-toggler share-button-mobile"
+            onClick={togglePopUp}
+            title="Share Your Monaly Link"
+          >
+            Share
+          </button>
+          {/* {showPopup && ( */}
+          <div className="popup">
+            <button
+              onClick={(e) => {
+                copyToClipboard(
+                  e,
+                  `${siteUrl}${currentUser && currentUser.userName}`
+                );
+                showSuccessAlert();
+                setShowPopup(false);
+              }}
+            >
+              Copy your monaly URL
+            </button>
+            <button
+              onClick={() => {
+                toggleQrModal();
+                setShowPopup(false);
+              }}
+            >
+              Download my monaly QR code
+            </button>
+          </div>
+          {/* )} */}
+        </div>
       </div>
       {alert && (
         <div class="alert success-bg alert-dismissible fade show" role="alert">
@@ -416,6 +494,17 @@ const DashBoard = (props) => {
                           </form>
                         </div>
                       </div>
+                      <NavLink
+                        to={`${url}/settings`}
+                        className="add-media-in-settings"
+                      >
+                        <span>Add social media handles in settings</span>
+                        <img
+                          src={ForwardArrow}
+                          alt="Forward Arrow"
+                          className="add-media-in-settings-arrow"
+                        />
+                      </NavLink>
                       <form action="Add new Custom link">
                         <button
                           className="link-btn mb-32 mb-16-900"
@@ -444,14 +533,7 @@ const DashBoard = (props) => {
                     <div id="appearance">
                       <h2>Profile settings</h2>
                       <div className="appearance-box">
-                        <div
-                          style={{
-                            display: "flex",
-                            padding: "40px 0 16px 0",
-                            alignItems: "center",
-                            justifyContent: "flex-start",
-                          }}
-                        >
+                        <div className="house-avatar">
                           {userProfile.profilePhoto ? (
                             <div className="avatar">
                               <img
@@ -550,12 +632,11 @@ const DashBoard = (props) => {
                             <input
                               type="radio"
                               name="styleSelect"
-                              id="check"
-                              // checked
+                              id="stackStyle"
                               defaultChecked
                             />
                             <span class="checkmark"></span>
-                            <label class="input-container" htmlFor="check">
+                            <label class="input-container" htmlFor="stackStyle">
                               Stacked
                             </label>
                             <div className="phone">
@@ -570,10 +651,13 @@ const DashBoard = (props) => {
                             <input
                               type="radio"
                               name="styleSelect"
-                              id="check1"
+                              id="galleryStyle"
                             />
                             <span class="checkmark"></span>
-                            <label class="input-container" htmlFor="check1">
+                            <label
+                              class="input-container"
+                              htmlFor="galleryStyle"
+                            >
                               Gallery
                             </label>
                             <div className="phone phone-grids">
@@ -587,10 +671,10 @@ const DashBoard = (props) => {
                             <input
                               type="radio"
                               name="styleSelect"
-                              id="check2"
+                              id="mixedStyle"
                             />
                             <span class="checkmark"></span>
-                            <label class="input-container" htmlFor="check2">
+                            <label class="input-container" htmlFor="mixedStyle">
                               Mixed
                             </label>
                             <div className="phone phone-mixed">
@@ -602,6 +686,72 @@ const DashBoard = (props) => {
                           </div>
                         </div>
                       </div>
+
+                      <h2>Themes</h2>
+                      <div className="appearance-box">
+                        <div className="style-items">
+                          <div className="style-item ">
+                            <input
+                              type="radio"
+                              name="themeSelect"
+                              id="themeOne"
+                              defaultChecked
+                            />
+                            <span class="checkmark"></span>
+                            <label class="input-container" htmlFor="themeOne">
+                              Stacked
+                            </label>
+                            <div
+                              className="phone theme-item-one"
+                              style={{
+                                // backgroundImage: `url("https://via.placeholder.com/500")`,
+                                backgroundImage: `url(${themeOneBackground})`,
+                              }}
+                            >
+                              <div className="phone-stack"></div>
+                              <div className="phone-stack"></div>
+                              <div className="phone-stack"></div>
+                              <div className="phone-stack"></div>
+                              <div className="phone-stack"></div>
+                            </div>
+                          </div>
+                          <div className="style-item">
+                            <input
+                              type="radio"
+                              name="themeSelect"
+                              id="themeTwo"
+                            />
+                            <span class="checkmark"></span>
+                            <label class="input-container" htmlFor="themeTwo">
+                              Gallery
+                            </label>
+                            <div className="phone phone-grids">
+                              <div className="phone-grid"></div>
+                              <div className="phone-grid"></div>
+                              <div className="phone-grid"></div>
+                              <div className="phone-grid"></div>
+                            </div>
+                          </div>
+                          <div className="style-item">
+                            <input
+                              type="radio"
+                              name="themeSelect"
+                              id="themeThree"
+                            />
+                            <span class="checkmark"></span>
+                            <label class="input-container" htmlFor="themeThree">
+                              Mixed
+                            </label>
+                            <div className="phone phone-mixed">
+                              <div className="phone-grid"></div>
+                              <div className="phone-grid"></div>
+                              <div className="phone-stack"></div>
+                              <div className="phone-stack"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
                       <div style={{ height: "100px" }}></div>
                     </div>
                   </div>
@@ -670,7 +820,17 @@ const DashBoard = (props) => {
           </div>
         </div>
       </div>
-    </>
+      <div className="mobile-bottom-nav">
+        <BottomNavigationItem title="Links" to="links" icon={faLink} />
+
+        <BottomNavigationItem
+          title="Appearance"
+          to="appearance"
+          icon={faSmile}
+        />
+        <BottomNavigationItem title="Settings" to="settings" icon={faCog} />
+      </div>
+    </div>
   );
 };
 
