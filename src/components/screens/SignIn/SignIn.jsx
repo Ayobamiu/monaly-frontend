@@ -36,7 +36,7 @@ const SignIn = () => {
         <p className="header-p mb-48 mb-32-900">
           Login in to your monaly account!
         </p>
-        <form action="sign-in" onSubmit={handleSignIn}>
+        <form action="sign-in" onSubmit={handleSignIn}> 
           <CustomInput
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email Address"

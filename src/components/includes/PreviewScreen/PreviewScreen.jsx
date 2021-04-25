@@ -29,6 +29,10 @@ const PreviewScreen = ({ data }) => {
                 dispatch(updateCustomLink(customLink._id, { visible: text }))
               // console.log(text)
             }
+            onChangeImage={
+              (data) => dispatch(updateCustomLink(customLink._id, data))
+              // console.log(text)
+            }
             key={customLink._id}
           />
         ))

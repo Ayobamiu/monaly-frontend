@@ -24,6 +24,7 @@ import {
 } from "../../../assets/js/controls";
 import { Link } from "react-router-dom";
 import { viewsocialMedia } from "../../../store/sociaMediaSampleSlice";
+import Bimbo from "../../../assets/images/Bimbo.png";
 
 const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
   const currentUser = getLoggedInUser() && getLoggedInUser().user;
@@ -35,6 +36,7 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
   const PreviewButton = ({
     color,
     backgroundColor,
+    backgroundImage,
     borderRadius,
     title,
     link,
@@ -49,17 +51,68 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
           dispatch(viewCustomLink(_id));
         }}
       >
-        <button
+        <div
           className={`custom-link-btn mb-8 ${className}`}
           style={{ color, backgroundColor, borderRadius }}
         >
-          {title}
-        </button>
+          <div
+            className="image"
+            style={{
+              backgroundImage: `url('${backgroundImage}')`,
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+            }}
+          ></div>
+          <span>{title}</span>
+        </div>
+      </a>
+    );
+  };
+  const PreviewButtonWithBackground = ({
+    color,
+    backgroundColor,
+    borderRadius,
+    title,
+    link,
+    className,
+    _id,
+    backgroundImage,
+  }) => {
+    return (
+      <a
+        href={`http://${link}`}
+        target="_blank"
+        onClick={() => {
+          dispatch(viewCustomLink(_id));
+        }}
+      >
+        <div
+          className={`custom-link-btn-with-img mb-8 ${className}`}
+          style={{
+            color: "white",
+            backgroundColor: "transparent",
+            background: `linear-gradient(270deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.9) 100%),url('${backgroundImage}')`,
+            height: "100px",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+          }}
+        >
+          <span>{title}</span>
+        </div>
       </a>
     );
   };
   return (
-    <div class="smartphone">
+    <div
+      class="smartphone"
+      style={{
+        backgroundImage: `url(${
+          userProfile.theme && userProfile.theme.backgroundImage
+        })`,
+      }}
+    >
       <div class="content">
         {userProfile.profilePhoto ? (
           <div className="profile-pic mt-32">
@@ -88,17 +141,33 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
         )}
         {customLinks.map((customLink) => {
           if (customLink.visible) {
-            return (
-              <PreviewButton
-                backgroundColor="#B9E3C6"
-                color="#262626"
-                borderRadius="4px"
-                title={customLink.title}
-                link={customLink.link}
-                key={customLink._id}
-                _id={customLink._id}
-              />
-            );
+            if (userProfile.stackStyle === "stacked") {
+              return (
+                <PreviewButton
+                  backgroundColor="#B9E3C6"
+                  color="#262626"
+                  borderRadius="4px"
+                  title={customLink.title}
+                  link={customLink.link}
+                  key={customLink._id}
+                  _id={customLink._id}
+                  backgroundImage={customLink.image}
+                />
+              );
+            } else {
+              return (
+                <PreviewButtonWithBackground
+                  backgroundColor="#B9E3C6"
+                  color="#262626"
+                  borderRadius="4px"
+                  backgroundImage={customLink.image}
+                  title={customLink.title}
+                  link={customLink.link}
+                  key={customLink._id}
+                  _id={customLink._id}
+                />
+              );
+            }
           }
         })}
 

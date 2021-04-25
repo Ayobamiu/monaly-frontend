@@ -2,6 +2,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef } from "react";
 import "./css/style.css";
 import monaly_logo from "../../../assets/images/monaly_logo.svg";
+import picp from "../../../assets/images/picp.jpg";
+import Bimbo from "../../../assets/images/Bimbo.png";
 import { Link } from "react-router-dom";
 import {
   loading,
@@ -80,8 +82,13 @@ const VisitorsScreen = (props) => {
       );
     }
   }, []);
+
   const visitorData = useSelector(visitorViewData);
+  console.log("visitorData", visitorData);
   const loadingLinks = useSelector(loading);
+  // const stackStyle = useSelector(loading);
+  const stackStyle = useSelector((state) => state.app.user.stackStyle);
+  // console.log("stackStyle", stackStyle);
   const initialsOnProfile =
     visitorData &&
     visitorData.firstName &&
@@ -93,6 +100,45 @@ const VisitorsScreen = (props) => {
     link,
     className,
     _id,
+    backgroundImage = "u",
+  }) => {
+    return (
+      <a href={`http://${link}`} target="_blank">
+        <button
+          className={`visitors-link-btn mb-8 ${className}`}
+          style={{
+            color,
+            backgroundColor,
+          }}
+          title={title}
+        >
+          <div
+            className="link-image"
+            style={{
+              backgroundImage: `url(${Bimbo})`,
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+            }}
+          >
+            {/* <img src={Bimbo} height="100%" style={{image}} alt="" /> */}
+          </div>
+          <span className="text">
+            Lorem, ipsum dolor sit amet consectetur adipisicin
+          </span>
+          {/* {title}  */}
+        </button>
+      </a>
+    );
+  };
+  const PreviewButtonWithBacground = ({
+    color,
+    backgroundColor,
+    title,
+    link,
+    className,
+    backgroundImage,
+    _id,
   }) => {
     return (
       <a
@@ -103,8 +149,17 @@ const VisitorsScreen = (props) => {
         // }}
       >
         <button
-          className={`visitors-link-btn mb-8 ${className}`}
-          style={{ color, backgroundColor }}
+          className={`visitors-link-btn-with-img mb-8 ${className}`}
+          style={{
+            color,
+            backgroundColor: "transparent",
+            background: `linear-gradient(270deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.9) 100%),url(${Bimbo})`,
+            height: "100px",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+          }}
+          title={title}
         >
           {title}
         </button>
@@ -143,16 +198,29 @@ const VisitorsScreen = (props) => {
             {visitorData.customLinks &&
               visitorData.customLinks.map((customLink) => {
                 if (customLink.visible) {
-                  return (
-                    <PreviewButton
-                      backgroundColor="#3AE09A"
-                      color="white"
-                      title={customLink.title}
-                      link={customLink.link}
-                      key={customLink._id}
-                      _id={customLink._id}
-                    />
-                  );
+                  if (visitorData.stackStyle === "stacked") {
+                    return (
+                      <PreviewButton
+                        backgroundColor={customLink.backgroundColor}
+                        color={customLink.color}
+                        title={customLink.title}
+                        link={customLink.link}
+                        key={customLink._id}
+                        _id={customLink._id}
+                      />
+                    );
+                  } else {
+                    return (
+                      <PreviewButtonWithBacground
+                        backgroundColor="#3AE09A"
+                        color="white"
+                        title={customLink.title}
+                        link={customLink.link}
+                        key={customLink._id}
+                        _id={customLink._id}
+                      />
+                    );
+                  }
                 }
               })}
           </div>

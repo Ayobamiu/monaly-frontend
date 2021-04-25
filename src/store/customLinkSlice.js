@@ -53,6 +53,7 @@ const slice = createSlice({
       customLinks.list[index].link = action.payload.customLink.link;
       customLinks.list[index].title = action.payload.customLink.title;
       customLinks.list[index].visible = action.payload.customLink.visible;
+      customLinks.list[index].image = action.payload.customLink.image;
       customLinks.loadingUpdate = false;
       customLinks.status = "Updated successfully";
       // window.location.reload();

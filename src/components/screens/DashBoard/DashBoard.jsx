@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { ReactComponent as Logo } from "../../../assets/images/linkIcon.svg";
-
+import { UncontrolledPopover } from "reactstrap";
 import "./css/style.css";
-
 import monalydashboardlogo from "../../../assets/images/Vector.svg";
 import Comment from "../../../assets/images/Comment.svg";
 import Notification from "../../../assets/images/Notification.svg";
-import AppearanceIcon from "../../../assets/images/AppearanceIcon.svg";
-import SettingsIcon from "../../../assets/images/Settings.svg";
 import ForwardArrow from "../../../assets/images/ForwardArrow.svg";
 import NotificationMobile from "../../../assets/images/NotificationMobile.svg";
 import shareLinkIconBox from "../../../assets/images/shareLinkIconBox.svg";
@@ -16,15 +12,12 @@ import colorInstagram from "../../../assets/images/colorInstagram.svg";
 import colorWhatsapp from "../../../assets/images/colorWhatsapp.svg";
 import colorTwitter from "../../../assets/images/colorTwitter.svg";
 import colorFacebook from "../../../assets/images/colorFacebook.svg";
-import menu_right from "../../../assets/images/menu_right.svg";
 
 import {
   Link,
   NavLink,
   Redirect,
   Route,
-  Switch,
-  useParams,
   useRouteMatch,
 } from "react-router-dom";
 import SmartPhone from "../../includes/SmartPhone/SmartPhone";
@@ -33,10 +26,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleDown,
   faLink,
-  faSmileBeam,
   faTimes,
   faCog,
-  faArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { faSmile } from "@fortawesome/free-regular-svg-icons";
 import {
@@ -63,7 +54,6 @@ import {
   matchSocialIcon,
   clickThroughRatio,
   siteUrl,
-  matchLightSocialIcon,
 } from "../../../assets/js/controls";
 
 import {
@@ -79,8 +69,11 @@ import {
   deleteProfilePhoto,
   loading,
 } from "../../../store/authSlice";
-// import { getWhereUserIsLocated } from "../../../assets/js/getAddress";
 import themeOneBackground from "../../../assets/images/themeOne.png";
+import picp from "../../../assets/images/picp.jpg";
+import chilli from "../../../assets/images/chilli.jpg";
+import abstract from "../../../assets/images/abstract.jpg";
+import { loadthemes } from "../../../store/themeSlice";
 
 const DashBoard = (props) => {
   const Settings = () => {
@@ -100,12 +93,16 @@ const DashBoard = (props) => {
   const loadingLinks = useSelector(loadingcustomLinks);
   const loadingLinksUpdate = useSelector(loadingUpdateCustomLinks);
   const authLoading = useSelector(loading);
+  const themes = useSelector((state) => state.app.themes.list);
   const [inputPlaceholder, setInputPlaceholder] = useState("");
   const [currentSocialMediaSampleId, setCurrentSocialMediaSampleId] = useState(
     ""
   );
+  console.log("themes", themes);
+  console.log("currentCustomLinks", currentCustomLinks);
   const [newSocialLink, setNewSocialLink] = useState("");
   useEffect(() => {
+    dispatch(loadthemes());
     dispatch(loadcustomLinks());
     dispatch(loadsocialMediaSamples());
     dispatch(loadUserSocials());
@@ -126,29 +123,6 @@ const DashBoard = (props) => {
     );
   };
 
-  const editpopUpToggler = document.querySelector(".link-to-user-profile");
-  const sharepopUpToggler = document.querySelector(".share-button-toggler");
-  const sharepopUp = document.querySelector(".popup");
-  const editpopUp = document.querySelector(".popup-edit-profile");
-  if (editpopUpToggler) {
-    editpopUpToggler.onclick = () => {
-      editpopUp.style.display = "block";
-    };
-  }
-  if (sharepopUpToggler) {
-    sharepopUpToggler.onclick = () => {
-      sharepopUp.style.display = "block";
-    };
-  }
-  window.onclick = function (e) {
-    if (e.target !== editpopUp && e.target !== editpopUpToggler) {
-      editpopUp.style.display = "none";
-    }
-    if (e.target !== sharepopUp && e.target !== sharepopUpToggler) {
-      sharepopUp.style.display = "none";
-    }
-    // console.log("clicked");
-  };
   const initialsOnProfile =
     currentUser &&
     currentUser.firstName &&
@@ -243,8 +217,13 @@ const DashBoard = (props) => {
         </Link>
         <img src={NotificationMobile} alt="" title="Notification" />
 
-        {/* <img src={menu_right} alt="" /> */}
-        <div className="user-round-avatar-small">BP</div>
+        <div className="user-round-avatar-small">
+          {userProfile.profilePhoto ? (
+            <img src={userProfile.profilePhoto} height="100%" alt="" />
+          ) : (
+            initialsOnProfile
+          )}
+        </div>
       </div>
       <div className="mobile-top-nav-share-box">
         <span title="Your Monaly Link">
@@ -259,37 +238,44 @@ const DashBoard = (props) => {
         <div className="share-btn relative">
           <button
             className="primary-btn-inverse custom-btn-xsm share-button-toggler share-button-mobile"
-            onClick={togglePopUp}
             title="Share Your Monaly Link"
+            id="mobileCopyLinkPopUp"
           >
             Share
           </button>
-          {/* {showPopup && ( */}
-          <div className="popup">
-            <button
-              onClick={(e) => {
-                copyToClipboard(
-                  e,
-                  `${siteUrl}${currentUser && currentUser.userName}`
-                );
-                showSuccessAlert();
-                setShowPopup(false);
-              }}
-            >
-              Copy your monaly URL
-            </button>
-            <button
-              onClick={() => {
-                toggleQrModal();
-                setShowPopup(false);
-              }}
-            >
-              Download my monaly QR code
-            </button>
-          </div>
+
+          <UncontrolledPopover
+            trigger="focus"
+            placement="bottom"
+            target="mobileCopyLinkPopUp"
+          >
+            <div className="popup">
+              <button
+                onClick={(e) => {
+                  copyToClipboard(
+                    e,
+                    `${siteUrl}${currentUser && currentUser.userName}`
+                  );
+                  showSuccessAlert();
+                  setShowPopup(false);
+                }}
+              >
+                Copy your monaly URL
+              </button>
+              <button
+                onClick={() => {
+                  toggleQrModal();
+                  setShowPopup(false);
+                }}
+              >
+                Download my monaly QR code
+              </button>
+            </div>
+          </UncontrolledPopover>
           {/* )} */}
         </div>
       </div>
+
       {alert && (
         <div class="alert success-bg alert-dismissible fade show" role="alert">
           <strong>Linked copied to clipboard!</strong>
@@ -367,43 +353,48 @@ const DashBoard = (props) => {
               <img src={Notification} alt="" title="Notification" />
               <div
                 className="link-to-user-profile mt-32 cursor"
-                onClick={() =>
-                  setShowPopupForEditProfile(!showPopupForEditProfile)
-                }
+                id="showSetProfilePopUp"
               >
                 {initialsOnProfile}
                 <span className="new-notification"></span>
               </div>
               {/* {showPopupForEditProfile && ( */}
-              <div className="popup-edit-profile">
-                <div
-                  class="dark-action-p"
-                  onClick={() => {
-                    setShowPopupForEditProfile(false);
-                  }}
-                >
-                  @{userProfile.userName}
-                </div>
 
-                <Link
-                  to={`${path}/appearance`}
-                  onClick={() => {
-                    setShowPopupForEditProfile(false);
-                  }}
-                  className="no-underline"
-                >
-                  <button class="nav-item active">Edit your profile</button>
-                </Link>
-                <button
-                  class="nav-item active"
-                  onClick={() => {
-                    setShowPopupForEditProfile(false);
-                    dispatch(logUserOut());
-                  }}
-                >
-                  Logout
-                </button>
-              </div>
+              <UncontrolledPopover
+                trigger="legacy"
+                placement="right"
+                target="showSetProfilePopUp"
+              >
+                <div className="popup-edit-profile">
+                  <div
+                    class="dark-action-p"
+                    onClick={() => {
+                      setShowPopupForEditProfile(false);
+                    }}
+                  >
+                    @{userProfile.userName}
+                  </div>
+
+                  <Link
+                    to={`${path}/appearance`}
+                    onClick={() => {
+                      setShowPopupForEditProfile(false);
+                    }}
+                    className="no-underline"
+                  >
+                    <button class="nav-item active">Edit your profile</button>
+                  </Link>
+                  <button
+                    class="nav-item active"
+                    onClick={() => {
+                      setShowPopupForEditProfile(false);
+                      dispatch(logUserOut());
+                    }}
+                  >
+                    Logout
+                  </button>
+                </div>
+              </UncontrolledPopover>
               {/* )} */}
             </div>
           </div>
@@ -437,7 +428,7 @@ const DashBoard = (props) => {
                         </div>
                         <div
                           className="metric-box"
-                          title="Percentage of visitors that clicks at least a link after visiting your page"
+                          title="Percentage of visitors that clicks at least a link when visiting your page"
                         >
                           <p>CTR</p>
                           <h2>{clickThroughRatio(userProfile)}%</h2>
@@ -586,12 +577,11 @@ const DashBoard = (props) => {
                         </div>
                         <input
                           type="text"
-                          placeholder={
-                            userProfile.profileTitle || "Profile Title"
-                          }
+                          placeholder="Profile Title"
                           className="add-profile-title"
                           title="Change Profile Title"
                           name="profileTitle"
+                          defaultValue={userProfile.profileTitle}
                           onChange={(e) => {
                             e.preventDefault();
                             dispatch(
@@ -611,7 +601,8 @@ const DashBoard = (props) => {
                           cols="60"
                           rows="10"
                           title="Change Bio"
-                          placeholder={userProfile.bio || "Bio"}
+                          placeholder="Bio"
+                          defaultValue={userProfile.bio}
                           onChange={(e) => {
                             e.preventDefault();
                             dispatch(
@@ -633,7 +624,16 @@ const DashBoard = (props) => {
                               type="radio"
                               name="styleSelect"
                               id="stackStyle"
-                              defaultChecked
+                              checked={userProfile.stackStyle === "stacked"}
+                              value="stacked"
+                              onChange={(e) => {
+                                e.preventDefault();
+                                dispatch(
+                                  updateUserProfile({
+                                    stackStyle: e.target.value,
+                                  })
+                                );
+                              }}
                             />
                             <span class="checkmark"></span>
                             <label class="input-container" htmlFor="stackStyle">
@@ -652,6 +652,16 @@ const DashBoard = (props) => {
                               type="radio"
                               name="styleSelect"
                               id="galleryStyle"
+                              value="cards"
+                              checked={userProfile.stackStyle === "cards"}
+                              onChange={(e) => {
+                                e.preventDefault();
+                                dispatch(
+                                  updateUserProfile({
+                                    stackStyle: e.target.value,
+                                  })
+                                );
+                              }}
                             />
                             <span class="checkmark"></span>
                             <label
@@ -672,6 +682,16 @@ const DashBoard = (props) => {
                               type="radio"
                               name="styleSelect"
                               id="mixedStyle"
+                              value="mixed"
+                              checked={userProfile.stackStyle === "mixed"}
+                              onChange={(e) => {
+                                e.preventDefault();
+                                dispatch(
+                                  updateUserProfile({
+                                    stackStyle: e.target.value,
+                                  })
+                                );
+                              }}
                             />
                             <span class="checkmark"></span>
                             <label class="input-container" htmlFor="mixedStyle">
@@ -690,65 +710,47 @@ const DashBoard = (props) => {
                       <h2>Themes</h2>
                       <div className="appearance-box">
                         <div className="style-items">
-                          <div className="style-item ">
-                            <input
-                              type="radio"
-                              name="themeSelect"
-                              id="themeOne"
-                              defaultChecked
-                            />
-                            <span class="checkmark"></span>
-                            <label class="input-container" htmlFor="themeOne">
-                              Stacked
-                            </label>
-                            <div
-                              className="phone theme-item-one"
-                              style={{
-                                // backgroundImage: `url("https://via.placeholder.com/500")`,
-                                backgroundImage: `url(${themeOneBackground})`,
-                              }}
-                            >
-                              <div className="phone-stack"></div>
-                              <div className="phone-stack"></div>
-                              <div className="phone-stack"></div>
-                              <div className="phone-stack"></div>
-                              <div className="phone-stack"></div>
+                          {themes.map((theme) => (
+                            <div className="style-item ">
+                              <input
+                                type="radio"
+                                name="themeSelect"
+                                id={theme._id}
+                                value={theme._id}
+                                checked={
+                                  userProfile.theme &&
+                                  userProfile.theme._id === theme._id
+                                }
+                                onChange={(e) => {
+                                  e.preventDefault();
+                                  dispatch(
+                                    updateUserProfile({ theme: e.target.value })
+                                  );
+                                  console.log("theme", e.target.value);
+                                }}
+                              />
+                              <span class="checkmark"></span>
+                              <label
+                                class="input-container"
+                                htmlFor={theme._id}
+                              >
+                                {theme.name}
+                              </label>
+                              <div
+                                className="phone theme-item-one"
+                                style={{
+                                  // backgroundImage: `url("https://via.placeholder.com/500")`,
+                                  backgroundImage: `url(${theme.backgroundImage})`,
+                                }}
+                              >
+                                <div className="phone-stack"></div>
+                                <div className="phone-stack"></div>
+                                <div className="phone-stack"></div>
+                                <div className="phone-stack"></div>
+                                <div className="phone-stack"></div>
+                              </div>
                             </div>
-                          </div>
-                          <div className="style-item">
-                            <input
-                              type="radio"
-                              name="themeSelect"
-                              id="themeTwo"
-                            />
-                            <span class="checkmark"></span>
-                            <label class="input-container" htmlFor="themeTwo">
-                              Gallery
-                            </label>
-                            <div className="phone phone-grids">
-                              <div className="phone-grid"></div>
-                              <div className="phone-grid"></div>
-                              <div className="phone-grid"></div>
-                              <div className="phone-grid"></div>
-                            </div>
-                          </div>
-                          <div className="style-item">
-                            <input
-                              type="radio"
-                              name="themeSelect"
-                              id="themeThree"
-                            />
-                            <span class="checkmark"></span>
-                            <label class="input-container" htmlFor="themeThree">
-                              Mixed
-                            </label>
-                            <div className="phone phone-mixed">
-                              <div className="phone-grid"></div>
-                              <div className="phone-grid"></div>
-                              <div className="phone-stack"></div>
-                              <div className="phone-stack"></div>
-                            </div>
-                          </div>
+                          ))}
                         </div>
                       </div>
 
@@ -776,36 +778,43 @@ const DashBoard = (props) => {
                   </a>
                 </span>
                 <div className="share-btn relative">
+                  <UncontrolledPopover
+                    trigger="legacy"
+                    placement="auto"
+                    target="desktopPopShare"
+                  >
+                    <div className="popup">
+                      <button
+                        onClick={(e) => {
+                          copyToClipboard(
+                            e,
+                            `${siteUrl}${currentUser && currentUser.userName}`
+                          );
+                          showSuccessAlert();
+                          setShowPopup(false);
+                        }}
+                      >
+                        Copy your monaly URL
+                      </button>
+                      <button
+                        onClick={() => {
+                          toggleQrModal();
+                          setShowPopup(false);
+                        }}
+                      >
+                        Download my monaly QR code
+                      </button>
+                    </div>
+                  </UncontrolledPopover>
                   <button
                     className="primary-btn-inverse custom-btn-sm share-button-toggler"
                     onClick={togglePopUp}
                     title="Share Your Monaly Link"
+                    id="desktopPopShare"
                   >
                     Share
                   </button>
                   {/* {showPopup && ( */}
-                  <div className="popup">
-                    <button
-                      onClick={(e) => {
-                        copyToClipboard(
-                          e,
-                          `${siteUrl}${currentUser && currentUser.userName}`
-                        );
-                        showSuccessAlert();
-                        setShowPopup(false);
-                      }}
-                    >
-                      Copy your monaly URL
-                    </button>
-                    <button
-                      onClick={() => {
-                        toggleQrModal();
-                        setShowPopup(false);
-                      }}
-                    >
-                      Download my monaly QR code
-                    </button>
-                  </div>
                   {/* )} */}
                 </div>
               </div>

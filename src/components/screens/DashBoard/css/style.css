@@ -11,9 +11,7 @@
 .mobile-top-share-box {
   display: none;
 }
-#dashboard:active + .popup-edit-profile {
-  display: none;
-}
+
 #dashboard .side-bar {
   flex: 132px;
   flex-grow: 0;
@@ -224,15 +222,7 @@
   font-size: 15px;
   position: relative;
 }
-.popup-edit-profile {
-  display: none;
-}
-.popup {
-  display: none;
-}
-/* .link-to-user-profile:hover + .popup-edit-profile {
-  display: block;
-} */
+
 .new-notification {
   position: absolute;
   top: 2.5px;
@@ -438,17 +428,15 @@
 }
 #appearance .style-items {
   display: flex;
-  height: 389px;
+  min-height: 389px;
   width: 100%;
   justify-content: space-between;
   padding: 32px;
+  flex-wrap: wrap;
 }
 #appearance .style-item {
-  /* display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; */
   text-align: center;
+  margin-bottom: 15px;
 }
 #appearance .style-item .input-container {
   position: relative;
@@ -496,7 +484,7 @@
 }
 
 #appearance .style-item .phone {
-  opacity: 0.2;
+  opacity: 0.7;
   padding: 0 12px;
   padding-top: 60px;
   height: 272.8915710449219px;
@@ -832,6 +820,7 @@
     background: #ef476f;
     border-radius: 80px;
     margin-left: 24px;
+    overflow: hidden;
   }
   .share-button-mobile {
     height: 40px;
@@ -1010,7 +999,7 @@
     display: none;
   }
   #appearance .image-btns label {
-    margin: 8px;
+    margin: 8px 0;
     /* Desktop / Link X-Small */
 
     font-family: Poppins;
@@ -1030,7 +1019,7 @@
 
     color: #f7f7fc;
     height: 40px;
-    width: auto;
+    width: 100%;
     padding: 8px;
     border: none;
     background: #ef476f;
@@ -1244,4 +1233,16 @@
   position: fixed;
   height: 100%;
   width: 100%;
+}
+.popover {
+  max-width: 100% !important;
+  border: none !important;
+}
+.popover .arrow::after,
+.popover .arrow::before {
+  position: absolute;
+  display: none !important;
+  content: "";
+  border-color: transparent;
+  border-style: solid;
 }

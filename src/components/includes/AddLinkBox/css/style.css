@@ -23,13 +23,24 @@
 }
 .add-link-box .inputs-and-media .text-icon {
   display: flex;
-  /* justify-content: space-between; */
+  justify-content: flex-start;
 }
 .add-link-box .inputs-and-media .text-icon input {
   border: none;
   outline: none;
+  width: auto;
+  margin-right: 4px;
 }
-
+#link-image {
+  display: none;
+}
+.align-end {
+  display: flex;
+  align-items: flex-end;
+}
+.mb-0 {
+  margin-bottom: 0px;
+}
 .form-check-input {
   width: 42.67px;
   height: 24px;
@@ -63,13 +74,13 @@
   }
   .add-link-box .inputs-and-media .text-icon {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     width: 100%;
   }
   .add-link-box .inputs-and-media .text-icon input {
     border: none;
     outline: none;
-    width: 100%;
+    /* width: 100%; */
   }
 
   .form-check-input {

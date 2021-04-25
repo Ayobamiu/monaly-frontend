@@ -9,6 +9,8 @@
   border-bottom-width: 10px;
   border-radius: 48px;
   overflow: hidden;
+  background-position: center;
+  background-size: cover;
 }
 
 /* The horizontal line on the top of the device */
@@ -43,14 +45,15 @@
 .smartphone .content {
   width: 100%;
   height: 90%;
-  background: white;
+  /* background: white; */
   overflow-y: scroll;
   padding: 20px;
   text-align: center;
   position: relative;
+  
 }
 .smartphone .red {
-  background-color: #ffffff;
+  background-color: transparent;
   width: 100%;
   min-height: 10%;
   /* text-align: center
@@ -103,7 +106,7 @@
 }
 .monaly-logo {
   cursor: pointer;
-  /* position: sticky;
+  /* position: sticky; 
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
@@ -118,4 +121,74 @@
   height: 20px;
   width: 100%;
   background-color: red;
+}
+.custom-link-btn:active {
+  transform: scale(1.002);
+}
+.custom-link-btn {
+  width: 100%;
+  height: 45px;
+  /* Monaly primary */
+
+  box-sizing: border-box;
+  border: none;
+  border-radius: 8px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  /* identical to box height, or 283% */
+
+  letter-spacing: 0.35px;
+
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.custom-link-btn .image {
+  width: 35px;
+  height: 80%;
+  background-color: transparent;
+  position: absolute;
+  left: 0px;
+  transform: translate(10%, -50%);
+  top: 50%;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.custom-link-btn span {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+}
+.custom-link-btn-with-img:active {
+  transform: scale(1.002);
+}
+.custom-link-btn-with-img {
+  width: 100%;
+  height: 45px;
+  /* Monaly primary */
+
+  box-sizing: border-box;
+  border: none;
+  border-radius: 8px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  /* identical to box height, or 283% */
+
+  letter-spacing: 0.35px;
+
+  outline: none;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  position: relative;
+  padding: 8px;
 }
