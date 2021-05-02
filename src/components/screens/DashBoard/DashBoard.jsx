@@ -36,11 +36,13 @@ import {
   addcustomLink,
   loadingcustomLinks,
   loadingUpdateCustomLinks,
+  ChangefocusedLinkId,
 } from "../../../store/customLinkSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getLoggedInUser,
   logUserOut,
+  resetLoading,
   updateUserProfile,
   uploadUserPhotos,
 } from "../../../store/authSlice";
@@ -74,13 +76,37 @@ import picp from "../../../assets/images/picp.jpg";
 import chilli from "../../../assets/images/chilli.jpg";
 import abstract from "../../../assets/images/abstract.jpg";
 import { loadthemes } from "../../../store/themeSlice";
+import validator from "validator";
 
 const DashBoard = (props) => {
-  const Settings = () => {
+  const ReUsableSocialInput = ({
+    onChange,
+    placeholder,
+    title,
+    defaultValue,
+    name,
+  }) => {
     return (
-      <div>
-        <div id="settings">...</div>
-      </div>
+      <>
+        <input
+          type="url"
+          placeholder={placeholder}
+          required
+          className="add-profile-title is-valid"
+          title={title}
+          name={name}
+          defaultValue={defaultValue}
+          onChange={(e) => {
+            e.preventDefault();
+            // validate(e.target.value);
+            onChange(e);
+          }}
+          onBlur={(e) => {
+            if (e.target.value.length > 0) {
+            }
+          }}
+        />
+      </>
     );
   };
 
@@ -98,7 +124,10 @@ const DashBoard = (props) => {
   const [currentSocialMediaSampleId, setCurrentSocialMediaSampleId] = useState(
     ""
   );
-  console.log("themes", themes);
+  const focusedLinkId = useSelector(
+    (state) => state.app.customLinks.focusedLinkId
+  );
+  console.log("currentUserSocials", currentUserSocials);
   console.log("currentCustomLinks", currentCustomLinks);
   const [newSocialLink, setNewSocialLink] = useState("");
   useEffect(() => {
@@ -112,6 +141,17 @@ const DashBoard = (props) => {
   const currentUser = getLoggedInUser() && getLoggedInUser().user;
   const [modal, setModal] = useState(false);
 
+  const getSocialAvailable = (id) => {
+    let result = null;
+    const resultSocial = currentUserSocials.find(
+      (social) =>
+        social.mediaPlatformSample && social.mediaPlatformSample._id === id
+    );
+    result = resultSocial;
+
+    return result;
+  };
+  // console.log(getSocialAvailable("605e6495c7a9a100e0e21d22"));
   const toggle = () => setModal(!modal);
 
   const addEmptyCustomLink = () => {
@@ -149,29 +189,6 @@ const DashBoard = (props) => {
     }, 1000);
   };
 
-  const handleShowArrowDown = (index, item) => {
-    const allArrowDowns = document.querySelectorAll(".social-icon-angle");
-    const targetArrowDown = document.querySelector(
-      `.social-icon-angle-${index}`
-    );
-    const targetInput = document.querySelector(".social-input");
-    setInputPlaceholder(item.name);
-    setCurrentSocialMediaSampleId(item._id);
-    if (targetArrowDown.classList.contains("hide")) {
-      for (let index = 0; index < allArrowDowns.length; index++) {
-        const item = allArrowDowns[index];
-        item.classList.add("hide");
-      }
-      targetArrowDown.classList.remove("hide");
-      targetInput.classList.remove("hide");
-    } else {
-      for (let index = 0; index < allArrowDowns.length; index++) {
-        const item = allArrowDowns[index];
-        item.classList.add("hide");
-      }
-      targetInput.classList.add("hide");
-    }
-  };
 
   const targetTextarea = document.querySelector(".edit-screen textarea");
   const targetTextareaLength =
@@ -190,6 +207,7 @@ const DashBoard = (props) => {
       </NavLink>
     );
   };
+
   const BottomNavigationItem = ({ title, to, icon }) => {
     return (
       <NavLink
@@ -208,6 +226,7 @@ const DashBoard = (props) => {
       </NavLink>
     );
   };
+  console.log("currentSocialMediaSamples", currentSocialMediaSamples);
 
   return (
     <div id="mobile-holder">
@@ -432,57 +451,6 @@ const DashBoard = (props) => {
                         >
                           <p>CTR</p>
                           <h2>{clickThroughRatio(userProfile)}%</h2>
-                        </div>
-                      </div>
-                      <div className="add-social-box">
-                        <h4>Add social media links</h4>
-                        {currentSocialMediaSamples.map((icon, index) => (
-                          <div className="social-icon-item" key={index}>
-                            {icon && (
-                              <FontAwesomeIcon
-                                icon={matchSocialIcon(icon.name)}
-                                className="social-icon cursor"
-                                color={matchSocialColor(icon.name)}
-                                onClick={() => handleShowArrowDown(index, icon)}
-                              />
-                            )}
-                            <FontAwesomeIcon
-                              icon={faAngleDown}
-                              color="#EF476F"
-                              className={`social-icon-angle hide social-icon-angle-${index}`}
-                            />
-                          </div>
-                        ))}
-
-                        <div className="social-input hide">
-                          <form
-                            action="Add Social Media Platform"
-                            onSubmit={(e) => {
-                              e.preventDefault();
-
-                              const dataToSubmit = {
-                                mediaPlatformSample: currentSocialMediaSampleId,
-                                link: newSocialLink,
-                              };
-                              dispatch(addsocialMedia(dataToSubmit));
-                            }}
-                          >
-                            <input
-                              type="url"
-                              placeholder={
-                                checkUserHasSocial(
-                                  inputPlaceholder,
-                                  currentUserSocials
-                                ) || `${inputPlaceholder} URL`
-                              }
-                              required
-                              onChange={(e) => {
-                                e.preventDefault();
-                                setNewSocialLink(e.target.value);
-                              }}
-                            />
-                            <button type="submit">Save</button>
-                          </form>
                         </div>
                       </div>
                       <NavLink
@@ -758,7 +726,32 @@ const DashBoard = (props) => {
                     </div>
                   </div>
                 </Route>
-                <Route path={`${path}/settings`} component={Settings} />
+                <Route path={`${path}/settings`}>
+                  <div id="appearance">
+                    <h2>Social media handles</h2>
+                    <div className="appearance-box">
+                      {currentSocialMediaSamples.map((item) => (
+                        <>
+                          <ReUsableSocialInput
+                            onChange={(e) => {
+                              e.preventDefault();
+                              const dataToSubmit = {
+                                mediaPlatformSample: item._id,
+                                link: e.target.value,
+                              };
+                              dispatch(addsocialMedia(dataToSubmit));
+                            }}
+                            defaultValue={
+                              getSocialAvailable(item._id) &&
+                              getSocialAvailable(item._id).link
+                            }
+                            placeholder={`${item.name} URL`}
+                          />
+                        </>
+                      ))}
+                    </div>
+                  </div>
+                </Route>
               </div>
             </div>
           </div>
@@ -780,7 +773,7 @@ const DashBoard = (props) => {
                 <div className="share-btn relative">
                   <UncontrolledPopover
                     trigger="legacy"
-                    placement="auto"
+                    placement="bottom-end"
                     target="desktopPopShare"
                   >
                     <div className="popup">

@@ -45,7 +45,7 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
   }) => {
     return (
       <a
-        href={`http://${link}`}
+        href={`${link}`}
         target="_blank"
         onClick={() => {
           dispatch(viewCustomLink(_id));
@@ -81,7 +81,7 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
   }) => {
     return (
       <a
-        href={`http://${link}`}
+        href={`${link}`}
         target="_blank"
         onClick={() => {
           dispatch(viewCustomLink(_id));
@@ -139,37 +139,47 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
             <PreviewButton className="loading" />
           </div>
         )}
-        {customLinks.map((customLink) => {
-          if (customLink.visible) {
-            if (userProfile.stackStyle === "stacked") {
-              return (
-                <PreviewButton
-                  backgroundColor="#B9E3C6"
-                  color="#262626"
-                  borderRadius="4px"
-                  title={customLink.title}
-                  link={customLink.link}
-                  key={customLink._id}
-                  _id={customLink._id}
-                  backgroundImage={customLink.image}
-                />
-              );
-            } else {
-              return (
-                <PreviewButtonWithBackground
-                  backgroundColor="#B9E3C6"
-                  color="#262626"
-                  borderRadius="4px"
-                  backgroundImage={customLink.image}
-                  title={customLink.title}
-                  link={customLink.link}
-                  key={customLink._id}
-                  _id={customLink._id}
-                />
-              );
+        {customLinks.length > 0 ? (
+          customLinks.map((customLink) => {
+            if (customLink.visible) {
+              if (userProfile.stackStyle === "stacked") {
+                return (
+                  <PreviewButton
+                    backgroundColor="#B9E3C6"
+                    color="#262626"
+                    borderRadius="4px"
+                    title={customLink.title}
+                    link={customLink.link}
+                    key={customLink._id}
+                    _id={customLink._id}
+                    backgroundImage={customLink.image}
+                  />
+                );
+              } else {
+                return (
+                  <PreviewButtonWithBackground
+                    backgroundColor="#B9E3C6"
+                    color="#262626"
+                    borderRadius="4px"
+                    backgroundImage={customLink.image}
+                    title={customLink.title}
+                    link={customLink.link}
+                    key={customLink._id}
+                    _id={customLink._id}
+                  />
+                );
+              }
             }
-          }
-        })}
+          })
+        ) : (
+          <div>
+            {!loadingLinks && (
+              <div className="add-links-to-start">
+                <p className="custom-p">Add links to get started</p>
+              </div>
+            )}
+          </div>
+        )}
 
         <div className="mtb-16">
           {customSocials.map((social, index) => (

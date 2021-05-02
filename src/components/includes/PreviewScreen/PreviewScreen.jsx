@@ -11,7 +11,7 @@ const PreviewScreen = ({ data }) => {
   return (
     <div>
       {data && data.length > 0 ? (
-        data.map((customLink) => (
+        data.map((customLink, index) => (
           <AddLinkBox
             title={customLink.title}
             _id={customLink._id}
@@ -24,16 +24,14 @@ const PreviewScreen = ({ data }) => {
             onChangeLink={(text) =>
               dispatch(updateCustomLink(customLink._id, { link: text }))
             }
-            onChangeSwitch={
-              (text) =>
-                dispatch(updateCustomLink(customLink._id, { visible: text }))
-              // console.log(text)
+            onChangeSwitch={(text) =>
+              dispatch(updateCustomLink(customLink._id, { visible: text }))
             }
-            onChangeImage={
-              (data) => dispatch(updateCustomLink(customLink._id, data))
-              // console.log(text)
+            onChangeImage={(data) =>
+              dispatch(updateCustomLink(customLink._id, data))
             }
-            key={customLink._id}
+            // key={customLink._id}
+            key={index}
           />
         ))
       ) : (

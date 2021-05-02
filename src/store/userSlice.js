@@ -16,7 +16,7 @@ const slice = createSlice({
       users.loading = false;
       users.lastFetch = Date.now();
     },
-    
+
     usersRequestFailed: (users, action) => {
       users.loading = false;
     },
@@ -55,7 +55,7 @@ export default slice.reducer;
 export const loadUsers = () => (dispatch, getState) => {
   dispatch(
     apiCallBegan({
-      url: "/users",
+      url: "/auth/users",
       onStart: usersRequested.type,
       onSuccess: usersReceived.type,
       onError: usersRequestFailed.type,

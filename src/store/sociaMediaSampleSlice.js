@@ -41,10 +41,19 @@ const slice = createSlice({
       socialMediaSamples.status = "Added successfully";
     },
     userSocialAdded: (socialMediaSamples, action) => {
-      socialMediaSamples.socials.push(action.payload);
+      const existsIndex = socialMediaSamples.socials.findIndex(
+        (item) =>
+          item.mediaPlatformSample._id ===
+          action.payload.mediaPlatformSample._id
+      );
+      if (existsIndex === -1) {
+        socialMediaSamples.socials.push(action.payload);
+      } else {
+        socialMediaSamples.socials[existsIndex].link = action.payload.link;
+      }
       socialMediaSamples.loading = false;
       socialMediaSamples.status = "Added successfully";
-      window.location.reload();
+      // window.location.reload();
     },
     socialMediaSampleAddFailed: (socialMediaSamples, action) => {
       socialMediaSamples.loading = false;

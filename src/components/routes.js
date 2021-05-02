@@ -11,6 +11,7 @@ import StartResetPassword from "./screens/StartResetPassword/StartResetPassword"
 import ResetPassword from "./screens/ResetPassword/ResetPassword";
 import DashBoard from "./screens/DashBoard/DashBoard";
 import VisitorsScreen from "./screens/VisitorsScreen/VisitorsScreen";
+import Admin from "./screens/Admin/Admin";
 
 const MainRoute = () => {
   return (
@@ -21,6 +22,7 @@ const MainRoute = () => {
         <Route component={SignIn} path="/sign-in" />
         <Route component={SignUp} path="/sign-up" />
         <Route component={DashBoard} path="/dashboard" />
+        <Route component={Admin} path="/admin" />
         <Route component={VisitorsScreen} path="/:userName" />
         <Route component={HomePage} path="/" />
       </Switch>

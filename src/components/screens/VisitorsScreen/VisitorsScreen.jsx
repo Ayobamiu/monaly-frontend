@@ -19,6 +19,7 @@ import {
   matchSocialColor,
 } from "../../../assets/js/controls";
 import { getAddress, ipLookUp } from "../../../assets/js/getAddress";
+import { viewCustomLink } from "../../../store/customLinkSlice";
 
 const VisitorsScreen = (props) => {
   const dispatch = useDispatch();
@@ -100,10 +101,16 @@ const VisitorsScreen = (props) => {
     link,
     className,
     _id,
-    backgroundImage = "u",
+    backgroundImage,
   }) => {
     return (
-      <a href={`http://${link}`} target="_blank">
+      <a
+        href={`${link}`}
+        target="_blank"
+        onClick={() => {
+          dispatch(viewCustomLink(_id));
+        }}
+      >
         <button
           className={`visitors-link-btn mb-8 ${className}`}
           style={{
@@ -115,18 +122,13 @@ const VisitorsScreen = (props) => {
           <div
             className="link-image"
             style={{
-              backgroundImage: `url(${Bimbo})`,
+              backgroundImage: `url(${backgroundImage})`,
               backgroundPosition: "center",
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
             }}
-          >
-            {/* <img src={Bimbo} height="100%" style={{image}} alt="" /> */}
-          </div>
-          <span className="text">
-            Lorem, ipsum dolor sit amet consectetur adipisicin
-          </span>
-          {/* {title}  */}
+          ></div>
+          <span className="text">{title}</span>
         </button>
       </a>
     );
@@ -142,18 +144,18 @@ const VisitorsScreen = (props) => {
   }) => {
     return (
       <a
-        href={`http://${link}`}
+        href={`${link}`}
         target="_blank"
-        // onClick={() => {
-        //   dispatch(viewCustomLink(_id));
-        // }}
+        onClick={() => {
+          dispatch(viewCustomLink(_id));
+        }}
       >
         <button
           className={`visitors-link-btn-with-img mb-8 ${className}`}
           style={{
             color,
             backgroundColor: "transparent",
-            background: `linear-gradient(270deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.9) 100%),url(${Bimbo})`,
+            background: `linear-gradient(270deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.9) 100%),url(${backgroundImage})`,
             height: "100px",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
@@ -168,9 +170,17 @@ const VisitorsScreen = (props) => {
   };
 
   return (
-    <div id="visitorsScreen">
+    <div
+      id="visitorsScreen"
+      style={{
+        backgroundImage: `url(${
+          visitorData.theme && visitorData.theme.backgroundImage
+        })`,
+      }}
+    >
       <div className="wider-content-top">
         <div className="content">
+          {loadingLinks && <div className="loader"></div>}
           {visitorData.profilePhoto ? (
             <div className="profile-pic mt-32">
               <img
@@ -188,13 +198,6 @@ const VisitorsScreen = (props) => {
           <p className="profile-pic-p mb-16">@{visitorData.userName}</p>
           <p className="custom-p bio-p mb-16">{visitorData.bio} </p>
           <div>
-            {loadingLinks && (
-              <div>
-                <PreviewButton className="loading" />
-                <PreviewButton className="loading" />
-                <PreviewButton className="loading" />
-              </div>
-            )}
             {visitorData.customLinks &&
               visitorData.customLinks.map((customLink) => {
                 if (customLink.visible) {

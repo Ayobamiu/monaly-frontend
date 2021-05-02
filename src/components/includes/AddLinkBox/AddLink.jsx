@@ -5,8 +5,6 @@ import Calandar from "../../../assets/images/Calandar.svg";
 import gallery from "../../../assets/images/gallery.svg";
 import Heart from "../../../assets/images/Heart.svg";
 import "./css/style.css";
-import { updateCustomLink } from "../../../store/customLinkSlice";
-import { useDispatch } from "react-redux";
 
 const AddLinkBox = ({
   title,
@@ -21,8 +19,7 @@ const AddLinkBox = ({
   onChangeImage,
 }) => {
   const [checkedStatus, setCheckedStatus] = useState(visible);
-  const dispatch = useDispatch();
-  const itemId = _id;
+
   return (
     <div className={`add-link-box  ${!checkedStatus && `opaque`}`} id={_id}>
       <div className="inputs-and-media space-between flex-column">
@@ -47,7 +44,7 @@ const AddLinkBox = ({
           </div>
           <div className="text-icon custom-p fsz-14-900">
             <input
-              type="text"
+              type="url"
               placeholder={link || "Paste link here"}
               id={`linkinput${_id}`}
               defaultValue={link}
@@ -65,29 +62,20 @@ const AddLinkBox = ({
         </div>
         <div className="align-end">
           <img className="mr-16" src={Calandar} alt="" title="Schedule" />
-          <label htmlFor="link-image" className="align-end mb-0">
-            <input
-              type="file"
-              name="image"
-              id="link-image"
-              onChange={(e) => {
-                // e.preventDefault();
-                console.log("input", itemId, e.target.files[0]);
-                const newFormData = new FormData();
-                newFormData.append("image", e.target.files[0]);
-                onChangeImage(newFormData);
-              }}
-            />
-            <img
-              className="mr-16"
-              src={gallery}
-              alt=""
-              title="Add media"
-              onClick={() => {
-                console.log("p", itemId);
-              }}
-            />
+          <label htmlFor={`link-image-input${_id}`} className="align-end mb-0">
+            <img className="mr-16" src={gallery} alt="" title="Add media" />
           </label>
+          <input
+            type="file"
+            name="image"
+            id={`link-image-input${_id}`}
+            className="link-image-input"
+            onChange={(e) => {
+              const newFormData = new FormData();
+              newFormData.append("image", e.target.files[0]);
+              onChangeImage(newFormData);
+            }}
+          />
           <img className="mr-16" src={Heart} alt="" title="Favourite" />
         </div>
       </div>

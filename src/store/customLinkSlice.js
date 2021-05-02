@@ -5,8 +5,22 @@ import memoize from "lodash.memoize";
 
 const slice = createSlice({
   name: "customLinks",
-  initialState: { list: [], customLink: {} },
+  initialState: { list: [], customLink: {}, focusedLinkId: "", statistics: {} },
   reducers: {
+    statisticsRequested: (customLinks, action) => {
+      customLinks.focusedLinkId = action.payload;
+      customLinks.loading = true;
+    },
+    statisticsReceived: (customLinks, action) => {
+      customLinks.statistics = action.payload;
+      customLinks.loading = false;
+    },
+    requestStatisticsFailed: (customLinks, action) => {
+      customLinks.loading = false;
+    },
+    changeFocusedLinkId: (customLinks, action) => {
+      customLinks.focusedLinkId = action.payload;
+    },
     customLinksRequested: (customLinks, action) => {
       customLinks.loading = true;
     },
@@ -93,10 +107,18 @@ export const {
   customLinkUpdateStart,
   customLinkUpdated,
   customLinkUpdateFailed,
+  changeFocusedLinkId,
+  statisticsRequested,
+  statisticsReceived,
+  requestStatisticsFailed,
 } = slice.actions;
 
 export default slice.reducer;
 
+//Action creators
+export const ChangefocusedLinkId = (focusedLinkId) => (dispatch, getState) => {
+  dispatch(changeFocusedLinkId(focusedLinkId));
+};
 //Action creators
 export const loadcustomLinks = () => (dispatch, getState) => {
   dispatch(
@@ -166,6 +188,14 @@ export const updateCustomLink = (customLinkId, customLink) =>
     onSuccess: customLinkUpdated.type,
     onError: customLinkUpdateFailed.type,
   });
+export const getStatistics = () =>
+  apiCallBegan({
+    url: "/custom-links/counts",
+    method: "get",
+    onStart: statisticsRequested.type,
+    onSuccess: statisticsReceived.type,
+    onError: requestStatisticsFailed.type,
+  });
 
 export const customLinks = (state) => state.app.customLinks.list;
 export const customLink = (state) => state.app.customLinks.customLink;
@@ -173,3 +203,4 @@ export const loadingUpdateCustomLinks = (state) =>
   state.app.customLinks.loadingUpdate;
 export const loadingcustomLinks = (state) => state.app.customLinks.loading;
 export const customLinksError = (state) => state.app.customLinks.error;
+export const focusedLinkId = (state) => state.app.customLinks.focusedLinkId;

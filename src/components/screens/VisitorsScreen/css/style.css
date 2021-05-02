@@ -7,6 +7,9 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 /* The screen (or content) of the device */
@@ -21,7 +24,7 @@
 #visitorsScreen .wider-content-bottom {
   flex: 1;
   width: 100%;
-  background-color: #ffffff;
+  background-color: transparent;
   height: auto;
   display: flex;
   justify-content: center;
