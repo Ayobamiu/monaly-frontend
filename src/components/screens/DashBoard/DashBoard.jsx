@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { UncontrolledPopover } from "reactstrap";
 import "./css/style.css";
 import monalydashboardlogo from "../../../assets/images/Vector.svg";
+import Comment from "../../../assets/images/Comment.svg";
 import Notification from "../../../assets/images/Notification.svg";
 import ForwardArrow from "../../../assets/images/ForwardArrow.svg";
 import NotificationMobile from "../../../assets/images/NotificationMobile.svg";
@@ -224,6 +225,16 @@ const DashBoard = (props) => {
         <Link to="/" className="mr-auto">
           <img src={monalydashboardlogo} alt="" height="28.46px" />
         </Link>
+        <a
+          href="https://tawk.to/chat/608fed0e55debc1e9711b45e/1f4p3c0s7"
+          target="_blank"
+          className="mx-3"
+        >
+          {/* <img src={Comment} alt="" title="Chat with Us" /> */}
+          <button className="primary-btn-inverse custom-btn-sm">
+            Talk to us
+          </button>
+        </a>
         <Link to={`${path}/notifications`}>
           <img src={NotificationMobile} alt="" title="Notification" />
         </Link>
@@ -381,7 +392,12 @@ const DashBoard = (props) => {
               </div>
             </div>
             <div className="action-icons relative">
-              {/* <img src={Comment} alt="" title="Comment" /> */}
+              {/* <a
+                href="https://tawk.to/chat/608fed0e55debc1e9711b45e/1f4p3c0s7"
+                target="_blank"
+              >
+                <img src={Notification} alt="" title="Comment" />
+              </a> */}
               <img
                 src={Notification}
                 alt=""
