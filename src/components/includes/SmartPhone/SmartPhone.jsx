@@ -30,6 +30,7 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
   const currentUser = getLoggedInUser() && getLoggedInUser().user;
   const loadingLinks = useSelector(loadingcustomLinks);
   const userProfile = useSelector(user);
+  console.log("userProfile", userProfile);
 
   const dispatch = useDispatch();
 
@@ -47,6 +48,7 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
       <a
         href={`${link}`}
         target="_blank"
+        rel="noreferrer"
         onClick={() => {
           dispatch(viewCustomLink(_id));
         }}
@@ -83,6 +85,7 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
       <a
         href={`${link}`}
         target="_blank"
+        rel="noreferrer"
         onClick={() => {
           dispatch(viewCustomLink(_id));
         }}
@@ -124,14 +127,34 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
             />
           </div>
         ) : (
-          <div className="profile-pic-sub mt-32" title="Profile">
+          <div
+            className="profile-pic-sub mt-32"
+            title="Profile"
+            style={{
+              color: userProfile.theme && userProfile.theme.color,
+              backgroundColor:
+                userProfile.theme && userProfile.theme.backgroundColor,
+            }}
+          >
             {initialsOnProfile}
           </div>
         )}
-        <p className="profile-pic-p mb-8">
+        <p
+          className="profile-pic-p mb-8"
+          style={{
+            color: userProfile.theme && userProfile.theme.backgroundColor,
+          }}
+        >
           {userProfile.profileTitle || "@" + userProfile.userName}
         </p>
-        <p className="small-p mb-24 text-center">{userProfile.bio}</p>
+        <p
+          className="small-p mb-24 text-center"
+          style={{
+            color: userProfile.theme && userProfile.theme.backgroundColor,
+          }}
+        >
+          {userProfile.bio}
+        </p>
         {loadingLinks && (
           <div>
             <PreviewButton className="loading" />
@@ -145,8 +168,10 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
               if (userProfile.stackStyle === "stacked") {
                 return (
                   <PreviewButton
-                    backgroundColor="#B9E3C6"
-                    color="#262626"
+                    backgroundColor={
+                      userProfile.theme && userProfile.theme.backgroundColor
+                    }
+                    color={userProfile.theme && userProfile.theme.color}
                     borderRadius="4px"
                     title={customLink.title}
                     link={customLink.link}
@@ -158,8 +183,10 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
               } else {
                 return (
                   <PreviewButtonWithBackground
-                    backgroundColor="#B9E3C6"
-                    color="#262626"
+                    backgroundColor={
+                      userProfile.theme && userProfile.theme.backgroundColor
+                    }
+                    color={userProfile.theme && userProfile.theme.color}
                     borderRadius="4px"
                     backgroundImage={customLink.image}
                     title={customLink.title}
@@ -187,12 +214,13 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
               href={social.link}
               key={index}
               target="_blank"
+              rel="noreferrer"
               onClick={() => {
                 dispatch(viewsocialMedia(social._id));
               }}
             >
               <FontAwesomeIcon
-                icon={matchSocialIcon(
+                icon={matchLightSocialIcon(
                   social &&
                     social.mediaPlatformSample &&
                     social.mediaPlatformSample.name
@@ -203,7 +231,7 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
                   social.mediaPlatformSample &&
                   social.mediaPlatformSample.name
                 }
-                color="#6E7191"
+                color={userProfile.theme && userProfile.theme.backgroundColor}
               />
             </a>
           ))}

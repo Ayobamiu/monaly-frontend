@@ -1,0 +1,31 @@
+.page-link {
+  /* Desktop / Link X-Small */
+
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 24px;
+  /* or 171% */
+
+  letter-spacing: 0.75px;
+
+  /* gray active */
+
+  color: #14142b !important;
+}
+.analytics-table {
+  background: #ffffff;
+  /* Grayscale / Line */
+
+  border: 1px solid #d6d8e7;
+  border-radius: 10px !important;
+  /* overflow: hidden; */
+}
+.table thead th {
+  border-bottom: 1px solid #d6d8e7 !important;
+}
+.table thead {
+  /* border: none !important; */
+  background: #eff0f7;
+}

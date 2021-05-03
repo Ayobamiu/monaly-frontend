@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { UncontrolledPopover } from "reactstrap";
 import "./css/style.css";
 import monalydashboardlogo from "../../../assets/images/Vector.svg";
-import Comment from "../../../assets/images/Comment.svg";
 import Notification from "../../../assets/images/Notification.svg";
 import ForwardArrow from "../../../assets/images/ForwardArrow.svg";
 import NotificationMobile from "../../../assets/images/NotificationMobile.svg";
@@ -23,37 +22,30 @@ import {
 import SmartPhone from "../../includes/SmartPhone/SmartPhone";
 import { Modal } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLink, faTimes, faCog } from "@fortawesome/free-solid-svg-icons";
 import {
-  faAngleDown,
-  faLink,
-  faTimes,
-  faCog,
-} from "@fortawesome/free-solid-svg-icons";
-import { faSmile } from "@fortawesome/free-regular-svg-icons";
+  faArrowAltCircleRight,
+  faSmile,
+} from "@fortawesome/free-regular-svg-icons";
 import {
   loadcustomLinks,
   customLinks as Links,
   addcustomLink,
   loadingcustomLinks,
   loadingUpdateCustomLinks,
-  ChangefocusedLinkId,
 } from "../../../store/customLinkSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getLoggedInUser,
   logUserOut,
-  resetLoading,
   updateUserProfile,
   uploadUserPhotos,
 } from "../../../store/authSlice";
 import PreviewScreen from "../../includes/PreviewScreen/PreviewScreen";
 import QRCode from "qrcode.react";
 import {
-  checkUserHasSocial,
   copyToClipboard,
   downloadQR,
-  matchSocialColor,
-  matchSocialIcon,
   clickThroughRatio,
   siteUrl,
 } from "../../../assets/js/controls";
@@ -71,12 +63,10 @@ import {
   deleteProfilePhoto,
   loading,
 } from "../../../store/authSlice";
-import themeOneBackground from "../../../assets/images/themeOne.png";
-import picp from "../../../assets/images/picp.jpg";
-import chilli from "../../../assets/images/chilli.jpg";
-import abstract from "../../../assets/images/abstract.jpg";
 import { loadthemes } from "../../../store/themeSlice";
-import validator from "validator";
+import Pricing from "../../includes/Pricing/Pricing";
+import Analytics from "../../includes/Analytics/Analytics";
+import { loadNotifications } from "../../../store/notificationSlice";
 
 const DashBoard = (props) => {
   const ReUsableSocialInput = ({
@@ -115,28 +105,20 @@ const DashBoard = (props) => {
   const userProfile = useSelector(user);
   const currentCustomLinks = useSelector(Links);
   const currentSocialMediaSamples = useSelector(socialMediaSamples);
+
   const currentUserSocials = useSelector(userSocials);
   const loadingLinks = useSelector(loadingcustomLinks);
   const loadingLinksUpdate = useSelector(loadingUpdateCustomLinks);
   const authLoading = useSelector(loading);
   const themes = useSelector((state) => state.app.themes.list);
-  const [inputPlaceholder, setInputPlaceholder] = useState("");
-  const [currentSocialMediaSampleId, setCurrentSocialMediaSampleId] = useState(
-    ""
-  );
-  const focusedLinkId = useSelector(
-    (state) => state.app.customLinks.focusedLinkId
-  );
-  console.log("currentUserSocials", currentUserSocials);
-  console.log("currentCustomLinks", currentCustomLinks);
-  const [newSocialLink, setNewSocialLink] = useState("");
+  const notifications = useSelector((state) => state.app.notifications.list);
   useEffect(() => {
     dispatch(loadthemes());
     dispatch(loadcustomLinks());
     dispatch(loadsocialMediaSamples());
     dispatch(loadUserSocials());
     dispatch(loadLoggedInUser());
-    // console.log(getWhereUserIsLocated());
+    dispatch(loadNotifications());
   }, [good]);
   const currentUser = getLoggedInUser() && getLoggedInUser().user;
   const [modal, setModal] = useState(false);
@@ -151,7 +133,6 @@ const DashBoard = (props) => {
 
     return result;
   };
-  // console.log(getSocialAvailable("605e6495c7a9a100e0e21d22"));
   const toggle = () => setModal(!modal);
 
   const addEmptyCustomLink = () => {
@@ -173,7 +154,6 @@ const DashBoard = (props) => {
   const [showPopup, setShowPopup] = useState(false);
   const [qrmodal, setQrmodal] = useState(false);
   const [alert, setAlert] = useState(false);
-  const [showPopupForEditProfile, setShowPopupForEditProfile] = useState(false);
   const togglePopUp = () => {
     setShowPopup(!showPopup);
   };
@@ -188,7 +168,6 @@ const DashBoard = (props) => {
       setAlert(false);
     }, 1000);
   };
-
 
   const targetTextarea = document.querySelector(".edit-screen textarea");
   const targetTextareaLength =
@@ -226,7 +205,6 @@ const DashBoard = (props) => {
       </NavLink>
     );
   };
-  console.log("currentSocialMediaSamples", currentSocialMediaSamples);
 
   return (
     <div id="mobile-holder">
@@ -250,6 +228,7 @@ const DashBoard = (props) => {
           <a
             href={`https://${siteUrl}${currentUser && currentUser.userName}`}
             target="_blank"
+            rel="noreferrer"
           >
             <u> mona.ly/{currentUser && currentUser.userName}</u>
           </a>
@@ -368,8 +347,48 @@ const DashBoard = (props) => {
               </div>
             </div>
             <div className="action-icons relative">
-              <img src={Comment} alt="" title="Comment" />
-              <img src={Notification} alt="" title="Notification" />
+              {/* <img src={Comment} alt="" title="Comment" /> */}
+              <img
+                src={Notification}
+                alt=""
+                title="Notification"
+                id="showNotificationsPopUp"
+                className="cursor"
+              />
+              <UncontrolledPopover
+                trigger="legacy"
+                placement="right"
+                target="showNotificationsPopUp"
+              >
+                <div className="popup-notifications">
+                  {notifications.map((item) => (
+                    <div className="popup-notifications-item">
+                      <header>
+                        {item.title && item.title.slice(0, 45)}
+                        {item.title && item.title.length > 45 && "..."}
+                      </header>
+                      <body>
+                        <div
+                          className="image"
+                          style={{ backgroundImage: `url(${item.image})` }}
+                        ></div>
+                        <div className="text">
+                          {item.body && item.body.slice(0, 130)}
+                          {item.body && item.body.length > 130 && "..."}
+                        </div>
+                      </body>
+                      <a href={item.link} target="_blank" rel="noreferrer">
+                        <FontAwesomeIcon
+                          icon={faArrowAltCircleRight}
+                          className="click-notification"
+                          color="#4e4b66"
+                        />
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </UncontrolledPopover>
+
               <div
                 className="link-to-user-profile mt-32 cursor"
                 id="showSetProfilePopUp"
@@ -377,7 +396,6 @@ const DashBoard = (props) => {
                 {initialsOnProfile}
                 <span className="new-notification"></span>
               </div>
-              {/* {showPopupForEditProfile && ( */}
 
               <UncontrolledPopover
                 trigger="legacy"
@@ -385,20 +403,13 @@ const DashBoard = (props) => {
                 target="showSetProfilePopUp"
               >
                 <div className="popup-edit-profile">
-                  <div
-                    class="dark-action-p"
-                    onClick={() => {
-                      setShowPopupForEditProfile(false);
-                    }}
-                  >
+                  <div class="dark-action-p" onClick={() => {}}>
                     @{userProfile.userName}
                   </div>
 
                   <Link
                     to={`${path}/appearance`}
-                    onClick={() => {
-                      setShowPopupForEditProfile(false);
-                    }}
+                    onClick={() => {}}
                     className="no-underline"
                   >
                     <button class="nav-item active">Edit your profile</button>
@@ -406,7 +417,6 @@ const DashBoard = (props) => {
                   <button
                     class="nav-item active"
                     onClick={() => {
-                      setShowPopupForEditProfile(false);
                       dispatch(logUserOut());
                     }}
                   >
@@ -414,7 +424,6 @@ const DashBoard = (props) => {
                   </button>
                 </div>
               </UncontrolledPopover>
-              {/* )} */}
             </div>
           </div>
           <div className="edit-screen">
@@ -424,6 +433,8 @@ const DashBoard = (props) => {
                 <NavigationItem index="2" title="Appearance" to="appearance" />
 
                 <NavigationItem index="3" title="Settings" to="settings" />
+                <NavigationItem index="4" title="Pricing" to="pricing" />
+                <NavigationItem index="5" title="Analytics" to="analytics" />
                 {authLoading || loadingLinksUpdate ? (
                   <div className="loader"></div>
                 ) : (
@@ -711,11 +722,36 @@ const DashBoard = (props) => {
                                   backgroundImage: `url(${theme.backgroundImage})`,
                                 }}
                               >
-                                <div className="phone-stack"></div>
-                                <div className="phone-stack"></div>
-                                <div className="phone-stack"></div>
-                                <div className="phone-stack"></div>
-                                <div className="phone-stack"></div>
+                                <div
+                                  className="phone-stack"
+                                  style={{
+                                    backgroundColor: theme.backgroundColor,
+                                  }}
+                                ></div>
+                                <div
+                                  className="phone-stack"
+                                  style={{
+                                    backgroundColor: theme.backgroundColor,
+                                  }}
+                                ></div>
+                                <div
+                                  className="phone-stack"
+                                  style={{
+                                    backgroundColor: theme.backgroundColor,
+                                  }}
+                                ></div>
+                                <div
+                                  className="phone-stack"
+                                  style={{
+                                    backgroundColor: theme.backgroundColor,
+                                  }}
+                                ></div>
+                                <div
+                                  className="phone-stack"
+                                  style={{
+                                    backgroundColor: theme.backgroundColor,
+                                  }}
+                                ></div>
                               </div>
                             </div>
                           ))}
@@ -752,6 +788,34 @@ const DashBoard = (props) => {
                     </div>
                   </div>
                 </Route>
+
+                <Route path={`${path}/analytics`}>
+                  <div id="appearance">
+                    <div className="analytics-metrics">
+                      <div className="analytics-metrics-item">
+                        <p className="custom-p">Total Visits</p>
+                        <h2>{userProfile.viewCount}</h2>
+                      </div>
+                      <div className="analytics-metrics-item">
+                        <p className="custom-p">Total Clicks</p>
+                        <h2>{userProfile.clickCount}</h2>
+                      </div>
+                      <div className="analytics-metrics-item">
+                        <p className="custom-p">Click Through Ratio</p>
+                        <h2>{clickThroughRatio(userProfile)}%</h2>
+                      </div>
+                    </div>
+                    <h2 className="py-2">Visitors</h2>
+
+                    <Analytics />
+                  </div>
+                </Route>
+                <Route path={`${path}/pricing`}>
+                  <div id="appearance">
+                    <h2>Pricing</h2>
+                    <Pricing />
+                  </div>
+                </Route>
               </div>
             </div>
           </div>
@@ -766,6 +830,7 @@ const DashBoard = (props) => {
                       currentUser && currentUser.userName
                     }`}
                     target="_blank"
+                    rel="noreferrer"
                   >
                     <u>mona.ly/{currentUser && currentUser.userName}</u>
                   </a>

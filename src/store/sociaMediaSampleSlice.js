@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createSelector } from "reselect";
 import { apiCallBegan } from "./api";
-import memoize from "lodash.memoize";
 
 const slice = createSlice({
   name: "socialMediaSamples",
@@ -40,7 +38,7 @@ const slice = createSlice({
       socialMediaSamples.loading = false;
       socialMediaSamples.status = "Added successfully";
     },
-    userSocialAdded: (socialMediaSamples, action) => {
+    userSocialAdded: (socialMediaSamples, action) => { 
       const existsIndex = socialMediaSamples.socials.findIndex(
         (item) =>
           item.mediaPlatformSample._id ===

@@ -39,6 +39,12 @@ const VisitorsScreen = (props) => {
           const latitude = position.coords.latitude;
           const longitude = position.coords.longitude;
           const addressFrom = await getAddress(latitude, longitude);
+          console.log(
+            props.match.params.userName,
+            addressFrom.currentLocation,
+            addressFrom.country,
+            addressFrom.city
+          );
           dispatch(
             storeVisitorLocation(
               props.match.params.userName,
@@ -85,11 +91,7 @@ const VisitorsScreen = (props) => {
   }, []);
 
   const visitorData = useSelector(visitorViewData);
-  console.log("visitorData", visitorData);
   const loadingLinks = useSelector(loading);
-  // const stackStyle = useSelector(loading);
-  const stackStyle = useSelector((state) => state.app.user.stackStyle);
-  // console.log("stackStyle", stackStyle);
   const initialsOnProfile =
     visitorData &&
     visitorData.firstName &&
@@ -107,6 +109,7 @@ const VisitorsScreen = (props) => {
       <a
         href={`${link}`}
         target="_blank"
+        rel="noreferrer"
         onClick={() => {
           dispatch(viewCustomLink(_id));
         }}
@@ -146,6 +149,7 @@ const VisitorsScreen = (props) => {
       <a
         href={`${link}`}
         target="_blank"
+        rel="noreferrer"
         onClick={() => {
           dispatch(viewCustomLink(_id));
         }}
@@ -191,12 +195,32 @@ const VisitorsScreen = (props) => {
               />
             </div>
           ) : (
-            <div className="profile-pic-sub mt-32" title="Profile">
+            <div
+              className="profile-pic-sub mt-32"
+              title="Profile"
+              style={{
+                color: visitorData.theme && visitorData.theme.backgroundColor,
+              }}
+            >
               {initialsOnProfile}
             </div>
           )}
-          <p className="profile-pic-p mb-16">@{visitorData.userName}</p>
-          <p className="custom-p bio-p mb-16">{visitorData.bio} </p>
+          <p
+            className="profile-pic-p mb-16"
+            style={{
+              color: visitorData.theme && visitorData.theme.backgroundColor,
+            }}
+          >
+            @{visitorData.userName}
+          </p>
+          <p
+            className="custom-p bio-p mb-16"
+            style={{
+              color: visitorData.theme && visitorData.theme.backgroundColor,
+            }}
+          >
+            {visitorData.bio}{" "}
+          </p>
           <div>
             {visitorData.customLinks &&
               visitorData.customLinks.map((customLink) => {
@@ -204,8 +228,11 @@ const VisitorsScreen = (props) => {
                   if (visitorData.stackStyle === "stacked") {
                     return (
                       <PreviewButton
-                        backgroundColor={customLink.backgroundColor}
-                        color={customLink.color}
+                        backgroundColor={
+                          visitorData.theme && visitorData.theme.backgroundColor
+                        }
+                        backgroundImage={customLink.image}
+                        color={visitorData.theme && visitorData.theme.color}
                         title={customLink.title}
                         link={customLink.link}
                         key={customLink._id}
@@ -215,8 +242,11 @@ const VisitorsScreen = (props) => {
                   } else {
                     return (
                       <PreviewButtonWithBacground
-                        backgroundColor="#3AE09A"
-                        color="white"
+                        backgroundColor={
+                          visitorData.theme && visitorData.theme.backgroundColor
+                        }
+                        color={visitorData.theme && visitorData.theme.color}
+                        backgroundImage={customLink.image}
                         title={customLink.title}
                         link={customLink.link}
                         key={customLink._id}
@@ -233,6 +263,7 @@ const VisitorsScreen = (props) => {
                 <a
                   href={social.link}
                   target="_blank"
+                  rel="noreferrer"
                   onClick={() => {
                     dispatch(viewsocialMedia(social._id));
                   }}
@@ -249,11 +280,9 @@ const VisitorsScreen = (props) => {
                       social.mediaPlatformSample &&
                       social.mediaPlatformSample.name
                     }
-                    color={matchSocialColor(
-                      social &&
-                        social.mediaPlatformSample &&
-                        social.mediaPlatformSample.name
-                    )}
+                    color={
+                      visitorData.theme && visitorData.theme.backgroundColor
+                    }
                     style={{ fontSize: "24px" }}
                   />
                 </a>

@@ -58,5 +58,45 @@
       integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
       crossorigin="anonymous"
     ></script>
+    <script
+      src="https://www.paypal.com/sdk/js?client-id=Af6dIaIP449jQ4EB-wMWjEUABBtqUJdna8MIQy1cV-yMTge4_1xbUBvsxSSQ6BhuEyhNuEAkCkVwfxIS&vault=true&intent=subscription"
+      data-sdk-integration-source="button-factory"
+    ></script>
+    <script>
+      paypal
+        .Buttons({
+          style: {
+            shape: "pill",
+            color: "white",
+            layout: "vertical",
+            label: "subscribe",
+          },
+          createSubscription: function (data, actions) {
+            return actions.subscription.create({
+              /* Creates the subscription */
+              plan_id: "P-59V25273NS2947038MCHJHOY",
+            });
+          },
+          onApprove: function (data, actions) {
+            alert(data.subscriptionID); // You can add optional success message for the subscriber here
+          },
+        })
+        .render("#paypal-button-container-P-59V25273NS2947038MCHJHOY"); // Renders the PayPal button
+    </script>
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+      var Tawk_API = Tawk_API || {},
+        Tawk_LoadStart = new Date();
+      (function () {
+        var s1 = document.createElement("script"),
+          s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = "https://embed.tawk.to/608fed0e55debc1e9711b45e/1f4p3c0s7";
+        s1.charset = "UTF-8";
+        s1.setAttribute("crossorigin", "*");
+        s0.parentNode.insertBefore(s1, s0);
+      })();
+    </script>
+    <!--End of Tawk.to Script-->
   </body>
 </html>

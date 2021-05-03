@@ -15,6 +15,84 @@ const {
   faYoutube,
 } = require("@fortawesome/free-brands-svg-icons");
 
+export const freePackages = [
+  { bold: true, available: true, text: "Add unlimited links" },
+  { bold: false, available: true, text: "Add video and image to links⁣" },
+  { bold: false, available: true, text: "Add social icons⁣" },
+  { bold: false, available: true, text: "Add bio to describe who you are⁣" },
+  {
+    bold: false,
+    available: true,
+    text: "Share link with friends using QRCode⁣",
+  },
+  { bold: false, available: false, text: "Add an e-commerce store ⁣" },
+  { bold: false, available: false, text: "Get orders on the App ⁣" },
+  { bold: false, available: false, text: "Get payment from customers ⁣" },
+  {
+    bold: false,
+    available: false,
+    text: "Link with dispatch riders to deliver your product⁣",
+  },
+  {
+    bold: false,
+    available: true,
+    text: "Get analytics of total views of your profile⁣",
+  },
+  {
+    bold: false,
+    available: true,
+    text: "Get analytics of total click of your links⁣",
+  },
+  {
+    bold: false,
+    available: true,
+    text: "Get visitors to subscribe to your profile⁣",
+  },
+  {
+    bold: false,
+    available: true,
+    text:
+      "Get visitors sign up to receive notification when you add new links ⁣",
+  },
+];
+export const proPackages = [
+  { bold: false, available: true, text: "All free packages" },
+  { bold: false, available: true, text: "Add multiple monaly accounts⁣" },
+  {
+    bold: false,
+    available: true,
+    text: "Get analytics of daily, weekly and monthly views of your profile⁣",
+  },
+  {
+    bold: false,
+    available: true,
+    text: "Get analytics of daily, weekly and monthly click of your links ⁣",
+  },
+  {
+    bold: false,
+    available: true,
+    text:
+      "Get analytics of countries where your profile is getting attention ⁣",
+  },
+  {
+    bold: false,
+    available: true,
+    text:
+      "Get analytics of devices from which your profile is getting attention ⁣",
+  },
+  { bold: false, available: true, text: "Download data of analytics ⁣" },
+  {
+    bold: false,
+    available: true,
+    text: "Get analytics of clicks on individual links. ⁣",
+  },
+  {
+    bold: false,
+    available: true,
+    text: "Download and Collect subscribers data",
+  },
+];
+
 export const copyToClipboard = (e, item) => {
   e.preventDefault();
   var textField = document.createElement("textarea");
@@ -79,11 +157,11 @@ export const socialIcons = [
 
 export const matchLightSocialIcon = (name) => {
   const targertIcon = socialIcons.find((icon) => icon.type === name);
-  return targertIcon.lightIcon;
+  return targertIcon && targertIcon.lightIcon;
 };
 export const matchSocialIcon = (name) => {
   const targertIcon = socialIcons.find((icon) => icon.type === name);
-  return targertIcon.name;
+  return targertIcon && targertIcon.name;
 };
 export const matchSocialColor = (name) => {
   const targertIcon = socialIcons.find((icon) => icon.type === name);
@@ -130,3 +208,24 @@ export function nFormatter(num, digits) {
 
 export const getInitialsOnProfile = (user) =>
   user && user.firstName && user.firstName.slice(0, 2).toUpperCase();
+
+export const exampleNotifications = [
+  {
+    _id: "0831701skuduo",
+    title: "Check analytics of your visitors",
+    body:
+      "See the number of attention your account is getting. You can see where your lovers are around the world",
+    image:
+      "https://usman-first-node-app.s3.eu-west-2.amazonaws.com/1618423936679pp.jpg",
+    link: "https://www.google.com",
+  },
+  {
+    _id: "0831701skskuduo",
+    title: "The new button that will blow your mind",
+    body:
+      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Pariatur autem cumque aperiam asperiores explicabo, tempora eius distinctio tenetur nam aspernatur quod voluptas harum eveniet placeat, deleniti quo maxime alias voluptatibus.",
+    image:
+      "https://usman-first-node-app.s3.eu-west-2.amazonaws.com/1618423936679pp.jpg",
+    link: "https://www.google.com",
+  },
+];

@@ -11,8 +11,19 @@ const slice = createSlice({
     reset: { status: null },
     visitorView: {},
     stackStyle: "stacked",
+    visitors: [],
   },
   reducers: {
+    visitorsRequested: (user, action) => {
+      user.loading = true;
+    },
+    visitorsReceived: (user, action) => {
+      user.visitors = action.payload;
+      user.loading = false;
+    },
+    visitorsRequestFailed: (user, action) => {
+      user.loading = false;
+    },
     visitorViewRequested: (user, action) => {
       user.loading = true;
     },
@@ -178,6 +189,9 @@ export const {
   visitorViewRequested,
   visitorViewReceived,
   visitorViewRequestFailed,
+  visitorsReceived,
+  visitorsRequestFailed,
+  visitorsRequested,
 } = slice.actions;
 
 export default slice.reducer;
@@ -305,6 +319,20 @@ export const loadLoggedInUser = () => (dispatch, getState) => {
       onStart: userRequested.type,
       onSuccess: userReceived.type,
       onError: userRequestFailed.type,
+    })
+  );
+};
+
+export const getMyVisitors = () => (dispatch, getState) => {
+  dispatch(
+    apiCallBegan({
+      url: "auth/me/views",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("authToken"),
+      },
+      onStart: visitorsRequested.type,
+      onSuccess: visitorsReceived.type,
+      onError: visitorsRequestFailed.type,
     })
   );
 };
