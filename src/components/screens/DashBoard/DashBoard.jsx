@@ -67,6 +67,7 @@ import { loadthemes } from "../../../store/themeSlice";
 import Pricing from "../../includes/Pricing/Pricing";
 import Analytics from "../../includes/Analytics/Analytics";
 import { loadNotifications } from "../../../store/notificationSlice";
+import Notifications from "../../includes/Notifications/Notifications";
 
 const DashBoard = (props) => {
   const ReUsableSocialInput = ({
@@ -113,6 +114,17 @@ const DashBoard = (props) => {
   const themes = useSelector((state) => state.app.themes.list);
   const notifications = useSelector((state) => state.app.notifications.list);
   useEffect(() => {
+    var Tawk_API = Tawk_API || {},
+      Tawk_LoadStart = new Date();
+    (function () {
+      var s1 = document.createElement("script"),
+        s0 = document.getElementsByTagName("script")[0];
+      s1.async = true;
+      s1.src = "https://embed.tawk.to/608fed0e55debc1e9711b45e/1f4p3c0s7";
+      s1.charset = "UTF-8";
+      s1.setAttribute("crossorigin", "*");
+      s0.parentNode.insertBefore(s1, s0);
+    })();
     dispatch(loadthemes());
     dispatch(loadcustomLinks());
     dispatch(loadsocialMediaSamples());
@@ -212,15 +224,37 @@ const DashBoard = (props) => {
         <Link to="/" className="mr-auto">
           <img src={monalydashboardlogo} alt="" height="28.46px" />
         </Link>
-        <img src={NotificationMobile} alt="" title="Notification" />
+        <Link to={`${path}/notifications`}>
+          <img src={NotificationMobile} alt="" title="Notification" />
+        </Link>
 
-        <div className="user-round-avatar-small">
+        <div
+          className="user-round-avatar-small cursor"
+          id="mobileShowUserProfilePopUp"
+        >
           {userProfile.profilePhoto ? (
             <img src={userProfile.profilePhoto} height="100%" alt="" />
           ) : (
             initialsOnProfile
-          )}
+          )}{" "}
         </div>
+        <UncontrolledPopover
+          trigger="legacy"
+          placement="bottom"
+          target="mobileShowUserProfilePopUp"
+        >
+          <div className="popup">
+            <Link to={`${path}/appearance`}>
+              <button>Profile</button>
+            </Link>
+            <Link to={`${path}/analytics`}>
+              <button>My Analytics</button>
+            </Link>
+            <Link to={`${path}/pricing`}>
+              <button>Join the PROs</button>
+            </Link>
+          </div>
+        </UncontrolledPopover>
       </div>
       <div className="mobile-top-nav-share-box">
         <span title="Your Monaly Link">
@@ -361,6 +395,16 @@ const DashBoard = (props) => {
                 target="showNotificationsPopUp"
               >
                 <div className="popup-notifications">
+                  <div className="see-all-notifications-button">
+                    <NavLink to={`${url}/notifications`}>
+                      <span>See all notifications</span>
+                      <img
+                        src={ForwardArrow}
+                        alt="Forward Arrow"
+                        className="add-media-in-settings-arrow"
+                      />
+                    </NavLink>
+                  </div>
                   {notifications.map((item) => (
                     <div className="popup-notifications-item">
                       <header>
@@ -814,6 +858,12 @@ const DashBoard = (props) => {
                   <div id="appearance">
                     <h2>Pricing</h2>
                     <Pricing />
+                  </div>
+                </Route>
+                <Route path={`${path}/notifications`}>
+                  <div id="appearance">
+                    <h2>Notifications</h2>
+                    <Notifications />
                   </div>
                 </Route>
               </div>

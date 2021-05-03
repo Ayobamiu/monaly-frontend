@@ -1295,6 +1295,26 @@
 .popup-notifications::-webkit-scrollbar {
   display: none;
 }
+.see-all-notifications-button {
+  /* background-color: red; */
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 22px;
+  /* identical to box height, or 169% */
+
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.25px;
+
+  /* gray inactive */
+  margin: 16px 0;
+}
+.see-all-notifications-button span {
+  color: #6e7191;
+  margin-right: 10px;
+}
 .popup-notifications-item {
   width: 100%;
   height: 200px;
@@ -1338,7 +1358,7 @@
   border-radius: 8px;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: auto;
+  background-size: cover;
 }
 .popup-notifications-item body .text {
   /* Mobile / Text Medium */
