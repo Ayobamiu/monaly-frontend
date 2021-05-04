@@ -26,7 +26,11 @@ import { Link } from "react-router-dom";
 import { viewsocialMedia } from "../../../store/sociaMediaSampleSlice";
 import Bimbo from "../../../assets/images/Bimbo.png";
 
-const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
+const SmartPhoneContent = ({
+  customLinks,
+  initialsOnProfile,
+  customSocials,
+}) => {
   const loadingLinks = useSelector(loadingcustomLinks);
   const userProfile = useSelector(user);
 
@@ -106,14 +110,7 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
     );
   };
   return (
-    <div
-      class="smartphone"
-      style={{
-        backgroundImage: `url(${
-          userProfile.theme && userProfile.theme.backgroundImage
-        })`,
-      }}
-    >
+    <div>
       <div class="content">
         {userProfile.profilePhoto ? (
           <div className="profile-pic mt-32">
@@ -251,4 +248,4 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
   );
 };
 
-export default SmartPhone;
+export default SmartPhoneContent;

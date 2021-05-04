@@ -1,0 +1,205 @@
+/* The device with borders */
+.smartphone {
+  position: relative;
+  width: 270px;
+  height: 535px;
+  margin: auto;
+  border: 10px #14142b solid;
+  border-top-width: 10px;
+  border-bottom-width: 10px;
+  border-radius: 48px;
+  overflow: hidden;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* The horizontal line on the top of the device */
+/* .smartphone:before {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 5px;
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #333;
+    border-radius: 10px;
+  } */
+
+/* The circle on the bottom of the device */
+/* .smartphone:after {
+    content: '';
+    display: block;
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    left: 50%;
+    bottom: -65px;
+    transform: translate(-50%, -50%);
+    background: #333;
+    border-radius: 50%;
+  } */
+
+/* The screen (or content) of the device */
+.smartphone .content {
+  width: 100%;
+  height: 90%;
+  /* background: white; */
+  overflow-y: scroll;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+}
+.smartphone .red {
+  background-color: transparent;
+  width: 100%;
+  min-height: 10%;
+  /* text-align: center
+  ; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.smartphone .content::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.smartphone .content {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.profile-pic {
+  height: 73.71px;
+  width: 73.71px;
+  border-radius: 50%;
+  background-color: black;
+  margin: auto;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+}
+.profile-pic-sub {
+  height: 73.71px;
+  width: 73.71px;
+  border-radius: 50%;
+  background-color: rgb(0, 0, 0);
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  font-size: 30px;
+  color: white;
+}
+.icon {
+  margin: 0 8px;
+  font-size: 15px;
+  cursor: pointer;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.monaly-logo {
+  cursor: pointer;
+  /* position: sticky; 
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: block;
+  width: 100px; */
+  margin-bottom: 32px;
+}
+.fixed-logo-box {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  height: 20px;
+  width: 100%;
+  background-color: red;
+}
+.custom-link-btn:active {
+  transform: scale(1.002);
+}
+.custom-link-btn {
+  width: 100%;
+  height: 45px;
+  /* Monaly primary */
+
+  box-sizing: border-box;
+  border: none;
+  border-radius: 8px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  /* identical to box height, or 283% */
+
+  letter-spacing: 0.35px;
+
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.custom-link-btn .image {
+  width: 35px;
+  height: 80%;
+  background-color: transparent;
+  position: absolute;
+  left: 0px;
+  transform: translate(10%, -50%);
+  top: 50%;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.custom-link-btn span {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+}
+.custom-link-btn-with-img:active {
+  transform: scale(1.002);
+}
+.custom-link-btn-with-img {
+  width: 100%;
+  height: 45px;
+  /* Monaly primary */
+
+  box-sizing: border-box;
+  border: none;
+  border-radius: 8px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  /* identical to box height, or 283% */
+
+  letter-spacing: 0.35px;
+
+  outline: none;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  position: relative;
+  padding: 8px;
+}
+.add-links-to-start {
+  box-shadow: 0px 8px 16px rgba(17, 17, 17, 0.04);
+  width: 100%;
+  height: 100px;
+  background-color: rgba(255, 255, 255, 0.096);
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 50px;
+}

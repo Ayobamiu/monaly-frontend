@@ -39,12 +39,6 @@ const VisitorsScreen = (props) => {
           const latitude = position.coords.latitude;
           const longitude = position.coords.longitude;
           const addressFrom = await getAddress(latitude, longitude);
-          console.log(
-            props.match.params.userName,
-            addressFrom.currentLocation,
-            addressFrom.country,
-            addressFrom.city
-          );
           dispatch(
             storeVisitorLocation(
               props.match.params.userName,

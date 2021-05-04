@@ -5,6 +5,7 @@ import monalydashboardlogo from "../../../assets/images/Vector.svg";
 import Comment from "../../../assets/images/Comment.svg";
 import Notification from "../../../assets/images/Notification.svg";
 import ForwardArrow from "../../../assets/images/ForwardArrow.svg";
+import Close from "../../../assets/images/Close.svg";
 import NotificationMobile from "../../../assets/images/NotificationMobile.svg";
 import shareLinkIconBox from "../../../assets/images/shareLinkIconBox.svg";
 import colorLinkedIn from "../../../assets/images/colorLinkedIn.svg";
@@ -27,6 +28,7 @@ import { faLink, faTimes, faCog } from "@fortawesome/free-solid-svg-icons";
 import {
   faArrowAltCircleRight,
   faSmile,
+  faTimesCircle,
 } from "@fortawesome/free-regular-svg-icons";
 import {
   loadcustomLinks,
@@ -69,6 +71,7 @@ import Pricing from "../../includes/Pricing/Pricing";
 import Analytics from "../../includes/Analytics/Analytics";
 import { loadNotifications } from "../../../store/notificationSlice";
 import Notifications from "../../includes/Notifications/Notifications";
+import SmartPhoneContent from "../../includes/SmartPhoneContent/SmartPhoneContent";
 
 const DashBoard = (props) => {
   const ReUsableSocialInput = ({
@@ -218,9 +221,42 @@ const DashBoard = (props) => {
       </NavLink>
     );
   };
+  const [showPreview, setShowPreview] = useState(false);
 
   return (
     <div id="mobile-holder">
+      <button
+        className="show-mobile-offcanvas"
+        onClick={() => {
+          setShowPreview(true);
+        }}
+      >
+        Preview
+      </button>
+      {showPreview && (
+        <div
+          className="mobile-offcanvas"
+          style={{
+            backgroundImage: `url(${
+              userProfile.theme && userProfile.theme.backgroundImage
+            })`,
+          }}
+        >
+          <div
+            className="close-mobile-offcanvas cursor"
+            onClick={() => setShowPreview(false)}
+          >
+            <img src={Close} alt="" onClick={() => setShowPreview(false)} />
+          </div>
+          {/* <div style={{ position: "relative" }}> */}
+          <SmartPhoneContent
+            customSocials={currentUserSocials}
+            customLinks={currentCustomLinks}
+            initialsOnProfile={initialsOnProfile}
+          />
+          {/* </div> */}
+        </div>
+      )}
       <div className="mobile-top-nav">
         <Link to="/" className="mr-auto">
           <img src={monalydashboardlogo} alt="" height="28.46px" />
