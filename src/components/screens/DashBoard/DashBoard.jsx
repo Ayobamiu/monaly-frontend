@@ -118,17 +118,17 @@ const DashBoard = (props) => {
   const themes = useSelector((state) => state.app.themes.list);
   const notifications = useSelector((state) => state.app.notifications.list);
   useEffect(() => {
-    var Tawk_API = Tawk_API || {},
-      Tawk_LoadStart = new Date();
-    (function () {
-      var s1 = document.createElement("script"),
-        s0 = document.getElementsByTagName("script")[0];
-      s1.async = true;
-      s1.src = "https://embed.tawk.to/608fed0e55debc1e9711b45e/1f4p3c0s7";
-      s1.charset = "UTF-8";
-      s1.setAttribute("crossorigin", "*");
-      s0.parentNode.insertBefore(s1, s0);
-    })();
+    // var Tawk_API = Tawk_API || {},
+    //   Tawk_LoadStart = new Date();
+    // (function () {
+    //   var s1 = document.createElement("script"),
+    //     s0 = document.getElementsByTagName("script")[0];
+    //   s1.async = true;
+    //   s1.src = "https://embed.tawk.to/608fed0e55debc1e9711b45e/1f4p3c0s7";
+    //   s1.charset = "UTF-8";
+    //   s1.setAttribute("crossorigin", "*");
+    //   s0.parentNode.insertBefore(s1, s0);
+    // })();
     dispatch(loadthemes());
     dispatch(loadcustomLinks());
     dispatch(loadsocialMediaSamples());
@@ -424,12 +424,12 @@ const DashBoard = (props) => {
               </div>
             </div>
             <div className="action-icons relative">
-              {/* <a
+              <a
                 href="https://tawk.to/chat/608fed0e55debc1e9711b45e/1f4p3c0s7"
                 target="_blank"
               >
-                <img src={Notification} alt="" title="Comment" />
-              </a> */}
+                <img src={Comment} alt="" title="Comment" />
+              </a>
               <img
                 src={Notification}
                 alt=""
