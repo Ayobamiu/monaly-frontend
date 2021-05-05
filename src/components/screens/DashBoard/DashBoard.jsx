@@ -254,7 +254,6 @@ const DashBoard = (props) => {
             customLinks={currentCustomLinks}
             initialsOnProfile={initialsOnProfile}
           />
-          {/* </div> */}
         </div>
       )}
       <div className="mobile-top-nav">
@@ -266,13 +265,10 @@ const DashBoard = (props) => {
           target="_blank"
           className="mx-3"
         >
-          {/* <img src={Comment} alt="" title="Chat with Us" /> */}
-          <button className="primary-btn-inverse custom-btn-sm">
-            Talk to us
-          </button>
+          <img src={Comment} alt="" title="Chat with Us" />
         </a>
         <Link to={`${path}/notifications`}>
-          <img src={NotificationMobile} alt="" title="Notification" />
+          <img src={Notification} alt="" title="Notification" />
         </Link>
 
         <div
