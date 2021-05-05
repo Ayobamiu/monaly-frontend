@@ -110,7 +110,7 @@ const SmartPhoneContent = ({
     );
   };
   return (
-    <div>
+    <div id="phone-content">
       <div class="content">
         {userProfile.profilePhoto ? (
           <div className="profile-pic mt-32">
