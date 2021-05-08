@@ -24,12 +24,10 @@ const SignUp = () => {
     window.location = "/";
   }
 
-  const currentUser = useSelector(user);
   const loadingUser = useSelector(loading);
   const userStatus = useSelector(status);
   const loadingUserName = useSelector(userNameloading);
   const statusUsername = useSelector(userNamestatus);
-  const userError = useSelector(error);
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
   const [email, setEmail] = useState(null);

@@ -536,6 +536,9 @@
   border: solid 1px;
   background-size: cover;
 }
+#links {
+  padding-bottom: 50vh;
+}
 #links .metric {
   display: flex;
   justify-content: space-between;
@@ -685,7 +688,7 @@
 .custom-file-input::before {
   content: "Select some files";
   display: inline-block;
-  background: linear-gradient(top, #ef476f, #ef476f);
+  background: linear-gradient(to top, #ef476f, #ef476f);
   border: 1px solid #999;
   border-radius: 3px;
   padding: 5px 8px;

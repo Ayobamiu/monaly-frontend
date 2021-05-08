@@ -2,8 +2,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef } from "react";
 import "./css/style.css";
 import monaly_logo from "../../../assets/images/monaly_logo.svg";
-import picp from "../../../assets/images/picp.jpg";
-import Bimbo from "../../../assets/images/Bimbo.png";
 import { Link } from "react-router-dom";
 import {
   loading,
@@ -16,7 +14,6 @@ import { viewsocialMedia } from "../../../store/sociaMediaSampleSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
   matchLightSocialIcon,
-  matchSocialColor,
 } from "../../../assets/js/controls";
 import { getAddress, ipLookUp } from "../../../assets/js/getAddress";
 import { viewCustomLink } from "../../../store/customLinkSlice";

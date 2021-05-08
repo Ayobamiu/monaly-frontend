@@ -118,17 +118,6 @@ const DashBoard = (props) => {
   const themes = useSelector((state) => state.app.themes.list);
   const notifications = useSelector((state) => state.app.notifications.list);
   useEffect(() => {
-    // var Tawk_API = Tawk_API || {},
-    //   Tawk_LoadStart = new Date();
-    // (function () {
-    //   var s1 = document.createElement("script"),
-    //     s0 = document.getElementsByTagName("script")[0];
-    //   s1.async = true;
-    //   s1.src = "https://embed.tawk.to/608fed0e55debc1e9711b45e/1f4p3c0s7";
-    //   s1.charset = "UTF-8";
-    //   s1.setAttribute("crossorigin", "*");
-    //   s0.parentNode.insertBefore(s1, s0);
-    // })();
     dispatch(loadthemes());
     dispatch(loadcustomLinks());
     dispatch(loadsocialMediaSamples());
@@ -260,6 +249,11 @@ const DashBoard = (props) => {
         <Link to="/" className="mr-auto">
           <img src={monalydashboardlogo} alt="" height="28.46px" />
         </Link>
+        {authLoading || loadingLinksUpdate ? (
+          <div className="loader"></div>
+        ) : (
+          ""
+        )}
         <a
           href="https://tawk.to/chat/608fed0e55debc1e9711b45e/1f4p3c0s7"
           target="_blank"
@@ -879,8 +873,12 @@ const DashBoard = (props) => {
                       ))}
                     </div>
                   </div>
-                </Route>
 
+                  <div id="appearance">
+                    <h2>Subscriptions History</h2>
+                    <div className="appearance-box"></div>
+                  </div>
+                </Route>
                 <Route path={`${path}/analytics`}>
                   <div id="appearance">
                     <div className="analytics-metrics">
