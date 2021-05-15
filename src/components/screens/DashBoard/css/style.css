@@ -1444,3 +1444,32 @@
     display: block;
   }
 }
+.subscription-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.subscription-item h5 {
+  color: #14142b;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  /* or 150% */
+
+  letter-spacing: 0.75px;
+
+  /* Grayscale / Body */
+}
+.subscription-item-right {
+  text-align: right;
+
+  min-width: 20%;
+}
+.subscription-item-right span {
+  text-transform: uppercase;
+  padding: 3px 5px;
+}
+.disabled {
+  cursor: not-allowed;
+  pointer-events: visible !important;
+}

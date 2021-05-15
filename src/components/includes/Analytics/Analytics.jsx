@@ -146,6 +146,12 @@ const Analytics = () => {
           ))}
         </tbody>
       </table>
+      {visitors.length === 0 && (
+        <div className="no-visitors-details">
+          <h2>Nothing here yet</h2>
+          <p className="custom-p">You will see all your visitors data  here</p>
+        </div>
+      )}
       <Navigation />
       <div style={{ height: "100px" }}></div>
     </section>

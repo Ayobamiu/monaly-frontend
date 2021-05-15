@@ -36,6 +36,12 @@ const Notifications = () => {
           </div>
         </div>
       ))}
+      {notifications.length === 0 && (
+        <div className="no-notifications">
+          <h2>Nothing here yet</h2>
+          <p className="custom-p">You will see all your notifications here</p>
+        </div>
+      )}
       <div style={{ height: "200px" }}></div>
     </div>
   );

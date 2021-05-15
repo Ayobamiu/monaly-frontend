@@ -1,49 +1,39 @@
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { Link } from "react-router-dom";
 import { freePackages, proPackages } from "../../../assets/js/controls";
-import PayPal from "../PayPal/PayPal";
 import "./css/style.css";
+import { useDispatch, useSelector } from "react-redux";
+import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
+import { addSubscription, userHasAnActiveSub } from "../../../store/authSlice";
 
 const Pricing = () => {
+  const user = useSelector((state) => state.app.user.profile);
+  const dispatch = useDispatch();
+  const isSubscribed = useSelector(userHasAnActiveSub);
+
+  const config = {
+    public_key: "FLWPUBK_TEST-5120f20f66db336ffc0f6131bcc49936-X",
+    tx_ref: Date.now(),
+    payment_plan: 11193,
+    amount: 5,
+    currency: "USD",
+    payment_options: "card",
+    customer: {
+      email: user.email,
+      name: user.firstName,
+    },
+    customizations: {
+      title: "Monaly PRO",
+      description: "Subscription to Monaly PRO",
+      logo:
+        "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
+    },
+  };
+  const handleFlutterPayment = useFlutterwave(config);
+
   return (
     <section class="pricing ">
-      <div
-        class="modal fade"
-        id="exampleModal"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">
-                Join the PROs
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <PayPal />
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-primary"
-                data-bs-dismiss="modal"
-              >
-                &nbsp; Close &nbsp;
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="row py-2">
         {/* <!-- Pro Tier --> */}
         <div class="col-lg-6">
@@ -56,14 +46,25 @@ const Pricing = () => {
                 $5<span class="period">/month</span>
               </h6>
               <hr />
-              <a
-                href="#"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-                class="btn btn-block btn-primary text-uppercase my-2"
-              >
-                Join the PROs
-              </a>
+
+              {!isSubscribed && (
+                <button
+                  class="btn btn-block btn-primary text-uppercase my-2"
+                  onClick={() => {
+                    handleFlutterPayment({
+                      callback: (response) => {
+                        if (response.status === "successful") {
+                          dispatch(addSubscription());
+                        }
+                        closePaymentModal(); // this will close the modal programmatically
+                      },
+                      onClose: () => {},
+                    });
+                  }}
+                >
+                  Join the PROs
+                </button>
+              )}
               <ul class="fa-ul">
                 {proPackages.map((item) => (
                   <li class={!item.available && "text-muted"}>
@@ -78,14 +79,26 @@ const Pricing = () => {
                   </li>
                 ))}
               </ul>
-              <a
-                href="#"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-                class="btn btn-block btn-primary text-uppercase"
-              >
-                Join the PROs
-              </a>
+              {!isSubscribed && (
+                <button
+                  class="btn btn-block btn-primary text-uppercase my-2"
+                  onClick={() => {
+                    handleFlutterPayment({
+                      callback: (response) => {
+                        console.log(response);
+                        if (response.status === "successful") {
+                          dispatch(addSubscription());
+                        }
+                        closePaymentModal(); // this will close the modal programmatically
+                      },
+
+                      onClose: () => {},
+                    });
+                  }}
+                >
+                  Join the PROs
+                </button>
+              )}
             </div>
           </div>
         </div>

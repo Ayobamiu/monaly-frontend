@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { apiCallBegan } from "./api";
 import jwt from "jsonwebtoken";
+import moment from "moment";
 
 const slice = createSlice({
   name: "user",
@@ -12,8 +13,29 @@ const slice = createSlice({
     visitorView: {},
     stackStyle: "stacked",
     visitors: [],
+    subscriptions: [],
   },
   reducers: {
+    subscriptionAddStart: (user, action) => {
+      user.loading = true;
+    },
+    subscriptionAdded: (user, action) => {
+      user.subscriptions = [action.payload, ...user.subscriptions];
+      user.loading = false;
+    },
+    subscriptionAddFailed: (user, action) => {
+      user.loading = false;
+    },
+    subscriptionsRequested: (user, action) => {
+      user.loading = true;
+    },
+    subscriptionsReceived: (user, action) => {
+      user.subscriptions = action.payload;
+      user.loading = false;
+    },
+    subscriptionsRequestFailed: (user, action) => {
+      user.loading = false;
+    },
     visitorsRequested: (user, action) => {
       user.loading = true;
     },
@@ -192,6 +214,12 @@ export const {
   visitorsReceived,
   visitorsRequestFailed,
   visitorsRequested,
+  subscriptionsRequested,
+  subscriptionsReceived,
+  subscriptionsRequestFailed,
+  subscriptionAddFailed,
+  subscriptionAddStart,
+  subscriptionAdded,
 } = slice.actions;
 
 export default slice.reducer;
@@ -249,6 +277,34 @@ export const uploadUserPhotos = (photdata) => (dispatch) => {
       onStart: photoUploadStart.type,
       onSuccess: userProfileUpdated.type,
       onError: photoUploadFailed.type,
+    })
+  );
+};
+export const addSubscription = () => (dispatch) => {
+  dispatch(
+    apiCallBegan({
+      url: "/subscriptions",
+      method: "post",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("authToken"),
+      },
+      onStart: subscriptionAddStart.type,
+      onSuccess: subscriptionAdded.type,
+      onError: subscriptionAddFailed.type,
+    })
+  );
+};
+export const getMySubscriptions = () => (dispatch) => {
+  dispatch(
+    apiCallBegan({
+      url: "/subscriptions",
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("authToken"),
+      },
+      onStart: subscriptionsRequested.type,
+      onSuccess: subscriptionsReceived.type,
+      onError: subscriptionsRequestFailed.type,
     })
   );
 };
@@ -370,6 +426,16 @@ export const getLoggedInUser = () => {
     return decoded;
   }
   return null;
+};
+
+export const userHasAnActiveSub = (state) => {
+  const mySubs = state.app.user.subscriptions;
+  const myLastSub = mySubs[0];
+  let result = false;
+  if (myLastSub && myLastSub.endDate > moment().format()) {
+    result = true;
+  }
+  return result;
 };
 
 export const visitorViewData = (state) => state.app.user.visitorView;

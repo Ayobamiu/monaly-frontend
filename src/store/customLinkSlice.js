@@ -45,10 +45,10 @@ const slice = createSlice({
       customLinks.status = "loading";
     },
     customLinkAdded: (customLinks, action) => {
-      customLinks.list.unshift(action.payload);
+      customLinks.list = [action.payload, ...customLinks.list];
       customLinks.loadingUpdate = false;
       customLinks.status = "Added successfully";
-      // window.location.reload();
+      window.location.reload();
     },
     customLinkAddFailed: (customLinks, action) => {
       customLinks.loadingUpdate = false;
@@ -79,7 +79,7 @@ const slice = createSlice({
       customLinks.status = "Failed";
     },
     customLinkRemoved: (customLinks, action) => {
-      customLinks.list.pop(
+      customLinks.list = customLinks.list.filter(
         (customLink) => customLink._id !== action.payload._id
       );
       customLinks.loadingUpdate = false;

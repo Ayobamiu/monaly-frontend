@@ -229,3 +229,53 @@ export const exampleNotifications = [
     link: "https://www.google.com",
   },
 ];
+export const exampleSubscriptions = [
+  {
+    _id: "609259720cad263ebcf3cc14",
+    startDate: "2021-05-05T08:37:19.336Z",
+    endDate: "2021-06-05T08:37:19.336Z",
+    user: "606a0bb8ddfb8a45300aafed",
+    createdAt: "2021-05-05T08:38:10.355Z",
+    updatedAt: "2021-05-05T08:38:10.355Z",
+    __v: 0,
+  },
+  {
+    _id: "609259720cad263ebcf3cc14",
+    startDate: "2021-04-05T08:37:19.336Z",
+    endDate: "2021-05-05T08:37:19.336Z",
+    user: "606a0bb8ddfb8a45300aafed",
+    createdAt: "2021-05-05T08:38:10.355Z",
+    updatedAt: "2021-05-05T08:38:10.355Z",
+    __v: 0,
+  },
+];
+export const data1 = [
+  {
+    foo: "123",
+    bar: "456",
+    baz: "789",
+  },
+  {
+    foo: "abc",
+    bar: "dfg",
+    baz: "hij",
+  },
+  {
+    foo: "aaa",
+    bar: "bbb",
+    baz: "ccc",
+  },
+];
+
+const data2 = [
+  {
+    aaa: 1,
+    bbb: 2,
+    ccc: 3,
+  },
+  {
+    aaa: 4,
+    bbb: 5,
+    ccc: 6,
+  },
+];

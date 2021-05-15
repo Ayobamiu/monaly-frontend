@@ -35,7 +35,7 @@ const SmartPhoneContent = ({
   const userProfile = useSelector(user);
 
   const dispatch = useDispatch();
-
+ 
   const PreviewButton = ({
     color,
     backgroundColor,

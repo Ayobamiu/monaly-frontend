@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Workbook from "react-excel-workbook";
 import { UncontrolledPopover } from "reactstrap";
 import "./css/style.css";
 import monalydashboardlogo from "../../../assets/images/Vector.svg";
@@ -24,7 +25,12 @@ import {
 import SmartPhone from "../../includes/SmartPhone/SmartPhone";
 import { Modal } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLink, faTimes, faCog } from "@fortawesome/free-solid-svg-icons";
+import {
+  faLink,
+  faTimes,
+  faCog,
+  faDownload,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   faArrowAltCircleRight,
   faSmile,
@@ -40,9 +46,11 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import {
   getLoggedInUser,
+  getMySubscriptions,
   logUserOut,
   updateUserProfile,
   uploadUserPhotos,
+  userHasAnActiveSub,
 } from "../../../store/authSlice";
 import PreviewScreen from "../../includes/PreviewScreen/PreviewScreen";
 import QRCode from "qrcode.react";
@@ -51,6 +59,8 @@ import {
   downloadQR,
   clickThroughRatio,
   siteUrl,
+  exampleSubscriptions,
+  data1,
 } from "../../../assets/js/controls";
 
 import {
@@ -72,6 +82,7 @@ import Analytics from "../../includes/Analytics/Analytics";
 import { loadNotifications } from "../../../store/notificationSlice";
 import Notifications from "../../includes/Notifications/Notifications";
 import SmartPhoneContent from "../../includes/SmartPhoneContent/SmartPhoneContent";
+import moment from "moment";
 
 const DashBoard = (props) => {
   const ReUsableSocialInput = ({
@@ -110,13 +121,25 @@ const DashBoard = (props) => {
   const userProfile = useSelector(user);
   const currentCustomLinks = useSelector(Links);
   const currentSocialMediaSamples = useSelector(socialMediaSamples);
+  const isSubscribed = useSelector(userHasAnActiveSub);
 
   const currentUserSocials = useSelector(userSocials);
   const loadingLinks = useSelector(loadingcustomLinks);
   const loadingLinksUpdate = useSelector(loadingUpdateCustomLinks);
   const authLoading = useSelector(loading);
+  const subscriptions = useSelector((state) => state.app.user.subscriptions);
   const themes = useSelector((state) => state.app.themes.list);
   const notifications = useSelector((state) => state.app.notifications.list);
+  const visitors = useSelector((state) => state.app.user.visitors);
+  const visitorsData = visitors.map((visitor, index) => {
+    return {
+      index: index + 1,
+      city: visitor.city,
+      country: visitor.country,
+      location: visitor.visitorLocation,
+    };
+  });
+
   useEffect(() => {
     dispatch(loadthemes());
     dispatch(loadcustomLinks());
@@ -124,6 +147,7 @@ const DashBoard = (props) => {
     dispatch(loadUserSocials());
     dispatch(loadLoggedInUser());
     dispatch(loadNotifications());
+    dispatch(getMySubscriptions());
   }, [good]);
   const currentUser = getLoggedInUser() && getLoggedInUser().user;
   const [modal, setModal] = useState(false);
@@ -143,8 +167,8 @@ const DashBoard = (props) => {
   const addEmptyCustomLink = () => {
     dispatch(
       addcustomLink({
-        title: newTitle,
-        link: newLink,
+        title: "",
+        link: "",
       })
     );
   };
@@ -154,8 +178,6 @@ const DashBoard = (props) => {
     currentUser.firstName &&
     currentUser.firstName.slice(0, 2).toUpperCase();
 
-  const [newLink, setNewLink] = useState("New link ");
-  const [newTitle, setNewTitle] = useState("New title ");
   const [showPopup, setShowPopup] = useState(false);
   const [qrmodal, setQrmodal] = useState(false);
   const [alert, setAlert] = useState(false);
@@ -286,6 +308,9 @@ const DashBoard = (props) => {
             </Link>
             <Link to={`${path}/analytics`}>
               <button>My Analytics</button>
+            </Link>
+            <Link to={`${path}/settings#subscriptions`}>
+              <button>My Subscriptions</button>
             </Link>
             <Link to={`${path}/pricing`}>
               <button>Join the PROs</button>
@@ -615,7 +640,6 @@ const DashBoard = (props) => {
                                 className="custom-file-input"
                                 onChange={(e) => {
                                   e.preventDefault();
-                                  console.log("Clicked ", e.target.files[0]);
                                   const newFormData = new FormData();
                                   newFormData.append(
                                     "profilePhoto",
@@ -774,6 +798,14 @@ const DashBoard = (props) => {
 
                       <h2>Themes</h2>
                       <div className="appearance-box">
+                        {themes.length === 0 && (
+                          <div className="no-visitors-details">
+                            <h2>Nothing here yet</h2>
+                            <p className="custom-p">
+                              You will see list of themes to select here
+                            </p>
+                          </div>
+                        )}
                         <div className="style-items">
                           {themes.map((theme) => (
                             <div className="style-item ">
@@ -791,7 +823,6 @@ const DashBoard = (props) => {
                                   dispatch(
                                     updateUserProfile({ theme: e.target.value })
                                   );
-                                  console.log("theme", e.target.value);
                                 }}
                               />
                               <span class="checkmark"></span>
@@ -844,7 +875,7 @@ const DashBoard = (props) => {
                         </div>
                       </div>
 
-                      <div style={{ height: "100px" }}></div>
+                      <div style={{ height: "300px" }}></div>
                     </div>
                   </div>
                 </Route>
@@ -871,31 +902,125 @@ const DashBoard = (props) => {
                           />
                         </>
                       ))}
+
+                      {currentSocialMediaSamples.length === 0 && (
+                        <div className="no-visitors-details">
+                          <h2>Nothing here yet</h2>
+                          <p className="custom-p">
+                            You will see forms to add social media links here
+                          </p>
+                        </div>
+                      )}
                     </div>
                   </div>
 
                   <div id="appearance">
-                    <h2>Subscriptions History</h2>
-                    <div className="appearance-box"></div>
+                    <div id="subscriptions">
+                      <h2>Subscriptions History</h2>
+                      <div className="appearance-box">
+                        {subscriptions.length === 0 && (
+                          <div className="no-visitors-details">
+                            <h2>Nothing here yet</h2>
+                            <p className="custom-p">
+                              You will see all your subscriptions history here
+                            </p>
+                          </div>
+                        )}
+
+                        {subscriptions.map((item) => (
+                          <div className="subscription-item">
+                            <div className="subscription-item-left">
+                              <h5>
+                                {moment(item.startDate).format("MMMM YYYY")}
+                              </h5>
+                              <span className="small-p">
+                                {userProfile.firstName} {userProfile.lastName}
+                              </span>
+                              <p className="custom-p">
+                                Due {moment(item.endDate).format("MMMM Do")}
+                              </p>
+                            </div>
+                            <div className="subscription-item-right">
+                              <h5>$5</h5>
+                              <span
+                                className={`badge ${
+                                  item.endDate < moment().format() &&
+                                  "badge-success"
+                                } ${
+                                  item.endDate > moment().format() &&
+                                  "badge-primary"
+                                }`}
+                              >
+                                {item.endDate < moment().format() &&
+                                  "completed"}
+                                {item.endDate > moment().format() && "active"}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
+                  <div style={{ height: "300px" }}></div>
                 </Route>
                 <Route path={`${path}/analytics`}>
                   <div id="appearance">
                     <div className="analytics-metrics">
                       <div className="analytics-metrics-item">
                         <p className="custom-p">Total Visits</p>
-                        <h2>{userProfile.viewCount}</h2>
+                        <h2>{userProfile.viewCount || 0}</h2>
                       </div>
                       <div className="analytics-metrics-item">
                         <p className="custom-p">Total Clicks</p>
-                        <h2>{userProfile.clickCount}</h2>
+                        <h2>{userProfile.clickCount || 0}</h2>
                       </div>
                       <div className="analytics-metrics-item">
                         <p className="custom-p">Click Through Ratio</p>
                         <h2>{clickThroughRatio(userProfile)}%</h2>
                       </div>
                     </div>
-                    <h2 className="py-2">Visitors</h2>
+                    <div className="row justify-content-between">
+                      <div className="col">
+                        <h2 className="py-2">Visitors</h2>
+                      </div>
+                      <div className="col">
+                        <h2 className="py-2 text-end">
+                          {isSubscribed ? (
+                            <Workbook
+                              filename="visitors.xlsx"
+                              element={
+                                <button className="btn btn-success">
+                                  Download
+                                </button>
+                              }
+                            >
+                              <Workbook.Sheet
+                                data={visitorsData}
+                                name="Sheet A"
+                              >
+                                <Workbook.Column label="#" value="index" />
+                                <Workbook.Column label="City" value="city" />
+                                <Workbook.Column
+                                  label="Country"
+                                  value="country"
+                                />
+                                <Workbook.Column
+                                  label="Location"
+                                  value="location"
+                                />
+                              </Workbook.Sheet>
+                            </Workbook>
+                          ) : (
+                            <button
+                              className="btn btn-success disabled"
+                              disabled
+                            >
+                              Download
+                            </button>
+                          )}
+                        </h2>
+                      </div>
+                    </div>
 
                     <Analytics />
                   </div>
@@ -905,12 +1030,14 @@ const DashBoard = (props) => {
                     <h2>Pricing</h2>
                     <Pricing />
                   </div>
+                  <div style={{ height: "300px" }}></div>
                 </Route>
                 <Route path={`${path}/notifications`}>
                   <div id="appearance">
                     <h2>Notifications</h2>
                     <Notifications />
                   </div>
+                  <div style={{ height: "300px" }}></div>
                 </Route>
               </div>
             </div>
