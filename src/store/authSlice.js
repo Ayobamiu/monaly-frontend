@@ -13,6 +13,7 @@ const slice = createSlice({
     visitorView: {},
     stackStyle: "stacked",
     visitors: [],
+    subscription: {},
     subscriptions: [],
   },
   reducers: {
@@ -24,6 +25,16 @@ const slice = createSlice({
       user.loading = false;
     },
     subscriptionAddFailed: (user, action) => {
+      user.loading = false;
+    },
+    subscriptionRequested: (user, action) => {
+      user.loading = true;
+    },
+    subscriptionReceived: (user, action) => {
+      user.subscription = action.payload;
+      user.loading = false;
+    },
+    subscriptionRequestFailed: (user, action) => {
       user.loading = false;
     },
     subscriptionsRequested: (user, action) => {
@@ -214,6 +225,9 @@ export const {
   visitorsReceived,
   visitorsRequestFailed,
   visitorsRequested,
+  subscriptionRequested,
+  subscriptionReceived,
+  subscriptionRequestFailed,
   subscriptionsRequested,
   subscriptionsReceived,
   subscriptionsRequestFailed,
@@ -305,6 +319,21 @@ export const getMySubscriptions = () => (dispatch) => {
       onStart: subscriptionsRequested.type,
       onSuccess: subscriptionsReceived.type,
       onError: subscriptionsRequestFailed.type,
+    })
+  );
+};
+
+export const getMySubscription = () => (dispatch) => {
+  dispatch(
+    apiCallBegan({
+      url: `/subscriptions`,
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("authToken"),
+      },
+      onStart: subscriptionRequested.type,
+      onSuccess: subscriptionReceived.type,
+      onError: subscriptionRequestFailed.type,
     })
   );
 };

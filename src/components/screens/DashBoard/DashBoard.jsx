@@ -46,6 +46,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import {
   getLoggedInUser,
+  getMySubscription,
   getMySubscriptions,
   logUserOut,
   updateUserProfile,
@@ -121,7 +122,8 @@ const DashBoard = (props) => {
   const userProfile = useSelector(user);
   const currentCustomLinks = useSelector(Links);
   const currentSocialMediaSamples = useSelector(socialMediaSamples);
-  const isSubscribed = useSelector(userHasAnActiveSub);
+  const subscription = useSelector((state) => state.app.user.subscription);
+  const isSubscribed = subscription && subscription.status === "active";
 
   const currentUserSocials = useSelector(userSocials);
   const loadingLinks = useSelector(loadingcustomLinks);
@@ -147,7 +149,7 @@ const DashBoard = (props) => {
     dispatch(loadUserSocials());
     dispatch(loadLoggedInUser());
     dispatch(loadNotifications());
-    dispatch(getMySubscriptions());
+    dispatch(getMySubscription());
   }, [good]);
   const currentUser = getLoggedInUser() && getLoggedInUser().user;
   const [modal, setModal] = useState(false);
@@ -1023,12 +1025,14 @@ const DashBoard = (props) => {
                     </div>
 
                     <Analytics />
+                    <div style={{ height: "300px" }}></div>
                   </div>
                 </Route>
                 <Route path={`${path}/pricing`}>
                   <div id="appearance">
                     <h2>Pricing</h2>
                     <Pricing />
+                    
                   </div>
                   <div style={{ height: "300px" }}></div>
                 </Route>

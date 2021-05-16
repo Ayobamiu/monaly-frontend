@@ -5,17 +5,18 @@ import { freePackages, proPackages } from "../../../assets/js/controls";
 import "./css/style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
-import { addSubscription, userHasAnActiveSub } from "../../../store/authSlice";
+import { addSubscription } from "../../../store/authSlice";
 
 const Pricing = () => {
   const user = useSelector((state) => state.app.user.profile);
   const dispatch = useDispatch();
-  const isSubscribed = useSelector(userHasAnActiveSub);
+  const subscription = useSelector((state) => state.app.user.subscription);
+  const isSubscribed = subscription && subscription.status === "active";
 
   const config = {
-    public_key: "FLWPUBK_TEST-5120f20f66db336ffc0f6131bcc49936-X",
+    public_key: "FLWPUBK-2e47da611ef1439c41b6685671258d8f-X",
     tx_ref: Date.now(),
-    payment_plan: 11193,
+    payment_plan: 40518,
     amount: 5,
     currency: "USD",
     payment_options: "card",
@@ -26,8 +27,7 @@ const Pricing = () => {
     customizations: {
       title: "Monaly PRO",
       description: "Subscription to Monaly PRO",
-      logo:
-        "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
+      logo: "https://apply-to-usman.s3.eu-west-2.amazonaws.com/monaly_logo.svg",
     },
   };
   const handleFlutterPayment = useFlutterwave(config);
@@ -54,6 +54,7 @@ const Pricing = () => {
                     handleFlutterPayment({
                       callback: (response) => {
                         if (response.status === "successful") {
+                          console.log(response);
                           dispatch(addSubscription());
                         }
                         closePaymentModal(); // this will close the modal programmatically
@@ -87,6 +88,7 @@ const Pricing = () => {
                       callback: (response) => {
                         console.log(response);
                         if (response.status === "successful") {
+                          console.log(response);
                           dispatch(addSubscription());
                         }
                         closePaymentModal(); // this will close the modal programmatically

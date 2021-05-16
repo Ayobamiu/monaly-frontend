@@ -16,11 +16,12 @@ const api = ({ dispatch }) => (next) => async (action) => {
     onSuccess,
     headers,
     params,
+    baseURL = liveUrl,
   } = action.payload;
   if (onStart) dispatch({ type: onStart });
   try {
     const response = await axios.request({
-      baseURL: liveUrl,
+      baseURL,
       url,
       method,
       data,
