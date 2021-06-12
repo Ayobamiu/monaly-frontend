@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./css/style.css";
 import monaly_logo from "../../../assets/images/monaly_logo.svg";
 import CustomInput from "../../includes/CustomInput/CustomInput";
@@ -24,6 +24,9 @@ const SignUp = () => {
     window.location = "/";
   }
 
+  useEffect(() => {
+    document.title = "Sign Up | Monaly";
+  }, []);
   const loadingUser = useSelector(loading);
   const userStatus = useSelector(status);
   const loadingUserName = useSelector(userNameloading);

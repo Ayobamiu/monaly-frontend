@@ -22,6 +22,7 @@ const Admin = () => {
     dispatch(loadUsers());
     dispatch(loadLoggedInUser());
     dispatch(getStatistics());
+    document.title = "Admin | Monaly";
   }, []);
   const users = useSelector((state) => state.app.users.list);
   const statistics = useSelector((state) => state.app.customLinks.statistics);

@@ -873,6 +873,8 @@
 
     background: #f7f7fc;
     justify-content: center;
+  }
+  #dashboard .edit-screen .hide-at-900 {
     display: none;
   }
   #dashboard .edit-screen .nav .nav-item {

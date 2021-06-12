@@ -15,7 +15,9 @@ import {
 const SignIn = () => {
   const dispatch = useDispatch();
   const loggedInUser = useSelector(getLoggedInUser);
-
+  useEffect(() => {
+    document.title = "Login | Monaly";
+  }, []);
   if (loggedInUser) {
     window.location = "/";
   }
@@ -31,12 +33,12 @@ const SignIn = () => {
     <div id="signinpage">
       <div className="form-box">
         <Link to="/">
-          <img src={monaly_logo} alt="" className="mb-32 h-25-900"  />
+          <img src={monaly_logo} alt="" className="mb-32 h-25-900" />
         </Link>
         <p className="header-p mb-48 mb-32-900">
           Login in to your monaly account!
         </p>
-        <form action="sign-in" onSubmit={handleSignIn}> 
+        <form action="sign-in" onSubmit={handleSignIn}>
           <CustomInput
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email Address"

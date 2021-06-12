@@ -58,7 +58,7 @@
 }
 #phone-content .icon {
   margin: 0 8px;
-  font-size: 15px;
+  font-size: 24px;
   cursor: pointer;
   border-radius: 4px;
   overflow: hidden;
@@ -86,7 +86,7 @@
 }
 #phone-content .custom-link-btn {
   width: 100%;
-  height: 48px;
+  height: 64px;
   /* Monaly primary */
 
   box-sizing: border-box;
@@ -94,8 +94,8 @@
   border-radius: 8px;
   font-family: Poppins;
   font-style: normal;
-  font-weight: normal;
-  font-size: 10px;
+  font-weight: 600;
+  font-size: 16px;
   /* identical to box height, or 283% */
 
   letter-spacing: 0.35px;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getLoggedInUser, logUserOut } from "../../../store/authSlice";
@@ -7,12 +7,12 @@ import "./css/style.css";
 const HomePage = () => {
   const loggedInUser = useSelector(getLoggedInUser);
   const dispatch = useDispatch();
+
   return (
     <div className="container mt-30">
       <div className="card">
         <div className="card-header">Monaly App</div>
         <div className="card-body">
-          {/* <div id="paypal-button-container-P-59V25273NS2947038MCHJHOY"></div> */}
           <ul>
             <li>
               <Link to="/">HomePage</Link>

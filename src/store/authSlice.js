@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { apiCallBegan } from "./api";
 import jwt from "jsonwebtoken";
 import moment from "moment";
-
+ 
 const slice = createSlice({
   name: "user",
   initialState: {
@@ -13,6 +13,7 @@ const slice = createSlice({
     visitorView: {},
     stackStyle: "stacked",
     visitors: [],
+    countries: [],
     subscription: {},
     subscriptions: [],
   },
@@ -51,7 +52,8 @@ const slice = createSlice({
       user.loading = true;
     },
     visitorsReceived: (user, action) => {
-      user.visitors = action.payload;
+      user.visitors = action.payload.visitors;
+      user.countries = action.payload.countries;
       user.loading = false;
     },
     visitorsRequestFailed: (user, action) => {

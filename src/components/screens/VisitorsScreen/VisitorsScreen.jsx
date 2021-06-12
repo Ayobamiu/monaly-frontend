@@ -12,9 +12,7 @@ import {
 import { viewsocialMedia } from "../../../store/sociaMediaSampleSlice";
 
 import { useDispatch, useSelector } from "react-redux";
-import {
-  matchLightSocialIcon,
-} from "../../../assets/js/controls";
+import { matchLightSocialIcon } from "../../../assets/js/controls";
 import { getAddress, ipLookUp } from "../../../assets/js/getAddress";
 import { viewCustomLink } from "../../../store/customLinkSlice";
 
@@ -24,6 +22,8 @@ const VisitorsScreen = (props) => {
   const divRref = useRef(null);
 
   useEffect(async () => {
+    document.title = "@" + props.match.params.userName + " | Monaly";
+
     dispatch(loadVisitorScreen(props.match.params.userName));
     divRref.current.scrollIntoView({ behavior: "smooth" });
 

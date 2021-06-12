@@ -26,6 +26,9 @@ const ResetPassword = (props) => {
   if (loggedInUser) {
     window.location = "/";
   }
+  useEffect(() => {
+    document.title = "Reset Password | Monaly";
+  }, []);
   const loadingUser = useSelector(resetLoading);
   const userStatus = useSelector(resetStatus);
 

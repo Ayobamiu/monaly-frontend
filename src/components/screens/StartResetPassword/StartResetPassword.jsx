@@ -22,6 +22,8 @@ const StartResetPassword = () => {
   const loadingUser = useSelector(startResetloading);
   const userStatus = useSelector(startResetstatus);
   useEffect(() => {
+    document.title = "Start Reset Password | Monaly";
+
     if (userStatus && userStatus.status === "success") {
       setResetButtonLabel("Resend link");
     }

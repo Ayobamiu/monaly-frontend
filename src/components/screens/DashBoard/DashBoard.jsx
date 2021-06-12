@@ -84,6 +84,8 @@ import { loadNotifications } from "../../../store/notificationSlice";
 import Notifications from "../../includes/Notifications/Notifications";
 import SmartPhoneContent from "../../includes/SmartPhoneContent/SmartPhoneContent";
 import moment from "moment";
+import DataMap from "../../includes/Map/Map";
+import ApexChart from "../../includes/ApexChart/ApexChart";
 
 const DashBoard = (props) => {
   const ReUsableSocialInput = ({
@@ -150,6 +152,7 @@ const DashBoard = (props) => {
     dispatch(loadLoggedInUser());
     dispatch(loadNotifications());
     dispatch(getMySubscription());
+    document.title = "Dashboard | Monaly";
   }, [good]);
   const currentUser = getLoggedInUser() && getLoggedInUser().user;
   const [modal, setModal] = useState(false);
@@ -541,7 +544,7 @@ const DashBoard = (props) => {
           </div>
           <div className="edit-screen">
             <div className="top-bar">
-              <div className="nav">
+              <div className="nav hide-at-900">
                 <NavigationItem index="1" title="Links" to="links" />
                 <NavigationItem index="2" title="Appearance" to="appearance" />
 
@@ -916,53 +919,6 @@ const DashBoard = (props) => {
                     </div>
                   </div>
 
-                  <div id="appearance">
-                    <div id="subscriptions">
-                      <h2>Subscriptions History</h2>
-                      <div className="appearance-box">
-                        {subscriptions.length === 0 && (
-                          <div className="no-visitors-details">
-                            <h2>Nothing here yet</h2>
-                            <p className="custom-p">
-                              You will see all your subscriptions history here
-                            </p>
-                          </div>
-                        )}
-
-                        {subscriptions.map((item) => (
-                          <div className="subscription-item">
-                            <div className="subscription-item-left">
-                              <h5>
-                                {moment(item.startDate).format("MMMM YYYY")}
-                              </h5>
-                              <span className="small-p">
-                                {userProfile.firstName} {userProfile.lastName}
-                              </span>
-                              <p className="custom-p">
-                                Due {moment(item.endDate).format("MMMM Do")}
-                              </p>
-                            </div>
-                            <div className="subscription-item-right">
-                              <h5>$5</h5>
-                              <span
-                                className={`badge ${
-                                  item.endDate < moment().format() &&
-                                  "badge-success"
-                                } ${
-                                  item.endDate > moment().format() &&
-                                  "badge-primary"
-                                }`}
-                              >
-                                {item.endDate < moment().format() &&
-                                  "completed"}
-                                {item.endDate > moment().format() && "active"}
-                              </span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
                   <div style={{ height: "300px" }}></div>
                 </Route>
                 <Route path={`${path}/analytics`}>
@@ -981,6 +937,63 @@ const DashBoard = (props) => {
                         <h2>{clickThroughRatio(userProfile)}%</h2>
                       </div>
                     </div>
+
+                    <div className="">
+                      <ul
+                        class="nav nav-pills mb-3 py-2"
+                        id="pills-tab"
+                        role="tablist"
+                      >
+                        <li class="" role="presentation">
+                          <button
+                            class="nav-link active"
+                            id="pills-map-tab"
+                            data-bs-toggle="pill"
+                            data-bs-target="#pills-map"
+                            type="button"
+                            role="tab"
+                            aria-controls="pills-map"
+                            aria-selected="true"
+                          >
+                            All
+                          </button>
+                        </li>
+                        <li class="" role="presentation">
+                          <button
+                            class="nav-link"
+                            id="pills-bars-tab"
+                            data-bs-toggle="pill"
+                            data-bs-target="#pills-bars"
+                            type="button"
+                            role="tab"
+                            aria-controls="pills-bars"
+                            aria-selected="false"
+                          >
+                            Top Countries
+                          </button>
+                        </li>
+                      </ul>
+
+                      <div class="tab-content" id="pills-tabContent">
+                        <div
+                          class="tab-pane fade show active"
+                          id="pills-map"
+                          role="tabpanel"
+                          aria-labelledby="pills-map-tab"
+                        >
+                          <DataMap />
+                        </div>
+                        <div
+                          class="tab-pane fade"
+                          id="pills-bars"
+                          role="tabpanel"
+                          aria-labelledby="pills-bars-tab"
+                        >
+                          <ApexChart />
+                        </div>
+                      </div>
+                    </div>
+
                     <div className="row justify-content-between">
                       <div className="col">
                         <h2 className="py-2">Visitors</h2>
@@ -1032,7 +1045,6 @@ const DashBoard = (props) => {
                   <div id="appearance">
                     <h2>Pricing</h2>
                     <Pricing />
-                    
                   </div>
                   <div style={{ height: "300px" }}></div>
                 </Route>
