@@ -24,6 +24,11 @@ import ShoppingCart from "../../../assets/images/ShoppingCart.svg";
 import DollarSign from "../../../assets/images/DollarSign.svg";
 import monaly_logo from "../../../assets/images/monaly_logo.svg";
 import MonalyLogoWhite from "../../../assets/images/MonalyLogoWhite.svg";
+import SectionOne5 from "../../../assets/images/SectionOne5.svg";
+import SectionOne4 from "../../../assets/images/SectionOne4.svg";
+import SectionOne3 from "../../../assets/images/SectionOne3.svg";
+import SectionOne2 from "../../../assets/images/SectionOne2.svg";
+import SectionOne1 from "../../../assets/images/SectionOne1.svg";
 import picp from "../../../assets/images/picp.jpg";
 
 const HomePage = (props) => {
@@ -159,7 +164,33 @@ const HomePage = (props) => {
               </ul>
             </div>
             <div className="col-md-6 col-12">
-              <img src={Group1000001659} alt="monaly products" width="100%" />
+              <div className="homepage-moving-images">
+                <img
+                  src={SectionOne1}
+                  alt="SectionOne1"
+                  className="SectionOne1"
+                />
+                <img
+                  src={SectionOne2}
+                  alt="SectionOne2"
+                  className="SectionOne2"
+                />
+                <img
+                  src={SectionOne3}
+                  alt="SectionOne3"
+                  className="SectionOne3"
+                />
+                <img
+                  src={SectionOne4}
+                  alt="SectionOne4"
+                  className="SectionOne4"
+                />
+                <img
+                  src={SectionOne5}
+                  alt="SectionOne5"
+                  className="SectionOne5"
+                />
+              </div>
             </div>
           </div>
           <div className="my-4 text-center">
