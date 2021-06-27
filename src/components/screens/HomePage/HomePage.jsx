@@ -59,7 +59,7 @@ const HomePage = (props) => {
         </li>
         {loggedInUser && (
           <li className="ml-auto mr-3">
-            <Link to="/sign-in" className="link-x-small">
+            <Link to="/dashboard" className="link-x-small">
               Dashboard
             </Link>
           </li>
@@ -397,44 +397,46 @@ const HomePage = (props) => {
         </div>
       </section>
 
-      <section id="homepageSectionFive" className="py-5 my-5">
-        <h1 className="display-large-bold text-center ">
-          What people are saying about us
-        </h1>
-        <div className="container-fluid my-5">
-          <div className="d-flex testimony-box py-3 justify-content-center">
-            <TestimonyCard
-              image={picp}
-              heading="Terry Dias"
-              text="I just signed up for a trial and within a couple of hours had a brand
+      <section id="homepageSectionFive" className="py-5 my-5 ">
+        <div className="container-fluid">
+          <h1 className="display-large-bold text-center ">
+            What people are saying about us
+          </h1>
+          <div className=" my-5">
+            <div className="d-flex testimony-box py-3 justify-content-start">
+              <TestimonyCard
+                image={picp}
+                heading="Terry Dias"
+                text="I just signed up for a trial and within a couple of hours had a brand
         new customer testimonials page built on our website as well as
         sliders..."
-              className="rad-top-left-0 rad-bottom-right-0"
-            />
-            <TestimonyCard
-              image={picp}
-              heading="Terry Dias"
-              text="I just signed up for a trial and within a couple of hours had a brand
+                className="rad-top-left-0 rad-bottom-right-0"
+              />
+              <TestimonyCard
+                image={picp}
+                heading="Terry Dias"
+                text="I just signed up for a trial and within a couple of hours had a brand
         new customer testimonials page built on our website as well as
         sliders..."
-            />
-            <TestimonyCard
-              image={picp}
-              heading="Terry Dias"
-              text="I just signed up for a trial and within a couple of hours had a brand
+              />
+              <TestimonyCard
+                image={picp}
+                heading="Terry Dias"
+                text="I just signed up for a trial and within a couple of hours had a brand
         new customer testimonials page built on our website as well as
         sliders..."
-            />
-            <TestimonyCard
-              image={picp}
-              heading="Terry Dias"
-              text="I just signed up for a trial and within a couple of hours had a brand
+              />
+              <TestimonyCard
+                image={picp}
+                heading="Terry Dias"
+                text="I just signed up for a trial and within a couple of hours had a brand
         new customer testimonials page built on our website as well as
         sliders..."
-              className="rad-top-right-0 rad-bottom-left-0"
-            />
+                className="rad-top-right-0 rad-bottom-left-0"
+              />
+            </div>
           </div>
-        </div>
+        </div>{" "}
       </section>
 
       <footer className="text-white py-5">

@@ -106,10 +106,9 @@
 }
 @media screen and (max-width: 900px) {
   .e-ad-card {
-    width: 100px;
-    height: 100px;
-    border-radius: 8px;
     padding: 5px;
+    width: 140px;
+    height: 140px;
   }
   .e-ad-card p {
     line-height: 14px;
@@ -120,9 +119,10 @@
   .testimony-card {
     padding: 1rem;
     width: 210px;
-    height: 201px;
     margin: 0px 14px;
     overflow: hidden;
+    height: auto;
+    max-height: 301px;
   }
   .testimony-card p {
     margin-bottom: 0;
