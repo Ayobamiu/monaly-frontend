@@ -13,6 +13,7 @@ const CustomInput = ({
   type,
   id,
   required,
+  defaultValue,
 }) => {
   const [inputType, setInputType] = useState(type);
   const [showLabel, setShowLabel] = useState(false);
@@ -26,6 +27,7 @@ const CustomInput = ({
         <div className="input-inner">
           {showLabel && <label htmlFor={placeholder}>{placeholder}</label>}
           <input
+            defaultValue={defaultValue}
             type={inputType}
             placeholder={placeholder}
             id={placeholder}

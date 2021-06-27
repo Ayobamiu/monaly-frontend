@@ -48,6 +48,7 @@ import {
   getLoggedInUser,
   getMySubscription,
   getMySubscriptions,
+  getMyVisitors,
   logUserOut,
   updateUserProfile,
   uploadUserPhotos,
@@ -135,6 +136,8 @@ const DashBoard = (props) => {
   const themes = useSelector((state) => state.app.themes.list);
   const notifications = useSelector((state) => state.app.notifications.list);
   const visitors = useSelector((state) => state.app.user.visitors);
+  const countries = useSelector((state) => state.app.user.countries);
+
   const visitorsData = visitors.map((visitor, index) => {
     return {
       index: index + 1,
@@ -152,6 +155,8 @@ const DashBoard = (props) => {
     dispatch(loadLoggedInUser());
     dispatch(loadNotifications());
     dispatch(getMySubscription());
+    dispatch(getMyVisitors());
+
     document.title = "Dashboard | Monaly";
   }, [good]);
   const currentUser = getLoggedInUser() && getLoggedInUser().user;
@@ -989,7 +994,7 @@ const DashBoard = (props) => {
                           role="tabpanel"
                           aria-labelledby="pills-bars-tab"
                         >
-                          <ApexChart />
+                          <ApexChart countries={countries} />
                         </div>
                       </div>
                     </div>

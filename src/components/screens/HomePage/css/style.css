@@ -1,0 +1,134 @@
+#homepage a:active {
+  color: currentColor;
+  text-decoration: none;
+}
+#homepage a:hover {
+  color: currentColor;
+  text-decoration: none;
+}
+#homepage ul {
+  padding-left: 0;
+}
+#homepage li {
+  list-style: none;
+}
+#homepage input {
+  outline: none;
+}
+#homepage .marked-list-item::before {
+  content: url("../../../../assets/images/Mark.svg");
+  margin-right: 10px;
+}
+
+.stripe-bg {
+  background-image: url("../../../../assets/images/StripeBG.svg");
+  background-position: bottom;
+  background-size: 50%;
+}
+.e-ad-card {
+  width: 250px;
+  height: 250px;
+  background: #ef476f;
+  border-radius: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.pricing-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 30px;
+  width: 310px;
+  height: 553px;
+  background: #ffffff;
+  border: 1.11468px solid #d6dae4;
+  box-sizing: border-box;
+  border-radius: 32px;
+}
+.pricing-card a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pricing-card.monaly-border {
+  height: 561px;
+  border: 3px solid #ef476f;
+}
+.testimony-box {
+  width: 100%;
+  overflow-y: scroll;
+}
+.testimony-box::-webkit-scrollbar {
+  width: 0; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+}
+
+.testimony-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 26px;
+  width: 310px;
+  height: 301px;
+  background: #ffffff;
+  box-shadow: 0px 0px 10px rgba(156, 160, 172, 0.4);
+  border-radius: 32px;
+  flex: none;
+  order: 2;
+  flex-grow: 0;
+  margin: 0px 24px;
+}
+.testimony-card.rad-top-right-0 {
+  border-top-right-radius: 0px;
+}
+.testimony-card.rad-top-left-0 {
+  border-top-left-radius: 0px;
+}
+.testimony-card.rad-bottom-right-0 {
+  border-bottom-right-radius: 0px;
+}
+.testimony-card.rad-bottom-left-0 {
+  border-bottom-left-radius: 0px;
+}
+#homepage footer {
+  min-height: 422px;
+  background: #111827;
+}
+#homepage footer p {
+  font-size: 12px;
+  line-height: 15px;
+  /* or 137% */
+  font-weight: 400;
+
+  color: #ffffff;
+}
+@media screen and (max-width: 900px) {
+  .e-ad-card {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    padding: 5px;
+  }
+  .e-ad-card p {
+    line-height: 14px;
+    margin-bottom: 0rem;
+    font-size: 12px;
+  }
+
+  .testimony-card {
+    padding: 1rem;
+    width: 210px;
+    height: 201px;
+    margin: 0px 14px;
+    overflow: hidden;
+  }
+  .testimony-card p {
+    margin-bottom: 0;
+    font-size: 12px !important;
+  }
+  .testimony-card .avatar {
+    margin-bottom: 10px !important;
+  }
+}

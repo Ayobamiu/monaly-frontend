@@ -1,15 +1,9 @@
 import React, { useEffect } from "react";
 import Chart from "react-apexcharts";
-import { useDispatch, useSelector } from "react-redux";
-import { getMyVisitors } from "../../../store/authSlice";
 import _ from "lodash";
 
-const ApexChart = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getMyVisitors());
-  }, []);
-  const countries = useSelector((state) => state.app.user.countries);
+const ApexChart = (props) => {
+  const countries = props.countries;
 
   const sortedLayers = _.sortBy(countries.layers, ["count", "name"]);
   const reversedLayers = _.reverse(sortedLayers);
@@ -109,7 +103,16 @@ const ApexChart = () => {
 
   return (
     <div id="chart">
-      <Chart options={options} series={series} type="bar" height={350} />
+      {firstTenCountries.length > 0 ? (
+        <Chart options={options} series={series} type="bar" height={350} />
+      ) : (
+        <div className="no-visitors-details">
+          <h2>Nothing here yet</h2>
+          <p className="custom-p">
+            You will see a chart display of your visitors' location
+          </p>
+        </div>
+      )}
     </div>
   );
 };

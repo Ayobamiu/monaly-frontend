@@ -10,7 +10,7 @@ const DataMap = (props) => {
     dispatch(getMyVisitors());
   }, []);
 
-  const countries = useSelector((state) => state.app.user.countries); 
+  const countries = useSelector((state) => state.app.user.countries);
   const below1000 = [];
 
   const below100000 = [];
@@ -92,6 +92,14 @@ const DataMap = (props) => {
           currentLayers={above100000}
         />
       </Map>
+      {countries.length === 0 && (
+        <div className="no-visitors-details">
+          <h2>Nothing here yet</h2>
+          <p className="custom-p">
+            You will see a map display of your visitors' location
+          </p>
+        </div>
+      )}
       <p>
         {(hovered || focused) && (
           <code>

@@ -8,12 +8,11 @@ import {
   loading,
   signUserUp,
   status,
-  user,
-  error,
   userNameloading,
   userNamestatus,
   checkUserNameAvailability,
   getLoggedInUser,
+  changeAuthInput,
 } from "../../../store/authSlice";
 
 const SignUp = () => {
@@ -34,12 +33,14 @@ const SignUp = () => {
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
   const [email, setEmail] = useState(null);
-  const [userName, setUserName] = useState(null);
   const [password, setPassword] = useState(null);
+  const signUpUserName = useSelector((state) => state.app.user.signUpUserName);
+
   const handleSignUp = (e) => {
     e.preventDefault();
-    dispatch(signUserUp(firstName, lastName, email, userName, password));
+    dispatch(signUserUp(firstName, lastName, email, signUpUserName, password));
   };
+  console.log("signUpUserName", signUpUserName);
 
   return (
     <div id="signuppage">
@@ -74,7 +75,7 @@ const SignUp = () => {
           />
           <CustomInput
             onChange={(e) => {
-              setUserName(e.target.value);
+              dispatch(changeAuthInput("signUpUserName", e.target.value));
               if (e.target.value && e.target.value.length > 0) {
                 dispatch(checkUserNameAvailability(e.target.value));
               }
@@ -83,6 +84,7 @@ const SignUp = () => {
             type="text"
             required={true}
             id="userName"
+            defaultValue={signUpUserName}
           />
           {statusUsername && (
             <div style={{ display: "flex", margin: 0 }}>
@@ -94,7 +96,7 @@ const SignUp = () => {
                   <span class="visually-hidden">Loading...</span>
                 </div>
               )}
-              {statusUsername && userName && (
+              {statusUsername && signUpUserName && (
                 <span
                   style={{
                     color: statusUsername && statusUsername.color,

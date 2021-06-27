@@ -2,12 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import { apiCallBegan } from "./api";
 import jwt from "jsonwebtoken";
 import moment from "moment";
- 
+
 const slice = createSlice({
   name: "user",
   initialState: {
     profile: {},
-    userName: { status: null },
+    userName: { status: null, loading: false },
     startReset: { status: null },
     reset: { status: null },
     visitorView: {},
@@ -16,8 +16,12 @@ const slice = createSlice({
     countries: [],
     subscription: {},
     subscriptions: [],
+    signUpUserName: "",
   },
   reducers: {
+    changeInput: (user, action) => {
+      user[action.payload.name] = action.payload.value;
+    },
     subscriptionAddStart: (user, action) => {
       user.loading = true;
     },
@@ -236,9 +240,14 @@ export const {
   subscriptionAddFailed,
   subscriptionAddStart,
   subscriptionAdded,
+  changeInput,
 } = slice.actions;
 
 export default slice.reducer;
+
+export const changeAuthInput = (name, value) => (dispatch) => {
+  dispatch({ type: changeInput, payload: { name, value } });
+};
 
 export const checkUserNameAvailability = (userName) => (dispatch) => {
   dispatch(
@@ -473,7 +482,6 @@ export const visitorViewData = (state) => state.app.user.visitorView;
 export const user = (state) => state.app.user.profile;
 export const error = (state) => state.app.user.error;
 export const status = (state) => state.app.user.status;
-// export const loadingUpdate = (state) => state.app.user.loadingUpdate;
 export const loading = (state) => state.app.user.loading;
 export const userNamestatus = (state) => state.app.user.userName.status;
 export const userNameloading = (state) => state.app.user.userName.loading;
