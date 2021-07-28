@@ -15,7 +15,8 @@ import {
   changeAuthInput,
 } from "../../../store/authSlice";
 
-const SignUp = () => {
+const SignUp = (props) => {
+  const redirect = props.match.params.redirect;
   const dispatch = useDispatch();
   const loggedInUser = useSelector(getLoggedInUser);
 
@@ -24,6 +25,9 @@ const SignUp = () => {
   }
 
   useEffect(() => {
+    if (redirect) {
+      dispatch(changeAuthInput("redirect", redirect));
+    }
     document.title = "Sign Up | Monaly";
   }, []);
   const loadingUser = useSelector(loading);
@@ -146,7 +150,7 @@ const SignUp = () => {
         </button> */}
         <p className="action-p">
           Already have an account? &nbsp;
-          <Link to="/sign-in" className="dark-action-p">
+          <Link to={`/sign-in?redirect=${redirect}`} className="dark-action-p">
             Login here
           </Link>
         </p>

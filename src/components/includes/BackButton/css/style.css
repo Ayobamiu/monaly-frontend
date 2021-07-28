@@ -1,0 +1,11 @@
+.back-arrow {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cart-count {
+  top: 0px;
+  right: 0px;
+}

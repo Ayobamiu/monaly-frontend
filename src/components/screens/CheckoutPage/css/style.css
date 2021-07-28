@@ -1,0 +1,32 @@
+#checoutPage {
+  margin-bottom: 100px;
+}
+#checoutPage .company-item {
+  height: 100px;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+}
+#checoutPage .company-item-image {
+  height: 100%;
+  width: 200px;
+  border-radius: 16px;
+}
+#checoutPage .company-item-input {
+  width: 40px;
+  background-color: transparent;
+  border: solid 0.5px grey;
+  border-radius: 10px;
+}
+.dashed {
+  border-style: dashed;
+}
+.form-200 {
+  height: 200px;
+  overflow: scroll;
+}
+@media screen and (max-width: 900px) {
+  #checoutPage .company-item {
+    /* height: 300px; */
+  }
+}

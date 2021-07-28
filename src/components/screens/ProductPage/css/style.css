@@ -1,0 +1,18 @@
+#productPage {
+  margin-bottom: 100px;
+}
+#productPage .product-image {
+  height: 600px;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media screen and (max-width: 900px) {
+  #productPage .product-image {
+    height: 300px;
+  }
+}

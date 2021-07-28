@@ -1,0 +1,28 @@
+#cartPage {
+  margin-bottom: 100px;
+}
+#cartPage .cart-item {
+  height: 100px;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+}
+#cartPage .cart-item-image {
+  height: 100%;
+  width: 200px;
+  border-radius: 16px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
+}
+#cartPage .cart-item-input {
+  width: 40px;
+  background-color: transparent;
+  border: solid 0.5px grey;
+  border-radius: 10px;
+}
+@media screen and (max-width: 900px) {
+  #cartPage .cart-item {
+    /* height: 300px; */
+  }
+}

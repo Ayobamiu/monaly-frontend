@@ -12,10 +12,16 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+a {
+  text-decoration: none !important;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+.shadow-small {
+  box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
 }
 .avatar {
   display: flex;
@@ -284,7 +290,7 @@ code {
   line-height: 24px;
   /* or 150% */
 
-  text-align: center;
+  /* text-align: center; */
   letter-spacing: 0.75px;
 
   /* Grayscale / Body */
@@ -559,30 +565,10 @@ code {
   padding: 0.2rem 2rem;
 }
 .custom-btn-xsm {
-  /* Grayscale / Line */
-
-  border: 2px solid #d6d8e7;
-  box-sizing: border-box;
-  border-radius: 20px;
-  height: 40px;
-  width: 63.276817321777344px;
-  /* Mobile / Link X-Small */
-
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 13px;
-  line-height: 22px;
-  /* or 169% */
-
-  display: flex;
-  align-items: center;
-  letter-spacing: 0.25px;
-  justify-content: center;
-
-  /* Monaly primary */
-
-  color: #ef476f;
+  height: unset;
+  width: unset;
+  border-radius: 40px;
+  padding: 0.2rem 1rem;
 }
 .primary-inverse-btn:active {
   transform: scale(1.002);
@@ -761,6 +747,9 @@ input::-ms-clear {
 .hide {
   display: none;
 }
+.show-900 {
+  display: none;
+}
 .cursor {
   cursor: pointer;
 }
@@ -913,6 +902,9 @@ a {
   }
   .hide-900 {
     display: none;
+  }
+  .show-900 {
+    display: block;
   }
   .h-25-900 {
     height: 25px;

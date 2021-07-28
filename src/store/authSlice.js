@@ -17,6 +17,10 @@ const slice = createSlice({
     subscription: {},
     subscriptions: [],
     signUpUserName: "",
+    signUpFirstName: "",
+    signUpLastName: "",
+    signUpEmail: "",
+    redirect: "",
   },
   reducers: {
     changeInput: (user, action) => {
@@ -169,6 +173,9 @@ const slice = createSlice({
       user.profile = action.payload.user;
       user.status = { message: "Sign Up successful", color: "#00966d" };
       localStorage.setItem("authToken", action.payload.token);
+      if (user.redirect) {
+        window.location = user.redirect;
+      }
     },
     signUpFailed: (user, action) => {
       user.loading = false;
@@ -187,6 +194,9 @@ const slice = createSlice({
       user.profile = action.payload.user;
       user.status = { message: "Login successful", color: "#00966d" };
       localStorage.setItem("authToken", action.payload.token);
+      if (user.redirect) {
+        window.location = user.redirect;
+      }
     },
     authFailed: (user, action) => {
       user.loading = false;
@@ -246,7 +256,7 @@ export const {
 export default slice.reducer;
 
 export const changeAuthInput = (name, value) => (dispatch) => {
-  dispatch({ type: changeInput, payload: { name, value } });
+  dispatch({ type: changeInput.type, payload: { name, value } });
 };
 
 export const checkUserNameAvailability = (userName) => (dispatch) => {
@@ -333,7 +343,6 @@ export const getMySubscriptions = () => (dispatch) => {
     })
   );
 };
-
 export const getMySubscription = () => (dispatch) => {
   dispatch(
     apiCallBegan({

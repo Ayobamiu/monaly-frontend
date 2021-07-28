@@ -6,8 +6,10 @@ import customLinkReducer from "./customLinkSlice";
 import socialMediaSampleReducer from "./sociaMediaSampleSlice";
 import themeReducer from "./themeSlice";
 import notificationReducer from "./notificationSlice";
+import productReducer from "./productSlice";
 
 export default combineReducers({
+  products: productReducer,
   notifications: notificationReducer,
   highlights: highlightReducer,
   users: usersReducer,

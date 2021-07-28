@@ -84,6 +84,7 @@
 .testimony-box {
   width: 100%;
   overflow-y: scroll;
+  justify-content: center;
 }
 .testimony-box::-webkit-scrollbar {
   width: 0; /* Remove scrollbar space */
@@ -144,7 +145,7 @@
   left: 0%;
   top: 2rem;
   z-index: 2;
-  animation: float 6s ease-in-out infinite;
+  /* animation: float 6s ease-in-out infinite; */
 }
 .SectionOne2 {
   position: absolute;
@@ -152,7 +153,7 @@
   left: 0%;
   bottom: 10%;
   z-index: 2;
-  animation: float 6s ease-in-out infinite;
+  /* animation: float 6s ease-in-out infinite; */
 }
 .SectionOne3 {
   position: absolute;
@@ -161,7 +162,7 @@
   bottom: 40%;
   z-index: 2;
   animation: float 6s ease-in-out infinite;
-  animation-delay: 5s;
+  /* animation-delay: 5s; */
 }
 .SectionOne4 {
   position: absolute;
@@ -220,6 +221,9 @@
     line-height: 14px;
     margin-bottom: 0rem;
     font-size: 12px;
+  }
+  .testimony-box {
+    justify-content: flex-start;
   }
 
   .testimony-card {

@@ -1,0 +1,9 @@
+#trackSingleOrder .status-item::before {
+  content: "";
+  background-color: currentColor;
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  margin-right: 10px;
+  border-radius: 50%;
+}

@@ -6,17 +6,22 @@ import CustomInput from "../../includes/CustomInput/CustomInput";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  changeAuthInput,
   getLoggedInUser,
   loading,
   logUserIn,
   status,
 } from "../../../store/authSlice";
 
-const SignIn = () => {
+const SignIn = (props) => {
+  const redirect = props.match.params.redirect;
   const dispatch = useDispatch();
   const loggedInUser = useSelector(getLoggedInUser);
   useEffect(() => {
     document.title = "Login | Monaly";
+    if (redirect) {
+      dispatch(changeAuthInput("redirect", redirect));
+    }
   }, []);
   if (loggedInUser) {
     window.location = "/";
@@ -89,7 +94,7 @@ const SignIn = () => {
         </p>
         <p className="action-p mb-32">
           Don’t have an account?&nbsp;
-          <Link to="/sign-up" className="dark-action-p">
+          <Link to={`/sign-up?redirect=${redirect}`} className="dark-action-p">
             Create one
           </Link>
         </p>

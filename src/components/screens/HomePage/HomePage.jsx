@@ -434,7 +434,7 @@ const HomePage = (props) => {
             What people are saying about us
           </h1>
           <div className=" my-5">
-            <div className="d-flex testimony-box py-3 justify-content-start">
+            <div className="d-flex testimony-box py-3 ">
               <TestimonyCard
                 image={picp}
                 heading="Terry Dias"
