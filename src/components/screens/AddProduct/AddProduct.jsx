@@ -8,6 +8,7 @@ import "./css/style.css";
 
 const AddProduct = (props) => {
   const dispatch = useDispatch();
+  const profile = useSelector((state) => state.app.user.profile);
   const status = useSelector((state) => state.app.products.status);
   useEffect(() => {
     dispatch(loadLoggedInUser());
@@ -25,6 +26,7 @@ const AddProduct = (props) => {
   const [numberInStock, setNumberInStock] = useState(1);
   const [returnable, setReturnable] = useState(true);
   const [video, setVideo] = useState("");
+  const [store, setStore] = useState("");
   console.log("imagesToUpload", imagesToUpload);
   return (
     <div id="addProduct" className="container my-5">
@@ -66,10 +68,32 @@ const AddProduct = (props) => {
           if (returnable) {
             data.set("returnable", returnable);
           }
+          if (store) {
+            data.set("store", store);
+          }
 
           dispatch(addproduct(data));
         }}
       >
+        <label className="text-medium my-2" htmlFor="title">
+          Select Store
+        </label>
+        <select
+          name="store"
+          id="store"
+          onChange={(e) => setStore(e.target.value)}
+          className="form-control form-control-lg"
+          required
+        >
+          <option unselectable>Select Store</option>
+          {profile.stores &&
+            profile.stores.map((store, index) => (
+              <option value={store._id} key={index}>
+                {store.name}
+              </option>
+            ))}
+        </select>
+
         <label className="text-medium my-2" htmlFor="title">
           Title Of the product
         </label>

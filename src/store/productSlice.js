@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import { apiCallBegan } from "./api";
 
 const slice = createSlice({
@@ -8,6 +8,7 @@ const slice = createSlice({
     carts: [],
     orders: [],
     order: {},
+    store: { logo: "", products: [] },
     product: { images: [] },
     dispatchCompanies: [],
     loadingDispatchCompanies: false,
@@ -19,11 +20,36 @@ const slice = createSlice({
     storeLogo: "",
     shippingFee: 0,
     storeAddress: "",
+    storePhoneOne: "",
+    storePhoneTwo: "",
     status: "",
+    loadingStoreLogo: false,
+    loadingStore: false,
   },
   reducers: {
+    storeUpdateStart: (products, action) => {
+      products.loadingStore = true;
+    },
+    storeUpdated: (products, action) => {
+      products.store = {
+        ...action.payload,
+        products: current(products.store.products),
+      };
+      products.loadingStore = false;
+    },
+    storeUpdateFailed: (products, action) => {
+      products.loadingStore = false;
+    },
+
+    storeLogoUpdateStart: (products, action) => {
+      products.loadingStoreLogo = true;
+    },
     storeLogoUpdated: (products, action) => {
-      products.storeLogo = action.payload.storeLogo;
+      products.store.logo = action.payload.logo;
+      products.loadingStoreLogo = false;
+    },
+    storeLogoUpdateFailed: (products, action) => {
+      products.loadingStoreLogo = false;
     },
     orderPlaced: (products, action) => {
       products.carts = [];
@@ -87,11 +113,7 @@ const slice = createSlice({
       products.loading = true;
     },
     productsReceived: (products, action) => {
-      products.list = action.payload.products;
-      products.storeName = action.payload.storeName || action.payload.firstName;
-      products.storeOwner = action.payload._id;
-      products.storeLogo =
-        action.payload.profilePhoto || action.payload.storeLogo;
+      products.store = action.payload;
       products.loading = false;
     },
     productsRequestFailed: (products, action) => {
@@ -112,7 +134,7 @@ const slice = createSlice({
       products.status = "loading..";
     },
     productAdded: (products, action) => {
-      products.list.push(action.payload);
+      products.store.products.push(action.payload);
       products.loading = false;
       products.status = "Added successfully";
     },
@@ -173,29 +195,46 @@ export const {
   orderReceived,
   orderRequestFailed,
   orderRequested,
+  storeUpdated,
+  storeUpdateStart,
+  storeUpdateFailed,
   storeLogoUpdated,
+  storeLogoUpdateStart,
+  storeLogoUpdateFailed,
 } = slice.actions;
 
 export default slice.reducer;
 
 //Action creators
-export const updateStoreLogo = (data) => (dispatch, getState) => {
+
+export const updateStore = (storeId, data) => (dispatch, getState) => {
   dispatch(
     apiCallBegan({
-      url: `/auth/me/storelogo`,
+      url: `products/store/${storeId}`,
       method: "patch",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("authToken"),
-      },
       data,
-      onSuccess: storeLogoUpdated.type,
+      onStart: storeUpdateStart.type,
+      onSuccess: storeUpdated.type,
+      onError: storeUpdateFailed.type,
     })
   );
 };
-export const loadproducts = (userName) => (dispatch, getState) => {
+export const updateStoreLogo = (storeId, data) => (dispatch, getState) => {
   dispatch(
     apiCallBegan({
-      url: `/users/${userName}/store`,
+      url: `products/store/${storeId}/logo`,
+      method: "patch",
+      data,
+      onStart: storeLogoUpdateStart.type,
+      onSuccess: storeLogoUpdated.type,
+      onError: storeLogoUpdateFailed.type,
+    })
+  );
+};
+export const loadStore = (slug) => (dispatch, getState) => {
+  dispatch(
+    apiCallBegan({
+      url: `/products/store/${slug}`,
       onStart: productsRequested.type,
       onSuccess: productsReceived.type,
       onError: productsRequestFailed.type,

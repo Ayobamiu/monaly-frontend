@@ -9,7 +9,7 @@
   border-radius: 16px;
   position: relative;
   background-repeat: no-repeat;
-  background-position: bottom;
+  background-position: center;
   background-size: contain;
   display: flex;
   justify-content: center;
@@ -41,4 +41,7 @@
   .product-item {
     flex: 0 0 100%;
   }
+}
+.transform-x-50 {
+  transform: translateY(-50%);
 }

@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
 import "./css/style.css";
-import sneakers from "../../../assets/images/sneakers.webp";
-import sneakers2 from "../../../assets/images/sneakers2.webp";
 import BackButton from "../../includes/BackButton/BackButton";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";

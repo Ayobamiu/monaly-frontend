@@ -6,7 +6,7 @@ import moment from "moment";
 const slice = createSlice({
   name: "user",
   initialState: {
-    profile: { addresses: [] },
+    profile: { addresses: [], stores: [] },
     userName: { status: null, loading: false },
     startReset: { status: null },
     reset: { status: null },
@@ -22,12 +22,23 @@ const slice = createSlice({
     signUpEmail: "",
     redirect: "",
     addAddressStatus: "",
+    addStoreStatus: "",
   },
   reducers: {
     changeInput: (user, action) => {
       user[action.payload.name] = action.payload.value;
     },
-    addressAddStart: (user, action) => { 
+    storeAddStart: (user, action) => {
+      user.addStoreStatus = "Adding store..";
+    },
+    storeAdded: (user, action) => {
+      user.profile.stores = [action.payload, ...user.profile.stores];
+      user.addStoreStatus = "Added store Successfully.";
+    },
+    storeAddFailed: (user, action) => {
+      user.addStoreStatus = "Adding Failed, Try Again";
+    },
+    addressAddStart: (user, action) => {
       user.addAddressStatus = "Adding Address..";
     },
     addressAdded: (user, action) => {
@@ -268,6 +279,9 @@ export const {
   addressAddFailed,
   addressAddStart,
   addressAdded,
+  storeAddStart,
+  storeAdded,
+  storeAddFailed,
 } = slice.actions;
 
 export default slice.reducer;
@@ -276,6 +290,21 @@ export const changeAuthInput = (name, value) => (dispatch) => {
   dispatch({ type: changeInput.type, payload: { name, value } });
 };
 
+export const addStore = (data) => (dispatch, getState) => {
+  dispatch(
+    apiCallBegan({
+      url: `products/store`,
+      method: "post",
+      data,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("authToken"),
+      },
+      onStart: storeAddStart.type,
+      onSuccess: storeAdded.type,
+      onError: storeAddFailed.type,
+    })
+  );
+};
 export const checkUserNameAvailability = (userName) => (dispatch) => {
   dispatch(
     apiCallBegan({

@@ -282,7 +282,7 @@ const VisitorsScreen = (props) => {
         </div>
       </div>
       <div className="wider-content-bottom" ref={divRref}>
-        <Link to="/">
+        <Link target="_blank" to="/">
           <img
             src={monaly_logo}
             alt="Monaly Logo"

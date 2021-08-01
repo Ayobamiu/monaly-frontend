@@ -20,7 +20,7 @@ const BackButton = ({ showCart = true, text, ...props }) => {
             className="shadow-small p-3 bg-white rounded-pill back-arrow"
             onClick={() => props.props.history.goBack()}
           >
-            <FontAwesomeIcon icon={faArrowLeft} />
+            <FontAwesomeIcon icon={faArrowLeft} /> 
           </div>
           <h1 className="display-small">{text}</h1>
           {showCart && (

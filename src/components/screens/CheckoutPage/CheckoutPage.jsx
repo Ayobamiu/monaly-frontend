@@ -19,6 +19,7 @@ const CheckoutPage = (props) => {
     (state) => state.app.user.addAddressStatus
   );
   const carts = useSelector((state) => state.app.products.carts);
+  console.log("carts", carts);
   const storeAddress = useSelector((state) => state.app.products.storeAddress);
   const shippingFee = useSelector((state) => state.app.products.shippingFee);
   useEffect(() => {
@@ -130,6 +131,8 @@ const CheckoutPage = (props) => {
     }
   };
 
+  // if (latitude && longitude) {
+  // }
   const FormOne = (props) => {
     return (
       <div>
@@ -150,6 +153,14 @@ const CheckoutPage = (props) => {
             e.preventDefault();
             if (addresses.length > 0) {
               props.nextStep();
+              getEstimate(
+                storeAddress.address,
+                storeAddress.latitude,
+                storeAddress.longitude,
+                addressAddress,
+                latitude,
+                longitude
+              );
             }
           }}
         >
@@ -167,7 +178,12 @@ const CheckoutPage = (props) => {
                   value={address._id}
                   id={`shippingAddress${index}`}
                   required={deliveryMethod === "toDoor"}
-                  onChange={(e) => setDileveryAddress(e.target.value)}
+                  onChange={(e) => {
+                    setDileveryAddress(e.target.value);
+                    setLatitude(address.latitude);
+                    setLongitude(address.longitude);
+                    setAddressAddress(address.address);
+                  }}
                 />
                 <label
                   htmlFor={`shippingAddress${index}`}
@@ -228,7 +244,8 @@ const CheckoutPage = (props) => {
               price={1000}
             />
           </div>
-          {/* {merchants &&
+          {loadingDeliveryMerchant && <div className="loader"></div>}
+          {merchants &&
             merchants.length > 0 &&
             merchants.map((merchant) => (
               <div className="d-flex align-items-center">
@@ -252,8 +269,8 @@ const CheckoutPage = (props) => {
                   price={(merchant && merchant.data && merchant.data.fare) || 0}
                 />
               </div>
-            ))} */}
-          {/* {merchants && merchants.length === 0 && (
+            ))}
+          {merchants && merchants.length === 0 && (
             <div className="card dashed my-5 p-3">
               <div className="card-body text-center text-muted">
                 <span>
@@ -262,7 +279,7 @@ const CheckoutPage = (props) => {
                 <div className="loader"></div>
               </div>
             </div>
-          )} */}
+          )}
 
           <br />
           <input type="submit" value="Back" />
@@ -344,14 +361,26 @@ const CheckoutPage = (props) => {
               Pick Up
             </label>
             <br />
-            {storeAddress ? (
-              <small className="text-muted">
-                Our office is at {storeAddress} We are open for pickup between
-                hours of 8am and 7pm everyday of the week.
-              </small>
-            ) : (
-              <small className="text-muted">Pick up at our main office</small>
-            )}
+
+            <div className="collapse" id="pickUpDetails">
+              {storeAddress.allowPickup ? (
+                <small className="text-muted">
+                  Pick Up Address:{storeAddress.address}
+                </small>
+              ) : (
+                <small className="text-muted">Pick up not Available</small>
+              )}
+            </div>
+            <a
+              href="#"
+              data-bs-toggle="collapse"
+              href="#pickUpDetails"
+              role="button"
+              aria-expanded="false"
+              aria-controls="pickUpDetails"
+            >
+              See pick up details..
+            </a>
             <br />
             <input
               type="radio"
