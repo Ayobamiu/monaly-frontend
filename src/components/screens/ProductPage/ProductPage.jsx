@@ -55,7 +55,7 @@ const ProductPage = (props) => {
                   product.images.map((item, index) => (
                     <div class={`carousel-item ${index === 0 && "active"}`}>
                       <div
-                        className="product-image bg-light "
+                        className="product-image bg-white "
                         style={{
                           backgroundImage: `url(${item.image})`,
                         }}
@@ -173,17 +173,56 @@ const ProductPage = (props) => {
             <h1 className="text-medium"></h1>
           </div>
         </div>
-        {product.description && (
-          <div>
-            <h1 className="link-medium">Description</h1>
-            <p className="custom-p">{product.description}</p>
+
+        <div className="row align-items-center my-3 flex-wrap">
+          <div className="col-md-8 col-12 ">
+            {product.description && (
+              <div>
+                <h1 className="link-medium">Description</h1>
+                <p className="custom-p">{product.description}</p>
+              </div>
+            )}
+            <h1 className="link-medium">Return Policy</h1>
+            {product.returnable && (
+              <p className="text-small">
+                This product is marked as returnable. With this, your payment is
+                refundable if you are not satisfied with package delivered to
+                you. <br />
+                <br />
+                <div id="returnPolcy" className="collapse">
+                  After recieving the package, go to your orders page and click{" "}
+                  <button className="btn btn-outline-dark btn-sm" disabled>
+                    Recieved
+                  </button>{" "}
+                  to indicate the you have Recieved and satisfied with the
+                  package delivered.
+                  <br />
+                  <br /> If you don't mark it as Recieved after 24 hours of
+                  delivery, it will be automatically genearated that you are
+                  satisfied with the quality of package Recieved
+                  <br />
+                  <br />
+                  When you have issues with authenticity of package Recieved,
+                  click the{" "}
+                  <button className="btn btn-outline-dark btn-sm" disabled>
+                    Reject
+                  </button>{" "}
+                  button in the order page. And we will proccess your refund
+                </div>
+                <a
+                  href="#"
+                  data-bs-toggle="collapse"
+                  href="#returnPolcy"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="returnPolcy"
+                >
+                  Read more..
+                </a>
+              </p>
+            )}
           </div>
-        )}
-        <h1 className="link-medium">Return Policy</h1>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, rem!{" "}
-          <a href="#">Read more..</a>
-        </p>
+        </div>
       </div>
 
       <div className="fixed-bottom bg-white border-top p-3 container show-900">

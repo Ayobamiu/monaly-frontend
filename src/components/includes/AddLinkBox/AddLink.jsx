@@ -24,7 +24,7 @@ const AddLinkBox = ({
     <div className={`add-link-box  ${!checkedStatus && `opaque`}`} id={_id}>
       <div className="inputs-and-media space-between flex-column">
         <div>
-          <div className="text-icon custom-p fsz-14-900">
+          <div className="text-icon custom-p fsz-14-900 bg-light my-2 p-1 rounded-pill px-3 ">
             <input
               type="text"
               placeholder={title || "Title"}
@@ -32,6 +32,7 @@ const AddLinkBox = ({
               id={`titleinput${_id}`}
               defaultValue={title}
               onChange={(e) => onChangeTitle(e.target.value)}
+              className="bg-light"
             />
             <img
               src={Edit}
@@ -42,13 +43,14 @@ const AddLinkBox = ({
               title="Edit Title"
             />
           </div>
-          <div className="text-icon custom-p fsz-14-900">
+          <div className="text-icon custom-p fsz-14-900 bg-light my-2 p-1 rounded-pill px-3 ">
             <input
               type="url"
               placeholder={link || "Paste link here"}
               id={`linkinput${_id}`}
               defaultValue={link}
               onChange={(e) => onChangeLink(e.target.value)}
+              className="bg-light"
             />
             <img
               src={Edit}

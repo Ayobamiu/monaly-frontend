@@ -184,7 +184,8 @@ export const clickThroughRatio = (user) => {
   return Math.ceil(ctratio * 100) || 0;
 };
 
-export const siteUrl = "monaly-app.herokuapp.com/";
+export const siteUrl = "https://www.monaly.co/";
+export const siteUrlMinusHttps = "monaly.co/";
 
 export function nFormatter(num, digits) {
   var si = [

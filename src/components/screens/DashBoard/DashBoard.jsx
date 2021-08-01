@@ -63,6 +63,7 @@ import {
   siteUrl,
   exampleSubscriptions,
   data1,
+  siteUrlMinusHttps,
 } from "../../../assets/js/controls";
 
 import {
@@ -89,7 +90,6 @@ import DataMap from "../../includes/Map/Map";
 import ApexChart from "../../includes/ApexChart/ApexChart";
 
 const DashBoard = (props) => {
-  
   const ReUsableSocialInput = ({
     onChange,
     placeholder,
@@ -125,6 +125,7 @@ const DashBoard = (props) => {
   const [good, setGood] = useState(false);
   const userProfile = useSelector(user);
   const currentCustomLinks = useSelector(Links);
+  console.log("currentCustomLinks", currentCustomLinks);
   const currentSocialMediaSamples = useSelector(socialMediaSamples);
   const subscription = useSelector((state) => state.app.user.subscription);
   const isSubscribed = subscription && subscription.status === "active";
@@ -333,11 +334,14 @@ const DashBoard = (props) => {
         <span title="Your Monaly Link">
           <b>My monaly:&nbsp;</b>
           <a
-            href={`https://${siteUrl}${currentUser && currentUser.userName}`}
+            href={`${siteUrl}${currentUser && currentUser.userName}`}
             target="_blank"
             rel="noreferrer"
           >
-            <u> mona.ly/{currentUser && currentUser.userName}</u>
+            <u>
+              {" "}
+              {`${siteUrlMinusHttps}${currentUser && currentUser.userName}`}
+            </u>
           </a>
         </span>
         <div className="share-btn relative">
@@ -1071,13 +1075,14 @@ const DashBoard = (props) => {
                   <b>My monaly: </b>
                   <a
                     className="nav-p"
-                    href={`https://${siteUrl}${
-                      currentUser && currentUser.userName
-                    }`}
+                    href={`${siteUrl}${currentUser && currentUser.userName}`}
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <u>mona.ly/{currentUser && currentUser.userName}</u>
+                    <u>
+                      {siteUrlMinusHttps}
+                      {currentUser && currentUser.userName}
+                    </u>
                   </a>
                 </span>
                 <div className="share-btn relative">

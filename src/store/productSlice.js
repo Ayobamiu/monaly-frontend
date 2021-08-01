@@ -313,7 +313,8 @@ export const placeOrder = (
   total,
   shippingFee,
   deliveryMethod,
-  deliveryMerchant
+  deliveryMerchant,
+  dileveryAddress
 ) =>
   apiCallBegan({
     url: "/products/order",
@@ -321,7 +322,14 @@ export const placeOrder = (
       Authorization: "Bearer " + localStorage.getItem("authToken"),
     },
     method: "post",
-    data: { products, total, shippingFee, deliveryMethod, deliveryMerchant },
+    data: {
+      products,
+      total,
+      shippingFee,
+      deliveryMethod,
+      deliveryMerchant,
+      dileveryAddress,
+    },
     onSuccess: orderPlaced.type,
   });
 export const addproduct = (product) =>

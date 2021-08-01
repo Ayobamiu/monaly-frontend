@@ -148,7 +148,7 @@ const VisitorsScreen = (props) => {
         <button
           className={`visitors-link-btn-with-img mb-8 ${className}`}
           style={{
-            color,
+            color: backgroundColor,
             backgroundColor: "transparent",
             background: `linear-gradient(270deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.9) 100%),url(${backgroundImage})`,
             height: "100px",

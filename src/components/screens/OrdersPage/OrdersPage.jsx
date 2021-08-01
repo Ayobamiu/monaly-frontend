@@ -10,10 +10,6 @@ import "./css/style.css";
 
 const OrdersPage = (props) => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(loadOrders());
-    dispatch(loadLoggedInUser());
-  }, []);
   const loggedInUser = useSelector(getLoggedInUser);
   if (!loggedInUser) {
     window.location = "/sign-in";
@@ -24,6 +20,12 @@ const OrdersPage = (props) => {
   const orders = useSelector((state) => state.app.products.orders);
   const user = useSelector((state) => state.app.user.profile);
   console.log("orders", orders);
+  useEffect(() => {
+    if (orders.length === 0) {
+      dispatch(loadOrders());
+    }
+    dispatch(loadLoggedInUser());
+  }, []);
   const OrderItem = ({ order }) => {
     return (
       <div className="my-2 card-body border rounded rounded-4">
@@ -48,14 +50,16 @@ const OrdersPage = (props) => {
           Total: <span className="text-muted">NGN {order.amount}</span>
         </div>
         <NavLink to={`/orders/${order._id}`}>
-          <button className="primary-btn custom-btn-sm m-1">Tracking</button>
+          <button className="primary-btn-inverse custom-btn-sm m-1">
+            Track Order
+          </button>
         </NavLink>
         {user._id === order.seller && (
           <button
             className="primary-btn custom-btn-sm m-1"
             onClick={() => dispatch(updateOrder(order._id, { status: "sent" }))}
           >
-            Dispatched
+            Package Dispatched
           </button>
         )}
         {user._id === order.buyer && (
@@ -65,7 +69,7 @@ const OrdersPage = (props) => {
               dispatch(updateOrder(order._id, { status: "received" }))
             }
           >
-            Recieved
+            Package Recieved
           </button>
         )}
       </div>

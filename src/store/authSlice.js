@@ -6,7 +6,7 @@ import moment from "moment";
 const slice = createSlice({
   name: "user",
   initialState: {
-    profile: {},
+    profile: { addresses: [] },
     userName: { status: null, loading: false },
     startReset: { status: null },
     reset: { status: null },
@@ -21,10 +21,24 @@ const slice = createSlice({
     signUpLastName: "",
     signUpEmail: "",
     redirect: "",
+    addAddressStatus: "",
   },
   reducers: {
     changeInput: (user, action) => {
       user[action.payload.name] = action.payload.value;
+    },
+    addressAddStart: (user, action) => { 
+      user.addAddressStatus = "Adding Address..";
+    },
+    addressAdded: (user, action) => {
+      user.profile.addresses = [
+        action.payload.address,
+        ...user.profile.addresses,
+      ];
+      user.addAddressStatus = "Added Address Successfully.";
+    },
+    addressAddFailed: (user, action) => {
+      user.addAddressStatus = "Adding Failed, Try Again";
     },
     subscriptionAddStart: (user, action) => {
       user.loading = true;
@@ -251,6 +265,9 @@ export const {
   subscriptionAddStart,
   subscriptionAdded,
   changeInput,
+  addressAddFailed,
+  addressAddStart,
+  addressAdded,
 } = slice.actions;
 
 export default slice.reducer;
@@ -282,6 +299,21 @@ export const signUserUp = (firstName, lastName, email, userName, password) => (
       onStart: signUpStart.type,
       onSuccess: signUpSuccess.type,
       onError: signUpFailed.type,
+    })
+  );
+};
+export const addUserAddress = (data) => (dispatch) => {
+  dispatch(
+    apiCallBegan({
+      url: "/auth/add-address",
+      method: "post",
+      data,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("authToken"),
+      },
+      onStart: addressAddStart.type,
+      onSuccess: addressAdded.type,
+      onError: addressAddFailed.type,
     })
   );
 };

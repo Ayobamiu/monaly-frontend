@@ -1,24 +1,23 @@
 import React, { useEffect, useState } from "react";
 import "./css/style.css";
-import sneakers from "../../../assets/images/sneakers.webp";
-import sneakers2 from "../../../assets/images/sneakers2.webp";
 import BackButton from "../../includes/BackButton/BackButton";
-import { faTimes, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import StepWizard from "react-step-wizard";
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 import { useDispatch, useSelector } from "react-redux";
 import { loadCarts, placeOrder } from "../../../store/productSlice";
-import { loadLoggedInUser } from "../../../store/authSlice";
-import { getAddress } from "../../../assets/js/getAddress";
+import { addUserAddress, loadLoggedInUser } from "../../../store/authSlice";
+import { getAddress, getAddressV2 } from "../../../assets/js/getAddress";
 
 const CheckoutPage = (props) => {
   useEffect(() => {
     // getEstimate("GoKada");
   }, []);
   const dispatch = useDispatch();
-  const addresses = [1, 2];
+  const addresses = useSelector((state) => state.app.user.profile.addresses);
+  const addAddressStatus = useSelector(
+    (state) => state.app.user.addAddressStatus
+  );
   const carts = useSelector((state) => state.app.products.carts);
   const storeAddress = useSelector((state) => state.app.products.storeAddress);
   const shippingFee = useSelector((state) => state.app.products.shippingFee);
@@ -48,12 +47,13 @@ const CheckoutPage = (props) => {
   const [addressEmail, setAddressEmail] = useState("");
   const [addressAddress, setAddressAddress] = useState("");
   const [addressCity, setAddressCity] = useState("");
+  const [addressState, setAddressState] = useState("");
+  const [addressCountry, setAddressCountry] = useState("");
+  const [addressZip, setAddressZip] = useState("");
   const [addressPhone, setAddressPhone] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
-  const [showNewAddressForm, setShowNewAddressForm] = useState(false);
-
-  console.log("merchants", merchants);
+  const [gettingLatLong, setGettingLatLong] = useState(false);
 
   const CustomLabel = ({ name, id, price, description }) => {
     return (
@@ -68,11 +68,29 @@ const CheckoutPage = (props) => {
     );
   };
 
+  console.log(
+    "getAddressV2",
+    getAddressV2("3b4c10a64fff96eaf6167a0c4c3926d5", 40.7638435, -73.9729691)
+  );
+
   const getLatLong = async (key, address) => {
     const result = await axios.get(
       `http://api.positionstack.com/v1/forward?access_key=${key}&query=${address}`
     );
-    console.log("result", result);
+    const confidences = [];
+    for (let index = 0; index < result.data.data.length; index++) {
+      const data = result.data.data[index];
+      confidences.push(data.confidence);
+    }
+    var max_of_array = Math.max.apply(Math, confidences);
+    const target = result.data.data.find(
+      (item) => item.confidence === max_of_array
+    );
+    console.log("target && target.latitude", target && target.latitude);
+    setLatitude(target && target.latitude);
+    setLongitude(target && target.longitude);
+    setAddressCountry(target && target.country);
+    console.log("target && target.country", target && target.country);
   };
   const getEstimate = async (
     pickup_address,
@@ -118,116 +136,53 @@ const CheckoutPage = (props) => {
         <div className="d-flex justify-content-between align-items-center">
           <p className="link-large">Select Delivery Address</p>
           <button
-            className="btn btn-primary monaly-primary"
-            onClick={() => setShowNewAddressForm(!showNewAddressForm)}
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
           >
-            Add New
+            Add new
           </button>
         </div>
-        {showNewAddressForm && (
-          <div
-            className="card-body border rounded rounded-4 my-3"
-            id="newAddressForm"
-          >
-            <p className="link-large">Enter Delivery Address</p>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                getLatLong("3b4c10a64fff96eaf6167a0c4c3926d5", addressAddress);
-              }}
-            >
-              <input
-                type="text"
-                name="name"
-                placeholder="Name"
-                id="name"
-                className="form-control  my-3"
-                required={deliveryMethod === "toDoor"}
-                onChange={(e) => setAddressName(e.target.val)}
-              />
-              <input
-                type="tel"
-                name="phone"
-                id="phone"
-                className="form-control  my-3"
-                placeholder="Phone"
-                required={deliveryMethod === "toDoor"}
-                onChange={(e) => setAddressPhone(e.target.val)}
-              />
-              <input
-                type="email"
-                name="email"
-                id="email"
-                className="form-control  my-3"
-                placeholder="Email Address"
-                required={deliveryMethod === "toDoor"}
-                onChange={(e) => {
-                  setAddressEmail(e.target.val);
-                  //use address to pre-fill zip, latitude and longitude
-                }}
-              />
-              <input
-                type="text"
-                name="address"
-                id="address"
-                className="form-control  my-3"
-                placeholder="Address"
-                required={deliveryMethod === "toDoor"}
-                onChange={(e) => setAddressAddress(e.target.val)}
-              />
 
-              <input
-                type="submit"
-                value="Add new"
-                className="my-3 btn btn-primary"
-              />
-            </form>
-          </div>
-        )}
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            props.nextStep();
+            if (addresses.length > 0) {
+              props.nextStep();
+            }
           }}
         >
           <div className="form-200">
             {addresses.length === 0 && (
               <div className=" card-body text-center border rounded rounded-4">
                 <p className="text-medium">Add a new Address to get started</p>
-                <butoon
-                  className="btn btn-primary"
-                  data-bs-toggle="collapse"
-                  href="#newAddressForm"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="newAddressForm"
-                >
-                  Add new
-                </butoon>
               </div>
             )}
             {addresses.map((address, index) => (
-              <div className="d-flex align-items-center my-2">
+              <div className="d-flex align-items-center my-2 0" key={index}>
                 <input
                   type="radio"
                   name="shippingAddress"
-                  value={`shippingAddress${index}`}
+                  value={address._id}
                   id={`shippingAddress${index}`}
                   required={deliveryMethod === "toDoor"}
                   onChange={(e) => setDileveryAddress(e.target.value)}
                 />
                 <label
                   htmlFor={`shippingAddress${index}`}
-                  className="mb-0 card p-3 border rounded rounded-4 mx-2"
+                  className="mb-0 card p-3 border rounded rounded-4 mx-2 w-100"
                 >
                   <small className="text-x-small text-success d-block">
-                    Ayobami Usman
+                    {address.name}
                   </small>
 
                   <span className="text-x-small">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Natus, et.
+                    {address.address + " " + address.state}
                   </span>
+                  <small className="text-x-small text-secondary d-block">
+                    {address.phoneNumber}
+                  </small>
                 </label>{" "}
               </div>
             ))}
@@ -236,7 +191,7 @@ const CheckoutPage = (props) => {
           <input
             type="submit"
             value="Continue"
-            className="form-control form-control-lg my-3 btn btn-primary btn-lg"
+            className=" my-2 btn btn-primary"
           />
         </form>
       </div>
@@ -310,7 +265,7 @@ const CheckoutPage = (props) => {
           )} */}
 
           <br />
-          <input type="submit" value="Continue" />
+          <input type="submit" value="Back" />
         </form>
       </div>
     );
@@ -337,8 +292,23 @@ const CheckoutPage = (props) => {
   };
   // const handleFlutterPayment = useFlutterwave(config);
   const pay = () => {
+    console.log("order data", {
+      carts,
+      total,
+      shippingFee,
+      deliveryMethod,
+      deliveryMerchant,
+      dileveryAddress,
+    });
     dispatch(
-      placeOrder(carts, total, shippingFee, deliveryMethod, deliveryMerchant)
+      placeOrder(
+        carts,
+        total,
+        shippingFee,
+        deliveryMethod,
+        deliveryMerchant,
+        dileveryAddress
+      )
     );
     // handleFlutterPayment({
     //   callback: (response) => {
@@ -355,11 +325,6 @@ const CheckoutPage = (props) => {
     <div id="checoutPage">
       <BackButton text="Checkout" props={props} />
       <div className="container">
-        <p>Click the button to get your coordinates.</p>
-        <button onClick={() => showAddress("6.2222", "3.7674")}>
-          Location
-        </button>
-
         <div className="row align-items-start my-5 flex-wrap">
           <div className="col-md-8 col-12">
             <p className="link-large">Select Delivery Method</p>
@@ -379,11 +344,14 @@ const CheckoutPage = (props) => {
               Pick Up
             </label>
             <br />
-            <small className="text-muted">
-              Our office is at Shop 6, Computer Village Ikeja, Lagos. You can
-              reach us on 08036137042. We are open for pickup between hours of
-              8am and 7pm everyday of the week.
-            </small>
+            {storeAddress ? (
+              <small className="text-muted">
+                Our office is at {storeAddress} We are open for pickup between
+                hours of 8am and 7pm everyday of the week.
+              </small>
+            ) : (
+              <small className="text-muted">Pick up at our main office</small>
+            )}
             <br />
             <input
               type="radio"
@@ -396,10 +364,12 @@ const CheckoutPage = (props) => {
               Door Step Delivery
             </label>
             {deliveryMethod === "toDoor" && (
-              <StepWizard>
-                <FormOne />
-                <FormTwo />
-              </StepWizard>
+              <div className="my-3">
+                <StepWizard>
+                  <FormOne />
+                  <FormTwo />
+                </StepWizard>
+              </div>
             )}
           </div>
           <div className="col-md-4 col-12 hide-900">
@@ -468,6 +438,144 @@ const CheckoutPage = (props) => {
             Order request successful.
           </span>
         )}
+      </div>
+
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form
+              onSubmit={async (e) => {
+                e.preventDefault();
+                setGettingLatLong(true);
+                await getLatLong(
+                  "3b4c10a64fff96eaf6167a0c4c3926d5",
+                  addressAddress + " " + addressCity
+                );
+                setGettingLatLong(false);
+                dispatch(
+                  addUserAddress({
+                    name: addressName,
+                    address: addressAddress,
+                    email: addressEmail,
+                    city: addressCity,
+                    state: addressState,
+                    country: addressCountry,
+                    zip: addressZip,
+                    phoneNumber: addressPhone,
+                    latitude,
+                    longitude,
+                  })
+                );
+              }}
+            >
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                  Enter Delivery Address
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  id="name"
+                  className="form-control  my-3"
+                  required={deliveryMethod === "toDoor"}
+                  onChange={(e) => setAddressName(e.target.value)}
+                />
+                <input
+                  type="tel"
+                  name="phone"
+                  id="phone"
+                  className="form-control  my-3"
+                  placeholder="Phone"
+                  required={deliveryMethod === "toDoor"}
+                  onChange={(e) => setAddressPhone(e.target.value)}
+                />
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  className="form-control  my-3"
+                  placeholder="Email Address"
+                  required={deliveryMethod === "toDoor"}
+                  onChange={(e) => {
+                    setAddressEmail(e.target.value);
+                    //use address to pre-fill zip, latitude and longitude
+                  }}
+                />
+                <input
+                  type="text"
+                  name="address"
+                  id="address"
+                  className="form-control  my-3"
+                  placeholder="Address"
+                  required={deliveryMethod === "toDoor"}
+                  onChange={(e) => {
+                    setAddressAddress(e.target.value);
+                  }}
+                />
+                <input
+                  type="number"
+                  name="zip"
+                  id="zip"
+                  className="form-control  my-3"
+                  placeholder="Postal Code"
+                  required={deliveryMethod === "toDoor"}
+                  onChange={(e) => setAddressZip(e.target.value)}
+                />
+                <input
+                  type="text"
+                  name="city"
+                  id="city"
+                  className="form-control  my-3"
+                  placeholder="City"
+                  required={deliveryMethod === "toDoor"}
+                  onChange={(e) => setAddressCity(e.target.value)}
+                />
+                <input
+                  type="text"
+                  name="state"
+                  id="state"
+                  className="form-control  my-3"
+                  placeholder="State"
+                  required={deliveryMethod === "toDoor"}
+                  onChange={(e) => setAddressState(e.target.value)}
+                />
+              </div>
+              <div class="modal-footer">
+                {gettingLatLong && <span className="loader"></span>}
+                <span className="text-x-small me-auto">{addAddressStatus}</span>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  disabled={gettingLatLong}
+                >
+                  Add Address
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -12,6 +12,7 @@ import { loadLoggedInUser } from "../../../store/authSlice";
 
 const CartPage = (props) => {
   const dispatch = useDispatch();
+  const loadingCarts = useSelector((state) => state.app.products.loadingCarts);
   const carts = useSelector((state) => state.app.products.carts);
   useEffect(() => {
     dispatch(loadCarts());
@@ -28,7 +29,13 @@ const CartPage = (props) => {
       <div className="container">
         <div className="row align-items-start my-5 flex-wrap">
           <div className="col-md-8 col-12">
-            {carts.length === 0 && (
+            {loadingCarts && (
+              <div className="my-2 card-body border rounded rounded-4 text-center">
+                <div className="loader"></div>
+                <div className="text-small">Loading your carts</div>
+              </div>
+            )}
+            {!loadingCarts && carts.length === 0 && (
               <div className="border p-5 rounded w-100 text-center my-5">
                 <span className="text-medium">You have no items in cart</span>
               </div>

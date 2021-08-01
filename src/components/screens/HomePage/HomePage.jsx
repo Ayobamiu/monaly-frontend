@@ -43,21 +43,20 @@ const HomePage = (props) => {
   const loading = useSelector((state) => state.app.user.userName.loading);
   const signUpUserName = useSelector((state) => state.app.user.signUpUserName);
 
-  console.log(props);
   return (
     <div id="homepage">
-      <nav className="d-flex align-items-center justify-content-between py-3 px-0 bg-white ">
-        <li className="mx-4">
+      <nav className="d-flex align-items-center justify-content-between p-3  bg-white ">
+        <li className="mx-2">
           <Link to="/">
             <img src={monaly_logo} height="25px" alt="" />
           </Link>
         </li>
-        <li className="mx-4 hide-900">
+        <li className="mx-2 hide-900">
           <a href="#pricing" className="link-x-small">
             Pricing
           </a>
         </li>
-        <li className="mx-4 hide-900">
+        <li className="mx-2 hide">
           <Link to="/help" className="link-x-small">
             Help
           </Link>
@@ -77,12 +76,12 @@ const HomePage = (props) => {
           </li>
         )}
         {!loggedInUser && (
-          <li className="mx-4">
+          <li className="mx-2">
             <Link
               to="/sign-up"
               className="primary-btn custom-btn-sm link-x-small"
             >
-              SIGN UP FREE{" "}
+              SIGN UP FREE
             </Link>
           </li>
         )}
@@ -91,7 +90,7 @@ const HomePage = (props) => {
       <section id="hompageSectionOne" className="bg-light">
         <div className="container py-5">
           <div className="row align-items-center">
-            <div className="col-md-6 col-12">
+            <div className="col-md-7 col-12">
               <h1 className="display-large-bold">
                 Start sharing and selling in seconds.
               </h1>
@@ -105,7 +104,7 @@ const HomePage = (props) => {
                 </li>
               </ul>
               <form
-                className="rounded-pill border d-flex justify-content-between p-1 mt-5 align-items-center bg-white"
+                className="rounded-pill border d-flex justify-content-between p-2 mt-5 mb-3 align-items-center bg-white"
                 onSubmit={(e) => {
                   e.preventDefault();
                   props.history.push("/sign-up");
@@ -158,12 +157,12 @@ const HomePage = (props) => {
                 </div>
               )}
               <ul className="my-2 text-x-small">
-                <li className="d-inline">Free 7-day trial</li>
+                <li className="d-inline">Free trial</li>
                 <li className="d-inline-block ml-3">Easy setup</li>
                 <li className="d-inline-block ml-3">Cancel any time</li>
               </ul>
             </div>
-            <div className="col-md-6 col-12">
+            <div className="col-md-5 col-12 my-3">
               <div className="homepage-moving-images">
                 <img
                   src={SectionOne1}
@@ -195,9 +194,9 @@ const HomePage = (props) => {
           </div>
           <div className="my-4 text-center">
             <p className="text-medium">
-              Join 50.000+ websites that use monaly to sell more
+              Join 50,000+ websites that use monaly to sell more
             </p>
-            <div className="d-flex justify-content-around flex-wrap">
+            {/* <div className="d-flex justify-content-around flex-wrap ">
               <div className=" text-center my-3">
                 <img src={CNNLogo} height="30px" alt="" />
               </div>
@@ -217,6 +216,7 @@ const HomePage = (props) => {
                 <img src={AncestryLogo} height="30px" alt="" />
               </div>
             </div>
+        */}
           </div>
         </div>
       </section>
@@ -428,7 +428,7 @@ const HomePage = (props) => {
         </div>
       </section>
 
-      <section id="homepageSectionFive" className="py-5 my-5 ">
+      <section id="homepageSectionFive" className="py-5 my-5 hide">
         <div className="container-fluid">
           <h1 className="display-large-bold text-center ">
             What people are saying about us
@@ -470,7 +470,7 @@ const HomePage = (props) => {
         </div>{" "}
       </section>
 
-      <footer className="text-white py-5">
+      <footer className="text-white py-5 hide">
         <div className="container">
           <div className="row">
             <div className="col-md-4 col-12 my-3">

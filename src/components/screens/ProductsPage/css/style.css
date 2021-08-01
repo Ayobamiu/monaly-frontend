@@ -5,16 +5,16 @@
   /* overflow: hidden; */
 }
 .product-item-image {
-  
   height: 200px;
   border-radius: 16px;
   position: relative;
   background-repeat: no-repeat;
   background-position: bottom;
-  background-size: cover;
+  background-size: contain;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 .delete-product {
   position: absolute;

@@ -15,6 +15,7 @@ import { loadLoggedInUser } from "../../../store/authSlice";
 import { loadOrder, updateOrder } from "../../../store/productSlice";
 import BackButton from "../BackButton/BackButton";
 import "./css/style.css";
+import moment from "moment";
 
 const TrackSingleOrder = (props) => {
   const dispatch = useDispatch();
@@ -62,30 +63,50 @@ const TrackSingleOrder = (props) => {
           <FontAwesomeIcon icon={faArrowLeft} />
         </div>
       </div>
-      <div className="link-medium my-2">
-        Tracking Order No:{" "}
-        <span className="text-muted text-medium">772683135914gjdg68et871</span>
-      </div>
-      <div className="link-medium my-2">
-        Shipped By: <span className="text-muted text-medium">UPS Ground</span>
-      </div>
-      <div className="link-medium my-2">
-        Expected Day:{" "}
-        <span className="text-muted text-medium">Sep 21, 2021</span>
-      </div>
+      {order.deliveryMethod === "pickUp" && (
+        <div className="link-medium my-2">
+          Order No:{" "}
+          <span className="text-muted text-medium">
+            772683135914gjdg68et871
+          </span>
+        </div>
+      )}
+      {order.deliveryMethod === "toDoor" && (
+        <div className="link-medium my-2">
+          Tracking Order No:{" "}
+          <span className="text-muted text-medium">{order._id}</span>
+        </div>
+      )}
+      {order.deliveryMethod === "toDoor" && (
+        <div className="link-medium my-2">
+          Shipped By:{" "}
+          <span className="text-muted text-medium">
+            {order.deliveryMerchant}
+          </span>
+        </div>
+      )}
+      {order.deliveryMethod === "toDoor" && (
+        <div className="link-medium my-2">
+          Expected Day:{" "}
+          <span className="text-muted text-medium">
+            {moment(order.eta).format("MMMM Do YYYY")}
+          </span>
+        </div>
+      )}
 
       {user._id === order.seller && (
         <div className="my-2 card-body border rounded rounded-4">
           <small className="text-x-small text-success">For Seller</small>
           <p className="text-small">
             Please click on the dispatched button after you have handed over the
-            package to delivery merchant
+            package to{" "}
+            {order.deliveryMethod === "toDoor" ? "delivery merchant" : "Buyer"}
           </p>
           <button
             className="primary-btn custom-btn-sm"
             onClick={() => dispatch(updateOrder(order._id, { status: "sent" }))}
           >
-            Dispatched
+            Package Dispatched
           </button>
         </div>
       )}
@@ -94,7 +115,8 @@ const TrackSingleOrder = (props) => {
           <small className="text-x-small text-success">For Buyer</small>
           <p className="text-small">
             Please click on the Recieved button after you have retrieved the
-            package from delivery merchant
+            package from{" "}
+            {order.deliveryMethod === "toDoor" ? "delivery merchant" : "Seller"}
           </p>
           <button
             className="primary-btn custom-btn-sm"
@@ -102,12 +124,12 @@ const TrackSingleOrder = (props) => {
               dispatch(updateOrder(order._id, { status: "received" }))
             }
           >
-            Recieved
+            Package Recieved
           </button>
         </div>
       )}
-      <div className="my-3">
-        <div className="display-small text-muted my-3">
+      <div className="my-4">
+        <div className="link-medium  my-3">
           Shipping Status:
           <span className="text-x-small mx-2 text-success status-item">
             Done
@@ -155,23 +177,38 @@ const TrackSingleOrder = (props) => {
           }
           inProgress={order.status === "started"}
         />
-        <OrderStage
-          icon={faCar}
-          text="Product Dispatched"
-          checked={
-            order.status === "sent" ||
-            order.status === "received" ||
-            order.status === "cancelled" ||
-            order.status === "rejected" ||
-            order.status === "completed"
-          }
-          inProgress={order.status === "sent"}
-        />
-        <OrderStage
-          icon={faHome}
-          text="Product Delivered"
-          checked={order.status === "received" || order.status === "completed"}
-        />
+        {order.deliveryMethod === "toDoor" && (
+          <OrderStage
+            icon={faCar}
+            text="Product Dispatched"
+            checked={
+              order.status === "sent" ||
+              order.status === "received" ||
+              order.status === "cancelled" ||
+              order.status === "rejected" ||
+              order.status === "completed"
+            }
+            inProgress={order.status === "sent"}
+          />
+        )}
+        {order.deliveryMethod === "toDoor" && (
+          <OrderStage
+            icon={faHome}
+            text="Product Delivered"
+            checked={
+              order.status === "received" || order.status === "completed"
+            }
+          />
+        )}
+        {order.deliveryMethod === "pickUp" && (
+          <OrderStage
+            icon={faHome}
+            text="Product Recieved"
+            checked={
+              order.status === "received" || order.status === "completed"
+            }
+          />
+        )}
       </div>
     </div>
   );

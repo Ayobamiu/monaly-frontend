@@ -10,7 +10,7 @@ const PreviewScreen = ({ data }) => {
   const dispatch = useDispatch();
   return (
     <div>
-      {data && data.length > 0 ? (
+      {data.length > 0 ? (
         data.map((customLink, index) => (
           <AddLinkBox
             title={customLink.title}

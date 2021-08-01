@@ -5,6 +5,28 @@ export const ipLookUp = async () => {
   return response;
 };
 
+export const getAddressV2 = async (key, latitude, longitude) => {
+  const result = await axios.get(
+    `http://api.positionstack.com/v1/reverse?access_key=${key}&query=${
+      latitude + "," + longitude
+    }`
+  );
+  const confidences = [];
+  for (let index = 0; index < result.data.data.length; index++) {
+    const data = result.data.data[index];
+    confidences.push(data.confidence);
+  }
+  var max_of_array = Math.max.apply(Math, confidences);
+  const target = result.data.data.find(
+    (item) => item.confidence === max_of_array
+  );
+  return {
+    currentLocation: target.label,
+    city: target.region,
+    country: target.country,
+  };
+};
+
 export const getAddress = async (latitude, longitude) => {
   const response = await axios.get(
     "https://maps.googleapis.com/maps/api/geocode/json?" +

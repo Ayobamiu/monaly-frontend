@@ -25,6 +25,10 @@
   height: 200px;
   overflow: scroll;
 }
+.form-200::-webkit-scrollbar {
+  width: 0; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+}
 @media screen and (max-width: 900px) {
   #checoutPage .company-item {
     /* height: 300px; */

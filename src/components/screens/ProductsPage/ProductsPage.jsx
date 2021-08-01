@@ -99,7 +99,7 @@ const ProductsPage = (props) => {
               key={index}
             >
               <div
-                className="product-item-image bg-light"
+                className="product-item-image bg-white"
                 style={{
                   backgroundImage: `url(${
                     product.images &&
@@ -108,6 +108,7 @@ const ProductsPage = (props) => {
                   })`,
                 }}
               >
+                
                 {profile._id === product.user && (
                   <div className="delete-product">
                     <div
@@ -136,7 +137,7 @@ const ProductsPage = (props) => {
               <NavLink to={`/product/${product._id}`} className="border">
                 <div className="p-3 ">
                   <div className="link-large ">NGN {product.price}</div>
-                  <div className="text-large ">{product.title}</div>
+                  <div className="text-small ">{product.title}</div>
                 </div>
               </NavLink>
             </div>
