@@ -12,9 +12,10 @@ import {
 import { viewsocialMedia } from "../../../store/sociaMediaSampleSlice";
 
 import { useDispatch, useSelector } from "react-redux";
-import { matchLightSocialIcon } from "../../../assets/js/controls";
+import { matchLightSocialIcon, siteUrl } from "../../../assets/js/controls";
 import { getAddress, ipLookUp } from "../../../assets/js/getAddress";
 import { viewCustomLink } from "../../../store/customLinkSlice";
+import { Helmet } from "react-helmet";
 
 const VisitorsScreen = (props) => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const VisitorsScreen = (props) => {
   const divRref = useRef(null);
 
   useEffect(async () => {
-    document.title = "@" + props.match.params.userName + " | Monaly";
+    // document.title = "@" + props.match.params.userName + " | Monaly";
 
     dispatch(loadVisitorScreen(props.match.params.userName));
     divRref.current.scrollIntoView({ behavior: "smooth" });
@@ -164,6 +165,13 @@ const VisitorsScreen = (props) => {
     );
   };
 
+  const titles = [];
+  visitorData.customLinks &&
+    visitorData.customLinks.forEach((link) => {
+      titles.push(`${link.title}`);
+    });
+  console.log("titles", titles.join(","));
+
   return (
     <div
       id="visitorsScreen"
@@ -173,6 +181,48 @@ const VisitorsScreen = (props) => {
         })`,
       }}
     >
+      <Helmet>
+        <meta charSet="utf-8" />
+        <meta
+          name="author"
+          content={visitorData.firstName ? visitorData.firstName : ""}
+        />
+        <meta
+          name="description"
+          content={`${visitorData.firstName ? visitorData.firstName : ""}${
+            visitorData.lastName ? visitorData.lastName : ""
+          } - ${visitorData.bio ? visitorData.bio : ""} - ${titles.join(",")} `}
+        />
+        <meta
+          property="og:title"
+          content={`@${props.match.params.userName} - Monaly`}
+        />
+        <meta
+          property="og:description"
+          content={`${visitorData.firstName ? visitorData.firstName : ""}${
+            visitorData.lastName ? visitorData.lastName : ""
+          } - ${visitorData.bio ? visitorData.bio : ""} - ${titles.join(",")} `}
+        />
+        {visitorData.profilePhoto && (
+          <meta property="og:image" content={visitorData.profilePhoto} />
+        )}
+        <meta
+          name="twitter:site"
+          content={`@${props.match.params.userName} - Monaly`}
+        />
+        <meta name="twitter:card" content="summary" />
+        <meta
+          name="twitter:creator"
+          content={`@${props.match.params.userName} - Monaly`}
+        />
+
+        <title>@{props.match.params.userName} | Monaly</title>
+        <link
+          rel="canonical"
+          href={`${siteUrl}${props.match.params.userName}`}
+        />
+      </Helmet>
+
       <div className="wider-content-top">
         <div className="content">
           {loadingLinks && <div className="loader"></div>}

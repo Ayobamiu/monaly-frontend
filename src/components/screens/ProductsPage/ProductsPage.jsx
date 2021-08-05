@@ -1,4 +1,5 @@
 import {
+  faCheckCircle,
   faCog,
   faImage,
   faPen,
@@ -6,6 +7,7 @@ import {
   faStoreAlt,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import { faCopy } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,11 +20,13 @@ import {
   updateStoreLogo,
 } from "../../../store/productSlice";
 import "./css/style.css";
+import { copyToClipboard, siteUrl } from "../../../assets/js/controls";
+import { Helmet } from "react-helmet";
+import Verified from "../../../assets/images/Verified.svg";
 
 const ProductsPage = (props) => {
   const loading = useSelector((state) => state.app.products.loading);
   const store = useSelector((state) => state.app.products.store);
-  console.log("products", store.products);
 
   const loadingStoreLogo = useSelector(
     (state) => state.app.products.loadingStoreLogo
@@ -35,14 +39,82 @@ const ProductsPage = (props) => {
   const [newStoreLogo, setNewStoreLogo] = useState("");
   const [newStoreAddress, setNewStoreAddress] = useState("");
   const [newStoreName, setNewStoreName] = useState("");
+  const [copied, setCopied] = useState(false);
   const dispatch = useDispatch();
+  const onCopy = () => {
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 1000);
+  };
   useEffect(() => {
     dispatch(loadStore(props.match.params.slug));
     dispatch(loadLoggedInUser());
   }, []);
 
+  const titles = [];
+  store.products &&
+    store.products.forEach((product) => {
+      titles.push(`${product.title}`);
+    });
+  console.log("titles", titles.join(","));
+  console.log("props", props);
+
   return (
     <div id="productsPage">
+      {/* HEaders */}
+      <Helmet>
+        <meta charSet="utf-8" />
+        <meta name="author" content={store.name} />
+        <meta
+          name="description"
+          content={`${store.name} - ${store.description} - ${titles.join(
+            ","
+          )} `}
+        />
+        <meta property="og:title" content={`@${store.name} - Monaly`} />
+        <meta
+          property="og:description"
+          content={`${store.name} - ${store.description} - ${titles.join(
+            ","
+          )} `}
+        />
+        {store.logo && <meta property="og:image" content={store.logo} />}
+        <meta name="twitter:site" content={`@${store.name} - Monaly`} />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:creator" content={`@${store.name} - Monaly`} />
+
+        <title>@{store.name ? store.name : ""} | Monaly</title>
+        <link
+          rel="canonical"
+          href={`${siteUrl}store/${props.match.params.slug}`}
+        />
+      </Helmet>
+      {/* HEaders */}
+
+      {/* Copy Link to ClipBoard */}
+
+      {store.user === profile._id && (
+        <div
+          class="cursor alert alert-success link-small d-flex justify-content-between align-items-center copy-link-text position-fixed bottom-0"
+          role="alert"
+          onClick={(e) => {
+            onCopy();
+            copyToClipboard(e, `${siteUrl}store/${props.match.params.slug}`);
+          }}
+        >
+          <span className="mx-3">
+            {copied ? "LInk Copied" : "Copy store Link"}
+          </span>
+          {copied ? (
+            <FontAwesomeIcon icon={faCheckCircle} size="lg" />
+          ) : (
+            <FontAwesomeIcon icon={faCopy} size="lg" />
+          )}
+        </div>
+      )}
+      {/* Copy Link to ClipBoard */}
+
       <div className="container">
         <div className="d-flex align-items-center my-4 ">
           <div
@@ -87,30 +159,34 @@ const ProductsPage = (props) => {
             <span className="text-large">
               {store.name || props.match.params.userName + "'s Store"}
             </span>
-            <div className="text-x-small">Verified</div>
+            <div className="text-x-small">
+              <img src={Verified} alt="Verified" height="20px" /> Verified
+              seller
+            </div>
           </div>
 
-          {/* {storeOwner === profile._id && ( */}
-          <div className="ms-auto d-flex align-items-center">
-            <FontAwesomeIcon
-              icon={faCog}
-              className="text-secondary mr-2"
-              size="lg"
-              title="Store Settings"
-              data-bs-toggle="modal"
-              data-bs-target="#storeSettings"
-            />
-            <NavLink to="/add-product">
+          {store.user === profile._id && (
+            <div className="ms-auto d-flex align-items-center">
               <FontAwesomeIcon
-                icon={faPlus}
-                className="text-secondary ml-2"
-                title="Add Product"
+                icon={faCog}
+                className="text-secondary mr-2"
                 size="lg"
+                title="Store Settings"
+                data-bs-toggle="modal"
+                data-bs-target="#storeSettings"
               />
-            </NavLink>
-          </div>
-          {/* )} */}
+              <NavLink to="/add-product">
+                <FontAwesomeIcon
+                  icon={faPlus}
+                  className="text-secondary ml-2"
+                  title="Add Product"
+                  size="lg"
+                />
+              </NavLink>
+            </div>
+          )}
         </div>
+
         <div className="d-flex align-items-center justify-content-center my-5 flex-wrap">
           {!loading && store.products && store.products.length === 0 && (
             <div className="border p-5 rounded w-100 text-center my-5">
