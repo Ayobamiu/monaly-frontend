@@ -40,11 +40,18 @@ const ProductsPage = (props) => {
   const [newStoreAddress, setNewStoreAddress] = useState("");
   const [newStoreName, setNewStoreName] = useState("");
   const [copied, setCopied] = useState(false);
+  const [copiedProductLink, setCopiedProductLink] = useState(false);
   const dispatch = useDispatch();
   const onCopy = () => {
     setCopied(true);
     setTimeout(() => {
       setCopied(false);
+    }, 1000);
+  };
+  const onCopyProductLink = () => {
+    setCopiedProductLink(true);
+    setTimeout(() => {
+      setCopiedProductLink(false);
     }, 1000);
   };
   useEffect(() => {
@@ -60,6 +67,22 @@ const ProductsPage = (props) => {
   console.log("titles", titles.join(","));
   console.log("props", props);
 
+  const CopyProductLink = ({ link }) => {
+    return (
+      <div
+        className="copy-product-link"
+        onClick={(e) => {
+          onCopyProductLink();
+          copyToClipboard(e, link);
+        }}
+      >
+        <div className="copy-text-message cursor alert alert-success link-x-small d-flex justify-content-between align-items-center ">
+          <span className="mr-2">Copy Product Link</span>
+          <FontAwesomeIcon icon={faCopy} className="text-secondary" size="lg" />
+        </div>
+      </div>
+    );
+  };
   return (
     <div id="productsPage">
       {/* HEaders */}
@@ -217,6 +240,12 @@ const ProductsPage = (props) => {
                   }}
                 >
                   {profile._id === product.user && (
+                    <CopyProductLink
+                      link={`${siteUrl}product/${product._id}`}
+                    />
+                  )}
+
+                  {profile._id === product.user && (
                     <div className="delete-product">
                       <div
                         className="shadow-small p-3 bg-white rounded-pill back-arrow"
@@ -229,6 +258,7 @@ const ProductsPage = (props) => {
                       </div>
                     </div>
                   )}
+
                   {product.images && product.images.length === 0 && (
                     <FontAwesomeIcon
                       icon={faImage}
@@ -421,6 +451,11 @@ const ProductsPage = (props) => {
           </div>
         </div>
       </div>
+      {copiedProductLink && (
+        <div className=" w-100 position-fixed bottom-0 text-center text-medium">
+          Link Copied
+        </div>
+      )}
     </div>
   );
 };

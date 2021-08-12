@@ -5,21 +5,21 @@ import axios from "axios";
 import StepWizard from "react-step-wizard";
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 import { useDispatch, useSelector } from "react-redux";
-import { loadCarts, placeOrder } from "../../../store/productSlice";
+import {
+  addTransaction,
+  loadCarts,
+  placeOrder,
+} from "../../../store/productSlice";
 import { addUserAddress, loadLoggedInUser } from "../../../store/authSlice";
 import { getAddress, getAddressV2 } from "../../../assets/js/getAddress";
 
 const CheckoutPage = (props) => {
-  useEffect(() => {
-    // getEstimate("GoKada");
-  }, []);
   const dispatch = useDispatch();
   const addresses = useSelector((state) => state.app.user.profile.addresses);
   const addAddressStatus = useSelector(
     (state) => state.app.user.addAddressStatus
   );
   const carts = useSelector((state) => state.app.products.carts);
-  console.log("carts", carts);
   const storeAddress = useSelector((state) => state.app.products.storeAddress);
   const shippingFee = useSelector((state) => state.app.products.shippingFee);
   useEffect(() => {
@@ -130,9 +130,6 @@ const CheckoutPage = (props) => {
       console.log("error", error);
     }
   };
-
-  // if (latitude && longitude) {
-  // }
   const FormOne = (props) => {
     return (
       <div>
@@ -241,7 +238,7 @@ const CheckoutPage = (props) => {
               description="24 Hours"
               name="Monaly Express"
               id="Monaly Express"
-              price={1000}
+              price={3000}
             />
           </div>
           {loadingDeliveryMerchant && <div className="loader"></div>}
@@ -307,7 +304,7 @@ const CheckoutPage = (props) => {
       title: "MY Store",
     },
   };
-  // const handleFlutterPayment = useFlutterwave(config);
+  const handleFlutterPayment = useFlutterwave(config);
   const pay = () => {
     console.log("order data", {
       carts,
@@ -317,26 +314,34 @@ const CheckoutPage = (props) => {
       deliveryMerchant,
       dileveryAddress,
     });
-    dispatch(
-      placeOrder(
-        carts,
-        total,
-        shippingFee,
-        deliveryMethod,
-        deliveryMerchant,
-        dileveryAddress
-      )
-    );
-    // handleFlutterPayment({
-    //   callback: (response) => {
-    //     if (response.status === "successful") {
-    //       console.log(response);
-    //       dispatch(placeOrder(carts, total, shippingFee));
-    //     }
-    //     closePaymentModal(); // this will close the modal programmatically
-    //   },
-    //   onClose: () => {},
-    // });
+
+    handleFlutterPayment({
+      callback: (response) => {
+        if (response.status === "successful") {
+          console.log(response);
+          dispatch(
+            placeOrder(
+              carts,
+              total,
+              shippingFee,
+              deliveryMethod,
+              deliveryMerchant,
+              dileveryAddress
+            )
+          );
+          dispatch(
+            addTransaction({
+              description: "Withdrawal to my own account",
+              amount: total,
+              data: response.data,
+            })
+          );
+          window.location = "/pay-redirect";
+        }
+        closePaymentModal(); // this will close the modal programmatically
+      },
+      onClose: () => {},
+    });
   };
   return (
     <div id="checoutPage">

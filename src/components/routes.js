@@ -20,6 +20,11 @@ import CheckoutPage from "./screens/CheckoutPage/CheckoutPage";
 import OrdersPage from "./screens/OrdersPage/OrdersPage";
 import TrackSingleOrder from "./includes/TrackSingleOrder/TrackSingleOrder";
 import AddProduct from "./screens/AddProduct/AddProduct";
+import AddStore from "./screens/AddStore/AddStore";
+import WithdrawalPage from "./screens/WithdrawalPage/WithdrawalPage";
+import Money from "./screens/Money/Money";
+import Stores from "./screens/Stores/Stores";
+import PayRedirect from "./screens/PayRedirect/PayRedirect";
 
 const MainRoute = () => {
   return (
@@ -34,6 +39,11 @@ const MainRoute = () => {
         <Route component={Admin} path="/admin" />
         <Route component={TrackSingleOrder} path="/orders/:orderId" />
         <Route component={AddProduct} path="/add-product" />
+        <Route component={PayRedirect} path="/pay-redirect" />
+        <Route component={Stores} path="/stores" />
+        <Route component={WithdrawalPage} path="/withdraw" />
+        <Route component={Money} path="/money" />
+        <Route component={AddStore} path="/add-store" />
         <Route component={OrdersPage} path="/orders" />
         <Route component={CheckoutPage} path="/checkout" />
         <Route component={CartPage} path="/cart" />

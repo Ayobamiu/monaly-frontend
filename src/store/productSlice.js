@@ -7,6 +7,7 @@ const slice = createSlice({
     list: [],
     carts: [],
     orders: [],
+    // stores: [],
     order: {},
     store: { logo: "", products: [] },
     product: { images: [] },
@@ -22,8 +23,10 @@ const slice = createSlice({
     storeAddress: "",
     storePhoneOne: "",
     storePhoneTwo: "",
+    transactionStatus: "",
     status: "",
     loadingStoreLogo: false,
+    transactionloading: false,
     loadingStore: false,
   },
   reducers: {
@@ -161,6 +164,19 @@ const slice = createSlice({
     cartRemoved: (products, action) => {
       products.carts.pop((cart) => cart.product._id !== action.payload.product);
     },
+    transactionAddStart: (products, action) => {
+      products.transactionStatus = "Adding transaction";
+      products.transactionloading = true;
+    },
+    transactionAdded: (products, action) => {
+      products.transactionStatus = "Transaction Added successfully";
+      products.transactionloading = false;
+    },
+    transactionAddFailed: (products, action) => {
+      // products.loading = false;
+      products.transactionStatus = "Transaction Failed";
+      products.transactionloading = false;
+    },
   },
 });
 
@@ -201,6 +217,9 @@ export const {
   storeLogoUpdated,
   storeLogoUpdateStart,
   storeLogoUpdateFailed,
+  transactionAddFailed,
+  transactionAddStart,
+  transactionAdded,
 } = slice.actions;
 
 export default slice.reducer;
@@ -326,6 +345,18 @@ export const addproductToCart = (productId) =>
     onStart: cartAddStart.type,
     onSuccess: cartAdded.type,
     onError: cartAddFailed.type,
+  });
+export const addTransaction = (data) =>
+  apiCallBegan({
+    url: "/products/add-transaction",
+    method: "post",
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("authToken"),
+    },
+    data,
+    onStart: transactionAddStart.type,
+    onSuccess: transactionAdded.type,
+    onError: transactionAddFailed.type,
   });
 
 export const removeproductFromCart = (cartId) =>

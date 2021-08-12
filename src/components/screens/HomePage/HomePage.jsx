@@ -63,6 +63,13 @@ const HomePage = (props) => {
         </li>
         {loggedInUser && (
           <li className="ml-auto mr-3">
+            <Link to="/money" className="link-x-small">
+              Store
+            </Link>
+          </li>
+        )}
+        {loggedInUser && (
+          <li className="mr-3">
             <Link to="/dashboard" className="link-x-small">
               Dashboard
             </Link>

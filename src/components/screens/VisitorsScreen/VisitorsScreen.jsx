@@ -187,7 +187,7 @@ const VisitorsScreen = (props) => {
           name="author"
           content={visitorData.firstName ? visitorData.firstName : ""}
         />
-        <meta
+        <meta 
           name="description"
           content={`${visitorData.firstName ? visitorData.firstName : ""}${
             visitorData.lastName ? visitorData.lastName : ""

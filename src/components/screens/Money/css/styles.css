@@ -1,0 +1,7 @@
+main {
+  min-height: 100vh;
+}
+.small-box {
+  min-height: 200px;
+  width: 100%;
+}

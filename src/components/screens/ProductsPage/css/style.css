@@ -22,6 +22,12 @@
   right: 1rem;
   z-index: 3;
 }
+.copy-product-link {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 3;
+}
 .update-store-logo {
   position: absolute;
   top: 0;
@@ -44,4 +50,7 @@
 }
 .transform-x-50 {
   transform: translateY(-50%);
+}
+.copy-product-link :active {
+  background-color: #fff;
 }

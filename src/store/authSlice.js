@@ -13,6 +13,7 @@ const slice = createSlice({
     visitorView: {},
     stackStyle: "stacked",
     visitors: [],
+    transactions: [],
     countries: [],
     subscription: {},
     subscriptions: [],
@@ -34,6 +35,7 @@ const slice = createSlice({
     storeAdded: (user, action) => {
       user.profile.stores = [action.payload, ...user.profile.stores];
       user.addStoreStatus = "Added store Successfully.";
+      window.location = "/stores";
     },
     storeAddFailed: (user, action) => {
       user.addStoreStatus = "Adding Failed, Try Again";
@@ -79,6 +81,16 @@ const slice = createSlice({
       user.loading = false;
     },
     subscriptionsRequestFailed: (user, action) => {
+      user.loading = false;
+    },
+    transactionsRequested: (user, action) => {
+      user.loading = true;
+    },
+    transactionsReceived: (user, action) => {
+      user.transactions = action.payload.transactions;
+      user.loading = false;
+    },
+    transactionsRequestFailed: (user, action) => {
       user.loading = false;
     },
     visitorsRequested: (user, action) => {
@@ -282,6 +294,9 @@ export const {
   storeAddStart,
   storeAdded,
   storeAddFailed,
+  transactionsReceived,
+  transactionsRequestFailed,
+  transactionsRequested,
 } = slice.actions;
 
 export default slice.reducer;
@@ -401,6 +416,20 @@ export const getMySubscriptions = () => (dispatch) => {
       onStart: subscriptionsRequested.type,
       onSuccess: subscriptionsReceived.type,
       onError: subscriptionsRequestFailed.type,
+    })
+  );
+};
+export const getMyTransactions = () => (dispatch) => {
+  dispatch(
+    apiCallBegan({
+      url: "/auth/me/transactions",
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("authToken"),
+      },
+      onStart: transactionsRequested.type,
+      onSuccess: transactionsReceived.type,
+      onError: transactionsRequestFailed.type,
     })
   );
 };
