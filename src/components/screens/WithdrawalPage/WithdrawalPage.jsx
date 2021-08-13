@@ -19,13 +19,13 @@ const WithdrawalPage = () => {
   const transactionloading = useSelector(
     (state) => state.app.products.transactionloading
   );
-  const getBankName = async () => {
+  const getBankName = async (number) => {
     try {
       setFecthAccountStatus("Fetching your Account details");
       const result = await axios.post(
         "https://api.flutterwave.com/v3/accounts/resolve",
         {
-          account_number: accountNumber,
+          account_number: number,
           account_bank: bank,
         },
         {
@@ -154,7 +154,7 @@ const WithdrawalPage = () => {
               onChange={(e) => {
                 setAccountNumber(e.target.value);
                 if (e.target.value.length === 10) {
-                  getBankName();
+                  getBankName(e.target.value);
                 }
               }}
             />
