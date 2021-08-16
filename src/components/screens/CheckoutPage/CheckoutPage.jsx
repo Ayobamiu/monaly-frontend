@@ -21,6 +21,8 @@ const CheckoutPage = (props) => {
   );
   const carts = useSelector((state) => state.app.products.carts);
   const storeAddress = useSelector((state) => state.app.products.storeAddress);
+  const loadingCarts = useSelector((state) => state.app.products.loadingCarts);
+  const orderLoading = useSelector((state) => state.app.products.orderLoading);
   const shippingFee = useSelector((state) => state.app.products.shippingFee);
   useEffect(() => {
     dispatch(loadCarts());
@@ -314,37 +316,56 @@ const CheckoutPage = (props) => {
       deliveryMerchant,
       dileveryAddress,
     });
-
-    handleFlutterPayment({
-      callback: (response) => {
-        if (response.status === "successful") {
-          console.log(response);
-          dispatch(
-            placeOrder(
-              carts,
-              total,
-              shippingFee,
-              deliveryMethod,
-              deliveryMerchant,
-              dileveryAddress
-            )
-          );
-          dispatch(
-            addTransaction({
-              description: "Withdrawal to my own account",
-              amount: total,
-              data: response.data,
-            })
-          );
-          window.location = "/pay-redirect";
-        }
-        closePaymentModal(); // this will close the modal programmatically
-      },
-      onClose: () => {},
-    });
+    dispatch(
+      placeOrder(
+        carts,
+        total,
+        shippingFee,
+        deliveryMethod,
+        deliveryMerchant,
+        dileveryAddress
+      )
+    );
+    // handleFlutterPayment({
+    //   callback: (response) => {
+    //     if (response.status === "successful") {
+    //       console.log(response);
+    //       dispatch(
+    //         placeOrder(
+    //           carts,
+    //           total,
+    //           shippingFee,
+    //           deliveryMethod,
+    //           deliveryMerchant,
+    //           dileveryAddress
+    //         )
+    //       );
+    //       dispatch(
+    //         addTransaction({
+    //           description: "Withdrawal to my own account",
+    //           amount: total,
+    //           data: response.data,
+    //         })
+    //       );
+    //       window.location = "/pay-redirect";
+    //     }
+    //     closePaymentModal(); // this will close the modal programmatically
+    //   },
+    //   onClose: () => {},
+    // });
   };
-  return (
+  return ( 
     <div id="checoutPage">
+      {orderLoading && (
+        <div className="loader-full">
+          <div className="loader"></div>
+        </div>
+      )}
+      {loadingCarts && (
+        <div className="loader-full">
+          <div className="loader"></div>
+        </div>
+      )}
       <BackButton text="Checkout" props={props} />
       <div className="container">
         <div className="row align-items-start my-5 flex-wrap">

@@ -24,9 +24,11 @@ const slice = createSlice({
     storePhoneOne: "",
     storePhoneTwo: "",
     transactionStatus: "",
+    cartLoadStatus: "",
     status: "",
     loadingStoreLogo: false,
     transactionloading: false,
+    orderLoading: false,
     loadingStore: false,
   },
   reducers: {
@@ -54,9 +56,16 @@ const slice = createSlice({
     storeLogoUpdateFailed: (products, action) => {
       products.loadingStoreLogo = false;
     },
+    orderPlaceStart: (products, action) => {
+      products.orderLoading = true;
+    },
     orderPlaced: (products, action) => {
       products.carts = [];
-      // window.location = "/cart";
+      products.orderLoading = false;
+      window.location.replace("/pay-success");
+    },
+    orderPlaceFailed: (products, action) => {
+      products.orderLoading = false;
     },
     dispatchCompaniesRequested: (products, action) => {
       products.loadingDispatchCompanies = true;
@@ -90,14 +99,17 @@ const slice = createSlice({
     },
     cartsRequested: (products, action) => {
       products.loadingCarts = true;
+      products.cartLoadStatus = "";
     },
     cartsReceived: (products, action) => {
       products.carts = action.payload.carts;
       products.storeAddress = action.payload.storeAddress;
       products.loadingCarts = false;
+      products.cartLoadStatus = "";
     },
     cartsRequestFailed: (products, action) => {
       products.loadingCarts = false;
+      products.cartLoadStatus = "Could not Load your Cart";
     },
     cartUpdateStart: (products, action) => {
       products.carting = true;
@@ -220,6 +232,8 @@ export const {
   transactionAddFailed,
   transactionAddStart,
   transactionAdded,
+  orderPlaceStart,
+  orderPlaceFailed,
 } = slice.actions;
 
 export default slice.reducer;
@@ -400,7 +414,9 @@ export const placeOrder = (
       deliveryMerchant,
       dileveryAddress,
     },
+    onStart: orderPlaceStart.type,
     onSuccess: orderPlaced.type,
+    onError: orderPlaceFailed.type,
   });
 export const addproduct = (product) =>
   apiCallBegan({

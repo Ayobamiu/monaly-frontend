@@ -9,14 +9,16 @@ import { getLoggedInUser } from "../../../store/authSlice";
 const ProductPage = (props) => {
   const dispatch = useDispatch();
   const product = useSelector((state) => state.app.products.product);
-  console.log("product", product);
   const loggedInUser = useSelector(getLoggedInUser);
   useEffect(() => {
     dispatch(loadproduct(props.match.params.productId));
   }, []);
 
+  const signInLocation = `/sign-in?redirect=/product/${props.match.params.productId}`;
+
   return (
     <div id="productPage">
+      
       <BackButton text="Product Details" props={props} />
       <div className="container">
         <div className="row align-items-center my-3 flex-wrap">
@@ -146,13 +148,13 @@ const ProductPage = (props) => {
           <div className="col-md-4 col-12">
             <div className="link-large">{product.title}</div>
             <div className="link-medium text-muted">NGN {product.price}</div>
-            <NavLink to={loggedInUser ? "/cart" : "/sign-up"}>
+            <NavLink to={loggedInUser ? "/cart" : signInLocation}>
               <button
                 className="primary-btn my-2 hide-900"
                 onClick={() =>
                   loggedInUser
                     ? dispatch(addproductToCart(product._id))
-                    : (window.location = "/sign-up")
+                    : (window.location = signInLocation)
                 }
               >
                 Buy Now
@@ -163,7 +165,7 @@ const ProductPage = (props) => {
               onClick={() =>
                 loggedInUser
                   ? dispatch(addproductToCart(product._id))
-                  : (window.location = "/sign-up")
+                  : (window.location = signInLocation)
               }
             >
               Add to Cart
@@ -226,13 +228,13 @@ const ProductPage = (props) => {
       <div className="fixed-bottom bg-white border-top p-3 container show-900">
         <div className="row g-2">
           <div className="col-6">
-            <NavLink to={loggedInUser ? "/cart" : "/sign-up"}>
+            <NavLink to={loggedInUser ? "/cart" : signInLocation}>
               <button
                 className="primary-btn my-2 custom-btn-sm"
                 onClick={() =>
                   loggedInUser
                     ? dispatch(addproductToCart(product._id))
-                    : (window.location = "/sign-up")
+                    : (window.location = signInLocation)
                 }
               >
                 Buy Now
@@ -245,7 +247,7 @@ const ProductPage = (props) => {
               onClick={() =>
                 loggedInUser
                   ? dispatch(addproductToCart(product._id))
-                  : (window.location = "/sign-up")
+                  : (window.location = signInLocation)
               }
             >
               Add to Cart

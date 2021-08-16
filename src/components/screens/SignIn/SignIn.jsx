@@ -12,9 +12,11 @@ import {
   logUserIn,
   status,
 } from "../../../store/authSlice";
+import queryString from "query-string";
 
 const SignIn = (props) => {
-  const redirect = props.match.params.redirect;
+  const params = queryString.parse(props.location.search);
+  const redirect = params.redirect;
   const dispatch = useDispatch();
   const loggedInUser = useSelector(getLoggedInUser);
   useEffect(() => {
@@ -24,7 +26,11 @@ const SignIn = (props) => {
     }
   }, []);
   if (loggedInUser) {
-    window.location = "/";
+    if (redirect) {
+      window.location = redirect;
+    } else {
+      window.location = "/";
+    }
   }
   const loadingUser = useSelector(loading);
   const userStatus = useSelector(status);

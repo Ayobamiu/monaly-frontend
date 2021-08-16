@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 import "./css/style.css";
-import sneakers from "../../../assets/images/sneakers.webp";
-import sneakers2 from "../../../assets/images/sneakers2.webp";
 import BackButton from "../../includes/BackButton/BackButton";
-import { faTimes, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +10,9 @@ import { loadLoggedInUser } from "../../../store/authSlice";
 
 const CartPage = (props) => {
   const dispatch = useDispatch();
+  const cartLoadStatus = useSelector(
+    (state) => state.app.products.cartLoadStatus
+  );
   const loadingCarts = useSelector((state) => state.app.products.loadingCarts);
   const carts = useSelector((state) => state.app.products.carts);
   useEffect(() => {
@@ -25,19 +26,29 @@ const CartPage = (props) => {
   }
   return (
     <div id="cartPage">
+      {loadingCarts && (
+        <div className="loader-full">
+          <div className="loader"></div>
+        </div>
+      )}
       <BackButton text="Carts" props={props} />
       <div className="container">
         <div className="row align-items-start my-5 flex-wrap">
           <div className="col-md-8 col-12">
-            {loadingCarts && (
-              <div className="my-2 card-body border rounded rounded-4 text-center">
-                <div className="loader"></div>
-                <div className="text-small">Loading your carts</div>
-              </div>
-            )}
             {!loadingCarts && carts.length === 0 && (
               <div className="border p-5 rounded w-100 text-center my-5">
                 <span className="text-medium">You have no items in cart</span>
+                {cartLoadStatus && (
+                  <span className="text-medium">
+                    {cartLoadStatus}{" "}
+                    <button
+                      className="link link-primary"
+                      onClick={() => dispatch(loadCarts())}
+                    >
+                      Reload
+                    </button>
+                  </span>
+                )}
               </div>
             )}
             {carts.map((cart, index) => (
@@ -88,7 +99,9 @@ const CartPage = (props) => {
                 <div className="display-small">Sub-Total</div>
                 <div className="display-small text-muted">NGN {total}</div>
                 <NavLink to="/checkout">
-                  <button className="primary-btn my-2">Checkout</button>
+                  <button className="primary-btn my-2">
+                    Proceed to Checkout
+                  </button>
                 </NavLink>
               </div>
             )}
@@ -100,14 +113,14 @@ const CartPage = (props) => {
         <div className="row g-2 align-items-center">
           <div className="col-6">
             <small className="link-medium">
-              Sub-Total{" "}
+              Sub-Total
               <span className="link-medium text-muted">NGN {total}</span>
             </small>
           </div>
           <div className="col-6">
             <NavLink to="/checkout">
               <button className="primary-btn my-2 custom-btn-sm">
-                Checkout
+                Proceed to Checkout
               </button>
             </NavLink>
           </div>

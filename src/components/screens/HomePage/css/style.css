@@ -44,6 +44,13 @@
   content: url("../../../../assets/images/Mark.svg");
   margin-right: 10px;
 }
+#homepageSectionThree {
+  height: 900px;
+  background-image: url("../../../../assets/images/Vector52.svg");
+  background-repeat: no-repeat;
+  background-size: 80%;
+  background-position: center;
+}
 
 .stripe-bg {
   background-image: url("../../../../assets/images/StripeBG.svg");
@@ -51,22 +58,49 @@
   background-size: 50%;
 }
 .e-ad-card {
-  width: 250px;
-  height: 250px;
-  background: #ef476f;
-  border-radius: 32px;
+  text-align: center;
+}
+
+.e-ad-card .icon-wrap {
+  min-width: 32px;
+  min-height: 32px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #ef476f;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* font-size: 12px; */
+  /* line-height: 16px; */
+}
+.e-ad-card-2 {
+  transform: translateY(30%);
+  /* position: relative; */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+}
+
+.e-ad-card-3 {
+  transform: translateY(60%);
+}
+.e-ad-card-4 {
+  transform: translateY(90%);
+}
+
+.pricing-card-wrap {
+  width: 455px;
 }
 .pricing-card {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 30px;
-  width: 310px;
-  height: 553px;
+  /* height: 578px; */
+  width: 455px;
+
   background: #ffffff;
   border: 1.11468px solid #d6dae4;
   box-sizing: border-box;
@@ -212,15 +246,22 @@
   }
 }
 @media screen and (max-width: 900px) {
-  .e-ad-card {
-    padding: 5px;
-    width: 140px;
-    height: 140px;
+  #homepageSectionThree {
+    height: auto;
+    background-image: unset;
   }
-  .e-ad-card p {
-    line-height: 14px;
-    margin-bottom: 0rem;
-    font-size: 12px;
+  .ads {
+    flex-wrap: wrap;
+  }
+  .e-ad-card-2 {
+    transform: unset;
+  }
+
+  .e-ad-card-3 {
+    transform: unset;
+  }
+  .e-ad-card-4 {
+    transform: unset;
   }
   .testimony-box {
     justify-content: flex-start;
@@ -240,5 +281,11 @@
   }
   .testimony-card .avatar {
     margin-bottom: 10px !important;
+  }
+  .pricing-card-wrap {
+    width: 100%;
+  }
+  .pricing-card {
+    width: 100%;
   }
 }

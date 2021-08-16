@@ -85,6 +85,11 @@ const ProductsPage = (props) => {
   };
   return (
     <div id="productsPage">
+      {loading && store.products && store.products.length === 0 && (
+        <div className="loader-full">
+          <div className="loader"></div>
+        </div>
+      )}
       {/* HEaders */}
       <Helmet>
         <meta charSet="utf-8" />
@@ -218,9 +223,6 @@ const ProductsPage = (props) => {
                 store
               </span>
             </div>
-          )}
-          {loading && store.products && store.products.length === 0 && (
-            <div className="loader"></div>
           )}
 
           {store.products &&

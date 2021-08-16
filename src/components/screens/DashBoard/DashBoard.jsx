@@ -7,13 +7,16 @@ import Comment from "../../../assets/images/Comment.svg";
 import Notification from "../../../assets/images/Notification.svg";
 import ForwardArrow from "../../../assets/images/ForwardArrow.svg";
 import Close from "../../../assets/images/Close.svg";
-import NotificationMobile from "../../../assets/images/NotificationMobile.svg";
 import shareLinkIconBox from "../../../assets/images/shareLinkIconBox.svg";
 import colorLinkedIn from "../../../assets/images/colorLinkedIn.svg";
 import colorInstagram from "../../../assets/images/colorInstagram.svg";
 import colorWhatsapp from "../../../assets/images/colorWhatsapp.svg";
 import colorTwitter from "../../../assets/images/colorTwitter.svg";
 import colorFacebook from "../../../assets/images/colorFacebook.svg";
+import Calandar from "../../../assets/images/Calandar.svg";
+
+import gallery from "../../../assets/images/gallery.svg";
+import Heart from "../../../assets/images/Heart.svg";
 
 import {
   Link,
@@ -25,16 +28,10 @@ import {
 import SmartPhone from "../../includes/SmartPhone/SmartPhone";
 import { Modal } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faLink,
-  faTimes,
-  faCog,
-  faDownload,
-} from "@fortawesome/free-solid-svg-icons";
+import { faLink, faTimes, faCog } from "@fortawesome/free-solid-svg-icons";
 import {
   faArrowAltCircleRight,
   faSmile,
-  faTimesCircle,
 } from "@fortawesome/free-regular-svg-icons";
 import {
   loadcustomLinks,
@@ -47,12 +44,10 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getLoggedInUser,
   getMySubscription,
-  getMySubscriptions,
   getMyVisitors,
   logUserOut,
   updateUserProfile,
   uploadUserPhotos,
-  userHasAnActiveSub,
 } from "../../../store/authSlice";
 import PreviewScreen from "../../includes/PreviewScreen/PreviewScreen";
 import QRCode from "qrcode.react";
@@ -61,8 +56,6 @@ import {
   downloadQR,
   clickThroughRatio,
   siteUrl,
-  exampleSubscriptions,
-  data1,
   siteUrlMinusHttps,
 } from "../../../assets/js/controls";
 
@@ -85,7 +78,6 @@ import Analytics from "../../includes/Analytics/Analytics";
 import { loadNotifications } from "../../../store/notificationSlice";
 import Notifications from "../../includes/Notifications/Notifications";
 import SmartPhoneContent from "../../includes/SmartPhoneContent/SmartPhoneContent";
-import moment from "moment";
 import DataMap from "../../includes/Map/Map";
 import ApexChart from "../../includes/ApexChart/ApexChart";
 
@@ -134,7 +126,6 @@ const DashBoard = (props) => {
   const loadingLinks = useSelector(loadingcustomLinks);
   const loadingLinksUpdate = useSelector(loadingUpdateCustomLinks);
   const authLoading = useSelector(loading);
-  const subscriptions = useSelector((state) => state.app.user.subscriptions);
   const themes = useSelector((state) => state.app.themes.list);
   const notifications = useSelector((state) => state.app.notifications.list);
   const visitors = useSelector((state) => state.app.user.visitors);
@@ -193,6 +184,10 @@ const DashBoard = (props) => {
   const [showPopup, setShowPopup] = useState(false);
   const [qrmodal, setQrmodal] = useState(false);
   const [alert, setAlert] = useState(false);
+  const [link, setLink] = useState("");
+  const [title, setTitle] = useState("");
+  const [image, setImage] = useState("");
+
   const togglePopUp = () => {
     setShowPopup(!showPopup);
   };
@@ -601,13 +596,73 @@ const DashBoard = (props) => {
                           className="add-media-in-settings-arrow"
                         />
                       </NavLink>
-                      <form action="Add new Custom link">
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          const newFormData = new FormData();
+                          if (image) {
+                            newFormData.append("image", image);
+                          }
+                          newFormData.set("title", title);
+                          newFormData.set("link", link);
+                          dispatch(addcustomLink(newFormData));
+                        }}
+                      >
+                        <div className={`add-link-box`}>
+                          <div className="inputs-and-media w-100 space-between flex-column">
+                            <div className="">
+                              <input
+                                type="text"
+                                placeholder="Title"
+                                style={{ fontWeight: "bold" }}
+                                className="bg-light fsz-14-900 my-2 rounded-pill p-2 px-4  w-100 border-0 "
+                                required
+                                onChange={(e) => setTitle(e.target.value)}
+                              />
+                              <input
+                                type="url"
+                                placeholder="Paste link here"
+                                className="bg-light fsz-14-900 my-2 rounded-pill p-2 px-4  w-100 border-0 "
+                                required
+                                onChange={(e) => setLink(e.target.value)}
+                              />
+                            </div>
+                            <div className="align-end">
+                              <img
+                                className="mr-16 opaque"
+                                src={Calandar}
+                                alt=""
+                                title="Schedule"
+                              />
+                              <label
+                                htmlFor="link-image-input-main"
+                                className="align-end mb-0"
+                              >
+                                <img
+                                  className="mr-16"
+                                  src={gallery}
+                                  alt=""
+                                  title="Add media"
+                                />
+                              </label>
+                              <input
+                                type="file"
+                                name="image"
+                                id="link-image-input-main"
+                                className="link-image-input"
+                                onChange={(e) => setImage(e.target.files[0])}
+                              />
+                              <img
+                                className="mr-16 opaque"
+                                src={Heart}
+                                alt=""
+                                title="Favourite"
+                              />
+                            </div>
+                          </div>
+                        </div>
                         <button
                           className="link-btn mb-32 mb-16-900"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            addEmptyCustomLink();
-                          }}
                           type="submit"
                         >
                           Add New Link

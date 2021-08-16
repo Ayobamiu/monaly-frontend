@@ -682,6 +682,17 @@ code {
   display: flex;
   flex-direction: column;
 }
+.loader-full {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  z-index: 10;
+}
 .loader {
   width: 20px;
   height: 20px;

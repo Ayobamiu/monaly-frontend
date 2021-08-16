@@ -1,27 +1,20 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   changeAuthInput,
   checkUserNameAvailability,
   getLoggedInUser,
-  logUserOut,
 } from "../../../store/authSlice";
 import "./css/style.css";
-import Group1000001659 from "../../../assets/images/Group1000001659.svg";
 import Group1000001632 from "../../../assets/images/Group1000001632.svg";
 import Group1000001664 from "../../../assets/images/Group1000001664.svg";
 import Group1000001669 from "../../../assets/images/Group1000001669.svg";
-import NikeLogo from "../../../assets/images/NikeLogo.svg";
-import NetgeoLogo from "../../../assets/images/NetgeoLogo.svg";
-import IndustriousLogo from "../../../assets/images/IndustriousLogo.svg";
-import FlorenceLogo from "../../../assets/images/FlorenceLogo.svg";
-import AncestryLogo from "../../../assets/images/AncestryLogo.svg";
-import CNNLogo from "../../../assets/images/CNNLogo.svg";
-import shoppingbag from "../../../assets/images/shopping-bag.svg";
-import CreditCard from "../../../assets/images/CreditCard.svg";
-import ShoppingCart from "../../../assets/images/ShoppingCart.svg";
-import DollarSign from "../../../assets/images/DollarSign.svg";
+import Flutterwave from "../../../assets/images/Flutterwave.svg";
+import StoreAds4 from "../../../assets/images/StoreAds4.svg";
+import StoreAds3 from "../../../assets/images/StoreAds3.svg";
+import StoreAds2 from "../../../assets/images/StoreAds2.svg";
+import StoreAd1 from "../../../assets/images/StoreAd1.svg";
 import monaly_logo from "../../../assets/images/monaly_logo.svg";
 import MonalyLogoWhite from "../../../assets/images/MonalyLogoWhite.svg";
 import SectionOne5 from "../../../assets/images/SectionOne5.svg";
@@ -30,6 +23,13 @@ import SectionOne3 from "../../../assets/images/SectionOne3.svg";
 import SectionOne2 from "../../../assets/images/SectionOne2.svg";
 import SectionOne1 from "../../../assets/images/SectionOne1.svg";
 import picp from "../../../assets/images/picp.jpg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCreditCard,
+  faDollarSign,
+  faShoppingBag,
+  faShoppingCart,
+} from "@fortawesome/free-solid-svg-icons";
 
 const HomePage = (props) => {
   const loggedInUser = useSelector(getLoggedInUser);
@@ -43,9 +43,19 @@ const HomePage = (props) => {
   const loading = useSelector((state) => state.app.user.userName.loading);
   const signUpUserName = useSelector((state) => state.app.user.signUpUserName);
 
+  const BoldItem = ({ text }) => {
+    return <li className="marked-list-item link-small">{text}</li>;
+  };
+  const BoldMutedItem = ({ text }) => {
+    return <li className="marked-list-item text-muted link-small">{text}</li>;
+  };
+  const MarkedListItem = ({ text }) => {
+    return <li className="marked-list-item text-medium my-2">{text}</li>;
+  };
+
   return (
     <div id="homepage">
-      <nav className="d-flex align-items-center justify-content-between p-3  bg-white ">
+      <nav className="d-flex align-items-center justify-content-between p-3  bg-light ">
         <li className="mx-2">
           <Link to="/">
             <img src={monaly_logo} height="25px" alt="" />
@@ -61,15 +71,15 @@ const HomePage = (props) => {
             Help
           </Link>
         </li>
-        {loggedInUser && (
+        {/* {loggedInUser && (
           <li className="ml-auto mr-3">
             <Link to="/money" className="link-x-small">
               Store
             </Link>
           </li>
-        )}
+        )} */}
         {loggedInUser && (
-          <li className="mr-3">
+          <li className="ml-auto mr-3">
             <Link to="/dashboard" className="link-x-small">
               Dashboard
             </Link>
@@ -97,18 +107,16 @@ const HomePage = (props) => {
       <section id="hompageSectionOne" className="bg-light">
         <div className="container py-5">
           <div className="row align-items-center">
-            <div className="col-md-7 col-12">
-              <h1 className="display-large-bold">
+            <div className="col-md-7 col-12 p-3">
+              <h1 className="display-large-bold mb-3">
                 Start sharing and selling in seconds.
               </h1>
               <ul>
-                <li className="marked-list-item text-medium">
-                  Get a link with all your important contents in seconds to
-                  share with your audience.
-                </li>
-                <li className="marked-list-item text-medium">
-                  Set up an e-commerce store and start selling.
-                </li>
+                <MarkedListItem
+                  text=" Get a link with all your important contents in seconds to
+                  share with your audience."
+                />
+                <MarkedListItem text="Set up an e-commerce store and start selling." />
               </ul>
               <form
                 className="rounded-pill border d-flex justify-content-between p-2 mt-5 mb-3 align-items-center bg-white"
@@ -201,13 +209,16 @@ const HomePage = (props) => {
           </div>
           <div className="my-4 text-center">
             <p className="text-medium">
-              Join 50,000+ websites that use monaly to sell more
+              Powered by some of the best technologies
             </p>
-            {/* <div className="d-flex justify-content-around flex-wrap ">
+            <div className="d-flex justify-content-around flex-wrap ">
               <div className=" text-center my-3">
-                <img src={CNNLogo} height="30px" alt="" />
+                <a href="https://flutterwave.com/" target="_blank">
+                  <img src={Flutterwave} height="30px" alt="" />
+                </a>
               </div>
-              <div className=" text-center my-3">
+
+              {/* <div className=" text-center my-3">
                 <img src={NikeLogo} height="30px" alt="" />
               </div>
               <div className=" text-center my-3">
@@ -221,9 +232,8 @@ const HomePage = (props) => {
               </div>
               <div className=" text-center my-3">
                 <img src={AncestryLogo} height="30px" alt="" />
-              </div>
+              </div> */}
             </div>
-        */}
           </div>
         </div>
       </section>
@@ -244,12 +254,8 @@ const HomePage = (props) => {
                 Create a beautiful landing page in minutes.
               </h1>
               <ul>
-                <li className="marked-list-item text-medium">
-                  no code required
-                </li>
-                <li className="marked-list-item text-medium">
-                  create beautiful landing page in seconds
-                </li>
+                <MarkedListItem text="no code required" />
+                <MarkedListItem text="create beautiful landing page in seconds" />
               </ul>
             </div>
           </div>
@@ -258,31 +264,54 @@ const HomePage = (props) => {
 
       <section id="homepageSectionThree" className="bg-light py-5 text-center">
         <div className="container-fluid">
-          <div className="row justify-content-center">
+          <div className="row justify-content-around">
             <h1 className="display-medium-bold col-md-6 col-12">
               Create an ecommerce page and sell stuff
             </h1>
           </div>
-          <div className="d-flex flex-wrap justify-content-center">
-            <div className="e-ad-card m-3">
-              <img src={shoppingbag} height="50%" alt="" />
-              <p className="text-medium text-white">Setup a store</p>
+          <div className="d-flex  justify-content-center my-3 ads">
+            <div className="e-ad-card e-ad-card-1 m-3">
+              <img src={StoreAd1} alt="" />
+              <div className="d-flex align-items-center mt-2 w-100 justify-content-center">
+                <div className="icon-wrap">
+                  <FontAwesomeIcon icon={faShoppingBag} />
+                </div>
+                <span className="text-medium ml-1 ">Setup a store</span>
+              </div>
             </div>
-            <div className="e-ad-card m-3">
-              <img src={DollarSign} height="50%" alt="" />
-              <p className="text-medium text-white">Recieve Payment</p>
+            <div className="e-ad-card e-ad-card-2 m-3">
+              <div className="img">
+                <img src={StoreAds2} alt="" />
+              </div>
+              <div className="d-flex align-items-center mt-2 w-100 justify-content-center">
+                <div className="icon-wrap">
+                  <FontAwesomeIcon icon={faDollarSign} />
+                </div>
+                <span className="text-medium ml-1 ">Recieve Payment</span>
+              </div>
             </div>
-            <div className="e-ad-card m-3">
-              <img src={ShoppingCart} height="50%" alt="" />
-              <p className="text-medium text-white">
-                Buy from verified sellers
-              </p>
+            <div className="e-ad-card e-ad-card-3 m-3">
+              <img src={StoreAds3} alt="" />
+              <div className="d-flex align-items-center mt-2 w-100 justify-content-center ">
+                <div className="icon-wrap">
+                  <FontAwesomeIcon icon={faShoppingCart} />
+                </div>
+                <span className="text-medium ml-1 ">
+                  Buy from verified sellers{" "}
+                </span>
+              </div>
             </div>
-            <div className="e-ad-card m-3">
-              <img src={CreditCard} height="50%" alt="" />
-              <p className="text-medium text-white">
-                Get a refund on verified products
-              </p>
+            <div className="e-ad-card e-ad-card-4 m-3">
+              <img src={StoreAds4} alt="" />
+              <div className="d-flex align-items-center mt-2 w-100 justify-content-center">
+                <div className="icon-wrap">
+                  <FontAwesomeIcon icon={faCreditCard} />
+                </div>
+                <span className="text-medium ml-1 ">
+                  {" "}
+                  Get a refund on verified products
+                </span>
+              </div>
             </div>
           </div>
         </div>{" "}
@@ -292,19 +321,13 @@ const HomePage = (props) => {
         <div className="container py-5 my-5">
           <div className="row align-items-center">
             <div className="col-md-6 col-12">
-              <h1 className="display-medium-bold">
+              <h1 className="display-medium-bold mb-3">
                 Get your audience to your important links
               </h1>
               <ul>
-                <li className="marked-list-item text-medium">
-                  Add links to your contents
-                </li>
-                <li className="marked-list-item text-medium">
-                  Add links to your social media pages
-                </li>
-                <li className="marked-list-item text-medium">
-                  All on a single page
-                </li>
+                <MarkedListItem text="Add links to your contents" />
+                <MarkedListItem text="Add links to your social media pages" />
+                <MarkedListItem text="All on a single page" />
               </ul>
             </div>
 
@@ -332,17 +355,15 @@ const HomePage = (props) => {
               />
             </div>
             <div className="col-md-6 col-12">
-              <h1 className="display-medium-bold">
+              <h1 className="display-medium-bold mb-3">
                 Manage analytics of your social media
               </h1>
               <ul>
-                <li className="marked-list-item text-medium">
-                  measure how audience view and click your contents.
-                </li>
-                <li className="marked-list-item text-medium">
-                  See countries where people are viewing and clicking your
-                  contents.
-                </li>
+                <MarkedListItem text="measure how audience view and click your contents." />
+                <MarkedListItem
+                  text=" See countries where people are viewing and clicking your
+                  contents."
+                />
               </ul>
             </div>
           </div>
@@ -358,77 +379,50 @@ const HomePage = (props) => {
             Reach more with your monaly links.
           </p>
           <div className="d-flex justify-content-center align-items center my-2 flex-wrap">
-            <div className="pricing-card  p-3 m-3">
-              <h1 className="display-small">FREE</h1>
-              <h1 className="display-small">
-                $0<span className="text-small">/month</span>
-              </h1>
-              <Link to="/sign-up" className="w-100 primary-inverse-btn my-4">
-                Start Using For Free
-              </Link>
-              <ul>
-                <li className="marked-list-item link-small">
-                  <u>1 Instagram Business Account</u>
-                </li>
-                <li className="marked-list-item link-small">Auto Update</li>
-                <li className="marked-list-item text-muted link-small">
-                  <strike>Unlimited Story Widgets</strike>
-                </li>
-                <li className="marked-list-item text-muted link-small">
-                  <strike>Unlimited Galleries</strike>
-                </li>
-                <li className="marked-list-item text-muted link-small">
-                  <strike>Multiple Layouts & Options</strike>
-                </li>
-                <li className="marked-list-item text-muted link-small">
-                  <strike>Convert to AMP Format</strike>
-                </li>
-                <li className="marked-list-item text-muted link-small">
-                  <strike>API Access</strike>
-                </li>
-                <li className="marked-list-item text-muted link-small">
-                  <strike>Team Sub-Accounts</strike>
-                </li>
-                <li className="marked-list-item text-muted link-small">
-                  <strike>Advance Analytics</strike>
-                </li>
-              </ul>
+            <div className="pricing-card-wrap  m-3">
+              <div className="pricing-card  p-3">
+                <h1 className="display-small-bold">FREE</h1>
+                <h1 className="display-small-bold">
+                  $0<span className="text-small">/month</span>
+                </h1>
+                <Link to="/sign-up" className="w-100 primary-inverse-btn my-4">
+                  Start Using For Free
+                </Link>
+                <ul>
+                  <BoldItem text="Add unlimited links" />
+                  <BoldMutedItem text="Add video and images to links" />
+                  <BoldMutedItem text="Add social icons" />
+                  <BoldMutedItem text="Add bio" />
+                  <BoldMutedItem text="Share link with friends using QR code" />
+                  <BoldMutedItem text="Add an e-commerce store" />
+                  <BoldMutedItem text="Get orders on the App" />
+                  <BoldMutedItem text="Get payment from customers" />
+                  <BoldMutedItem text="Link with dispatch riders to deliver your product" />
+                </ul>
+              </div>
+              <p className="text-x-small text-muted mt-3">
+                You can also refer your friends to get monaly points and monaly
+                points can be used to subscribe for PRO for a limited time.
+              </p>
             </div>
 
             <div className="pricing-card monaly-border p-3 m-3">
-              <h1 className="display-small">PRO</h1>
+              <h1 className="display-small-bold">PRO</h1>
               <h1 className="display-small-bold">
                 $5<span className="text-small">/month</span>
               </h1>
-              <Link to="sign-up" className="w-100 primary-btn my-4">
+              <Link to="sign-up" className="w-100 primary-btn my-4 p-4">
                 Join the PROs
               </Link>
               <ul>
-                <li className="marked-list-item link-small">
-                  <u>1 Instagram Business Account</u>
-                </li>
-                <li className="marked-list-item link-small">Auto Update</li>
-                <li className="marked-list-item text-muted link-small">
-                  <strike>Unlimited Story Widgets</strike>
-                </li>
-                <li className="marked-list-item text-muted link-small">
-                  <strike>Unlimited Galleries</strike>
-                </li>
-                <li className="marked-list-item text-muted link-small">
-                  <strike>Multiple Layouts & Options</strike>
-                </li>
-                <li className="marked-list-item text-muted link-small">
-                  <strike>Convert to AMP Format</strike>
-                </li>
-                <li className="marked-list-item text-muted link-small">
-                  <strike>API Access</strike>
-                </li>
-                <li className="marked-list-item text-muted link-small">
-                  <strike>Team Sub-Accounts</strike>
-                </li>
-                <li className="marked-list-item text-muted link-small">
-                  <strike>Advance Analytics</strike>
-                </li>
+                <BoldItem text="Add multiple monaly accounts⁣" />
+                <BoldMutedItem text="Get analytics of daily, weekly and monthly views of your profile⁣" />
+                <BoldMutedItem text="Get analytics of daily, weekly and monthly click of your links" />
+                <BoldMutedItem text="Get analytics of countries where your profile is getting attention" />
+                <BoldMutedItem text="Get analytics of devices from which your profile is getting attention" />
+                <BoldMutedItem text="Download data of analytics" />
+                <BoldMutedItem text="Get analytics of clicks on individual links." />
+                <BoldMutedItem text="Download and Collect subscribers data" />
               </ul>
             </div>
           </div>
