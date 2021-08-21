@@ -262,7 +262,7 @@ const HomePage = (props) => {
         </div>
       </section>
 
-      <section id="homepageSectionThree" className="bg-light py-5 text-center">
+      <section id="homepageSectionThree" className="bg-white py-5 text-center">
         <div className="container-fluid">
           <div className="row justify-content-around">
             <h1 className="display-medium-bold col-md-6 col-12">
@@ -291,7 +291,7 @@ const HomePage = (props) => {
               </div>
             </div>
             <div className="e-ad-card e-ad-card-3 m-3">
-              <img src={StoreAds3} alt="" />
+              <img src={StoreAd1} alt="" />
               <div className="d-flex align-items-center mt-2 w-100 justify-content-center ">
                 <div className="icon-wrap">
                   <FontAwesomeIcon icon={faShoppingCart} />
