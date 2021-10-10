@@ -105,6 +105,7 @@
   border: 1.11468px solid #d6dae4;
   box-sizing: border-box;
   border-radius: 32px;
+  text-align: left;
 }
 .pricing-card a {
   display: flex;
@@ -216,10 +217,12 @@
 
 @media screen and (max-width: 1200px) {
   .homepage-moving-images {
-    height: 400px;
+    height: 300px;
     background-image: url("../../../../assets/images/StripeBG.svg");
     background-position: bottom;
     background-size: 50%;
+    width: 80%;
+    margin: 0 auto;
   }
   .SectionOne1 {
     height: 30%;
@@ -246,6 +249,12 @@
   }
 }
 @media screen and (max-width: 900px) {
+  #homepage {
+    text-align: center;
+  }
+  #homepage .marked-list-item::before {
+    margin-right: 5px;
+  }
   #homepageSectionThree {
     height: auto;
     background-image: unset;

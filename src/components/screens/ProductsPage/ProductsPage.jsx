@@ -70,16 +70,13 @@ const ProductsPage = (props) => {
   const CopyProductLink = ({ link }) => {
     return (
       <div
-        className="copy-product-link"
+        className="copy-product-link shadow-small p-3 bg-white rounded-pill back-arrow"
         onClick={(e) => {
           onCopyProductLink();
           copyToClipboard(e, link);
         }}
       >
-        <div className="copy-text-message cursor alert alert-success link-x-small d-flex justify-content-between align-items-center ">
-          <span className="mr-2">Copy Product Link</span>
-          <FontAwesomeIcon icon={faCopy} className="text-secondary" size="lg" />
-        </div>
+        <FontAwesomeIcon icon={faCopy} className="text-secondary" size="lg" />
       </div>
     );
   };
@@ -143,7 +140,7 @@ const ProductsPage = (props) => {
       )}
       {/* Copy Link to ClipBoard */}
 
-      <div className="container">
+      <div className="container-fluid">
         <div className="d-flex align-items-center my-4 ">
           <div
             className="avatar bg-light position-relative"
@@ -242,9 +239,7 @@ const ProductsPage = (props) => {
                   }}
                 >
                   {profile._id === product.user && (
-                    <CopyProductLink
-                      link={`${siteUrl}product/${product._id}`}
-                    />
+                    <CopyProductLink link={`product/${product._id}`} />
                   )}
 
                   {profile._id === product.user && (
@@ -281,6 +276,13 @@ const ProductsPage = (props) => {
                 </NavLink>
               </div>
             ))}
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-12 col-12">
+          {/* <div className="col-md-3 col-12">
+            <div className="product-item bg-white m-2 p-1 shadow-small"></div>
+          </div> */}
         </div>
       </div>
 

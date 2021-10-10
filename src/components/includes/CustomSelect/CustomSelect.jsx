@@ -5,8 +5,8 @@ import Close from "../../../assets/images/Close.png";
 
 import "./css/style.css";
 
-const CustomInput = ({
-  onChange = () => {},
+const CustomSelect = ({
+  onChange,
   icon,
   secured,
   placeholder,
@@ -24,9 +24,20 @@ const CustomInput = ({
   return (
     <>
       <div className="custom-input" id={id}>
-        <div className="input-inner">
+        <div className="input-inner h-100">
           {showLabel && <label htmlFor={placeholder}>{placeholder}</label>}
-          <input
+          <select
+            name="select"
+            id="Selectid"
+            className="w-100 h-100 bg-transparent border-0"
+          >
+            <option value="" disabled selected>
+              Select Country
+            </option>
+            <option value="Two">Two</option>
+            <option value="Three">Three</option>
+          </select>
+          {/* <input
             defaultValue={defaultValue}
             type={inputType}
             placeholder={placeholder}
@@ -58,7 +69,7 @@ const CustomInput = ({
                 close.style.display = "none";
               }
             }}
-          />
+          /> */}
         </div>
 
         {!secured ? (
@@ -99,4 +110,4 @@ const CustomInput = ({
   );
 };
 
-export default CustomInput;
+export default CustomSelect;

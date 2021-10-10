@@ -105,7 +105,7 @@ const HomePage = (props) => {
       </nav>
 
       <section id="hompageSectionOne" className="bg-light">
-        <div className="container py-5">
+        <div className="container py-md-5 py-3">
           <div className="row align-items-center">
             <div className="col-md-7 col-12 p-3">
               <h1 className="display-large-bold mb-3">
@@ -241,7 +241,7 @@ const HomePage = (props) => {
       <section id="hompageSectionTwo" className="bg-white">
         <div className="container py-5 my-5">
           <div className="row align-items-center">
-            <div className="col-md-6 col-12 stripe-bg">
+            <div className="col-md-6 col-12 stripe-bg order-md-0 order-2">
               <img
                 src={Group1000001632}
                 alt="monaly products"
@@ -249,8 +249,8 @@ const HomePage = (props) => {
                 height="400px"
               />
             </div>
-            <div className="col-md-6 col-12">
-              <h1 className="display-medium-bold">
+            <div className="col-md-6 col-12 order-0  mb-3">
+              <h1 className="display-medium-bold  mb-3">
                 Create a beautiful landing page in minutes.
               </h1>
               <ul>
@@ -354,8 +354,8 @@ const HomePage = (props) => {
                 height="400px"
               />
             </div>
-            <div className="col-md-6 col-12">
-              <h1 className="display-medium-bold mb-3">
+            <div className="col-md-6 col-12 ">
+              <h1 className="display-medium-bold my-4">
                 Manage analytics of your social media
               </h1>
               <ul>

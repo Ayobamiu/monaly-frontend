@@ -78,16 +78,6 @@ const SignIn = (props) => {
               </div>
             )}
           </button>
-          {userStatus && (
-            <span
-              style={{
-                color: userStatus && userStatus.color,
-              }}
-              className="notify-p mb-8"
-            >
-              {userStatus && userStatus.message}...
-            </span>
-          )}
         </form>
         <div className="mb-32"></div>
         {/* <button className="primary-inverse-btn mb-32">

@@ -79,7 +79,7 @@ code {
   font-style: normal;
   font-weight: bold;
   font-size: 64px;
-  line-height: 66px;
+  /* line-height: 66px; */
   /* or 103% */
 
   letter-spacing: 1px;
@@ -95,7 +95,7 @@ code {
   font-style: normal;
   font-weight: normal;
   font-size: 48px;
-  line-height: 50px;
+  /* line-height: 50px; */
   /* or 104% */
 
   letter-spacing: 1px;
@@ -111,7 +111,7 @@ code {
   font-style: normal;
   font-weight: bold;
   font-size: 48px;
-  line-height: 50px;
+  /* line-height: 50px; */
   /* or 104% */
 
   letter-spacing: 1px;
@@ -127,7 +127,7 @@ code {
   font-style: normal;
   font-weight: normal;
   font-size: 32px;
-  line-height: 34px;
+  /* line-height: 34px; */
   /* or 106% */
 
   letter-spacing: 1px;
@@ -143,7 +143,7 @@ code {
   font-style: normal;
   font-weight: bold;
   font-size: 32px;
-  line-height: 34px;
+  /* line-height: 34px; */
   /* or 106% */
 
   letter-spacing: 1px;
@@ -159,7 +159,7 @@ code {
   font-style: normal;
   font-weight: normal;
   font-size: 24px;
-  line-height: 38px;
+  /* line-height: 38px; */
   /* or 158% */
 
   letter-spacing: 0.75px;
@@ -175,7 +175,7 @@ code {
   font-style: normal;
   font-weight: 600;
   font-size: 24px;
-  line-height: 38px;
+  /* line-height: 38px; */
   /* or 158% */
 
   letter-spacing: 0.75px;
@@ -200,7 +200,7 @@ code {
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
-  line-height: 34px;
+  /* line-height: 34px; */
   /* or 189% */
 
   letter-spacing: 0.75px;
@@ -216,7 +216,7 @@ code {
   font-style: normal;
   font-weight: 600;
   font-size: 18px;
-  line-height: 34px;
+  /* line-height: 34px; */
   /* or 189% */
 
   letter-spacing: 0.75px;
@@ -241,7 +241,7 @@ code {
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
-  line-height: 28px;
+  /* line-height: 28px; */
   /* or 175% */
 
   letter-spacing: 0.75px;
@@ -257,7 +257,7 @@ code {
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
-  line-height: 28px;
+  /* line-height: 28px; */
   /* or 175% */
 
   letter-spacing: 0.75px;
@@ -282,7 +282,7 @@ code {
   font-style: normal;
   font-weight: 500;
   font-size: 13px;
-  line-height: 22px;
+  /* line-height: 22px; */
   /* or 171% */
 
   letter-spacing: 0.75px;
@@ -298,7 +298,7 @@ code {
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
-  line-height: 24px;
+  /* line-height: 24px; */
   /* or 171% */
 
   letter-spacing: 0.75px;
@@ -322,7 +322,7 @@ code {
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
-  line-height: 24px;
+  /* line-height: 24px; */
   /* or 150% */
 
   /* text-align: center; */
@@ -354,7 +354,7 @@ code {
   font-style: normal;
   font-weight: normal;
   font-size: 32px;
-  line-height: 32px;
+  /* line-height: 32px; */
   /* or 133% */
 
   text-align: center;
@@ -370,7 +370,7 @@ code {
   font-style: normal;
   font-weight: normal;
   font-size: 11px;
-  line-height: 16px;
+  /* line-height: 16px; */
   /* or 145% */
 
   letter-spacing: 0.75px;
@@ -386,7 +386,7 @@ code {
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
-  line-height: 24px;
+  /* line-height: 24px; */
   /* identical to box height, or 171% */
 
   letter-spacing: 0.75px;
@@ -399,7 +399,7 @@ code {
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
-  line-height: 24px;
+  /* line-height: 24px; */
   /* or 171% */
 
   letter-spacing: 0.75px;
@@ -415,7 +415,7 @@ code {
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
-  line-height: 16px;
+  /* line-height: 16px; */
   /* identical to box height, or 114% */
 
   display: flex;
@@ -429,7 +429,7 @@ code {
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
-  line-height: 34px;
+  /* line-height: 34px; */
   /* identical to box height, or 189% */
 
   letter-spacing: 0.75px;
@@ -443,7 +443,7 @@ code {
   font-style: normal;
   font-weight: 600;
   font-size: 12px;
-  line-height: 34px;
+  /* line-height: 34px; */
   /* identical to box height, or 283% */
 
   letter-spacing: 0.75px;
@@ -537,7 +537,7 @@ code {
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
-  line-height: 28px;
+  /* line-height: 28px; */
   letter-spacing: 0.75px;
   text-align: center;
   outline: none;
@@ -557,7 +557,7 @@ code {
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
-  line-height: 28px;
+  /* line-height: 28px; */
   letter-spacing: 0.75px;
   text-align: center;
   outline: none;
@@ -588,7 +588,7 @@ code {
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
-  line-height: 28px;
+  /* line-height: 28px; */
   letter-spacing: 0.75px;
   text-align: center;
   outline: none;
@@ -613,7 +613,7 @@ code {
   font-style: normal;
   font-weight: 600;
   font-size: 13px;
-  line-height: 22px;
+  /* line-height: 22px; */
   /* or 169% */
 
   display: flex;
@@ -645,7 +645,7 @@ code {
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
-  line-height: 28px;
+  /* line-height: 28px; */
   letter-spacing: 0.75px;
   text-align: center;
   /* margin: 10px 0; */
@@ -734,7 +734,7 @@ input::-ms-clear {
   font-style: normal;
   font-weight: 600;
   font-size: 18px;
-  line-height: 28px;
+  /* line-height: 28px; */
   /* identical to box height, or 156% */
 
   letter-spacing: 0.75px;
@@ -750,7 +750,7 @@ input::-ms-clear {
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
-  line-height: 28px;
+  /* line-height: 28px; */
   /* identical to box height, or 156% */
   letter-spacing: 0.75px;
   text-align: left;
@@ -772,7 +772,7 @@ input::-ms-clear {
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
-  line-height: 28px;
+  /* line-height: 28px; */
   /* identical to box height, or 156% */
   letter-spacing: 0.75px;
   text-align: left;
@@ -895,43 +895,43 @@ a {
 
   .display-large,
   .display-large-bold {
-    font-size: 48px;
-    line-height: 50px;
+    font-size: 36px;
+    /* line-height: 40px; */
   }
   .display-medium,
   .display-medium-bold {
-    font-size: 32px;
-    line-height: 36px;
+    font-size: 24px;
+    /* line-height: 30px; */
   }
 
   .display-small,
   .display-small-bold {
-    font-size: 24px;
-    line-height: 32px;
+    font-size: 16px;
+    /* line-height: 20px; */
   }
 
   .text-large,
   .link-large {
-    font-size: 20px;
-    line-height: 32px;
+    font-size: 1rem;
+    /* line-height: 1.2rem; */
   }
 
   .text-medium,
   .link-medium {
-    font-size: 16px;
-    line-height: 28px;
+    font-size: 14px;
+    /* line-height: 1rem; */
   }
 
   .text-small,
   .link-small {
-    font-size: 14px;
-    line-height: 24px;
+    font-size: 12px;
+    /* line-height: 0.8rem; */
   }
 
   .text-x-small,
   .link-x-small {
-    font-size: 13px;
-    line-height: 22px;
+    font-size: 10px;
+    /* line-height: 0.6rem; */
   }
   .form-box {
     padding: 72px 24px;
@@ -968,7 +968,7 @@ a {
   .popup button {
     padding: 8px 12px;
     font-size: 13px;
-    line-height: 22px;
+    /* line-height: 22px; */
   }
   .popup button:hover {
     background: #fff9fa;

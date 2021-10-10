@@ -267,7 +267,7 @@ export const updateStoreLogo = (storeId, data) => (dispatch, getState) => {
 export const loadStore = (slug) => (dispatch, getState) => {
   dispatch(
     apiCallBegan({
-      url: `/products/store/${slug}`,
+      url: `/products/store-by-slug/${slug}`,
       onStart: productsRequested.type,
       onSuccess: productsReceived.type,
       onError: productsRequestFailed.type,

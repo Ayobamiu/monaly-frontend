@@ -26,6 +26,7 @@ import Money from "./screens/Money/Money";
 import Stores from "./screens/Stores/Stores";
 import PayRedirect from "./screens/PayRedirect/PayRedirect";
 import CheckoutComplete from "./screens/CheckoutComplete/CheckoutComplete";
+import CartPlusCheckout from "./screens/CartPlusCheckout/CartPlusCheckout";
 
 const MainRoute = () => {
   return (
@@ -43,6 +44,7 @@ const MainRoute = () => {
         <Route component={AddProduct} path="/add-product" />
         <Route component={PayRedirect} path="/pay-redirect" />
         <Route component={Stores} path="/stores" />
+        <Route component={CartPlusCheckout} path="/one-click" />
         <Route component={WithdrawalPage} path="/withdraw" />
         <Route component={Money} path="/money" />
         <Route component={AddStore} path="/add-store" />
