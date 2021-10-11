@@ -95,7 +95,7 @@ export const getLatLong = async (address) => {
 };
 
 export const getCountries = async () => {
-  const { data } = await axios
+  const response = await axios
     .get("https://api.countrystatecity.in/v1/countries", {
       headers: {
         "X-CSCAPI-KEY":
@@ -103,7 +103,7 @@ export const getCountries = async () => {
       },
     })
     .catch((error) => {});
-  return data;
+  return response?.data || [];
 };
 
 export const getStates = async (iso2) => {

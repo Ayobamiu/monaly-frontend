@@ -2,6 +2,8 @@ import {
   faAngleDown,
   faCaretDown,
   faHeart,
+  faLink,
+  faStore,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect } from "react";
 import monalydashboardlogo from "../../../assets/images/Vector.svg";
@@ -35,7 +37,7 @@ const Admin = () => {
         <span className="custom-p">
           <img src={monalydashboardlogo} alt="" /> Analytics
         </span>
-        <div className="admin-search-input">
+        {/* <div className="admin-search-input">
           <CustomInput
             placeholder="Search for username/email"
             icon={faHeart}
@@ -65,9 +67,10 @@ const Admin = () => {
             <button>Log Out</button>
           </div>
         </UncontrolledPopover>
+     */}
       </nav>
-      <section className="analytics-summary" id="analytics-summary">
-        <div className="venn-container">
+      {/* <section className="bg-light " id=""> */}
+      {/* <div className="venn-container">
           <div className="venncirctop">{nFormatter(users.length, 1)}</div>
           <div className="venncirclft">{nFormatter(users.length, 1)}</div>
           <div className="venncircrt">{nFormatter(0, 1)}</div>
@@ -76,45 +79,145 @@ const Admin = () => {
           <span className="venn-one custom-p bold">Registered Users</span>
           <span className="venn-two custom-p bold">Free Tier Accounts</span>
           <span className="venn-three custom-p bold">Premium Accounts</span>
-        </div>
-      </section>
-      <section className="product-statistics" id="product-statistics">
-        <h1>Product Statistics</h1>
+        </div> */}
+      {/* <div className="d-flex ">
+          <div className="count-item bg-secondary">
+            <span>Registered Users</span>
+            <div>{nFormatter(users.length, 1)}</div>
+          </div>
+          <div className="count-item bg-secondary">
+            <span>Free Tier Accounts</span>
+            <div>{nFormatter(users.length, 1)}</div>
+          </div>
+          <div className="count-item bg-secondary">
+            <span>Premium Accounts</span>
+            <div>{nFormatter(0, 1)}</div>
+          </div>
+        </div> */}
+      {/* </section> */}
+      <section className="product-statistics p-2" id="product-statistics">
+        <h3 className="text-center">Users </h3>
+
         <div className="statistic-items">
           <div className="statistic-item statistic-item-one">
-            <h3>{statistics.customLinksCount}</h3>
-            <span>Monalys Created</span>
+            <h3>{nFormatter(users.length, 1)}</h3>
+            <small>Registered Users</small>
           </div>
           <div className="statistic-item statistic-item-two">
-            <h3>{statistics.noOfVisits}</h3>
-            <span>Total Monaly Visits</span>
+            <h3>{nFormatter(users.length, 1)}</h3>
+            <small>Free Tier Accounts</small>
           </div>
-          <div className="statistic-item statistic-item-three">
+          {/* <div className="statistic-item statistic-item-three">
             <h3>{statistics.customLinksCount}</h3>
-            <span>Urls Hosted</span>
+            <small>Urls Hosted</small>
           </div>
           <div className="statistic-item statistic-item-four">
             <h3>{statistics.noOfClicks}</h3>
-            <span>Total URL Clicks</span>
+            <small>Total URL Clicks</small>
+          </div> */}
+        </div>
+      </section>
+      <section className="product-statistics p-2" id="product-statistics">
+        <h3 className="text-center">Product Statistics</h3>
+
+        <div className="statistic-items">
+          <div className="statistic-item statistic-item-one">
+            <h3>{statistics.customLinksCount}</h3>
+            <small>Monalys Created</small>
+          </div>
+          <div className="statistic-item statistic-item-two">
+            <h3>{statistics.noOfVisits}</h3>
+            <small>Total Monaly Visits</small>
+          </div>
+          <div className="statistic-item statistic-item-three">
+            <h3>{statistics.customLinksCount}</h3>
+            <small>Urls Hosted</small>
+          </div>
+          <div className="statistic-item statistic-item-four">
+            <h3>{statistics.noOfClicks}</h3>
+            <small>Total URL Clicks</small>
           </div>
         </div>
       </section>
-      <section className="users-list" id="users-list">
+
+      <div className="container">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">
+                  <small>Username</small>
+                </th>
+                <th scope="col">
+                  <small>Email</small>
+                </th>
+                <th scope="col">
+                  <small>links</small>
+                </th>
+                <th scope="col">
+                  <small>stores</small>
+                </th>
+                <th scope="col">
+                  <small>products</small>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((user) => (
+                <tr>
+                  <td>
+                    <small>@{user.userName}</small>
+                  </td>
+                  <td>
+                    <small>{user.email}</small>
+                  </td>
+                  <td>
+                    <small>{user.linksCount}</small>
+                  </td>
+                  <td>
+                    <small>{user.storesCount}</small>
+                  </td>
+                  <td>
+                    <small>
+                      {user.productsCount}
+                      {/* product */}
+                      {/* {user.productsCount > 1 && "s"} */}
+                    </small>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {/* <section className="users-list" id="users-list">
         {users.map((user) => (
           <div className="users-list-item">
-            <div
-              className="avatar"
-              style={{ backgroundImage: `url(${user.profilePhoto})` }}
-            >
-              {!user.profilePhoto && getInitialsOnProfile(user)}
-            </div>
             <span className="username">@{user.userName}</span>
             <span className="email">{user.email}</span>
-            <span className="account-type">Free Tier Account</span>
-            <button>Learn More</button>
+            <span className="">
+              <FontAwesomeIcon
+                icon={faLink}
+                size="sm"
+                className="text-secondary"
+              />{" "}
+              {user.linksCount}
+            </span>
+            <span className="">
+              <FontAwesomeIcon
+                icon={faStore}
+                size="sm"
+                className="text-secondary"
+              />{" "}
+              {user.storesCount}
+            </span>
+            <span className="">
+              {user.productsCount} product{user.productsCount > 1 && "s"}
+            </span>
           </div>
         ))}
       </section>
+   */}
     </div>
   );
 };

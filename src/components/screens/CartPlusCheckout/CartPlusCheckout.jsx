@@ -101,6 +101,7 @@ export default function CartPlusCheckout() {
         "8, Gbemisola street, Allen Avenue, Ikeja Lagos.6, Gbemisola street, Allen Avenue, Ikeja Lagos.",
     },
   ]);
+  const [showAddAddress, setShowAddAddress] = useState(false);
   const [showHiddenCart, setShowHiddenCart] = useState(false);
   const [show, setShow] = useState(false);
   const [address, setAddress] = useState(addresses[0]);
@@ -127,6 +128,9 @@ export default function CartPlusCheckout() {
   const [cities, setCities] = useState([]);
   const [state, setState] = useState(null);
   const [city, setCity] = useState(null);
+  const [newFullName, setNewFullName] = useState("");
+  const [newAddress, setNewAddress] = useState("");
+  const [newPhone, setNewPhone] = useState("");
 
   const [country, setCountry] = useState(null);
   console.log("city", city);
@@ -173,9 +177,7 @@ export default function CartPlusCheckout() {
     saveToLocalStorage("orders", []);
     window.location.replace("/pay-redirect");
   };
-  (async () => {
-    await getLatLong("Ikeja, Lagos");
-  })();
+
   const Canva = ({ visible = false }) => {
     if (!visible) return null;
     return (
@@ -189,10 +191,8 @@ export default function CartPlusCheckout() {
           <div className="d-flex justify-content-between align-items-center">
             <span>Please select shipping Address:</span>
             <button
-              type="button"
               class="btn btn-link"
-              data-bs-toggle="modal"
-              data-bs-target="#addAddressModal"
+              onClick={() => setShowAddAddress(!showAddAddress)}
             >
               Add new
             </button>
@@ -228,6 +228,135 @@ export default function CartPlusCheckout() {
           &#10005;
         </span>
         <Cart />
+      </div>
+    );
+  };
+  const AddAddress = ({ visible = false }) => {
+    if (!visible) return null;
+    return (
+      <div className="canvas px-2 scroll-y p-2 pb-5  bg-light d-flex">
+        <div className="off-canvas">
+          <span
+            className="float-right mx-2"
+            onClick={() => setShowAddAddress(!showAddAddress)}
+          >
+            &#10005;
+          </span>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              saveUserAddress();
+            }}
+            className="container my-4"
+          >
+            <h5 class="modal-title" id="addAddressModalLabel">
+              Add new Address
+            </h5>
+            <CustomInput
+              onChange={(e) => setNewFullName(e.target.value)}
+              placeholder="Full Name"
+              type="text"
+              required
+              id="fullName"
+            />
+            <CustomInput
+              onChange={(e) => setNewPhone(e.target.value)}
+              placeholder="Phone Number"
+              type="phone"
+              required
+              id="phone"
+            />
+            <CustomInput
+              onChange={(e) => setNewAddress(e.target.value)}
+              placeholder=" Address"
+              type="text"
+              required
+              id="newAddress"
+            />
+            <div className="custom-input">
+              <div className="input-inner h-100">
+                <select
+                  required
+                  name="select"
+                  id="Selectid"
+                  className="w-100 h-100 bg-transparent border-0"
+                  onChange={async (e) => {
+                    e.preventDefault();
+                    console.log("value", countries[e.target.value]);
+                    setCountry(countries[e.target.value]);
+                    const data = await getStates(
+                      countries[e.target.value]?.iso2
+                    );
+                    setStates(data);
+                  }}
+                >
+                  <option value="" disabled selected>
+                    Select Country
+                  </option>
+                  {countries.map((i, index) => (
+                    <option value={index}>{i.name}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="custom-input">
+              <div className="input-inner h-100">
+                <select
+                  required
+                  name="select"
+                  id="cities"
+                  className="w-100 h-100 bg-transparent border-0"
+                  onChange={async (e) => {
+                    console.log("value", states[e.target.value]);
+                    setState(states[e.target.value]);
+                    const data = await getCitiess(
+                      country?.iso2,
+                      states[e.target.value]?.iso2
+                    );
+                    setCities(data);
+                  }}
+                >
+                  <option value="" disabled selected>
+                    Select State
+                  </option>
+                  {states.map((i, index) => (
+                    <option value={index}>{i.name}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="custom-input">
+              <div className="input-inner h-100">
+                <select
+                  required
+                  name="select"
+                  id="cities"
+                  className="w-100 h-100 bg-transparent border-0"
+                  onChange={async (e) => {
+                    console.log("value", states[e.target.value]);
+                    setCity(states[e.target.value]);
+                  }}
+                >
+                  <option value="" disabled selected>
+                    Select City
+                  </option>
+                  {cities.map((i, index) => (
+                    <option value={index}>{i.name}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              Submit
+            </button>
+          </form>
+        </div>
+        <div
+          className="close-canvas"
+          onClick={() => setShowAddAddress(!showAddAddress)}
+        ></div>
       </div>
     );
   };
@@ -290,13 +419,13 @@ export default function CartPlusCheckout() {
         <div className="border-bottom py-2">
           <div className="d-flex justify-content-between">
             <span>Shipping Address</span>
-            <NavLink
+            <button
               className="btn btn-link"
-              // onClick={() => setShow(!show)}
-              to="/one-click/add"
+              onClick={() => setShow(!show)}
+              // to="/one-click/add"
             >
               Change
-            </NavLink>
+            </button>
           </div>
 
           <div className="border bg-white w-100 p-2 my-2">
@@ -353,9 +482,17 @@ export default function CartPlusCheckout() {
   };
 
   const saveUserAddress = () => {
-    setTimeout(() => {
-      window.location = "/one-click";
-    }, 1000);
+    console.log("data", {
+      newFullName,
+      newAddress,
+      city,
+      state,
+      country,
+      newPhone,
+    });
+    // setTimeout(() => {
+    //   window.location = "/one-click";
+    // }, 1000);
   };
 
   //addToLocalStorage
@@ -384,30 +521,24 @@ export default function CartPlusCheckout() {
                       <h5 class="modal-title" id="addAddressModalLabel">
                         Add new Address
                       </h5>
-                      <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                      ></button>
                     </div>
                     <div class="modal-body">
                       <CustomInput
-                        // onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => setNewFullName(e.target.value)}
                         placeholder="Full Name"
                         type="text"
                         required
                         id="fullName"
                       />
                       <CustomInput
-                        // onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => setNewPhone(e.target.value)}
                         placeholder="Phone Number"
                         type="phone"
                         required
                         id="phone"
                       />
                       <CustomInput
-                        // onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => setNewAddress(e.target.value)}
                         placeholder=" Address"
                         type="text"
                         required
@@ -563,6 +694,7 @@ export default function CartPlusCheckout() {
         </div>
       </div>
       <Canva visible={show} />
+      <AddAddress visible={showAddAddress} />
       <HiddenCart visible={showHiddenCart} />
     </div>
   );
