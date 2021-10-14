@@ -28,58 +28,58 @@ const VisitorsScreen = (props) => {
     dispatch(loadVisitorScreen(props.match.params.userName));
     divRref.current.scrollIntoView({ behavior: "smooth" });
 
-    if ("geolocation" in navigator) {
-      // check if geolocation is supported/enabled on current browser
-      navigator.geolocation.getCurrentPosition(
-        async function success(position) {
-          // for when getting location is a success
-          // getAddress(position.coords.latitude, position.coords.longitude);
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-          const addressFrom = await getAddress(latitude, longitude);
-          dispatch(
-            storeVisitorLocation(
-              props.match.params.userName,
-              addressFrom.currentLocation,
-              addressFrom.country,
-              addressFrom.city
-            )
-          );
-        },
-        async function error(error_message) {
-          // for when getting location results in an error
-          console.error(
-            "An error has occured while retrieving" + "location",
-            error_message
-          );
-          const getIp = await ipLookUp();
-          const latitude = getIp.data.lat;
-          const longitude = getIp.data.lon;
-          const addressFrom = await getAddress(latitude, longitude);
-          dispatch(
-            storeVisitorLocation(
-              props.match.params.userName,
-              addressFrom.currentLocation,
-              addressFrom.country,
-              addressFrom.city
-            )
-          );
-        }
-      );
-    } else {
-      const getIp = await ipLookUp();
-      const latitude = getIp.data.lat;
-      const longitude = getIp.data.lon;
-      const addressFrom = await getAddress(latitude, longitude);
-      dispatch(
-        storeVisitorLocation(
-          props.match.params.userName,
-          addressFrom.currentLocation,
-          addressFrom.country,
-          addressFrom.city
-        )
-      );
-    }
+    // if ("geolocation" in navigator) {
+    //   // check if geolocation is supported/enabled on current browser
+    //   navigator.geolocation.getCurrentPosition(
+    //     async function success(position) {
+    //       // for when getting location is a success
+    //       // getAddress(position.coords.latitude, position.coords.longitude);
+    //       const latitude = position.coords.latitude;
+    //       const longitude = position.coords.longitude;
+    //       const addressFrom = await getAddress(latitude, longitude);
+    //       dispatch(
+    //         storeVisitorLocation(
+    //           props.match.params.userName,
+    //           addressFrom.currentLocation,
+    //           addressFrom.country,
+    //           addressFrom.city
+    //         )
+    //       );
+    //     },
+    //     async function error(error_message) {
+    //       // for when getting location results in an error
+    //       console.error(
+    //         "An error has occured while retrieving" + "location",
+    //         error_message
+    //       );
+    //       const getIp = await ipLookUp();
+    //       const latitude = getIp.data.lat;
+    //       const longitude = getIp.data.lon;
+    //       const addressFrom = await getAddress(latitude, longitude);
+    //       dispatch(
+    //         storeVisitorLocation(
+    //           props.match.params.userName,
+    //           addressFrom.currentLocation,
+    //           addressFrom.country,
+    //           addressFrom.city
+    //         )
+    //       );
+    //     }
+    //   );
+    // } else {
+    //   const getIp = await ipLookUp();
+    //   const latitude = getIp.data.lat;
+    //   const longitude = getIp.data.lon;
+    //   const addressFrom = await getAddress(latitude, longitude);
+    //   dispatch(
+    //     storeVisitorLocation(
+    //       props.match.params.userName,
+    //       addressFrom.currentLocation,
+    //       addressFrom.country,
+    //       addressFrom.city
+    //     )
+    //   );
+    // }
   }, []);
 
   const visitorData = useSelector(visitorViewData);
@@ -187,7 +187,7 @@ const VisitorsScreen = (props) => {
           name="author"
           content={visitorData.firstName ? visitorData.firstName : ""}
         />
-        <meta 
+        <meta
           name="description"
           content={`${visitorData.firstName ? visitorData.firstName : ""}${
             visitorData.lastName ? visitorData.lastName : ""
