@@ -35,12 +35,10 @@ const WithdrawalPage = () => {
           },
         }
       );
-      console.log("result", result);
 
       setAccountName(result.data.data.account_name);
       setFecthAccountStatus(result.data.message);
     } catch (error) {
-      console.log("error", error);
       setFecthAccountStatus("Fetching your Account details failed");
     }
   };
@@ -88,9 +86,7 @@ const WithdrawalPage = () => {
           })
         );
       }
-    } catch (error) {
-      console.log("error", error);
-    }
+    } catch (error) {}
   };
 
   const sortedList =

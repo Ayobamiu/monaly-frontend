@@ -30,7 +30,6 @@ const Admin = () => {
   const statistics = useSelector((state) => state.app.customLinks.statistics);
   const loggedInUser = useSelector((state) => state.app.user.profile);
   const profile = getLoggedInUser();
-  console.log("statistics", statistics);
   return (
     <div id="admin">
       <nav>
@@ -43,7 +42,6 @@ const Admin = () => {
             icon={faHeart}
             id="search-admin"
             onChange={(text) => {
-              console.log(text);
             }}
           />
         </div>

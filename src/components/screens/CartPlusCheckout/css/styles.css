@@ -49,8 +49,10 @@
   box-sizing: border-box;
 }
 #one-click .icon {
-  width: 30px;
-  height: 30px;
+  max-width: 30px;
+  min-width: 30px;
+  min-height: 30px;
+  max-height: 30px;
   border-radius: 50%;
   background-color: #ddd;
   display: flex;

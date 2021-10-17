@@ -43,13 +43,11 @@ export const getAddress = async (latitude, longitude) => {
     response.data.results[0] &&
     response.data.results[0].formatted_address;
 
-  console.log("currentLocation", currentLocation);
   const country =
     response.data &&
     response.data.results.find(
       (result) => result.types && result.types[0] === "country"
     ).formatted_address;
-  console.log("country", country);
   const city =
     response.data &&
     response.data.results.find(
@@ -62,7 +60,6 @@ export const getAddress = async (latitude, longitude) => {
 var x = document.getElementById("demo");
 
 function getLocation() {
-  console.log("ll");
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
   } else {
@@ -91,7 +88,6 @@ export const getLatLong = async (address) => {
   const target = result.data.data.find(
     (item) => item.confidence === max_of_array
   );
-  console.log("target", target);
 };
 
 export const getCountries = async () => {

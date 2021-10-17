@@ -48,10 +48,6 @@ const VisitorsScreen = (props) => {
     //     },
     //     async function error(error_message) {
     //       // for when getting location results in an error
-    //       console.error(
-    //         "An error has occured while retrieving" + "location",
-    //         error_message
-    //       );
     //       const getIp = await ipLookUp();
     //       const latitude = getIp.data.lat;
     //       const longitude = getIp.data.lon;
@@ -170,7 +166,6 @@ const VisitorsScreen = (props) => {
     visitorData.customLinks.forEach((link) => {
       titles.push(`${link.title}`);
     });
-  console.log("titles", titles.join(","));
 
   return (
     <div

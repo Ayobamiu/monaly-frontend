@@ -19,7 +19,6 @@ const OrdersPage = (props) => {
   );
   const orders = useSelector((state) => state.app.products.orders);
   const user = useSelector((state) => state.app.user.profile);
-  console.log("orders", orders);
   useEffect(() => {
     if (orders.length === 0) {
       dispatch(loadOrders());

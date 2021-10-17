@@ -54,7 +54,6 @@ const Pricing = () => {
                     handleFlutterPayment({
                       callback: (response) => {
                         if (response.status === "successful") {
-                          console.log(response);
                           dispatch(addSubscription());
                         }
                         closePaymentModal(); // this will close the modal programmatically
@@ -86,9 +85,7 @@ const Pricing = () => {
                   onClick={() => {
                     handleFlutterPayment({
                       callback: (response) => {
-                        console.log(response);
                         if (response.status === "successful") {
-                          console.log(response);
                           dispatch(addSubscription());
                         }
                         closePaymentModal(); // this will close the modal programmatically

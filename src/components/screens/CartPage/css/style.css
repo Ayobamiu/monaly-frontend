@@ -21,6 +21,17 @@
   border: solid 0.5px grey;
   border-radius: 10px;
 }
+#cartPage .icon {
+  max-width: 30px;
+  min-width: 30px;
+  min-height: 30px;
+  max-height: 30px;
+  border-radius: 50%;
+  background-color: #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 @media screen and (max-width: 900px) {
   #cartPage .cart-item {
     /* height: 300px; */

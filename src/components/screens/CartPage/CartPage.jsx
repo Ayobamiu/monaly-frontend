@@ -1,12 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import "./css/style.css";
 import BackButton from "../../includes/BackButton/BackButton";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleDown,
+  faAngleUp,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loadCarts, updateProductInCart } from "../../../store/productSlice";
 import { loadLoggedInUser } from "../../../store/authSlice";
+import CartContext from "../../../store/contexts/cartContext";
+import { saveToLocalStorage } from "../../../assets/js/localStorage";
 
 const CartPage = (props) => {
   const dispatch = useDispatch();
@@ -14,7 +20,9 @@ const CartPage = (props) => {
     (state) => state.app.products.cartLoadStatus
   );
   const loadingCarts = useSelector((state) => state.app.products.loadingCarts);
-  const carts = useSelector((state) => state.app.products.carts);
+  // const carts = useSelector((state) => state.app.products.carts);
+  const { carts, setCarts } = useContext(CartContext);
+
   useEffect(() => {
     dispatch(loadCarts());
     dispatch(loadLoggedInUser());
@@ -22,8 +30,22 @@ const CartPage = (props) => {
   let total = 0;
   for (let index = 0; index < carts.length; index++) {
     const cart = carts[index];
-    total += cart.product.price * cart.quantity;
+    total += cart.price * cart.quantity;
   }
+  const updateCart = (product) => {
+    const currentOrders = carts;
+    const targetIndex = currentOrders.findIndex((i) => i._id == product._id);
+    currentOrders.splice(targetIndex, 1, product);
+    setCarts([...currentOrders]);
+    saveToLocalStorage("carts", currentOrders);
+  };
+  const removeFromCart = (product) => {
+    const currentOrders = carts;
+    const targetIndex = currentOrders.findIndex((i) => i._id == product._id);
+    currentOrders.splice(targetIndex, 1);
+    setCarts((initialState) => [...currentOrders]);
+    saveToLocalStorage("carts", currentOrders);
+  };
   return (
     <div id="cartPage">
       {loadingCarts && (
@@ -52,42 +74,50 @@ const CartPage = (props) => {
               </div>
             )}
             {carts.map((cart, index) => (
-              <div className="cart-item bg-light my-2 d-flex p-1" key={index}>
+              <div className="order-item  mb-2 d-flex justify-content-between">
                 <div
-                  className="cart-item-image bg-secondary"
+                  className="order-item-img bg-secondary"
                   style={{
                     backgroundImage: `url(${
-                      cart &&
-                      cart.product &&
-                      cart.product.images.length > 0 &&
-                      cart.product.images[0].image
+                      cart && cart.images.length > 0 && cart.images[0].image
                     })`,
                   }}
-                ></div>
-                <div className="w-100 d-flex justify-content-between flex-column p-2">
-                  <div className="d-flex justify-content-between">
-                    <h1 className="link-medium">
-                      {cart && cart.product && cart.product.name}
-                    </h1>
-                    <FontAwesomeIcon icon={faTrash} color="grey" />
+                />
+                <div className="text m-2 text-truncate flex-grow-1">
+                  <div className="text-truncate">{cart.title}</div>
+                  <div>
+                    <strong>NGN{cart.price}</strong> <small>X</small>{" "}
+                    <small>{cart.quantity}</small>
                   </div>
-                  <div className="d-flex justify-content-between">
-                    <input
-                      type="number"
-                      name="count"
-                      id="count"
-                      className="cart-item-input link-small"
-                      defaultValue={cart && cart.quantity}
-                      onChange={(e) => {
-                        dispatch(updateProductInCart(cart._id, e.target.value));
+                  <span
+                    className="text-danger"
+                    onClick={() => {
+                      removeFromCart(cart);
+                    }}
+                  >
+                    Remove
+                  </span>
+                </div>
+                <div className="d-flex flex-column justify-content-around">
+                  <div className="icon bg-secondary">
+                    <FontAwesomeIcon
+                      icon={faAngleUp}
+                      color="white"
+                      onClick={() => {
+                        updateCart({ ...cart, quantity: cart.quantity + 1 });
                       }}
-                      min={1}
                     />
-                    <span className="link-medium">
-                      NGN{" "}
-                      {(cart && cart.quantity) *
-                        (cart && cart.product && cart.product.price)}
-                    </span>
+                  </div>
+                  <div className="icon bg-secondary">
+                    <FontAwesomeIcon
+                      icon={faAngleDown}
+                      color="white"
+                      onClick={() => {
+                        if (cart.quantity > 1) {
+                          updateCart({ ...cart, quantity: cart.quantity - 1 });
+                        }
+                      }}
+                    />
                   </div>
                 </div>
               </div>

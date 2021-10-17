@@ -62,7 +62,7 @@ const slice = createSlice({
     orderPlaced: (products, action) => {
       products.carts = [];
       products.orderLoading = false;
-      window.location.replace("/pay-success");
+      window.location.replace("/pay-redirect");
     },
     orderPlaceFailed: (products, action) => {
       products.orderLoading = false;

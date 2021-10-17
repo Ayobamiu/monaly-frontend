@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./css/style.css";
 import BackButton from "../../includes/BackButton/BackButton";
 import axios from "axios";
@@ -12,14 +12,17 @@ import {
 } from "../../../store/productSlice";
 import { addUserAddress, loadLoggedInUser } from "../../../store/authSlice";
 import { getAddress, getAddressV2 } from "../../../assets/js/getAddress";
+import CartContext from "../../../store/contexts/cartContext";
+import { saveToLocalStorage } from "../../../assets/js/localStorage";
 
 const CheckoutPage = (props) => {
   const dispatch = useDispatch();
+  const loadingUser = useSelector((state) => state.app.user.loading);
   const addresses = useSelector((state) => state.app.user.profile.addresses);
   const addAddressStatus = useSelector(
     (state) => state.app.user.addAddressStatus
   );
-  const carts = useSelector((state) => state.app.products.carts);
+  const { carts, setCarts } = useContext(CartContext);
   const storeAddress = useSelector((state) => state.app.products.storeAddress);
   const loadingCarts = useSelector((state) => state.app.products.loadingCarts);
   const orderLoading = useSelector((state) => state.app.products.orderLoading);
@@ -32,12 +35,11 @@ const CheckoutPage = (props) => {
   let total = 0;
   for (let index = 0; index < carts.length; index++) {
     const cart = carts[index];
-    total += cart.product.price * cart.quantity;
+    total += cart.price * cart.quantity;
   }
 
   const showAddress = async (lat, lon) => {
     const result = await getAddress(lat, lon);
-    console.log("address", result);
   };
   const [deliveryMethod, setDeliveryMethod] = useState("pickUp");
   const [loadingDeliveryMerchant, setLoadingDeliveryMerchant] = useState(false);
@@ -71,11 +73,6 @@ const CheckoutPage = (props) => {
     );
   };
 
-  console.log(
-    "getAddressV2",
-    getAddressV2("3b4c10a64fff96eaf6167a0c4c3926d5", 40.7638435, -73.9729691)
-  );
-
   const getLatLong = async (key, address) => {
     const result = await axios.get(
       `http://api.positionstack.com/v1/forward?access_key=${key}&query=${address}`
@@ -89,11 +86,9 @@ const CheckoutPage = (props) => {
     const target = result.data.data.find(
       (item) => item.confidence === max_of_array
     );
-    console.log("target && target.latitude", target && target.latitude);
     setLatitude(target && target.latitude);
     setLongitude(target && target.longitude);
     setAddressCountry(target && target.country);
-    console.log("target && target.country", target && target.country);
   };
   const getEstimate = async (
     pickup_address,
@@ -129,7 +124,6 @@ const CheckoutPage = (props) => {
       setLoadingDeliveryMerchant(false);
     } catch (error) {
       setLoadingDeliveryMerchant(false);
-      console.log("error", error);
     }
   };
   const FormOne = (props) => {
@@ -164,11 +158,12 @@ const CheckoutPage = (props) => {
           }}
         >
           <div className="form-200">
-            {addresses.length === 0 && (
+            {!loadingUser && addresses.length === 0 && (
               <div className=" card-body text-center border rounded rounded-4">
                 <p className="text-medium">Add a new Address to get started</p>
               </div>
             )}
+            {loadingUser && <div className="loader"></div>}
             {addresses.map((address, index) => (
               <div className="d-flex align-items-center my-2 0" key={index}>
                 <input
@@ -229,12 +224,13 @@ const CheckoutPage = (props) => {
               type="radio"
               name="deliveryMerchant"
               id="Monaly Express"
-              value={1000}
+              value={3000}
               onChange={(e) => {
                 setDeliveryMerchant("Monaly Express");
                 setShipping(e.target.value);
               }}
               required={deliveryMethod === "toDoor"}
+              // defaultChecked={deliveryMethod === "toDoor"}
             />
             <CustomLabel
               description="24 Hours"
@@ -295,8 +291,8 @@ const CheckoutPage = (props) => {
   const config = {
     public_key: "FLWPUBK-2e47da611ef1439c41b6685671258d8f-X",
     tx_ref: Date.now(),
-    // amount: Number(total) + Number(shipping),
-    amount: 10,
+    amount: Number(total) + Number(shipping),
+    // amount: 10,
     currency: "NGN",
     payment_options: "card",
     customer: {
@@ -308,53 +304,47 @@ const CheckoutPage = (props) => {
   };
   const handleFlutterPayment = useFlutterwave(config);
   const pay = () => {
-    console.log("order data", {
-      carts,
-      total,
-      shippingFee,
-      deliveryMethod,
-      deliveryMerchant,
-      dileveryAddress,
+   
+    // dispatch(
+    //   placeOrder(
+    //     carts,
+    //     total,
+    //     shippingFee,
+    //     deliveryMethod,
+    //     deliveryMerchant,
+    //     dileveryAddress
+    //   )
+    // );
+    // saveToLocalStorage("carts", []);
+    handleFlutterPayment({
+      callback: (response) => {
+        if (response.status === "successful") {
+          dispatch(
+            placeOrder(
+              carts,
+              total,
+              shippingFee,
+              deliveryMethod,
+              deliveryMerchant,
+              dileveryAddress
+            )
+          );
+          dispatch(
+            addTransaction({
+              description: "Withdrawal to my own account",
+              amount: total,
+              data: response.data,
+            })
+          );
+          saveToLocalStorage("carts", []);
+          window.location = "/pay-redirect";
+        }
+        closePaymentModal(); // this will close the modal programmatically
+      },
+      onClose: () => {},
     });
-    dispatch(
-      placeOrder(
-        carts,
-        total,
-        shippingFee,
-        deliveryMethod,
-        deliveryMerchant,
-        dileveryAddress
-      )
-    );
-    // handleFlutterPayment({
-    //   callback: (response) => {
-    //     if (response.status === "successful") {
-    //       console.log(response);
-    //       dispatch(
-    //         placeOrder(
-    //           carts,
-    //           total,
-    //           shippingFee,
-    //           deliveryMethod,
-    //           deliveryMerchant,
-    //           dileveryAddress
-    //         )
-    //       );
-    //       dispatch(
-    //         addTransaction({
-    //           description: "Withdrawal to my own account",
-    //           amount: total,
-    //           data: response.data,
-    //         })
-    //       );
-    //       window.location = "/pay-redirect";
-    //     }
-    //     closePaymentModal(); // this will close the modal programmatically
-    //   },
-    //   onClose: () => {},
-    // });
   };
-  return ( 
+  return (
     <div id="checoutPage">
       {orderLoading && (
         <div className="loader-full">

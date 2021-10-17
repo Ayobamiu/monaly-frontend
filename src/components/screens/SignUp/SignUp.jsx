@@ -44,7 +44,6 @@ const SignUp = (props) => {
     e.preventDefault();
     dispatch(signUserUp(firstName, lastName, email, signUpUserName, password));
   };
-  console.log("signUpUserName", signUpUserName);
 
   return (
     <div id="signuppage">

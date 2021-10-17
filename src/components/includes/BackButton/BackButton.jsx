@@ -1,17 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import "./css/style.css";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loadCarts } from "../../../store/productSlice";
+import CartContext from "../../../store/contexts/cartContext";
+import { getFromLocalStorage } from "../../../assets/js/localStorage";
 
 const BackButton = ({ showCart = true, text, ...props }) => {
+  const { carts, setCarts } = useContext(CartContext);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadCarts());
+    const result = getFromLocalStorage("carts");
+    if (result && result.length) {
+      setCarts([...result]);
+    }
   }, []);
-  const carts = useSelector((state) => state.app.products.carts);
+  // const carts = useSelector((state) => state.app.products.carts);
+  // const context = useContext(contextValue)
   return (
     <div id="backButton">
       <div className="container">

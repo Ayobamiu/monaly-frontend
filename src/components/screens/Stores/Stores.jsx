@@ -13,7 +13,6 @@ export default function Stores() {
     dispatch(loadLoggedInUser());
   }, []);
 
-  console.log("profile", profile.stores);
 
   return (
     <div>

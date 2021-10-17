@@ -27,7 +27,6 @@ const AddProduct = (props) => {
   const [returnable, setReturnable] = useState(true);
   const [video, setVideo] = useState("");
   const [store, setStore] = useState("");
-  console.log("imagesToUpload", imagesToUpload);
   return (
     <div id="addProduct" className="container my-5">
       <div className="my-3 d-flex align-items-center">

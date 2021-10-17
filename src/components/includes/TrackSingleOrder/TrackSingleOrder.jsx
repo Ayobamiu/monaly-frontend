@@ -25,8 +25,6 @@ const TrackSingleOrder = (props) => {
   }, []);
   const order = useSelector((state) => state.app.products.order);
   const user = useSelector((state) => state.app.user.profile);
-  console.log("user", user);
-  console.log("order", order);
   const OrderStage = ({ icon, text, checked, inProgress }) => {
     return (
       <div className="d-flex justify-content-between align-items-center my-3 bg-light p-3 rounded-pill">

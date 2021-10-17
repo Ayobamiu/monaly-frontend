@@ -117,7 +117,6 @@ const DashBoard = (props) => {
   const [good, setGood] = useState(false);
   const userProfile = useSelector(user);
   const currentCustomLinks = useSelector(Links);
-  console.log("currentCustomLinks", currentCustomLinks);
   const currentSocialMediaSamples = useSelector(socialMediaSamples);
   const subscription = useSelector((state) => state.app.user.subscription);
   const isSubscribed = subscription && subscription.status === "active";

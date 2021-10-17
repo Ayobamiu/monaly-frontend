@@ -64,8 +64,6 @@ const ProductsPage = (props) => {
     store.products.forEach((product) => {
       titles.push(`${product.title}`);
     });
-  console.log("titles", titles.join(","));
-  console.log("props", props);
 
   const CopyProductLink = ({ link }) => {
     return (
@@ -182,7 +180,7 @@ const ProductsPage = (props) => {
           </div>
           <div className="mx-2">
             <span className="text-large">
-              {store.name || props.match.params.userName + "'s Store"}
+              {store.name || props.match.params.slug?.replace("-", " ")}
             </span>
             <div className="text-x-small">
               <img src={Verified} alt="Verified" height="20px" /> Verified
@@ -216,8 +214,8 @@ const ProductsPage = (props) => {
           {!loading && store.products && store.products.length === 0 && (
             <div className="border p-5 rounded w-100 text-center my-5">
               <span className="text-medium">
-                {store.name || props.match.params.userName} has no products in
-                store
+                {store.name || props.match.params.slug?.replace("-", " ")} has
+                no products in store
               </span>
             </div>
           )}
@@ -313,7 +311,6 @@ const ProductsPage = (props) => {
                   data.phoneTwo = newStorePhoneTwo;
                 }
 
-                console.log("data", data);
                 dispatch(updateStore(store._id, data));
               }}
             >

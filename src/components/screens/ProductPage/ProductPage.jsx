@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import "./css/style.css";
 import BackButton from "../../includes/BackButton/BackButton";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addproductToCart, loadproduct } from "../../../store/productSlice";
 import { getLoggedInUser } from "../../../store/authSlice";
+import CartContext from "../../../store/contexts/cartContext";
+import { saveToLocalStorage } from "../../../assets/js/localStorage";
 
 const ProductPage = (props) => {
   const dispatch = useDispatch();
@@ -13,12 +15,24 @@ const ProductPage = (props) => {
   useEffect(() => {
     dispatch(loadproduct(props.match.params.productId));
   }, []);
+  const { carts, setCarts } = useContext(CartContext);
+  const addToCart = (product) => {
+    const data = [...carts, { ...product, quantity: 1 }];
+    setCarts([...data]);
+    saveToLocalStorage("carts", data);
+  };
 
+  const updateCart = (product) => {
+    const currentOrders = carts;
+    const targetIndex = currentOrders.findIndex((i) => i._id == product._id);
+    currentOrders.splice(targetIndex, 1, product);
+    setCarts([...currentOrders]);
+    saveToLocalStorage("carts", currentOrders);
+  };
   const signInLocation = `/sign-in?redirect=/product/${props.match.params.productId}`;
 
   return (
     <div id="productPage">
-      
       <BackButton text="Product Details" props={props} />
       <div className="container">
         <div className="row align-items-center my-3 flex-wrap">
@@ -65,7 +79,7 @@ const ProductPage = (props) => {
                 {product.video && (
                   <div class={`carousel-item`}>
                     <div className="product-image bg-light ">
-                      <video width="100%" height="100%" controls>
+                      <video width="100%" height="100%" autoPlay muted loop>
                         <source src={product.video} type="video/mp4" />
                         <source src={product.video} type="video/ogg" />
                         Your browser does not support the video tag.
@@ -152,9 +166,20 @@ const ProductPage = (props) => {
               <button
                 className="primary-btn my-2 hide-900"
                 onClick={() =>
-                  loggedInUser
-                    ? dispatch(addproductToCart(product._id))
-                    : (window.location = signInLocation)
+                  // loggedInUser
+                  //   ? dispatch(addproductToCart(product._id))
+                  //   : (window.location = signInLocation)
+                  {
+                    const exist = carts.find((p) => p._id == product._id);
+                    if (exist) {
+                      updateCart({
+                        ...exist,
+                        quantity: exist.quantity + 1,
+                      });
+                    } else {
+                      addToCart(product);
+                    }
+                  }
                 }
               >
                 Buy Now
@@ -163,9 +188,25 @@ const ProductPage = (props) => {
             <button
               className="primary-btn-inverse my-2 hide-900"
               onClick={() =>
-                loggedInUser
-                  ? dispatch(addproductToCart(product._id))
-                  : (window.location = signInLocation)
+                // loggedInUser
+                //   ? dispatch(addproductToCart(product._id))
+                //   : (window.location = signInLocation)
+                {
+                  if (!loggedInUser) {
+                    window.location = signInLocation;
+                    return;
+                  } else {
+                    const exist = carts.find((p) => p._id == product._id);
+                    if (exist) {
+                      updateCart({
+                        ...exist,
+                        quantity: exist.quantity + 1,
+                      });
+                    } else {
+                      addToCart(product);
+                    }
+                  }
+                }
               }
             >
               Add to Cart
@@ -231,11 +272,22 @@ const ProductPage = (props) => {
             <NavLink to={loggedInUser ? "/cart" : signInLocation}>
               <button
                 className="primary-btn my-2 custom-btn-sm"
-                onClick={() =>
-                  loggedInUser
-                    ? dispatch(addproductToCart(product._id))
-                    : (window.location = signInLocation)
-                }
+                onClick={() => {
+                  if (!loggedInUser) {
+                    window.location = signInLocation;
+                    return;
+                  } else {
+                    const exist = carts.find((p) => p._id == product._id);
+                    if (exist) {
+                      updateCart({
+                        ...exist,
+                        quantity: exist.quantity + 1,
+                      });
+                    } else {
+                      addToCart(product);
+                    }
+                  }
+                }}
               >
                 Buy Now
               </button>
@@ -244,11 +296,22 @@ const ProductPage = (props) => {
           <div className="col-6">
             <button
               className="primary-btn-inverse my-2 custom-btn-sm "
-              onClick={() =>
-                loggedInUser
-                  ? dispatch(addproductToCart(product._id))
-                  : (window.location = signInLocation)
-              }
+              onClick={() => {
+                if (!loggedInUser) {
+                  window.location = signInLocation;
+                  return;
+                } else {
+                  const exist = carts.find((p) => p._id == product._id);
+                  if (exist) {
+                    updateCart({
+                      ...exist,
+                      quantity: exist.quantity + 1,
+                    });
+                  } else {
+                    addToCart(product);
+                  }
+                }
+              }}
             >
               Add to Cart
             </button>

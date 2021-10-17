@@ -86,7 +86,6 @@ export default function CartPlusCheckout() {
     },
   ];
   const [orders, setOrders] = useState([]);
-  console.log("orders", orders);
   const [addresses, setAddresses] = useState([
     {
       label:
@@ -133,9 +132,6 @@ export default function CartPlusCheckout() {
   const [newPhone, setNewPhone] = useState("");
 
   const [country, setCountry] = useState(null);
-  console.log("city", city);
-  console.log("state", state);
-  console.log("country", country);
 
   useEffect(() => {
     const result = getFromLocalStorage("orders");
@@ -282,7 +278,6 @@ export default function CartPlusCheckout() {
                   className="w-100 h-100 bg-transparent border-0"
                   onChange={async (e) => {
                     e.preventDefault();
-                    console.log("value", countries[e.target.value]);
                     setCountry(countries[e.target.value]);
                     const data = await getStates(
                       countries[e.target.value]?.iso2
@@ -308,7 +303,6 @@ export default function CartPlusCheckout() {
                   id="cities"
                   className="w-100 h-100 bg-transparent border-0"
                   onChange={async (e) => {
-                    console.log("value", states[e.target.value]);
                     setState(states[e.target.value]);
                     const data = await getCitiess(
                       country?.iso2,
@@ -335,7 +329,6 @@ export default function CartPlusCheckout() {
                   id="cities"
                   className="w-100 h-100 bg-transparent border-0"
                   onChange={async (e) => {
-                    console.log("value", states[e.target.value]);
                     setCity(states[e.target.value]);
                   }}
                 >
@@ -482,14 +475,6 @@ export default function CartPlusCheckout() {
   };
 
   const saveUserAddress = () => {
-    console.log("data", {
-      newFullName,
-      newAddress,
-      city,
-      state,
-      country,
-      newPhone,
-    });
     // setTimeout(() => {
     //   window.location = "/one-click";
     // }, 1000);
@@ -553,7 +538,6 @@ export default function CartPlusCheckout() {
                             className="w-100 h-100 bg-transparent border-0"
                             onChange={async (e) => {
                               e.preventDefault();
-                              console.log("value", countries[e.target.value]);
                               setCountry(countries[e.target.value]);
                               const data = await getStates(
                                 countries[e.target.value]?.iso2
@@ -579,7 +563,6 @@ export default function CartPlusCheckout() {
                             id="cities"
                             className="w-100 h-100 bg-transparent border-0"
                             onChange={async (e) => {
-                              console.log("value", states[e.target.value]);
                               setState(states[e.target.value]);
                               const data = await getCitiess(
                                 country?.iso2,
@@ -606,7 +589,6 @@ export default function CartPlusCheckout() {
                             id="cities"
                             className="w-100 h-100 bg-transparent border-0"
                             onChange={async (e) => {
-                              console.log("value", states[e.target.value]);
                               setCity(states[e.target.value]);
                             }}
                           >
