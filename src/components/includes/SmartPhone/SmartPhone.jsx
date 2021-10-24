@@ -1,30 +1,17 @@
 import React from "react";
 import "./css/style.css";
-import profilepic from "../../../assets/images/profilepic.svg";
-import picp from "../../../assets/images/picp.jpg";
 import monaly_logo from "../../../assets/images/pinkLogo.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { user } from "../../../store/authSlice";
 import {
-  faFacebookF,
-  faInstagram,
-  faLinkedinIn,
-  faYoutube,
-} from "@fortawesome/free-brands-svg-icons";
-import { getLoggedInUser, user } from "../../../store/authSlice";
-import {
-  customLinksError,
   loadingcustomLinks,
   viewCustomLink,
 } from "../../../store/customLinkSlice";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  matchLightSocialIcon,
-  matchSocialColor,
-  matchSocialIcon,
-} from "../../../assets/js/controls";
+import { matchLightSocialIcon } from "../../../assets/js/controls";
 import { Link } from "react-router-dom";
 import { viewsocialMedia } from "../../../store/sociaMediaSampleSlice";
-import Bimbo from "../../../assets/images/Bimbo.png";
 
 const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
   const loadingLinks = useSelector(loadingcustomLinks);
@@ -119,7 +106,6 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
           <div className="profile-pic mt-32">
             <img
               src={userProfile.profilePhoto}
-              alt="My photo"
               title="Profile Photo"
               width="100%"
             />

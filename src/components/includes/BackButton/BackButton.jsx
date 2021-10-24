@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import "./css/style.css";
 import { NavLink } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loadCarts } from "../../../store/productSlice";
 import CartContext from "../../../store/contexts/cartContext";
 import { getFromLocalStorage } from "../../../assets/js/localStorage";

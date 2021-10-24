@@ -6,14 +6,12 @@ import { Link } from "react-router-dom";
 import {
   loading,
   loadVisitorScreen,
-  storeVisitorLocation,
   visitorViewData,
 } from "../../../store/authSlice";
 import { viewsocialMedia } from "../../../store/sociaMediaSampleSlice";
 
 import { useDispatch, useSelector } from "react-redux";
 import { matchLightSocialIcon, siteUrl } from "../../../assets/js/controls";
-import { getAddress, ipLookUp } from "../../../assets/js/getAddress";
 import { viewCustomLink } from "../../../store/customLinkSlice";
 import { Helmet } from "react-helmet";
 

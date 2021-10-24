@@ -6,30 +6,147 @@ import StepWizard from "react-step-wizard";
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addTransaction,
-  loadCarts,
+  loadSandBox,
+  loadStoreById,
   placeOrder,
 } from "../../../store/productSlice";
-import { addUserAddress, loadLoggedInUser } from "../../../store/authSlice";
-import { getAddress, getAddressV2 } from "../../../assets/js/getAddress";
+import {
+  addUserAddress,
+  loadLoggedInUser,
+  user,
+} from "../../../store/authSlice";
+import { getCitiess, getStates } from "../../../assets/js/getAddress";
 import CartContext from "../../../store/contexts/cartContext";
 import { saveToLocalStorage } from "../../../assets/js/localStorage";
 
 const CheckoutPage = (props) => {
   const dispatch = useDispatch();
+  const userProfile = useSelector(user);
   const loadingUser = useSelector((state) => state.app.user.loading);
   const addresses = useSelector((state) => state.app.user.profile.addresses);
   const addAddressStatus = useSelector(
     (state) => state.app.user.addAddressStatus
   );
-  const { carts, setCarts } = useContext(CartContext);
-  const storeAddress = useSelector((state) => state.app.products.storeAddress);
+  const { carts } = useContext(CartContext);
+  const storeAddress = useSelector((state) => state.app.products.store);
+  const sandBoxLoading = useSelector(
+    (state) => state.app.products.sandBoxLoading
+  );
+  const sandBox = useSelector((state) => state.app.products.sandBox);
   const loadingCarts = useSelector((state) => state.app.products.loadingCarts);
   const orderLoading = useSelector((state) => state.app.products.orderLoading);
   const shippingFee = useSelector((state) => state.app.products.shippingFee);
+
+  const [deliveryMethod, setDeliveryMethod] = useState("pickUp");
+  const [deliveryMerchant, setDeliveryMerchant] = useState("Monaly Express");
+  const [courier, setCourier] = useState("");
+  const [shipping, setShipping] = useState(shippingFee);
+  const [shippingAddress, setShippingAddress] = useState(null);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [showFAdeText, setShowFAdeText] = useState(false);
+  const [dileveryAddress, setDileveryAddress] = useState("");
+  const [addressName, setAddressName] = useState("");
+  const [addressEmail, setAddressEmail] = useState("");
+  const [addressAddress, setAddressAddress] = useState("");
+  const [addressCity, setAddressCity] = useState("");
+  const [addressState, setAddressState] = useState("");
+  const [addressStateCode, setAddressStateCode] = useState("");
+  const [addressCountry, setAddressCountry] = useState("");
+  const [addressZip, setAddressZip] = useState("");
+  const [addressPhone, setAddressPhone] = useState("");
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
+  const [gettingLatLong, setGettingLatLong] = useState(false);
+  const selectedAddress = addresses.find((i) => i._id == dileveryAddress);
+  const dispatchProducts = carts.map((i) => {
+    return {
+      name: i.title,
+      quantity: i.quantity,
+      weight: "1",
+      amount: i.price,
+      value: i.quantity * i.price,
+    };
+  });
+  const getSandboxEstimate = async () => {
+    // await loadSandBox();
+    // dispatch(
+    //   loadSandBox({
+    //     origin_name: profile.firstName + profile.lastName,
+    //     origin_phone: "+2348036137042",
+    //     origin_street: selectedAddress.address,
+    //     origin_city: "Ikorodu",
+    //     origin_country: selectedAddress.city,
+    //     origin_country_code: "NG",
+    //     origin_state: selectedAddress.state,
+    //     origin_state_code: "LOS",
+    //     destination_name: storeAddress.name,
+    //     destination_phone: storeAddress.phoneOne,
+    //     destination_street: storeAddress.location.label,
+    //     destination_city: storeAddress.location.region,
+    //     destination_country: storeAddress.location.country,
+    //     destination_country_code: storeAddress.location.country_code,
+    //     destination_state: storeAddress.location.region,
+    //     destination_state_code: storeAddress.location.region_code,
+    //     weight: "0.5",
+    //     items: dispatchProducts,
+    //   })
+    // );
+    console.log("load sendbox", {
+      origin_name: storeAddress.name,
+      origin_phone: storeAddress.phoneOne,
+      origin_street: storeAddress?.location?.label,
+      origin_city: storeAddress?.location?.region,
+      origin_country: storeAddress?.location?.country,
+      origin_country_code: "NG",
+      origin_state: storeAddress?.location?.region,
+      origin_state_code: storeAddress?.location?.region_code,
+      destination_name: addressName,
+      destination_phone: addressPhone,
+      destination_street: addressAddress,
+      destination_city: addressCity,
+      destination_country: "NIGERIA",
+      destination_country_code: "NG",
+      destination_state: addressState,
+      destination_state_code: addressStateCode,
+      weight: "0.5",
+      items: dispatchProducts,
+    });
+    dispatch(
+      loadSandBox({
+        origin_name: storeAddress.name,
+        origin_phone: storeAddress.phoneOne,
+        origin_street: storeAddress?.location?.label,
+        origin_city: storeAddress?.location?.region,
+        origin_country: storeAddress?.location?.country,
+        origin_country_code: "NG",
+        origin_state: storeAddress?.location?.region,
+        origin_state_code: storeAddress?.location?.region_code,
+        destination_name: selectedAddress.name,
+        destination_phone: selectedAddress.phoneNumber,
+        destination_street: selectedAddress.address,
+        destination_city: selectedAddress.city,
+        destination_country: selectedAddress.country,
+        destination_country_code: selectedAddress.country_code,
+        destination_state: selectedAddress.state,
+        destination_state_code: selectedAddress.state_code,
+        weight: "0.5",
+        items: dispatchProducts,
+      })
+    );
+  };
   useEffect(() => {
-    dispatch(loadCarts());
+    // dispatch(loadCarts());
+    if (carts?.length && carts?.length > 0) {
+      dispatch(loadStoreById(carts[0]?.store));
+    }
+
     dispatch(loadLoggedInUser());
+    (async () => {
+      const coo = await getStates("NG");
+      setStates([...coo]);
+    })();
+    // ()();
   }, []);
 
   let total = 0;
@@ -38,34 +155,12 @@ const CheckoutPage = (props) => {
     total += cart.price * cart.quantity;
   }
 
-  const showAddress = async (lat, lon) => {
-    const result = await getAddress(lat, lon);
-  };
-  const [deliveryMethod, setDeliveryMethod] = useState("pickUp");
-  const [loadingDeliveryMerchant, setLoadingDeliveryMerchant] = useState(false);
-  const [deliveryMerchant, setDeliveryMerchant] = useState("Monaly Express");
-  const [merchants, setMerchants] = useState([{ name: "GoKada" }]);
-  const [shipping, setShipping] = useState(shippingFee);
-  const [showFAdeText, setShowFAdeText] = useState(false);
-  const [dileveryAddress, setDileveryAddress] = useState("");
-  const [addressName, setAddressName] = useState("");
-  const [addressEmail, setAddressEmail] = useState("");
-  const [addressAddress, setAddressAddress] = useState("");
-  const [addressCity, setAddressCity] = useState("");
-  const [addressState, setAddressState] = useState("");
-  const [addressCountry, setAddressCountry] = useState("");
-  const [addressZip, setAddressZip] = useState("");
-  const [addressPhone, setAddressPhone] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
-  const [gettingLatLong, setGettingLatLong] = useState(false);
-
   const CustomLabel = ({ name, id, price, description }) => {
     return (
-      <label htmlFor={id} className="text-medium mx-2 w-100 mb-0">
+      <label htmlFor={id} className="text-medium mx-2 w-100 mb-3">
         <div className="d-flex justify-content-between align-items-center w-100 ">
           <span>
-            {name} <small className="text-muted">{description}</small>
+            {name} <small className="text-muted d-block">{description}</small>
           </span>
           <span>N{price}</span>
         </div>
@@ -90,42 +185,7 @@ const CheckoutPage = (props) => {
     setLongitude(target && target.longitude);
     setAddressCountry(target && target.country);
   };
-  const getEstimate = async (
-    pickup_address,
-    pickup_latitude,
-    pickup_longitude,
-    dropoff_address,
-    dropoff_latitude,
-    dropoff_longitude
-  ) => {
-    setLoadingDeliveryMerchant(true);
-    try {
-      for (let index = 0; index < merchants.length; index++) {
-        const merchant = merchants[index];
-        const details = await axios.post(
-          "https://api.gokada.ng/api/developer/v3/order_estimate",
-          {
-            pickup_address,
-            pickup_latitude,
-            pickup_longitude,
-            dropoffs: [
-              {
-                dropoff_address,
-                dropoff_latitude,
-                dropoff_longitude,
-              },
-            ],
-            api_key:
-              "0Ornc6TGYMRiXs14h66tfVdEmnUqMRYYiaH04cxzSKHe9Z0d5L3qNdkfGQ9e_test",
-          }
-        );
-        merchant.data = details.data;
-      }
-      setLoadingDeliveryMerchant(false);
-    } catch (error) {
-      setLoadingDeliveryMerchant(false);
-    }
-  };
+
   const FormOne = (props) => {
     return (
       <div>
@@ -146,14 +206,15 @@ const CheckoutPage = (props) => {
             e.preventDefault();
             if (addresses.length > 0) {
               props.nextStep();
-              getEstimate(
-                storeAddress.address,
-                storeAddress.latitude,
-                storeAddress.longitude,
-                addressAddress,
-                latitude,
-                longitude
-              );
+              // getEstimate(
+              //   storeAddress.address,
+              //   storeAddress.location.latitude,
+              //   storeAddress.location.longitude,
+              //   addressAddress,
+              //   latitude,
+              //   longitude
+              // );
+              getSandboxEstimate();
             }
           }}
         >
@@ -177,6 +238,7 @@ const CheckoutPage = (props) => {
                     setLatitude(address.latitude);
                     setLongitude(address.longitude);
                     setAddressAddress(address.address);
+                    setShippingAddress(address);
                   }}
                 />
                 <label
@@ -210,71 +272,61 @@ const CheckoutPage = (props) => {
   const FormTwo = (props) => {
     return (
       <div>
-        {merchants && merchants.length > 0 && (
-          <p className="link-large">Select Delivery Merchant</p>
-        )}
+        <p className="link-large">Select Delivery Merchant</p>
         <form
           onSubmit={(e) => {
             e.preventDefault();
             props.previousStep();
           }}
         >
-          <div className="d-flex align-items-center">
-            <input
-              type="radio"
-              name="deliveryMerchant"
-              id="Monaly Express"
-              value={3000}
-              onChange={(e) => {
-                setDeliveryMerchant("Monaly Express");
-                setShipping(e.target.value);
-              }}
-              required={deliveryMethod === "toDoor"}
-              // defaultChecked={deliveryMethod === "toDoor"}
-            />
-            <CustomLabel
-              description="24 Hours"
-              name="Monaly Express"
-              id="Monaly Express"
-              price={3000}
-            />
-          </div>
-          {loadingDeliveryMerchant && <div className="loader"></div>}
-          {merchants &&
-            merchants.length > 0 &&
-            merchants.map((merchant) => (
+          {sandBoxLoading && <div className="loader"></div>}
+          {sandBox &&
+            sandBox?.rates?.map((i) => (
               <div className="d-flex align-items-center">
                 <input
                   type="radio"
                   name="deliveryMerchant"
-                  id={merchant && merchant.name}
-                  value={merchant && merchant.data && merchant.data.fare}
+                  id={i?.id}
+                  value={i?.fee}
                   onChange={(e) => {
-                    setDeliveryMerchant(merchant && merchant.name);
-                    setShipping(e.target.value);
+                    e.preventDefault();
+                    setDeliveryMerchant(i.name);
+                    setShipping(i?.fee);
+                    setCourier(i?.courier_id);
+                    // setCourier({
+                    //   origin_name: "Mrs. Hippo",
+                    //   origin_phone: "+2348170441446",
+                    //   origin_street: "Clayton St.",
+                    //   origin_city: "Ikorodu",
+                    //   origin_country: "NIGERIA",
+                    //   origin_country_code: "NG",
+                    //   origin_state: "Lagos",
+                    //   origin_state_code: "LOS",
+                    //   destination_name: "Brian",
+                    //   destination_phone: "+2348170441446",
+                    //   destination_street: "Drydock Ave Suite 610",
+                    //   destination_city: "Ikeja",
+                    //   destination_country: "NIGERIA",
+                    //   destination_country_code: "NG",
+                    //   destination_state: "Lagos",
+                    //   destination_state_code: "LOS",
+                    //   weight: "0.5",
+                    //   items: dispatchProducts,
+                    //   selected_courier_id: i.id,
+                    //   channel_code: "api",
+                    // });
                   }}
                   required={deliveryMethod === "toDoor"}
+                  // defaultChecked={deliveryMethod === "toDoor"}
                 />
                 <CustomLabel
-                  description={`${
-                    (merchant && merchant.data && merchant.data.time) || 0
-                  } Hours`}
-                  name={merchant && merchant.name}
-                  id={merchant && merchant.name}
-                  price={(merchant && merchant.data && merchant.data.fare) || 0}
+                  description={i?.description}
+                  name={i.name}
+                  id={i.name}
+                  price={i?.fee}
                 />
               </div>
             ))}
-          {merchants && merchants.length === 0 && (
-            <div className="card dashed my-5 p-3">
-              <div className="card-body text-center text-muted">
-                <span>
-                  Enter shipping address to get list of delivery merchants
-                </span>
-                <div className="loader"></div>
-              </div>
-            </div>
-          )}
 
           <br />
           <input type="submit" value="Back" />
@@ -292,50 +344,96 @@ const CheckoutPage = (props) => {
     public_key: "FLWPUBK-2e47da611ef1439c41b6685671258d8f-X",
     tx_ref: Date.now(),
     amount: Number(total) + Number(shipping),
-    // amount: 10,
     currency: "NGN",
     payment_options: "card",
     customer: {
-      email: "ayobamu@gmail.com",
+      email: userProfile.email,
     },
     customizations: {
-      title: "MY Store",
+      title: "Monaly Inc",
     },
   };
   const handleFlutterPayment = useFlutterwave(config);
   const pay = () => {
-   
-    // dispatch(
-    //   placeOrder(
-    //     carts,
-    //     total,
-    //     shippingFee,
-    //     deliveryMethod,
-    //     deliveryMerchant,
-    //     dileveryAddress
-    //   )
-    // );
-    // saveToLocalStorage("carts", []);
+    console.log("Pay data", {
+      carts,
+      total: Number(total) + Number(shipping),
+      shippingFee: Number(shipping),
+      deliveryMethod,
+      deliveryMerchant,
+      dileveryAddress,
+      shippinData:
+        deliveryMethod === "pickUp"
+          ? null
+          : {
+              origin_name: storeAddress.name,
+              origin_phone: storeAddress.phoneOne,
+              origin_street: storeAddress?.location?.label,
+              origin_city: storeAddress?.location?.region,
+              origin_country: storeAddress?.location?.country,
+              origin_country_code: "NG",
+              origin_state: storeAddress?.location?.region,
+              origin_state_code: storeAddress?.location?.region_code,
+              destination_name: shippingAddress.name,
+              destination_phone: shippingAddress.phoneNumber,
+              destination_street: shippingAddress.address,
+              destination_city: shippingAddress.city,
+              destination_country: shippingAddress.country,
+              destination_country_code: "NG",
+              destination_state: shippingAddress.state,
+              destination_state_code: shippingAddress.state_code,
+              weight: "0.5",
+              items: dispatchProducts,
+              selected_courier_id: courier,
+              channel_code: "api",
+            },
+    });
+
+    saveToLocalStorage("carts", []);
     handleFlutterPayment({
       callback: (response) => {
         if (response.status === "successful") {
           dispatch(
             placeOrder(
               carts,
-              total,
-              shippingFee,
+              Number(total) + Number(shipping),
+              Number(shipping),
               deliveryMethod,
               deliveryMerchant,
-              dileveryAddress
+              dileveryAddress,
+              deliveryMethod === "pickUp"
+                ? null
+                : {
+                    origin_name: storeAddress.name,
+                    origin_phone: storeAddress.phoneOne,
+                    origin_street: storeAddress?.location?.label,
+                    origin_city: storeAddress?.location?.region,
+                    origin_country: storeAddress?.location?.country,
+                    origin_country_code: "NG",
+                    origin_state: storeAddress?.location?.region,
+                    origin_state_code: storeAddress?.location?.region_code,
+                    destination_name: shippingAddress.name,
+                    destination_phone: shippingAddress.phoneNumber,
+                    destination_street: shippingAddress.address,
+                    destination_city: shippingAddress.city,
+                    destination_country: shippingAddress.country,
+                    destination_country_code: "NG",
+                    destination_state: shippingAddress.state,
+                    destination_state_code: shippingAddress.state_code,
+                    weight: "0.5",
+                    items: dispatchProducts,
+                    selected_courier_id: courier,
+                    channel_code: "api",
+                  }
             )
           );
-          dispatch(
-            addTransaction({
-              description: "Withdrawal to my own account",
-              amount: total,
-              data: response.data,
-            })
-          );
+          // dispatch(
+          //   addTransaction({
+          //     description: "Withdrawal to my own account",
+          //     amount: total,
+          //     data: response.data,
+          //   })
+          // );
           saveToLocalStorage("carts", []);
           window.location = "/pay-redirect";
         }
@@ -500,7 +598,7 @@ const CheckoutPage = (props) => {
                 setGettingLatLong(true);
                 await getLatLong(
                   "3b4c10a64fff96eaf6167a0c4c3926d5",
-                  addressAddress + " " + addressCity
+                  addressCity + " " + addressState
                 );
                 setGettingLatLong(false);
                 dispatch(
@@ -510,6 +608,8 @@ const CheckoutPage = (props) => {
                     email: addressEmail,
                     city: addressCity,
                     state: addressState,
+                    state_code: addressStateCode,
+                    country_code: "NG",
                     country: addressCountry,
                     zip: addressZip,
                     phoneNumber: addressPhone,
@@ -581,7 +681,57 @@ const CheckoutPage = (props) => {
                   required={deliveryMethod === "toDoor"}
                   onChange={(e) => setAddressZip(e.target.value)}
                 />
-                <input
+
+                <select
+                  name="state"
+                  className="form-select  my-3"
+                  id="state"
+                  onChange={async (e) => {
+                    const selected = states.find(
+                      (i) => i.id.toString() === e.target.value
+                    );
+                    setAddressState(selected.name);
+                    setAddressStateCode(selected.iso2);
+                    const nnn = await getCitiess("NG", selected.iso2);
+                    setCities([...nnn]);
+                  }}
+                >
+                  {states
+                    .sort(function (a, b) {
+                      var textA = a.name.toUpperCase();
+                      var textB = b.name.toUpperCase();
+                      return textA < textB ? -1 : textA > textB ? 1 : 0;
+                    })
+                    .map((i, index) => (
+                      <option key={index} value={i.id}>
+                        {i?.name}
+                      </option>
+                    ))}
+                </select>
+                <select
+                  className="form-select  my-3"
+                  name="city"
+                  id="city"
+                  onChange={async (e) => {
+                    const selected = cities.find(
+                      (i) => i.id.toString() === e.target.value
+                    );
+                    setAddressCity(selected.name);
+                  }}
+                >
+                  {cities
+                    .sort(function (a, b) {
+                      var textA = a.name.toUpperCase();
+                      var textB = b.name.toUpperCase();
+                      return textA < textB ? -1 : textA > textB ? 1 : 0;
+                    })
+                    .map((i, index) => (
+                      <option key={index} value={i.id}>
+                        {i?.name}
+                      </option>
+                    ))}
+                </select>
+                {/* <input
                   type="text"
                   name="city"
                   id="city"
@@ -589,16 +739,7 @@ const CheckoutPage = (props) => {
                   placeholder="City"
                   required={deliveryMethod === "toDoor"}
                   onChange={(e) => setAddressCity(e.target.value)}
-                />
-                <input
-                  type="text"
-                  name="state"
-                  id="state"
-                  className="form-control  my-3"
-                  placeholder="State"
-                  required={deliveryMethod === "toDoor"}
-                  onChange={(e) => setAddressState(e.target.value)}
-                />
+                /> */}
               </div>
               <div class="modal-footer">
                 {gettingLatLong && <span className="loader"></span>}

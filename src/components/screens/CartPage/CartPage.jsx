@@ -1,15 +1,11 @@
 import React, { useContext, useEffect } from "react";
 import "./css/style.css";
 import BackButton from "../../includes/BackButton/BackButton";
-import {
-  faAngleDown,
-  faAngleUp,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loadCarts, updateProductInCart } from "../../../store/productSlice";
+import { loadCarts } from "../../../store/productSlice";
 import { loadLoggedInUser } from "../../../store/authSlice";
 import CartContext from "../../../store/contexts/cartContext";
 import { saveToLocalStorage } from "../../../assets/js/localStorage";
@@ -20,7 +16,6 @@ const CartPage = (props) => {
     (state) => state.app.products.cartLoadStatus
   );
   const loadingCarts = useSelector((state) => state.app.products.loadingCarts);
-  // const carts = useSelector((state) => state.app.products.carts);
   const { carts, setCarts } = useContext(CartContext);
 
   useEffect(() => {
@@ -101,7 +96,7 @@ const CartPage = (props) => {
                 <div className="d-flex flex-column justify-content-around">
                   <div className="icon bg-secondary">
                     <FontAwesomeIcon
-                      icon={faAngleUp}
+                      icon={faPlus}
                       color="white"
                       onClick={() => {
                         updateCart({ ...cart, quantity: cart.quantity + 1 });
@@ -110,7 +105,7 @@ const CartPage = (props) => {
                   </div>
                   <div className="icon bg-secondary">
                     <FontAwesomeIcon
-                      icon={faAngleDown}
+                      icon={faMinus}
                       color="white"
                       onClick={() => {
                         if (cart.quantity > 1) {

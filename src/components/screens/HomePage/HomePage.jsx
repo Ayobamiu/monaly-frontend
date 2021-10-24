@@ -12,7 +12,6 @@ import Group1000001664 from "../../../assets/images/Group1000001664.svg";
 import Group1000001669 from "../../../assets/images/Group1000001669.svg";
 import Flutterwave from "../../../assets/images/Flutterwave.svg";
 import StoreAds4 from "../../../assets/images/StoreAds4.svg";
-import StoreAds3 from "../../../assets/images/StoreAds3.svg";
 import StoreAds2 from "../../../assets/images/StoreAds2.svg";
 import StoreAd1 from "../../../assets/images/StoreAd1.svg";
 import monaly_logo from "../../../assets/images/monaly_logo.svg";
@@ -140,7 +139,6 @@ const HomePage = (props) => {
                     }
                   }}
                   placeholder="username"
-                  type="text"
                   required={true}
                 />
                 <input
@@ -213,7 +211,11 @@ const HomePage = (props) => {
             </p>
             <div className="d-flex justify-content-around flex-wrap ">
               <div className=" text-center my-3">
-                <a href="https://flutterwave.com/" target="_blank">
+                <a
+                  href="https://flutterwave.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <img src={Flutterwave} height="30px" alt="" />
                 </a>
               </div>

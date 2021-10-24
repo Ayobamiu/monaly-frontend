@@ -7,7 +7,6 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   loading,
   signUserUp,
-  status,
   userNameloading,
   userNamestatus,
   checkUserNameAvailability,
@@ -31,7 +30,6 @@ const SignUp = (props) => {
     document.title = "Sign Up | Monaly";
   }, []);
   const loadingUser = useSelector(loading);
-  const userStatus = useSelector(status);
   const loadingUserName = useSelector(userNameloading);
   const statusUsername = useSelector(userNamestatus);
   const [firstName, setFirstName] = useState(null);

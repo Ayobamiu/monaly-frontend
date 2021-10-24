@@ -16,7 +16,7 @@ const api = ({ dispatch }) => (next) => async (action) => {
     onSuccess,
     headers,
     params,
-    baseURL = liveUrl,
+    baseURL = localUrl,
   } = action.payload;
   if (onStart) dispatch({ type: onStart });
   try {

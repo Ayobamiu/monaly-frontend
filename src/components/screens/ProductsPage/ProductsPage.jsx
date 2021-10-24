@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { loadLoggedInUser, updateUserProfile } from "../../../store/authSlice";
+import { loadLoggedInUser } from "../../../store/authSlice";
 import {
   loadStore,
   removeproduct,
@@ -36,7 +36,6 @@ const ProductsPage = (props) => {
 
   const [newStorePhoneTwo, setNewStorePhoneTwo] = useState("");
   const [newStorePhoneOne, setNewStorePhoneOne] = useState("");
-  const [newStoreLogo, setNewStoreLogo] = useState("");
   const [newStoreAddress, setNewStoreAddress] = useState("");
   const [newStoreName, setNewStoreName] = useState("");
   const [copied, setCopied] = useState(false);
@@ -351,7 +350,6 @@ const ProductsPage = (props) => {
                     id="storeLogo"
                     // required={deliveryMethod === "toDoor"}
                     onChange={(e) => {
-                      setNewStoreLogo(e.target.files[0]);
                       const data = new FormData();
                       data.append("image", e.target.files[0]);
                       dispatch(updateStoreLogo(store._id, data));

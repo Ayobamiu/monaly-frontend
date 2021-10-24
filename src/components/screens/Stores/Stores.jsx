@@ -13,7 +13,6 @@ export default function Stores() {
     dispatch(loadLoggedInUser());
   }, []);
 
-
   return (
     <div>
       <BackButton showCart={false} text="My Stores" />

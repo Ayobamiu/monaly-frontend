@@ -1,12 +1,8 @@
-import React, { Component, useEffect, useState } from "react";
+import React from "react";
 import PayPal from "../../includes/PayPal/PayPal";
 import "./css/style.css";
 
 const Pay = () => {
-  const [good, setGood] = useState(true);
-  useEffect(() => {
-    // window.location.reload();
-  }, [good]);
   return (
     <div id="payment">
       <div className="card">

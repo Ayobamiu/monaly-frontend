@@ -2,25 +2,22 @@ import {
   faArrowLeft,
   faCamera,
   faMapMarkerAlt,
-  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAddress, getAddressV2 } from "../../../assets/js/getAddress";
+import { getAddressV2 } from "../../../assets/js/getAddress";
 import {
   addStore,
   getLoggedInUser,
   loadLoggedInUser,
 } from "../../../store/authSlice";
-import { addproduct } from "../../../store/productSlice";
 import "./css/style.css";
 
 const AddStore = (props) => {
   const dispatch = useDispatch();
-  
+
   const addStoreStatus = useSelector((state) => state.app.user.addStoreStatus);
-  const status = useSelector((state) => state.app.products.status);
   useEffect(() => {
     dispatch(loadLoggedInUser());
   }, []);
@@ -29,15 +26,8 @@ const AddStore = (props) => {
   if (!loggedInUser) {
     window.location = "/sign-in";
   }
-  const [imagesToUpload, setImagesToUpload] = useState([]);
   const [image, setImage] = useState([]);
   const [logo, setLogo] = useState("");
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState(0);
-  const [numberInStock, setNumberInStock] = useState(1);
-  const [returnable, setReturnable] = useState(true);
-  const [video, setVideo] = useState("");
-  const [store, setStore] = useState("");
 
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");

@@ -3,7 +3,7 @@ import "./css/style.css";
 import BackButton from "../../includes/BackButton/BackButton";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addproductToCart, loadproduct } from "../../../store/productSlice";
+import { loadproduct } from "../../../store/productSlice";
 import { getLoggedInUser } from "../../../store/authSlice";
 import CartContext from "../../../store/contexts/cartContext";
 import { saveToLocalStorage } from "../../../assets/js/localStorage";

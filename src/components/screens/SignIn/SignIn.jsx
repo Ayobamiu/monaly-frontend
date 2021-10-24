@@ -10,7 +10,6 @@ import {
   getLoggedInUser,
   loading,
   logUserIn,
-  status,
 } from "../../../store/authSlice";
 import queryString from "query-string";
 
@@ -33,7 +32,6 @@ const SignIn = (props) => {
     }
   }
   const loadingUser = useSelector(loading);
-  const userStatus = useSelector(status);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const handleSignIn = (e) => {

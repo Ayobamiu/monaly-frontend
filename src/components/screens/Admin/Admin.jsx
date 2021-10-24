@@ -1,18 +1,7 @@
-import {
-  faAngleDown,
-  faCaretDown,
-  faHeart,
-  faLink,
-  faStore,
-} from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect } from "react";
 import monalydashboardlogo from "../../../assets/images/Vector.svg";
-import CustomInput from "../../includes/CustomInput/CustomInput";
-import picp from "../../../assets/images/picp.jpg";
 import "./css/style.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { UncontrolledPopover } from "reactstrap";
-import { getInitialsOnProfile, nFormatter } from "../../../assets/js/controls";
+import { nFormatter } from "../../../assets/js/controls";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUsers } from "../../../store/userSlice";
 import { getLoggedInUser, loadLoggedInUser } from "../../../store/authSlice";
@@ -28,8 +17,6 @@ const Admin = () => {
   }, []);
   const users = useSelector((state) => state.app.users.list);
   const statistics = useSelector((state) => state.app.customLinks.statistics);
-  const loggedInUser = useSelector((state) => state.app.user.profile);
-  const profile = getLoggedInUser();
   return (
     <div id="admin">
       <nav>

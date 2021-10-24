@@ -1,7 +1,6 @@
 import {
   faArrowLeft,
   faShoppingCart,
-  faTimes,
   faCheck,
   faProcedures,
   faMedal,
@@ -13,7 +12,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loadLoggedInUser } from "../../../store/authSlice";
 import { loadOrder, updateOrder } from "../../../store/productSlice";
-import BackButton from "../BackButton/BackButton";
 import "./css/style.css";
 import moment from "moment";
 

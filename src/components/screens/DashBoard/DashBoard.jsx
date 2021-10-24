@@ -31,6 +31,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLink, faTimes, faCog } from "@fortawesome/free-solid-svg-icons";
 import {
   faArrowAltCircleRight,
+  faClone,
   faSmile,
 } from "@fortawesome/free-regular-svg-icons";
 import {
@@ -114,7 +115,6 @@ const DashBoard = (props) => {
   };
 
   const dispatch = useDispatch();
-  const [good, setGood] = useState(false);
   const userProfile = useSelector(user);
   const currentCustomLinks = useSelector(Links);
   const currentSocialMediaSamples = useSelector(socialMediaSamples);
@@ -150,7 +150,7 @@ const DashBoard = (props) => {
     dispatch(getMyVisitors());
 
     document.title = "Dashboard | Monaly";
-  }, [good]);
+  }, []);
   const currentUser = getLoggedInUser() && getLoggedInUser().user;
   const [modal, setModal] = useState(false);
 
@@ -165,15 +165,6 @@ const DashBoard = (props) => {
     return result;
   };
   const toggle = () => setModal(!modal);
-
-  const addEmptyCustomLink = () => {
-    dispatch(
-      addcustomLink({
-        title: "",
-        link: "",
-      })
-    );
-  };
 
   const initialsOnProfile =
     currentUser &&
@@ -286,12 +277,13 @@ const DashBoard = (props) => {
           href="https://tawk.to/chat/608fed0e55debc1e9711b45e/1f4p3c0s7"
           target="_blank"
           className="mx-3"
+          rel="noreferrer"
         >
           <img src={Comment} alt="" title="Chat with Us" />
         </a>
-        <Link to={`${path}/notifications`}>
+        {/* <Link to={`${path}/notifications`}>
           <img src={Notification} alt="" title="Notification" />
-        </Link>
+        </Link> */}
 
         <div
           className="user-round-avatar-small cursor"
@@ -321,6 +313,14 @@ const DashBoard = (props) => {
             <Link to={`${path}/pricing`}>
               <button>Join the PROs</button>
             </Link>
+            <button
+              class="nav-item active"
+              onClick={() => {
+                dispatch(logUserOut());
+              }}
+            >
+              Logout
+            </button>
           </div>
         </UncontrolledPopover>
       </div>
@@ -339,43 +339,18 @@ const DashBoard = (props) => {
           </a>
         </span>
         <div className="share-btn relative">
-          <button
-            className="primary-btn-inverse custom-btn-xsm share-button-toggler share-button-mobile"
-            title="Share Your Monaly Link"
-            id="mobileCopyLinkPopUp"
-          >
-            Share
-          </button>
-
-          <UncontrolledPopover
-            trigger="focus"
-            placement="bottom"
-            target="mobileCopyLinkPopUp"
-          >
-            <div className="popup">
-              <button
-                onClick={(e) => {
-                  copyToClipboard(
-                    e,
-                    `${siteUrl}${currentUser && currentUser.userName}`
-                  );
-                  showSuccessAlert();
-                  setShowPopup(false);
-                }}
-              >
-                Copy your monaly URL
-              </button>
-              <button
-                onClick={() => {
-                  toggleQrModal();
-                  setShowPopup(false);
-                }}
-              >
-                Download my monaly QR code
-              </button>
-            </div>
-          </UncontrolledPopover>
-          {/* )} */}
+          <FontAwesomeIcon
+            icon={faClone}
+            color="white"
+            size="lg"
+            onClick={(e) => {
+              copyToClipboard(
+                e,
+                `${siteUrl}${currentUser && currentUser.userName}`
+              );
+              showSuccessAlert();
+            }}
+          />
         </div>
       </div>
 
@@ -455,10 +430,11 @@ const DashBoard = (props) => {
               <a
                 href="https://tawk.to/chat/608fed0e55debc1e9711b45e/1f4p3c0s7"
                 target="_blank"
+                rel="noreferrer"
               >
                 <img src={Comment} alt="" title="Comment" />
               </a>
-              <img
+              {/* <img
                 src={Notification}
                 alt=""
                 title="Notification"
@@ -507,7 +483,7 @@ const DashBoard = (props) => {
                     </div>
                   ))}
                 </div>
-              </UncontrolledPopover>
+              </UncontrolledPopover> */}
 
               <div
                 className="link-to-user-profile mt-32 cursor"
@@ -989,15 +965,17 @@ const DashBoard = (props) => {
                   <div id="appearance">
                     <div className="analytics-metrics">
                       <div className="analytics-metrics-item">
-                        <p className="custom-p">Total Visits</p>
+                        <p className="custom-p text-center">Total Visits</p>
                         <h2>{userProfile.viewCount || 0}</h2>
                       </div>
                       <div className="analytics-metrics-item">
-                        <p className="custom-p">Total Clicks</p>
+                        <p className="custom-p text-center">Total Clicks</p>
                         <h2>{userProfile.clickCount || 0}</h2>
                       </div>
                       <div className="analytics-metrics-item">
-                        <p className="custom-p">Click Through Ratio</p>
+                        <p className="custom-p text-center">
+                          Click Through Ratio
+                        </p>
                         <h2>{clickThroughRatio(userProfile)}%</h2>
                       </div>
                     </div>

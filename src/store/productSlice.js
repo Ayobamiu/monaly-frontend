@@ -29,7 +29,9 @@ const slice = createSlice({
     loadingStoreLogo: false,
     transactionloading: false,
     orderLoading: false,
+    sandBoxLoading: false,
     loadingStore: false,
+    sandBox: {},
   },
   reducers: {
     storeUpdateStart: (products, action) => {
@@ -55,6 +57,16 @@ const slice = createSlice({
     },
     storeLogoUpdateFailed: (products, action) => {
       products.loadingStoreLogo = false;
+    },
+    getsandBoxStart: (products, action) => {
+      products.sandBoxLoading = true;
+    },
+    gotsandBox: (products, action) => {
+      products.sandBox = action.payload;
+      products.sandBoxLoading = false;
+    },
+    gettingsandBoxFailed: (products, action) => {
+      products.sandBoxLoading = false;
     },
     orderPlaceStart: (products, action) => {
       products.orderLoading = true;
@@ -234,12 +246,27 @@ export const {
   transactionAdded,
   orderPlaceStart,
   orderPlaceFailed,
+  getsandBoxStart,
+  gettingsandBoxFailed,
+  gotsandBox,
 } = slice.actions;
 
 export default slice.reducer;
 
 //Action creators
 
+export const loadSandBox = (data) => (dispatch, getState) => {
+  dispatch(
+    apiCallBegan({
+      url: `products/load-sandBox`,
+      method: "post",
+      data,
+      onStart: getsandBoxStart.type,
+      onSuccess: gotsandBox.type,
+      onError: gettingsandBoxFailed.type,
+    })
+  );
+};
 export const updateStore = (storeId, data) => (dispatch, getState) => {
   dispatch(
     apiCallBegan({
@@ -268,6 +295,16 @@ export const loadStore = (slug) => (dispatch, getState) => {
   dispatch(
     apiCallBegan({
       url: `/products/store-by-slug/${slug}`,
+      onStart: productsRequested.type,
+      onSuccess: productsReceived.type,
+      onError: productsRequestFailed.type,
+    })
+  );
+};
+export const loadStoreById = (id) => (dispatch, getState) => {
+  dispatch(
+    apiCallBegan({
+      url: `/products/store-by-id/${id}`,
       onStart: productsRequested.type,
       onSuccess: productsReceived.type,
       onError: productsRequestFailed.type,
@@ -398,7 +435,8 @@ export const placeOrder = (
   shippingFee,
   deliveryMethod,
   deliveryMerchant,
-  dileveryAddress
+  dileveryAddress,
+  shippingData
 ) =>
   apiCallBegan({
     url: "/products/order",
@@ -413,6 +451,7 @@ export const placeOrder = (
       deliveryMethod,
       deliveryMerchant,
       dileveryAddress,
+      shippingData,
     },
     onStart: orderPlaceStart.type,
     onSuccess: orderPlaced.type,
