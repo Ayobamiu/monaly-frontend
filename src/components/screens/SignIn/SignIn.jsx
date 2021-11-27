@@ -23,7 +23,7 @@ const SignIn = (props) => {
     if (redirect) {
       dispatch(changeAuthInput("redirect", redirect));
     }
-  }, []);
+  }, [dispatch, redirect]);
   if (loggedInUser) {
     if (redirect) {
       window.location = redirect;

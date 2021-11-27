@@ -14,7 +14,7 @@ const ProductPage = (props) => {
   const loggedInUser = useSelector(getLoggedInUser);
   useEffect(() => {
     dispatch(loadproduct(props.match.params.productId));
-  }, []);
+  }, [dispatch, props.match.params.productId]);
   const { carts, setCarts } = useContext(CartContext);
   const addToCart = (product) => {
     const data = [...carts, { ...product, quantity: 1 }];
@@ -24,7 +24,7 @@ const ProductPage = (props) => {
 
   const updateCart = (product) => {
     const currentOrders = carts;
-    const targetIndex = currentOrders.findIndex((i) => i._id == product._id);
+    const targetIndex = currentOrders.findIndex((i) => i._id === product._id);
     currentOrders.splice(targetIndex, 1, product);
     setCarts([...currentOrders]);
     saveToLocalStorage("carts", currentOrders);
@@ -170,7 +170,7 @@ const ProductPage = (props) => {
                   //   ? dispatch(addproductToCart(product._id))
                   //   : (window.location = signInLocation)
                   {
-                    const exist = carts.find((p) => p._id == product._id);
+                    const exist = carts.find((p) => p._id === product._id);
                     if (exist) {
                       updateCart({
                         ...exist,
@@ -196,7 +196,7 @@ const ProductPage = (props) => {
                     window.location = signInLocation;
                     return;
                   } else {
-                    const exist = carts.find((p) => p._id == product._id);
+                    const exist = carts.find((p) => p._id === product._id);
                     if (exist) {
                       updateCart({
                         ...exist,
@@ -211,7 +211,7 @@ const ProductPage = (props) => {
             >
               Add to Cart
             </button>
-            <h1 className="text-medium"></h1>
+            {/* <h1 className="text-medium"></h1> */}
           </div>
         </div>
 
@@ -251,7 +251,6 @@ const ProductPage = (props) => {
                   button in the order page. And we will proccess your refund
                 </div>
                 <a
-                  href="#"
                   data-bs-toggle="collapse"
                   href="#returnPolcy"
                   role="button"
@@ -277,7 +276,7 @@ const ProductPage = (props) => {
                     window.location = signInLocation;
                     return;
                   } else {
-                    const exist = carts.find((p) => p._id == product._id);
+                    const exist = carts.find((p) => p._id === product._id);
                     if (exist) {
                       updateCart({
                         ...exist,
@@ -301,7 +300,7 @@ const ProductPage = (props) => {
                   window.location = signInLocation;
                   return;
                 } else {
-                  const exist = carts.find((p) => p._id == product._id);
+                  const exist = carts.find((p) => p._id === product._id);
                   if (exist) {
                     updateCart({
                       ...exist,

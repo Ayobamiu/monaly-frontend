@@ -24,7 +24,7 @@ const OrdersPage = (props) => {
       dispatch(loadOrders());
     }
     dispatch(loadLoggedInUser());
-  }, []);
+  }, [dispatch, orders.length]);
   const OrderItem = ({ order }) => {
     return (
       <div className="my-2 card-body border rounded rounded-4">

@@ -375,7 +375,8 @@
 #appearance .add-profile-title {
   height: 64px;
   width: 100%;
-  margin: 32px auto;
+  margin: 16px auto;
+  margin-top: 0px;
   display: block;
   background: #eff0f7;
   border-radius: 16px;
@@ -437,6 +438,7 @@
 #appearance .style-item {
   text-align: center;
   margin-bottom: 15px;
+  cursor: pointer;
 }
 #appearance .style-item .input-container {
   position: relative;
@@ -1034,6 +1036,7 @@
     height: 56px;
     width: 100%;
     margin: 16px auto;
+
     display: block;
     background: #eff0f7;
     border-radius: 16px;

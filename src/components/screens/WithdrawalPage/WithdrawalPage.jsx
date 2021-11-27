@@ -102,7 +102,7 @@ const WithdrawalPage = () => {
       getBanks();
       dispatch(loadLoggedInUser());
     }
-  }, []);
+  }, [banks.length, dispatch]);
   return (
     <div id="payment" className="container my-4">
       <div className="card">

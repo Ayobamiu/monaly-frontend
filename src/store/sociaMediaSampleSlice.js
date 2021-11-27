@@ -3,7 +3,12 @@ import { apiCallBegan } from "./api";
 
 const slice = createSlice({
   name: "socialMediaSamples",
-  initialState: { list: [], socialMediaSample: {}, socials: [] },
+  initialState: {
+    list: [],
+    socialMediaSample: {},
+    socials: [],
+    loading: false,
+  },
   reducers: {
     socialMediaSamplesRequested: (socialMediaSamples, action) => {
       socialMediaSamples.loading = true;
@@ -38,7 +43,10 @@ const slice = createSlice({
       socialMediaSamples.loading = false;
       socialMediaSamples.status = "Added successfully";
     },
-    userSocialAdded: (socialMediaSamples, action) => { 
+    userSocialAddStart: (socialMediaSamples, action) => {
+      socialMediaSamples.loading = true;
+    },
+    userSocialAdded: (socialMediaSamples, action) => {
       const existsIndex = socialMediaSamples.socials.findIndex(
         (item) =>
           item.mediaPlatformSample._id ===
@@ -78,6 +86,7 @@ export const {
   socialMediaSampleRemoved,
   userSocialsReceived,
   userSocialAdded,
+  userSocialAddStart,
 } = slice.actions;
 
 export default slice.reducer;
@@ -133,6 +142,7 @@ export const addsocialMedia = (socialMediaSample) =>
     headers: {
       Authorization: "Bearer " + localStorage.getItem("authToken"),
     },
+    onStart: userSocialAddStart.type,
     onSuccess: userSocialAdded.type,
     onError: socialMediaSampleAddFailed.type,
   });

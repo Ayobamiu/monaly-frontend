@@ -11,7 +11,7 @@ export default function Stores() {
   const loading = useSelector((state) => state.app.user.loading);
   useEffect(() => {
     dispatch(loadLoggedInUser());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>

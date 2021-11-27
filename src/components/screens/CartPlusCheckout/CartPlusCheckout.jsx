@@ -150,14 +150,14 @@ export default function CartPlusCheckout() {
   };
   const removeFromCart = (product) => {
     const currentOrders = orders;
-    const targetIndex = currentOrders.findIndex((i) => i._id == product._id);
+    const targetIndex = currentOrders.findIndex((i) => i._id === product._id);
     currentOrders.splice(targetIndex, 1);
     setOrders((initialState) => [...currentOrders]);
     saveToLocalStorage("orders", currentOrders);
   };
   const updateCart = (product) => {
     const currentOrders = orders;
-    const targetIndex = currentOrders.findIndex((i) => i._id == product._id);
+    const targetIndex = currentOrders.findIndex((i) => i._id === product._id);
     currentOrders.splice(targetIndex, 1, product);
     setOrders((initialState) => [...currentOrders]);
     saveToLocalStorage("orders", currentOrders);
@@ -647,7 +647,7 @@ export default function CartPlusCheckout() {
                       <button
                         className="btn btn-sm btn-primary"
                         onClick={() => {
-                          const exist = orders.find((p) => p._id == i._id);
+                          const exist = orders.find((p) => p._id === i._id);
                           if (exist) {
                             updateCart({
                               ...exist,

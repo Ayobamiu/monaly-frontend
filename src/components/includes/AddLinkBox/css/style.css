@@ -30,6 +30,16 @@
   outline: none;
   width: auto;
   margin-right: 4px;
+  width: 100%;
+}
+.float-edit-button {
+  position: absolute;
+  /* top: 8px; */
+  right: 8px;
+  /* height: 20px; */
+  /* width: 20px; */
+  /* border-radius: 10px; */
+  /* background-color: red; */
 }
 .link-image-input {
   display: none;

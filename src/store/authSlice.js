@@ -562,6 +562,7 @@ export const getLoggedInUser = () => {
   const token = localStorage.getItem("authToken");
   if (token) {
     var decoded = jwt.verify(token, "myjwtsecretkey");
+    console.log("decoded", decoded);
     return decoded;
   }
   return null;

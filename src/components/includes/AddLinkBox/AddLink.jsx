@@ -24,7 +24,7 @@ const AddLinkBox = ({
     <div className={`add-link-box  ${!checkedStatus && `opaque`}`} id={_id}>
       <div className="inputs-and-media space-between flex-column">
         <div>
-          <div className="text-icon custom-p fsz-14-900 bg-light my-2 p-1 rounded-pill px-3 ">
+          <div className="text-icon custom-p fsz-14-900 bg-light my-2 p-1 rounded-pill px-3 position-relative d-flex align-items-center">
             <input
               type="text"
               placeholder={title || "Title"}
@@ -34,16 +34,18 @@ const AddLinkBox = ({
               onChange={(e) => onChangeTitle(e.target.value)}
               className="bg-light"
             />
-            <img
-              src={Edit}
-              alt=""
-              onClick={() => {
-                document.getElementById(`titleinput${_id}`).focus();
-              }}
-              title="Edit Title"
-            />
+            <div className="float-edit-button">
+              <img
+                src={Edit}
+                alt=""
+                onClick={() => {
+                  document.getElementById(`titleinput${_id}`).focus();
+                }}
+                title="Edit Title"
+              />
+            </div>
           </div>
-          <div className="text-icon custom-p fsz-14-900 bg-light my-2 p-1 rounded-pill px-3 ">
+          <div className="text-icon custom-p fsz-14-900 bg-light my-2 p-1 rounded-pill px-3 position-relative d-flex align-items-center">
             <input
               type="url"
               placeholder={link || "Paste link here"}
@@ -52,18 +54,20 @@ const AddLinkBox = ({
               onChange={(e) => onChangeLink(e.target.value)}
               className="bg-light"
             />
-            <img
-              src={Edit}
-              alt=""
-              onClick={() => {
-                document.getElementById(`linkinput${_id}`).focus();
-              }}
-              title="Edit Link"
-            />
+            <div className="float-edit-button">
+              <img
+                src={Edit}
+                alt=""
+                onClick={() => {
+                  document.getElementById(`linkinput`).focus();
+                }}
+                title="Edit Link"
+              />
+            </div>
           </div>
         </div>
         <div className="align-end">
-          <img className="mr-16" src={Calandar} alt="" title="Schedule" />
+          {/* <img className="mr-16" src={Calandar} alt="" title="Schedule" /> */}
           <label htmlFor={`link-image-input${_id}`} className="align-end mb-0">
             <img className="mr-16" src={gallery} alt="" title="Add media" />
           </label>
@@ -78,7 +82,7 @@ const AddLinkBox = ({
               onChangeImage(newFormData);
             }}
           />
-          <img className="mr-16" src={Heart} alt="" title="Favourite" />
+          {/* <img className="mr-16" src={Heart} alt="" title="Favourite" /> */}
         </div>
       </div>
       <div className="switch-and-delete">

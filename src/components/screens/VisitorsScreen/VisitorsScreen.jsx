@@ -20,7 +20,7 @@ const VisitorsScreen = (props) => {
 
   const divRref = useRef(null);
 
-  useEffect(async () => {
+  useEffect(() => {
     // document.title = "@" + props.match.params.userName + " | Monaly";
 
     dispatch(loadVisitorScreen(props.match.params.userName));
@@ -74,7 +74,7 @@ const VisitorsScreen = (props) => {
     //     )
     //   );
     // }
-  }, []);
+  }, [props.match.params.userName, dispatch]);
 
   const visitorData = useSelector(visitorViewData);
   const loadingLinks = useSelector(loading);
@@ -223,7 +223,7 @@ const VisitorsScreen = (props) => {
             <div className="profile-pic mt-32">
               <img
                 src={visitorData.profilePhoto}
-                alt="My photo"
+                alt="profilePic"
                 title="Profile Photo"
                 width="100%"
               />

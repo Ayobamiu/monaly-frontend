@@ -4,7 +4,6 @@ import { UncontrolledPopover } from "reactstrap";
 import "./css/style.css";
 import monalydashboardlogo from "../../../assets/images/Vector.svg";
 import Comment from "../../../assets/images/Comment.svg";
-import Notification from "../../../assets/images/Notification.svg";
 import ForwardArrow from "../../../assets/images/ForwardArrow.svg";
 import Close from "../../../assets/images/Close.svg";
 import shareLinkIconBox from "../../../assets/images/shareLinkIconBox.svg";
@@ -13,10 +12,10 @@ import colorInstagram from "../../../assets/images/colorInstagram.svg";
 import colorWhatsapp from "../../../assets/images/colorWhatsapp.svg";
 import colorTwitter from "../../../assets/images/colorTwitter.svg";
 import colorFacebook from "../../../assets/images/colorFacebook.svg";
-import Calandar from "../../../assets/images/Calandar.svg";
+// import Calandar from "../../../assets/images/Calandar.svg";
 
 import gallery from "../../../assets/images/gallery.svg";
-import Heart from "../../../assets/images/Heart.svg";
+// import Heart from "../../../assets/images/Heart.svg";
 
 import {
   Link,
@@ -30,7 +29,7 @@ import { Modal } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLink, faTimes, faCog } from "@fortawesome/free-solid-svg-icons";
 import {
-  faArrowAltCircleRight,
+  // faArrowAltCircleRight,
   faClone,
   faSmile,
 } from "@fortawesome/free-regular-svg-icons";
@@ -90,8 +89,22 @@ const DashBoard = (props) => {
     defaultValue,
     name,
   }) => {
+    const [value, setValue] = useState("");
     return (
-      <>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+
+          if (value === defaultValue) {
+            console.log("no changes");
+          } else {
+            console.log("value", value);
+            onChange(value);
+          }
+        }}
+        className="my-2"
+      >
+        <label className="text-medium">{placeholder}</label>
         <input
           type="url"
           placeholder={placeholder}
@@ -103,14 +116,20 @@ const DashBoard = (props) => {
           onChange={(e) => {
             e.preventDefault();
             // validate(e.target.value);
-            onChange(e);
+            // onChange(e);
+            setValue(e.target.value);
           }}
           onBlur={(e) => {
             if (e.target.value.length > 0) {
             }
           }}
         />
-      </>
+        <input
+          type="submit"
+          value="Update"
+          className="primary-btn-inverse custom-btn-sm"
+        />
+      </form>
     );
   };
 
@@ -118,6 +137,7 @@ const DashBoard = (props) => {
   const userProfile = useSelector(user);
   const currentCustomLinks = useSelector(Links);
   const currentSocialMediaSamples = useSelector(socialMediaSamples);
+
   const subscription = useSelector((state) => state.app.user.subscription);
   const isSubscribed = subscription && subscription.status === "active";
 
@@ -126,7 +146,11 @@ const DashBoard = (props) => {
   const loadingLinksUpdate = useSelector(loadingUpdateCustomLinks);
   const authLoading = useSelector(loading);
   const themes = useSelector((state) => state.app.themes.list);
-  const notifications = useSelector((state) => state.app.notifications.list);
+  const socialLoading = useSelector(
+    (state) => state.app.socialMediaSamples.loading
+  );
+  console.log("socialLoading", socialLoading);
+  // const notifications = useSelector((state) => state.app.notifications.list);
   const visitors = useSelector((state) => state.app.user.visitors);
   const countries = useSelector((state) => state.app.user.countries);
 
@@ -150,7 +174,7 @@ const DashBoard = (props) => {
     dispatch(getMyVisitors());
 
     document.title = "Dashboard | Monaly";
-  }, []);
+  }, [dispatch]);
   const currentUser = getLoggedInUser() && getLoggedInUser().user;
   const [modal, setModal] = useState(false);
 
@@ -177,6 +201,9 @@ const DashBoard = (props) => {
   const [link, setLink] = useState("");
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
+  const [profileTitle, setProfileTitle] = useState(userProfile.profileTitle);
+
+  const [bio, setBio] = useState(userProfile.bio);
 
   const togglePopUp = () => {
     setShowPopup(!showPopup);
@@ -274,7 +301,7 @@ const DashBoard = (props) => {
           ""
         )}
         <a
-          href="https://tawk.to/chat/608fed0e55debc1e9711b45e/1f4p3c0s7"
+          href="mailto: contact@monaly.co"
           target="_blank"
           className="mx-3"
           rel="noreferrer"
@@ -288,6 +315,8 @@ const DashBoard = (props) => {
         <div
           className="user-round-avatar-small cursor"
           id="mobileShowUserProfilePopUp"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
         >
           {userProfile.profilePhoto ? (
             <img src={userProfile.profilePhoto} height="100%" alt="" />
@@ -295,34 +324,36 @@ const DashBoard = (props) => {
             initialsOnProfile
           )}{" "}
         </div>
-        <UncontrolledPopover
-          trigger="legacy"
-          placement="bottom"
-          target="mobileShowUserProfilePopUp"
+        <div
+          // trigger=""
+          // placement="bottom"
+          // target="mobileShowUserProfilePopUp"
+          class="dropdown-menu popup"
+          aria-labelledby="mobileShowUserProfilePopUp"
         >
-          <div className="popup">
-            <Link to={`${path}/appearance`}>
-              <button>Profile</button>
-            </Link>
-            <Link to={`${path}/analytics`}>
-              <button>My Analytics</button>
-            </Link>
-            <Link to={`${path}/settings#subscriptions`}>
+          {/* <div className="popup"> */}
+          <Link to={`${path}/appearance`}>
+            <button>Profile</button>
+          </Link>
+          <Link to={`${path}/analytics`}>
+            <button>My Analytics</button>
+          </Link>
+          {/* <Link to={`${path}/settings#subscriptions`}>
               <button>My Subscriptions</button>
-            </Link>
-            <Link to={`${path}/pricing`}>
-              <button>Join the PROs</button>
-            </Link>
-            <button
-              class="nav-item active"
-              onClick={() => {
-                dispatch(logUserOut());
-              }}
-            >
-              Logout
-            </button>
-          </div>
-        </UncontrolledPopover>
+            </Link> */}
+          <Link to={`${path}/pricing`}>
+            <button>Join the PROs</button>
+          </Link>
+          <button
+            class="nav-item active"
+            onClick={() => {
+              dispatch(logUserOut());
+            }}
+          >
+            Logout
+          </button>
+          {/* </div> */}
+        </div>
       </div>
       <div className="mobile-top-nav-share-box">
         <span title="Your Monaly Link">
@@ -428,7 +459,8 @@ const DashBoard = (props) => {
             </div>
             <div className="action-icons relative">
               <a
-                href="https://tawk.to/chat/608fed0e55debc1e9711b45e/1f4p3c0s7"
+                // href="https://tawk.to/chat/608fed0e55debc1e9711b45e/1f4p3c0s7"
+                href="mailto: contact@monaly.co"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -487,39 +519,46 @@ const DashBoard = (props) => {
 
               <div
                 className="link-to-user-profile mt-32 cursor"
+                // id="showSetProfilePopUp"
+
                 id="showSetProfilePopUp"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
               >
                 {initialsOnProfile}
                 <span className="new-notification"></span>
               </div>
 
-              <UncontrolledPopover
-                trigger="legacy"
-                placement="right"
-                target="showSetProfilePopUp"
-              >
-                <div className="popup-edit-profile">
-                  <div class="dark-action-p" onClick={() => {}}>
-                    @{userProfile.userName}
-                  </div>
+              <div
+                // trigger="legacy"
+                // placement="right"
+                // target="showSetProfilePopUp"
 
-                  <Link
-                    to={`${path}/appearance`}
-                    onClick={() => {}}
-                    className="no-underline"
-                  >
-                    <button class="nav-item active">Edit your profile</button>
-                  </Link>
-                  <button
-                    class="nav-item active"
-                    onClick={() => {
-                      dispatch(logUserOut());
-                    }}
-                  >
-                    Logout
-                  </button>
+                class="dropdown-menu popup-edit-profile"
+                aria-labelledby="showSetProfilePopUp"
+              >
+                {/* <div className="popup-edit-profile"> */}
+                <div class="dark-action-p" onClick={() => {}}>
+                  @{userProfile.userName}
                 </div>
-              </UncontrolledPopover>
+
+                <Link
+                  to={`${path}/appearance`}
+                  onClick={() => {}}
+                  className="no-underline"
+                >
+                  <button class="nav-item active">Edit your profile</button>
+                </Link>
+                <button
+                  class="nav-item active"
+                  onClick={() => {
+                    dispatch(logUserOut());
+                  }}
+                >
+                  Logout
+                </button>
+                {/* </div> */}
+              </div>
             </div>
           </div>
           <div className="edit-screen">
@@ -603,12 +642,12 @@ const DashBoard = (props) => {
                               />
                             </div>
                             <div className="align-end">
-                              <img
+                              {/* <img
                                 className="mr-16 opaque"
                                 src={Calandar}
                                 alt=""
                                 title="Schedule"
-                              />
+                              /> */}
                               <label
                                 htmlFor="link-image-input-main"
                                 className="align-end mb-0"
@@ -627,12 +666,12 @@ const DashBoard = (props) => {
                                 className="link-image-input"
                                 onChange={(e) => setImage(e.target.files[0])}
                               />
-                              <img
+                              {/* <img
                                 className="mr-16 opaque"
                                 src={Heart}
                                 alt=""
                                 title="Favourite"
-                              />
+                              /> */}
                             </div>
                           </div>
                         </div>
@@ -709,51 +748,83 @@ const DashBoard = (props) => {
                             )}
                           </div>
                         </div>
-                        <input
-                          type="text"
-                          placeholder="Profile Title"
-                          className="add-profile-title"
-                          title="Change Profile Title"
-                          name="profileTitle"
-                          defaultValue={userProfile.profileTitle}
-                          onChange={(e) => {
+                        <form
+                          onSubmit={(e) => {
                             e.preventDefault();
-                            dispatch(
-                              updateUserProfile({
-                                profileTitle: e.target.value,
-                              })
-                            );
-                          }}
-                          onBlur={(e) => {
-                            if (e.target.value.length > 0) {
+                            const data = {};
+                            if (userProfile.profileTitle !== profileTitle) {
+                              data.profileTitle = profileTitle;
+                            }
+                            if (userProfile.bio !== bio) {
+                              data.bio = bio;
+                            }
+                            if (
+                              userProfile.profileTitle !== profileTitle ||
+                              userProfile.bio !== bio
+                            ) {
+                              console.log("data", data);
+                              dispatch(
+                                updateUserProfile({
+                                  profileTitle,
+                                  bio,
+                                })
+                              );
+                            } else {
+                              console.log("no changes");
                             }
                           }}
-                        />
-                        <textarea
-                          name="bio"
-                          id="bio"
-                          cols="60"
-                          rows="10"
-                          title="Change Bio"
-                          placeholder="Bio"
-                          defaultValue={userProfile.bio}
-                          onChange={(e) => {
-                            e.preventDefault();
-                            dispatch(
-                              updateUserProfile({ bio: e.target.value })
-                            );
-                          }}
-                          maxLength="80"
-                        ></textarea>
-                        <div className="textarea-count">
-                          <span>{targetTextareaLength || 0}/80</span>
-                        </div>
+                        >
+                          <input
+                            type="text"
+                            placeholder="Profile Title"
+                            className="add-profile-title"
+                            title="Change Profile Title"
+                            name="profileTitle"
+                            defaultValue={userProfile.profileTitle}
+                            onChange={(e) => {
+                              // dispatch(
+                              //   updateUserProfile({
+                              //     profileTitle: e.target.value,
+                              //   })
+                              // );
+                              setProfileTitle(e.target.value);
+                            }}
+                            onBlur={(e) => {
+                              if (e.target.value.length > 0) {
+                              }
+                            }}
+                          />
+                          <textarea
+                            name="bio"
+                            id="bio"
+                            cols="60"
+                            rows="10"
+                            title="Change Bio"
+                            placeholder="Bio"
+                            defaultValue={userProfile.bio}
+                            onChange={(e) => {
+                              // dispatch(
+                              //   updateUserProfile({ bio: e.target.value })
+                              // );
+                              setBio(e.target.value);
+                            }}
+                            maxLength="80"
+                          ></textarea>
+                          <div className="textarea-count">
+                            <span>{targetTextareaLength || 0}/80</span>
+                          </div>
+                          <input
+                            type="submit"
+                            value="Update"
+                            className="primary-btn-inverse custom-btn-sm"
+                          />
+                        </form>
                       </div>
 
                       <h2>Link display style</h2>
                       <div className="appearance-box">
                         <div className="style-items">
-                          <div className="style-item">
+                          <label className="style-item" htmlFor="stackStyle">
                             <input
                               type="radio"
                               name="styleSelect"
@@ -770,9 +841,7 @@ const DashBoard = (props) => {
                               }}
                             />
                             <span class="checkmark"></span>
-                            <label class="input-container" htmlFor="stackStyle">
-                              Stacked
-                            </label>
+                            <div class="input-container">Stacked</div>
                             <div className="phone">
                               <div className="phone-stack"></div>
                               <div className="phone-stack"></div>
@@ -780,8 +849,8 @@ const DashBoard = (props) => {
                               <div className="phone-stack"></div>
                               <div className="phone-stack"></div>
                             </div>
-                          </div>
-                          <div className="style-item">
+                          </label>
+                          <label className="style-item" htmlFor="galleryStyle">
                             <input
                               type="radio"
                               name="styleSelect"
@@ -798,20 +867,15 @@ const DashBoard = (props) => {
                               }}
                             />
                             <span class="checkmark"></span>
-                            <label
-                              class="input-container"
-                              htmlFor="galleryStyle"
-                            >
-                              Gallery
-                            </label>
+                            <div class="input-container">Gallery</div>
                             <div className="phone phone-grids">
                               <div className="phone-grid"></div>
                               <div className="phone-grid"></div>
                               <div className="phone-grid"></div>
                               <div className="phone-grid"></div>
                             </div>
-                          </div>
-                          <div className="style-item">
+                          </label>
+                          <label className="style-item" htmlFor="mixedStyle">
                             <input
                               type="radio"
                               name="styleSelect"
@@ -828,16 +892,14 @@ const DashBoard = (props) => {
                               }}
                             />
                             <span class="checkmark"></span>
-                            <label class="input-container" htmlFor="mixedStyle">
-                              Mixed
-                            </label>
+                            <div class="input-container">Mixed</div>
                             <div className="phone phone-mixed">
                               <div className="phone-grid"></div>
                               <div className="phone-grid"></div>
                               <div className="phone-stack"></div>
                               <div className="phone-stack"></div>
                             </div>
-                          </div>
+                          </label>
                         </div>
                       </div>
 
@@ -853,7 +915,7 @@ const DashBoard = (props) => {
                         )}
                         <div className="style-items">
                           {themes.map((theme) => (
-                            <div className="style-item ">
+                            <label className="style-item " htmlFor={theme._id}>
                               <input
                                 type="radio"
                                 name="themeSelect"
@@ -871,12 +933,7 @@ const DashBoard = (props) => {
                                 }}
                               />
                               <span class="checkmark"></span>
-                              <label
-                                class="input-container"
-                                htmlFor={theme._id}
-                              >
-                                {theme.name}
-                              </label>
+                              <div class="input-container">{theme.name}</div>
                               <div
                                 className="phone theme-item-one"
                                 style={{
@@ -915,7 +972,7 @@ const DashBoard = (props) => {
                                   }}
                                 ></div>
                               </div>
-                            </div>
+                            </label>
                           ))}
                         </div>
                       </div>
@@ -926,16 +983,18 @@ const DashBoard = (props) => {
                 </Route>
                 <Route path={`${path}/settings`}>
                   <div id="appearance">
-                    <h2>Social media handles</h2>
+                    <h2>
+                      Social media handles{" "}
+                      {socialLoading && <div className="loader"></div>}{" "}
+                    </h2>
                     <div className="appearance-box">
                       {currentSocialMediaSamples.map((item) => (
                         <>
                           <ReUsableSocialInput
-                            onChange={(e) => {
-                              e.preventDefault();
+                            onChange={(value) => {
                               const dataToSubmit = {
                                 mediaPlatformSample: item._id,
-                                link: e.target.value,
+                                link: value,
                               };
                               dispatch(addsocialMedia(dataToSubmit));
                             }}

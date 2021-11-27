@@ -21,7 +21,7 @@ export default function Money(props) {
   useEffect(() => {
     dispatch(loadLoggedInUser());
     dispatch(getMyTransactions());
-  }, []);
+  }, [dispatch]);
   return (
     <div className="bg-light">
       <main className="container w-100 py-3">

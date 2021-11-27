@@ -56,7 +56,7 @@ const ProductsPage = (props) => {
   useEffect(() => {
     dispatch(loadStore(props.match.params.slug));
     dispatch(loadLoggedInUser());
-  }, []);
+  }, [dispatch, props.match.params.slug]);
 
   const titles = [];
   store.products &&

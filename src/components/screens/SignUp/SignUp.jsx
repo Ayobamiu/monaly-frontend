@@ -28,7 +28,7 @@ const SignUp = (props) => {
       dispatch(changeAuthInput("redirect", redirect));
     }
     document.title = "Sign Up | Monaly";
-  }, []);
+  }, [dispatch, redirect]);
   const loadingUser = useSelector(loading);
   const loadingUserName = useSelector(userNameloading);
   const statusUsername = useSelector(userNamestatus);

@@ -58,7 +58,7 @@ const CheckoutPage = (props) => {
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [gettingLatLong, setGettingLatLong] = useState(false);
-  const selectedAddress = addresses.find((i) => i._id == dileveryAddress);
+  const selectedAddress = addresses.find((i) => i._id === dileveryAddress);
   const dispatchProducts = carts.map((i) => {
     return {
       name: i.title,
@@ -147,7 +147,7 @@ const CheckoutPage = (props) => {
       setStates([...coo]);
     })();
     // ()();
-  }, []);
+  }, [carts, dispatch]);
 
   let total = 0;
   for (let index = 0; index < carts.length; index++) {
@@ -341,7 +341,8 @@ const CheckoutPage = (props) => {
     }, 3000);
   };
   const config = {
-    public_key: "FLWPUBK-2e47da611ef1439c41b6685671258d8f-X",
+    // public_key: "FLWPUBK-2e47da611ef1439c41b6685671258d8f-X",
+    public_key: "FLWPUBK_TEST-59d8c0ddd33f5d7ceed591f757f3df47-X",
     tx_ref: Date.now(),
     amount: Number(total) + Number(shipping),
     currency: "NGN",
