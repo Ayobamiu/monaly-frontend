@@ -51,14 +51,16 @@ export default function ComingSoon() {
             <img src={monaly_logo} height='25px' alt='' />
           </li>
           <li className='mx-2  ml-auto'>
-            <a href='#pricing' className='link-x-small'>
+            <a href='mailto:contact@monaly.co' className='link-x-small'>
               Contact us
             </a>
           </li>
           <li className='mx-2 '>
-            <button className='link-x-small primary-btn-inverse custom-btn-xsm px-4'>
-              Help
-            </button>
+            <a href='mailto:contact@monaly.co' className='link-x-small'>
+              <button className='link-x-small primary-btn-inverse custom-btn-xsm px-4'>
+                Help
+              </button>
+            </a>
           </li>
         </nav>
         <div className='container py-md-5 py-3'>
