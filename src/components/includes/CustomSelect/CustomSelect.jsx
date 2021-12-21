@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useState } from "react";
 import show from "../../../assets/images/show.png";
 import hide from "../../../assets/images/hide.png";
@@ -16,26 +18,24 @@ const CustomSelect = ({
   defaultValue,
 }) => {
   const [inputType, setInputType] = useState(type);
-  const [showLabel, setShowLabel] = useState(false);
-  const [showClose, setShowClose] = useState(false);
-  const [error, setError] = useState(null);
+  const [showLabel] = useState(false);
+  const [error] = useState(null);
   const [secureTextImage, setSecureTextImage] = useState(hide);
 
   return (
     <>
-      <div className="custom-input" id={id}>
-        <div className="input-inner h-100">
+      <div className='custom-input' id={id}>
+        <div className='input-inner h-100'>
           {showLabel && <label htmlFor={placeholder}>{placeholder}</label>}
           <select
-            name="select"
-            id="Selectid"
-            className="w-100 h-100 bg-transparent border-0"
-          >
-            <option value="" disabled selected>
+            name='select'
+            id='Selectid'
+            className='w-100 h-100 bg-transparent border-0'>
+            <option value='' disabled selected>
               Select Country
             </option>
-            <option value="Two">Two</option>
-            <option value="Three">Three</option>
+            <option value='Two'>Two</option>
+            <option value='Three'>Three</option>
           </select>
           {/* <input
             defaultValue={defaultValue}
@@ -78,9 +78,9 @@ const CustomSelect = ({
             onClick={() => {
               document.querySelector(`#${id} input`).value = "";
             }}
-            id="close"
-            alt=""
-            className="cursor"
+            id='close'
+            alt=''
+            className='cursor'
           />
         ) : (
           <img
@@ -94,15 +94,14 @@ const CustomSelect = ({
                 setSecureTextImage(show);
               }
             }}
-            alt=""
+            alt=''
           />
         )}
       </div>
       {error && (
         <div
-          className="notification"
-          style={{ textAlign: "left", width: "100%" }}
-        >
+          className='notification'
+          style={{ textAlign: "left", width: "100%" }}>
           <span>error</span>
         </div>
       )}

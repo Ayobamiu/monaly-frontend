@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useContext, useEffect, useState } from "react";
 import "./css/style.css";
 import BackButton from "../../includes/BackButton/BackButton";
@@ -157,10 +159,10 @@ const CheckoutPage = (props) => {
 
   const CustomLabel = ({ name, id, price, description }) => {
     return (
-      <label htmlFor={id} className="text-medium mx-2 w-100 mb-3">
-        <div className="d-flex justify-content-between align-items-center w-100 ">
+      <label htmlFor={id} className='text-medium mx-2 w-100 mb-3'>
+        <div className='d-flex justify-content-between align-items-center w-100 '>
           <span>
-            {name} <small className="text-muted d-block">{description}</small>
+            {name} <small className='text-muted d-block'>{description}</small>
           </span>
           <span>N{price}</span>
         </div>
@@ -189,14 +191,13 @@ const CheckoutPage = (props) => {
   const FormOne = (props) => {
     return (
       <div>
-        <div className="d-flex justify-content-between align-items-center">
-          <p className="link-large">Select Delivery Address</p>
+        <div className='d-flex justify-content-between align-items-center'>
+          <p className='link-large'>Select Delivery Address</p>
           <button
-            type="button"
-            class="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-          >
+            type='button'
+            class='btn btn-primary'
+            data-bs-toggle='modal'
+            data-bs-target='#exampleModal'>
             Add new
           </button>
         </div>
@@ -216,20 +217,19 @@ const CheckoutPage = (props) => {
               // );
               getSandboxEstimate();
             }
-          }}
-        >
-          <div className="form-200">
+          }}>
+          <div className='form-200'>
             {!loadingUser && addresses.length === 0 && (
-              <div className=" card-body text-center border rounded rounded-4">
-                <p className="text-medium">Add a new Address to get started</p>
+              <div className=' card-body text-center border rounded rounded-4'>
+                <p className='text-medium'>Add a new Address to get started</p>
               </div>
             )}
-            {loadingUser && <div className="loader"></div>}
+            {loadingUser && <div className='loader'></div>}
             {addresses.map((address, index) => (
-              <div className="d-flex align-items-center my-2 0" key={index}>
+              <div className='d-flex align-items-center my-2 0' key={index}>
                 <input
-                  type="radio"
-                  name="shippingAddress"
+                  type='radio'
+                  name='shippingAddress'
                   value={address._id}
                   id={`shippingAddress${index}`}
                   required={deliveryMethod === "toDoor"}
@@ -243,16 +243,15 @@ const CheckoutPage = (props) => {
                 />
                 <label
                   htmlFor={`shippingAddress${index}`}
-                  className="mb-0 card p-3 border rounded rounded-4 mx-2 w-100"
-                >
-                  <small className="text-x-small text-success d-block">
+                  className='mb-0 card p-3 border rounded rounded-4 mx-2 w-100'>
+                  <small className='text-x-small text-success d-block'>
                     {address.name}
                   </small>
 
-                  <span className="text-x-small">
+                  <span className='text-x-small'>
                     {address.address + " " + address.state}
                   </span>
-                  <small className="text-x-small text-secondary d-block">
+                  <small className='text-x-small text-secondary d-block'>
                     {address.phoneNumber}
                   </small>
                 </label>{" "}
@@ -261,9 +260,9 @@ const CheckoutPage = (props) => {
           </div>
 
           <input
-            type="submit"
-            value="Continue"
-            className=" my-2 btn btn-primary"
+            type='submit'
+            value='Continue'
+            className=' my-2 btn btn-primary'
           />
         </form>
       </div>
@@ -272,20 +271,19 @@ const CheckoutPage = (props) => {
   const FormTwo = (props) => {
     return (
       <div>
-        <p className="link-large">Select Delivery Merchant</p>
+        <p className='link-large'>Select Delivery Merchant</p>
         <form
           onSubmit={(e) => {
             e.preventDefault();
             props.previousStep();
-          }}
-        >
-          {sandBoxLoading && <div className="loader"></div>}
+          }}>
+          {sandBoxLoading && <div className='loader'></div>}
           {sandBox &&
             sandBox?.rates?.map((i) => (
-              <div className="d-flex align-items-center">
+              <div className='d-flex align-items-center'>
                 <input
-                  type="radio"
-                  name="deliveryMerchant"
+                  type='radio'
+                  name='deliveryMerchant'
                   id={i?.id}
                   value={i?.fee}
                   onChange={(e) => {
@@ -329,7 +327,7 @@ const CheckoutPage = (props) => {
             ))}
 
           <br />
-          <input type="submit" value="Back" />
+          <input type='submit' value='Back' />
         </form>
       </div>
     );
@@ -444,71 +442,69 @@ const CheckoutPage = (props) => {
     });
   };
   return (
-    <div id="checoutPage">
+    <div id='checoutPage'>
       {orderLoading && (
-        <div className="loader-full">
-          <div className="loader"></div>
+        <div className='loader-full'>
+          <div className='loader'></div>
         </div>
       )}
       {loadingCarts && (
-        <div className="loader-full">
-          <div className="loader"></div>
+        <div className='loader-full'>
+          <div className='loader'></div>
         </div>
       )}
-      <BackButton text="Checkout" props={props} />
-      <div className="container">
-        <div className="row align-items-start my-5 flex-wrap">
-          <div className="col-md-8 col-12">
-            <p className="link-large">Select Delivery Method</p>
+      <BackButton text='Checkout' props={props} />
+      <div className='container'>
+        <div className='row align-items-start my-5 flex-wrap'>
+          <div className='col-md-8 col-12'>
+            <p className='link-large'>Select Delivery Method</p>
 
             <input
-              type="radio"
-              name="deliveryMethod"
-              id="pickUp"
-              value="pickUp"
+              type='radio'
+              name='deliveryMethod'
+              id='pickUp'
+              value='pickUp'
               defaultChecked
               onChange={(e) => {
                 setShipping(0);
                 setDeliveryMethod(e.target.value);
               }}
             />
-            <label htmlFor="pickUp" className="text-medium mx-2">
+            <label htmlFor='pickUp' className='text-medium mx-2'>
               Pick Up
             </label>
             <br />
 
-            <div className="collapse" id="pickUpDetails">
+            <div className='collapse' id='pickUpDetails'>
               {storeAddress.allowPickup ? (
-                <small className="text-muted">
+                <small className='text-muted'>
                   Pick Up Address:{storeAddress.address}
                 </small>
               ) : (
-                <small className="text-muted">Pick up not Available</small>
+                <small className='text-muted'>Pick up not Available</small>
               )}
             </div>
             <a
-              href="#"
-              data-bs-toggle="collapse"
-              href="#pickUpDetails"
-              role="button"
-              aria-expanded="false"
-              aria-controls="pickUpDetails"
-            >
+              data-bs-toggle='collapse'
+              href='#pickUpDetails'
+              role='button'
+              aria-expanded='false'
+              aria-controls='pickUpDetails'>
               See pick up details..
             </a>
             <br />
             <input
-              type="radio"
-              name="deliveryMethod"
-              id="toDoor"
-              value="toDoor"
+              type='radio'
+              name='deliveryMethod'
+              id='toDoor'
+              value='toDoor'
               onChange={(e) => setDeliveryMethod(e.target.value)}
             />
-            <label htmlFor="toDoor" className="text-medium mx-2">
+            <label htmlFor='toDoor' className='text-medium mx-2'>
               Door Step Delivery
             </label>
             {deliveryMethod === "toDoor" && (
-              <div className="my-3">
+              <div className='my-3'>
                 <StepWizard>
                   <FormOne />
                   <FormTwo />
@@ -516,32 +512,31 @@ const CheckoutPage = (props) => {
               </div>
             )}
           </div>
-          <div className="col-md-4 col-12 hide-900">
-            <div className="card border p-3 rounded  ">
-              <div className="link-small">
-                Sub-Total: <span className="text-muted">NGN {total}</span>
+          <div className='col-md-4 col-12 hide-900'>
+            <div className='card border p-3 rounded  '>
+              <div className='link-small'>
+                Sub-Total: <span className='text-muted'>NGN {total}</span>
               </div>
-              <div className="link-small">
-                Shipping: <span className="text-muted">NGN {shipping}</span>
+              <div className='link-small'>
+                Shipping: <span className='text-muted'>NGN {shipping}</span>
               </div>
-              <div className="display-small">
+              <div className='display-small'>
                 Total:{" "}
-                <span className="text-muted">
+                <span className='text-muted'>
                   NGN {Number(total) + Number(shipping)}
                 </span>
               </div>
 
               <button
-                className="primary-btn my-2"
+                className='primary-btn my-2'
                 onClick={() => {
                   fade();
                   pay();
-                }}
-              >
+                }}>
                 Checkout
               </button>
               {showFAdeText && (
-                <span className="text-small text-success">
+                <span className='text-small text-success'>
                   Order request successful.
                 </span>
               )}
@@ -550,49 +545,47 @@ const CheckoutPage = (props) => {
         </div>
       </div>
 
-      <div className="fixed-bottom bg-white border-top p-3 container show-900">
-        <div className="row g-2">
-          <div className="col-6">
-            <div className="link-medium">
+      <div className='fixed-bottom bg-white border-top p-3 container show-900'>
+        <div className='row g-2'>
+          <div className='col-6'>
+            <div className='link-medium'>
               Total:{" "}
-              <span className="link-medium text-muted">
+              <span className='link-medium text-muted'>
                 NGN {Number(total) + Number(shipping)}
               </span>
             </div>
-            <div className="text-x-small">
-              <small className=" text-muted">
+            <div className='text-x-small'>
+              <small className=' text-muted'>
                 NGN {total} + NGN {shipping}
               </small>
             </div>
           </div>
-          <div className="col-6">
+          <div className='col-6'>
             <button
-              className="primary-btn my-2 custom-btn-sm "
+              className='primary-btn my-2 custom-btn-sm '
               onClick={() => {
                 fade();
                 pay();
-              }}
-            >
+              }}>
               Checkout
             </button>
           </div>
         </div>
         {showFAdeText && (
-          <span className="text-small text-success">
+          <span className='text-small text-success'>
             Order request successful.
           </span>
         )}
       </div>
 
       <div
-        class="modal fade"
-        id="exampleModal"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
+        class='modal fade'
+        id='exampleModal'
+        tabindex='-1'
+        aria-labelledby='exampleModalLabel'
+        aria-hidden='true'>
+        <div class='modal-dialog'>
+          <div class='modal-content'>
             <form
               onSubmit={async (e) => {
                 e.preventDefault();
@@ -618,44 +611,42 @@ const CheckoutPage = (props) => {
                     longitude,
                   })
                 );
-              }}
-            >
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">
+              }}>
+              <div class='modal-header'>
+                <h5 class='modal-title' id='exampleModalLabel'>
                   Enter Delivery Address
                 </h5>
                 <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
+                  type='button'
+                  class='btn-close'
+                  data-bs-dismiss='modal'
+                  aria-label='Close'></button>
               </div>
-              <div class="modal-body">
+              <div class='modal-body'>
                 <input
-                  type="text"
-                  name="name"
-                  placeholder="Name"
-                  id="name"
-                  className="form-control  my-3"
+                  type='text'
+                  name='name'
+                  placeholder='Name'
+                  id='name'
+                  className='form-control  my-3'
                   required={deliveryMethod === "toDoor"}
                   onChange={(e) => setAddressName(e.target.value)}
                 />
                 <input
-                  type="tel"
-                  name="phone"
-                  id="phone"
-                  className="form-control  my-3"
-                  placeholder="Phone"
+                  type='tel'
+                  name='phone'
+                  id='phone'
+                  className='form-control  my-3'
+                  placeholder='Phone'
                   required={deliveryMethod === "toDoor"}
                   onChange={(e) => setAddressPhone(e.target.value)}
                 />
                 <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  className="form-control  my-3"
-                  placeholder="Email Address"
+                  type='email'
+                  name='email'
+                  id='email'
+                  className='form-control  my-3'
+                  placeholder='Email Address'
                   required={deliveryMethod === "toDoor"}
                   onChange={(e) => {
                     setAddressEmail(e.target.value);
@@ -663,30 +654,30 @@ const CheckoutPage = (props) => {
                   }}
                 />
                 <input
-                  type="text"
-                  name="address"
-                  id="address"
-                  className="form-control  my-3"
-                  placeholder="Address"
+                  type='text'
+                  name='address'
+                  id='address'
+                  className='form-control  my-3'
+                  placeholder='Address'
                   required={deliveryMethod === "toDoor"}
                   onChange={(e) => {
                     setAddressAddress(e.target.value);
                   }}
                 />
                 <input
-                  type="number"
-                  name="zip"
-                  id="zip"
-                  className="form-control  my-3"
-                  placeholder="Postal Code"
+                  type='number'
+                  name='zip'
+                  id='zip'
+                  className='form-control  my-3'
+                  placeholder='Postal Code'
                   required={deliveryMethod === "toDoor"}
                   onChange={(e) => setAddressZip(e.target.value)}
                 />
 
                 <select
-                  name="state"
-                  className="form-select  my-3"
-                  id="state"
+                  name='state'
+                  className='form-select  my-3'
+                  id='state'
                   onChange={async (e) => {
                     const selected = states.find(
                       (i) => i.id.toString() === e.target.value
@@ -695,8 +686,7 @@ const CheckoutPage = (props) => {
                     setAddressStateCode(selected.iso2);
                     const nnn = await getCitiess("NG", selected.iso2);
                     setCities([...nnn]);
-                  }}
-                >
+                  }}>
                   {states
                     .sort(function (a, b) {
                       var textA = a.name.toUpperCase();
@@ -710,16 +700,15 @@ const CheckoutPage = (props) => {
                     ))}
                 </select>
                 <select
-                  className="form-select  my-3"
-                  name="city"
-                  id="city"
+                  className='form-select  my-3'
+                  name='city'
+                  id='city'
                   onChange={async (e) => {
                     const selected = cities.find(
                       (i) => i.id.toString() === e.target.value
                     );
                     setAddressCity(selected.name);
-                  }}
-                >
+                  }}>
                   {cities
                     .sort(function (a, b) {
                       var textA = a.name.toUpperCase();
@@ -742,21 +731,19 @@ const CheckoutPage = (props) => {
                   onChange={(e) => setAddressCity(e.target.value)}
                 /> */}
               </div>
-              <div class="modal-footer">
-                {gettingLatLong && <span className="loader"></span>}
-                <span className="text-x-small me-auto">{addAddressStatus}</span>
+              <div class='modal-footer'>
+                {gettingLatLong && <span className='loader'></span>}
+                <span className='text-x-small me-auto'>{addAddressStatus}</span>
                 <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
+                  type='button'
+                  class='btn btn-secondary'
+                  data-bs-dismiss='modal'>
                   Close
                 </button>
                 <button
-                  type="submit"
-                  class="btn btn-primary"
-                  disabled={gettingLatLong}
-                >
+                  type='submit'
+                  class='btn btn-primary'
+                  disabled={gettingLatLong}>
                   Add Address
                 </button>
               </div>

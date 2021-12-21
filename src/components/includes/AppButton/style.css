@@ -1,0 +1,44 @@
+/** @format */
+
+#app-btn {
+  background: #ef476f;
+  border: 2px solid #ef476f;
+  box-sizing: border-box;
+  color: #f7f7fc;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.75px;
+  text-align: center;
+  outline: none;
+  padding: 10px 30px;
+  display: block;
+}
+#app-btn.app-btn-rounded {
+  border-radius: 40px;
+}
+#app-btn.app-btn-inverse {
+  background: #ffffff;
+  border: 1px solid #d6d8e7;
+  box-sizing: border-box;
+  color: #6e7191;
+}
+#app-btn.app-btn-fullWidth {
+  width: 100%;
+}
+#app-btn.app-btn-large {
+  padding: 20px 60px;
+}
+#app-btn.app-btn-secondary {
+  background: transparent;
+  border: none;
+  color: #ef476f;
+}
+#app-btn.app-btn-small {
+  padding: 0px 15px;
+  letter-spacing: 0.75px;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 28px;
+}

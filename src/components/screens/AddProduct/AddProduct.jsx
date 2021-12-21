@@ -1,3 +1,5 @@
+/** @format */
+
 import { faArrowLeft, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
@@ -12,7 +14,7 @@ const AddProduct = (props) => {
   const status = useSelector((state) => state.app.products.status);
   useEffect(() => {
     dispatch(loadLoggedInUser());
-  }, []);
+  }, [dispatch]);
 
   const loggedInUser = useSelector(getLoggedInUser);
   if (!loggedInUser) {
@@ -28,15 +30,14 @@ const AddProduct = (props) => {
   const [video, setVideo] = useState("");
   const [store, setStore] = useState("");
   return (
-    <div id="addProduct" className="container my-5">
-      <div className="my-3 d-flex align-items-center">
+    <div id='addProduct' className='container my-5'>
+      <div className='my-3 d-flex align-items-center'>
         <div
-          className="shadow-small p-3 bg-white rounded-pill back-arrow"
-          onClick={() => props.history.goBack()}
-        >
+          className='shadow-small p-3 bg-white rounded-pill back-arrow'
+          onClick={() => props.history.goBack()}>
           <FontAwesomeIcon icon={faArrowLeft} />
         </div>
-        <span className="link-large mx-3">Add Product </span>
+        <span className='link-large mx-3'>Add Product </span>
       </div>
       <form
         onSubmit={(e) => {
@@ -72,18 +73,16 @@ const AddProduct = (props) => {
           }
 
           dispatch(addproduct(data));
-        }}
-      >
-        <label className="text-medium my-2" htmlFor="title">
+        }}>
+        <label className='text-medium my-2' htmlFor='title'>
           Select Store
         </label>
         <select
-          name="store"
-          id="store"
+          name='store'
+          id='store'
           onChange={(e) => setStore(e.target.value)}
-          className="form-control form-control-lg"
-          required
-        >
+          className='form-control form-control-lg'
+          required>
           <option unselectable>Select Store</option>
           {profile.stores &&
             profile.stores.map((store, index) => (
@@ -93,82 +92,81 @@ const AddProduct = (props) => {
             ))}
         </select>
 
-        <label className="text-medium my-2" htmlFor="title">
+        <label className='text-medium my-2' htmlFor='title'>
           Title Of the product
         </label>
         <input
           required
-          type="text"
-          name="title"
-          id="title"
-          placeholder="Title Of the product"
-          className="form-control form-control-lg"
+          type='text'
+          name='title'
+          id='title'
+          placeholder='Title Of the product'
+          className='form-control form-control-lg'
           onChange={(e) => setTitle(e.target.value)}
         />
-        <label className="text-medium my-2" htmlFor="description">
+        <label className='text-medium my-2' htmlFor='description'>
           Description Of the product
         </label>
         <input
           required
-          type="text"
-          name="description"
-          id="description"
-          placeholder="Description Of the product"
-          className="form-control form-control-lg"
+          type='text'
+          name='description'
+          id='description'
+          placeholder='Description Of the product'
+          className='form-control form-control-lg'
           onChange={(e) => setDescription(e.target.value)}
         />
-        <label className="text-medium my-2" htmlFor="price">
+        <label className='text-medium my-2' htmlFor='price'>
           Price
         </label>
         <input
           required
-          type="number"
-          name="price"
-          id="price"
-          placeholder="0.00"
-          className="form-control form-control-lg"
+          type='number'
+          name='price'
+          id='price'
+          placeholder='0.00'
+          className='form-control form-control-lg'
           onChange={(e) => setPrice(e.target.value)}
         />
-        <label className="text-medium my-2" htmlFor="numberInStock">
+        <label className='text-medium my-2' htmlFor='numberInStock'>
           Number in stock
         </label>
         <input
           required
-          type="number"
-          name="numberInStock"
-          id="numberInStock"
+          type='number'
+          name='numberInStock'
+          id='numberInStock'
           defaultValue={1}
-          className="form-control form-control-lg"
+          className='form-control form-control-lg'
           onChange={(e) => setNumberInStock(e.target.value)}
         />
-        <label className="text-medium my-2" htmlFor="hiddeninput">
+        <label className='text-medium my-2' htmlFor='hiddeninput'>
           Product Images
         </label>
-        <div className="input-images action-card">
-          <div className="input-images-item text-center link-small ">
+        <div className='input-images action-card'>
+          <div className='input-images-item text-center link-small '>
             <input
-              type="file"
-              class="hiddeninput"
-              id="hiddeninput"
+              type='file'
+              class='hiddeninput'
+              id='hiddeninput'
               onChange={(e) => {
                 e.preventDefault();
                 const objectUrl = URL.createObjectURL(e.target.files[0]);
                 setImages([objectUrl, ...images]);
                 setImagesToUpload([e.target.files[0], ...imagesToUpload]);
               }}
-              accept="image/*"
+              accept='image/*'
             />
-            <label for="hiddeninput" className="cursor text-x-small">
+            <label for='hiddeninput' className='cursor text-x-small'>
               Add Image
             </label>
           </div>
           {images.map((item, index) => (
             <div
-              className="input-images-item"
+              className='input-images-item'
               style={{ backgroundImage: `url(${item})` }}
-              key={index}
-            >
-              <div className="input-images-item-delete cursor">
+              key={index}>
+              <div className='input-images-item-delete cursor'>
                 <FontAwesomeIcon
                   icon={faTimes}
                   onClick={() => {
@@ -189,39 +187,39 @@ const AddProduct = (props) => {
           ))}
         </div>
 
-        <label className="text-medium my-2 mr-2" htmlFor="video">
+        <label className='text-medium my-2 mr-2' htmlFor='video'>
           Attach Video
         </label>
         <br />
         <input
-          className="text-medium mb-2"
-          type="file"
-          name="video"
-          id="video"
+          className='text-medium mb-2'
+          type='file'
+          name='video'
+          id='video'
           onChange={(e) => setVideo(e.target.files[0])}
-          accept="video/*"
+          accept='video/*'
         />
         <br />
-        <label className="text-medium my-2 mr-2" htmlFor="returnable">
+        <label className='text-medium my-2 mr-2' htmlFor='returnable'>
           Is this product returnable?
         </label>
         <input
           required
-          type="checkbox"
-          name="returnable"
-          id="returnable"
+          type='checkbox'
+          name='returnable'
+          id='returnable'
           defaultChecked
           onChange={(e) => setReturnable(e.target.checked)}
         />
         <br />
         <input
-          type="submit"
-          value="Submit"
-          className="my-2 primary-btn custom-btn-sm"
+          type='submit'
+          value='Submit'
+          className='my-2 primary-btn custom-btn-sm'
         />
       </form>
       <br />
-      <div className="text-x-small">{status}</div>
+      <div className='text-x-small'>{status}</div>
     </div>
   );
 };

@@ -1,3 +1,5 @@
+/** @format */
+
 import {
   faArrowLeft,
   faCamera,
@@ -20,7 +22,7 @@ const AddStore = (props) => {
   const addStoreStatus = useSelector((state) => state.app.user.addStoreStatus);
   useEffect(() => {
     dispatch(loadLoggedInUser());
-  }, []);
+  }, [dispatch]);
 
   const loggedInUser = useSelector(getLoggedInUser);
   if (!loggedInUser) {
@@ -68,15 +70,14 @@ const AddStore = (props) => {
   };
 
   return (
-    <div id="addStore" className="container my-5">
-      <div className="my-3 d-flex align-items-center">
+    <div id='addStore' className='container my-5'>
+      <div className='my-3 d-flex align-items-center'>
         <div
-          className="shadow-small p-3 bg-white rounded-pill back-arrow"
-          onClick={() => props.history.goBack()}
-        >
+          className='shadow-small p-3 bg-white rounded-pill back-arrow'
+          onClick={() => props.history.goBack()}>
           <FontAwesomeIcon icon={faArrowLeft} />
         </div>
-        <span className="link-large mx-3">Add Business Information </span>
+        <span className='link-large mx-3'>Add Business Information </span>
       </div>
       <form
         onSubmit={(e) => {
@@ -114,143 +115,140 @@ const AddStore = (props) => {
           }
 
           dispatch(addStore(data));
-        }}
-      >
-        <label className="text-medium my-2" htmlFor="name">
+        }}>
+        <label className='text-medium my-2' htmlFor='name'>
           Business Name
         </label>
         <input
           required
-          type="text"
-          name="name"
-          id="name"
-          placeholder="Business Name"
-          className="form-control form-control-lg"
+          type='text'
+          name='name'
+          id='name'
+          placeholder='Business Name'
+          className='form-control form-control-lg'
           onChange={(e) => setName(e.target.value)}
         />
 
-        <label className="text-medium my-2" htmlFor="description">
+        <label className='text-medium my-2' htmlFor='description'>
           Description
         </label>
         <input
           required
-          type="text"
-          name="description"
-          id="description"
-          placeholder="Description"
-          className="form-control form-control-lg"
+          type='text'
+          name='description'
+          id='description'
+          placeholder='Description'
+          className='form-control form-control-lg'
           onChange={(e) => setDescription(e.target.value)}
         />
-        <label className="text-medium my-2" htmlFor="phone">
+        <label className='text-medium my-2' htmlFor='phone'>
           Phone
         </label>
         <input
           required
-          type="tel"
-          name="phone"
-          id="phone"
-          placeholder="Phone"
-          className="form-control form-control-lg"
+          type='tel'
+          name='phone'
+          id='phone'
+          placeholder='Phone'
+          className='form-control form-control-lg'
           onChange={(e) => setPhone(e.target.value)}
         />
-        <label className="text-medium my-2" htmlFor="address">
+        <label className='text-medium my-2' htmlFor='address'>
           Business Address
         </label>
         <input
           required
-          type="text"
-          name="address"
-          id="address"
+          type='text'
+          name='address'
+          id='address'
           defaultValue={address}
-          placeholder="Business Address"
-          className="form-control form-control-lg"
+          placeholder='Business Address'
+          className='form-control form-control-lg'
           onChange={(e) => setaddress(e.target.value)}
         />
 
         <button
-          className="d-flex justify-content-center align-items-center primary-btn custom-btn-sm py-2 primary-btn primary-btn-inverse my-3"
+          className='d-flex justify-content-center align-items-center primary-btn custom-btn-sm py-2 primary-btn primary-btn-inverse my-3'
           onClick={(e) => {
             e.preventDefault();
             getLatandLong();
-          }}
-        >
-          <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-2" size="lg" />
+          }}>
+          <FontAwesomeIcon icon={faMapMarkerAlt} className='mr-2' size='lg' />
           <span>Use Current location</span>
         </button>
-        {loadingAddress && <div className="loader"></div>}
+        {loadingAddress && <div className='loader'></div>}
 
-        <label className="text-medium my-2" htmlFor="city">
+        <label className='text-medium my-2' htmlFor='city'>
           City
         </label>
         <input
           required
-          type="text"
-          name="city"
-          id="city"
+          type='text'
+          name='city'
+          id='city'
           defaultValue={city}
-          placeholder="City"
-          className="form-control form-control-lg"
+          placeholder='City'
+          className='form-control form-control-lg'
           onChange={(e) => setcity(e.target.value)}
         />
-        <label className="text-medium my-2" htmlFor="state">
+        <label className='text-medium my-2' htmlFor='state'>
           State
         </label>
         <input
           required
-          type="text"
-          name="state"
-          id="state"
+          type='text'
+          name='state'
+          id='state'
           defaultValue={state}
-          placeholder="State"
-          className="form-control form-control-lg"
+          placeholder='State'
+          className='form-control form-control-lg'
           onChange={(e) => setstate(e.target.value)}
         />
-        <label className="text-medium my-2" htmlFor="country">
+        <label className='text-medium my-2' htmlFor='country'>
           Country
         </label>
         <input
           required
-          type="text"
-          name="country"
-          id="country"
+          type='text'
+          name='country'
+          id='country'
           defaultValue={country}
-          placeholder="Country"
-          className="form-control form-control-lg"
+          placeholder='Country'
+          className='form-control form-control-lg'
           onChange={(e) => setcountry(e.target.value)}
         />
-        <label className="text-medium my-2" htmlFor="hiddeninput">
+        <label className='text-medium my-2' htmlFor='hiddeninput'>
           Logo
         </label>
         <div
-          className="input-images-item text-center link-small "
-          style={{ backgroundImage: `url(${image})` }}
-        >
+          className='input-images-item text-center link-small '
+          style={{ backgroundImage: `url(${image})` }}>
           <input
-            type="file"
-            class="hiddeninput"
-            id="hiddeninput"
+            type='file'
+            class='hiddeninput'
+            id='hiddeninput'
             onChange={(e) => {
               e.preventDefault();
               const objectUrl = URL.createObjectURL(e.target.files[0]);
               setImage(objectUrl);
               setLogo(e.target.files[0]);
             }}
-            accept="image/*"
+            accept='image/*'
           />
-          <label for="hiddeninput" className="cursor text-x-small">
-            <FontAwesomeIcon icon={faCamera} size="2x" />
+          <label for='hiddeninput' className='cursor text-x-small'>
+            <FontAwesomeIcon icon={faCamera} size='2x' />
           </label>
         </div>
 
         <br />
         <input
-          type="submit"
-          value="Submit"
-          className="my-2 primary-btn custom-btn-sm"
+          type='submit'
+          value='Submit'
+          className='my-2 primary-btn custom-btn-sm'
         />
       </form>
       <br />
-      <div className="text-x-small">{addStoreStatus}</div>
+      <div className='text-x-small'>{addStoreStatus}</div>
     </div>
   );
 };

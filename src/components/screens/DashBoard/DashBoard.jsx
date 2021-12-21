@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useEffect, useState } from "react";
 import Workbook from "react-excel-workbook";
 import { UncontrolledPopover } from "reactstrap";
@@ -80,6 +82,7 @@ import Notifications from "../../includes/Notifications/Notifications";
 import SmartPhoneContent from "../../includes/SmartPhoneContent/SmartPhoneContent";
 import DataMap from "../../includes/Map/Map";
 import ApexChart from "../../includes/ApexChart/ApexChart";
+import { message } from "antd";
 
 const DashBoard = (props) => {
   const ReUsableSocialInput = ({
@@ -102,14 +105,13 @@ const DashBoard = (props) => {
             onChange(value);
           }
         }}
-        className="my-2"
-      >
-        <label className="text-medium">{placeholder}</label>
+        className='my-2'>
+        <label className='text-medium'>{placeholder}</label>
         <input
-          type="url"
+          type='url'
           placeholder={placeholder}
           required
-          className="add-profile-title is-valid"
+          className='add-profile-title is-valid'
           title={title}
           name={name}
           defaultValue={defaultValue}
@@ -125,9 +127,9 @@ const DashBoard = (props) => {
           }}
         />
         <input
-          type="submit"
-          value="Update"
-          className="primary-btn-inverse custom-btn-sm"
+          type='submit'
+          value='Update'
+          className='primary-btn-inverse custom-btn-sm'
         />
       </form>
     );
@@ -149,8 +151,6 @@ const DashBoard = (props) => {
   const socialLoading = useSelector(
     (state) => state.app.socialMediaSamples.loading
   );
-  console.log("socialLoading", socialLoading);
-  // const notifications = useSelector((state) => state.app.notifications.list);
   const visitors = useSelector((state) => state.app.user.visitors);
   const countries = useSelector((state) => state.app.user.countries);
 
@@ -197,7 +197,6 @@ const DashBoard = (props) => {
 
   const [showPopup, setShowPopup] = useState(false);
   const [qrmodal, setQrmodal] = useState(false);
-  const [alert, setAlert] = useState(false);
   const [link, setLink] = useState("");
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
@@ -214,10 +213,7 @@ const DashBoard = (props) => {
   };
 
   const showSuccessAlert = () => {
-    setAlert(true);
-    setTimeout(() => {
-      setAlert(false);
-    }, 1000);
+    message.success("Link copied to clipboard!");
   };
 
   const targetTextarea = document.querySelector(".edit-screen textarea");
@@ -229,10 +225,9 @@ const DashBoard = (props) => {
     return (
       <NavLink
         to={`${url}/${to}`}
-        activeClassName="active"
-        className="nav-item mb-32 mb-16-900 mrl-16 cursor nav-p"
-        title={title}
-      >
+        activeClassName='active'
+        className='nav-item mb-32 mb-16-900 mrl-16 cursor nav-p'
+        title={title}>
         {title}
       </NavLink>
     );
@@ -242,15 +237,14 @@ const DashBoard = (props) => {
     return (
       <NavLink
         to={`${url}/${to}`}
-        activeClassName="active"
+        activeClassName='active'
         title={title}
-        className="mobile-bottom-nav-item"
-      >
+        className='mobile-bottom-nav-item'>
         <FontAwesomeIcon
           icon={icon}
           alt={title}
           title={title}
-          className="mobile-bottom-nav-item-icon"
+          className='mobile-bottom-nav-item-icon'
         />
         <span>{title}</span>
       </NavLink>
@@ -259,29 +253,26 @@ const DashBoard = (props) => {
   const [showPreview, setShowPreview] = useState(false);
 
   return (
-    <div id="mobile-holder">
+    <div id='mobile-holder'>
       <button
-        className="show-mobile-offcanvas"
+        className='show-mobile-offcanvas'
         onClick={() => {
           setShowPreview(true);
-        }}
-      >
+        }}>
         Preview
       </button>
       {showPreview && (
         <div
-          className="mobile-offcanvas"
+          className='mobile-offcanvas'
           style={{
             backgroundImage: `url(${
               userProfile.theme && userProfile.theme.backgroundImage
             })`,
-          }}
-        >
+          }}>
           <div
-            className="close-mobile-offcanvas cursor"
-            onClick={() => setShowPreview(false)}
-          >
-            <img src={Close} alt="" onClick={() => setShowPreview(false)} />
+            className='close-mobile-offcanvas cursor'
+            onClick={() => setShowPreview(false)}>
+            <img src={Close} alt='' onClick={() => setShowPreview(false)} />
           </div>
           {/* <div style={{ position: "relative" }}> */}
           <SmartPhoneContent
@@ -291,35 +282,33 @@ const DashBoard = (props) => {
           />
         </div>
       )}
-      <div className="mobile-top-nav">
-        <Link to="/" className="mr-auto">
-          <img src={monalydashboardlogo} alt="" height="28.46px" />
+      <div className='mobile-top-nav'>
+        <Link to='/' className='mr-auto'>
+          <img src={monalydashboardlogo} alt='' height='28.46px' />
         </Link>
         {authLoading || loadingLinksUpdate ? (
-          <div className="loader"></div>
+          <div className='loader'></div>
         ) : (
           ""
         )}
         <a
-          href="mailto: contact@monaly.co"
-          target="_blank"
-          className="mx-3"
-          rel="noreferrer"
-        >
-          <img src={Comment} alt="" title="Chat with Us" />
+          href='mailto: contact@monaly.co'
+          target='_blank'
+          className='mx-3'
+          rel='noreferrer'>
+          <img src={Comment} alt='' title='Chat with Us' />
         </a>
         {/* <Link to={`${path}/notifications`}>
           <img src={Notification} alt="" title="Notification" />
         </Link> */}
 
         <div
-          className="user-round-avatar-small cursor"
-          id="mobileShowUserProfilePopUp"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
+          className='user-round-avatar-small cursor'
+          id='mobileShowUserProfilePopUp'
+          data-bs-toggle='dropdown'
+          aria-expanded='false'>
           {userProfile.profilePhoto ? (
-            <img src={userProfile.profilePhoto} height="100%" alt="" />
+            <img src={userProfile.profilePhoto} height='100%' alt='' />
           ) : (
             initialsOnProfile
           )}{" "}
@@ -328,9 +317,8 @@ const DashBoard = (props) => {
           // trigger=""
           // placement="bottom"
           // target="mobileShowUserProfilePopUp"
-          class="dropdown-menu popup"
-          aria-labelledby="mobileShowUserProfilePopUp"
-        >
+          class='dropdown-menu popup'
+          aria-labelledby='mobileShowUserProfilePopUp'>
           {/* <div className="popup"> */}
           <Link to={`${path}/appearance`}>
             <button>Profile</button>
@@ -345,35 +333,33 @@ const DashBoard = (props) => {
             <button>Join the PROs</button>
           </Link>
           <button
-            class="nav-item active"
+            class='nav-item active'
             onClick={() => {
               dispatch(logUserOut());
-            }}
-          >
+            }}>
             Logout
           </button>
           {/* </div> */}
         </div>
       </div>
-      <div className="mobile-top-nav-share-box">
-        <span title="Your Monaly Link">
+      <div className='mobile-top-nav-share-box'>
+        <span title='Your Monaly Link'>
           <b>My monaly:&nbsp;</b>
           <a
             href={`${siteUrl}${currentUser && currentUser.userName}`}
-            target="_blank"
-            rel="noreferrer"
-          >
+            target='_blank'
+            rel='noreferrer'>
             <u>
               {" "}
               {`${siteUrlMinusHttps}${currentUser && currentUser.userName}`}
             </u>
           </a>
         </span>
-        <div className="share-btn relative">
+        <div className='share-btn relative'>
           <FontAwesomeIcon
             icon={faClone}
-            color="white"
-            size="lg"
+            color='white'
+            size='lg'
             onClick={(e) => {
               copyToClipboard(
                 e,
@@ -385,15 +371,10 @@ const DashBoard = (props) => {
         </div>
       </div>
 
-      {alert && (
-        <div class="alert success-bg alert-dismissible fade show" role="alert">
-          <strong>Linked copied to clipboard!</strong>
-        </div>
-      )}
-      <div className="push-to-center">
-        <div id="dashboard">
+      <div className='push-to-center'>
+        <div id='dashboard'>
           <Modal isOpen={modal} toggle={toggle}>
-            <div className="custom-modal">
+            <div className='custom-modal'>
               <FontAwesomeIcon
                 icon={faTimes}
                 style={{
@@ -404,33 +385,33 @@ const DashBoard = (props) => {
                 }}
                 onClick={toggle}
               />
-              <h2 className="share-box-head mt-32">Share your link</h2>
-              <div className="images">
-                <img src={shareLinkIconBox} alt="" />
-                <img src={colorTwitter} alt="" />
-                <img src={colorFacebook} alt="" />
-                <img src={colorWhatsapp} alt="" />
-                <img src={colorInstagram} alt="" />
-                <img src={colorLinkedIn} alt="" />
+              <h2 className='share-box-head mt-32'>Share your link</h2>
+              <div className='images'>
+                <img src={shareLinkIconBox} alt='' />
+                <img src={colorTwitter} alt='' />
+                <img src={colorFacebook} alt='' />
+                <img src={colorWhatsapp} alt='' />
+                <img src={colorInstagram} alt='' />
+                <img src={colorLinkedIn} alt='' />
               </div>
-              <button className="primary-btn mt-48">
+              <button className='primary-btn mt-48'>
                 Share to all social accounts
               </button>
             </div>
           </Modal>
-          <Modal className="qrmodal" isOpen={qrmodal} toggle={toggleQrModal}>
-            <div className="qrbox" id="qrbox">
-              <p className="custom-p">
+          <Modal className='qrmodal' isOpen={qrmodal} toggle={toggleQrModal}>
+            <div className='qrbox' id='qrbox'>
+              <p className='custom-p'>
                 {currentUser && currentUser.lastName}{" "}
                 {currentUser && currentUser.firstName}
               </p>
-              <p className="small-p">
+              <p className='small-p'>
                 {siteUrl}
                 {currentUser && currentUser.userName}
               </p>
               <QRCode
-                id="qrcode"
-                value="http://facebook.github.io/react/"
+                id='qrcode'
+                value='http://facebook.github.io/react/'
                 imageSettings={{
                   src: monalydashboardlogo,
                   height: 30,
@@ -441,30 +422,29 @@ const DashBoard = (props) => {
                 size={200}
               />
             </div>
-            <button onClick={downloadQR} className="primary-btn mt-16 ">
+            <button onClick={downloadQR} className='primary-btn mt-16 '>
               Download QR code
             </button>
           </Modal>
-          <div className="side-bar">
-            <div className="top-bar">
-              <div className="logo">
-                <Link to="/">
+          <div className='side-bar'>
+            <div className='top-bar'>
+              <div className='logo'>
+                <Link to='/'>
                   <img
                     src={monalydashboardlogo}
-                    alt="Monaly logo"
-                    title="Go to Homepage"
+                    alt='Monaly logo'
+                    title='Go to Homepage'
                   />
                 </Link>
               </div>
             </div>
-            <div className="action-icons relative">
+            <div className='action-icons relative'>
               <a
                 // href="https://tawk.to/chat/608fed0e55debc1e9711b45e/1f4p3c0s7"
-                href="mailto: contact@monaly.co"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <img src={Comment} alt="" title="Comment" />
+                href='mailto: contact@monaly.co'
+                target='_blank'
+                rel='noreferrer'>
+                <img src={Comment} alt='' title='Comment' />
               </a>
               {/* <img
                 src={Notification}
@@ -518,15 +498,14 @@ const DashBoard = (props) => {
               </UncontrolledPopover> */}
 
               <div
-                className="link-to-user-profile mt-32 cursor"
+                className='link-to-user-profile mt-32 cursor'
                 // id="showSetProfilePopUp"
 
-                id="showSetProfilePopUp"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
+                id='showSetProfilePopUp'
+                data-bs-toggle='dropdown'
+                aria-expanded='false'>
                 {initialsOnProfile}
-                <span className="new-notification"></span>
+                <span className='new-notification'></span>
               </div>
 
               <div
@@ -534,80 +513,74 @@ const DashBoard = (props) => {
                 // placement="right"
                 // target="showSetProfilePopUp"
 
-                class="dropdown-menu popup-edit-profile"
-                aria-labelledby="showSetProfilePopUp"
-              >
+                class='dropdown-menu popup-edit-profile'
+                aria-labelledby='showSetProfilePopUp'>
                 {/* <div className="popup-edit-profile"> */}
-                <div class="dark-action-p" onClick={() => {}}>
+                <div class='dark-action-p' onClick={() => {}}>
                   @{userProfile.userName}
                 </div>
 
                 <Link
                   to={`${path}/appearance`}
                   onClick={() => {}}
-                  className="no-underline"
-                >
-                  <button class="nav-item active">Edit your profile</button>
+                  className='no-underline'>
+                  <button class='nav-item active'>Edit your profile</button>
                 </Link>
                 <button
-                  class="nav-item active"
+                  class='nav-item active'
                   onClick={() => {
                     dispatch(logUserOut());
-                  }}
-                >
+                  }}>
                   Logout
                 </button>
                 {/* </div> */}
               </div>
             </div>
           </div>
-          <div className="edit-screen">
-            <div className="top-bar">
-              <div className="nav hide-at-900">
-                <NavigationItem index="1" title="Links" to="links" />
-                <NavigationItem index="2" title="Appearance" to="appearance" />
+          <div className='edit-screen'>
+            <div className='top-bar'>
+              <div className='nav hide-at-900'>
+                <NavigationItem index='1' title='Links' to='links' />
+                <NavigationItem index='2' title='Appearance' to='appearance' />
 
-                <NavigationItem index="3" title="Settings" to="settings" />
-                <NavigationItem index="4" title="Pricing" to="pricing" />
-                <NavigationItem index="5" title="Analytics" to="analytics" />
+                <NavigationItem index='3' title='Settings' to='settings' />
+                <NavigationItem index='4' title='Pricing' to='pricing' />
+                <NavigationItem index='5' title='Analytics' to='analytics' />
                 {authLoading || loadingLinksUpdate ? (
-                  <div className="loader"></div>
+                  <div className='loader'></div>
                 ) : (
                   ""
                 )}
               </div>
             </div>
-            <div className="wider-content">
-              <div className="content tab-content">
+            <div className='wider-content'>
+              <div className='content tab-content'>
                 <Redirect from={`${path}`} to={`${path}/links`} />
                 <Route path={`${path}/links`}>
                   <div>
-                    <div id="links">
-                      <div className="metric">
+                    <div id='links'>
+                      <div className='metric'>
                         <div
-                          className="metric-box"
-                          title="Count of all clicks on your links"
-                        >
+                          className='metric-box'
+                          title='Count of all clicks on your links'>
                           <p>Clicks</p>
                           <h2>{userProfile.clickCount || 0}</h2>
                         </div>
                         <div
-                          className="metric-box"
-                          title="Percentage of visitors that clicks at least a link when visiting your page"
-                        >
+                          className='metric-box'
+                          title='Percentage of visitors that clicks at least a link when visiting your page'>
                           <p>CTR</p>
                           <h2>{clickThroughRatio(userProfile)}%</h2>
                         </div>
                       </div>
                       <NavLink
                         to={`${url}/settings`}
-                        className="add-media-in-settings"
-                      >
+                        className='add-media-in-settings'>
                         <span>Add social media handles in settings</span>
                         <img
                           src={ForwardArrow}
-                          alt="Forward Arrow"
-                          className="add-media-in-settings-arrow"
+                          alt='Forward Arrow'
+                          className='add-media-in-settings-arrow'
                         />
                       </NavLink>
                       <form
@@ -620,28 +593,27 @@ const DashBoard = (props) => {
                           newFormData.set("title", title);
                           newFormData.set("link", link);
                           dispatch(addcustomLink(newFormData));
-                        }}
-                      >
+                        }}>
                         <div className={`add-link-box`}>
-                          <div className="inputs-and-media w-100 space-between flex-column">
-                            <div className="">
+                          <div className='inputs-and-media w-100 space-between flex-column'>
+                            <div className=''>
                               <input
-                                type="text"
-                                placeholder="Title"
+                                type='text'
+                                placeholder='Title'
                                 style={{ fontWeight: "bold" }}
-                                className="bg-light fsz-14-900 my-2 rounded-pill p-2 px-4  w-100 border-0 "
+                                className='bg-light fsz-14-900 my-2 rounded-pill p-2 px-4  w-100 border-0 '
                                 required
                                 onChange={(e) => setTitle(e.target.value)}
                               />
                               <input
-                                type="url"
-                                placeholder="Paste link here"
-                                className="bg-light fsz-14-900 my-2 rounded-pill p-2 px-4  w-100 border-0 "
+                                type='url'
+                                placeholder='Paste link here'
+                                className='bg-light fsz-14-900 my-2 rounded-pill p-2 px-4  w-100 border-0 '
                                 required
                                 onChange={(e) => setLink(e.target.value)}
                               />
                             </div>
-                            <div className="align-end">
+                            <div className='align-end'>
                               {/* <img
                                 className="mr-16 opaque"
                                 src={Calandar}
@@ -649,21 +621,20 @@ const DashBoard = (props) => {
                                 title="Schedule"
                               /> */}
                               <label
-                                htmlFor="link-image-input-main"
-                                className="align-end mb-0"
-                              >
+                                htmlFor='link-image-input-main'
+                                className='align-end mb-0'>
                                 <img
-                                  className="mr-16"
+                                  className='mr-16'
                                   src={gallery}
-                                  alt=""
-                                  title="Add media"
+                                  alt=''
+                                  title='Add media'
                                 />
                               </label>
                               <input
-                                type="file"
-                                name="image"
-                                id="link-image-input-main"
-                                className="link-image-input"
+                                type='file'
+                                name='image'
+                                id='link-image-input-main'
+                                className='link-image-input'
                                 onChange={(e) => setImage(e.target.files[0])}
                               />
                               {/* <img
@@ -676,17 +647,16 @@ const DashBoard = (props) => {
                           </div>
                         </div>
                         <button
-                          className="link-btn mb-32 mb-16-900"
-                          type="submit"
-                        >
+                          className='link-btn mb-32 mb-16-900'
+                          type='submit'>
                           Add New Link
                         </button>
                       </form>
                       {loadingLinks && (
                         <>
-                          <div className="add-link-box loading"></div>
-                          <div className="add-link-box loading"></div>
-                          <div className="add-link-box loading"></div>
+                          <div className='add-link-box loading'></div>
+                          <div className='add-link-box loading'></div>
+                          <div className='add-link-box loading'></div>
                         </>
                       )}
                       <PreviewScreen data={currentCustomLinks} />
@@ -695,33 +665,32 @@ const DashBoard = (props) => {
                 </Route>
                 <Route path={`${path}/appearance`}>
                   <div>
-                    <div id="appearance">
+                    <div id='appearance'>
                       <h2>Profile settings</h2>
-                      <div className="appearance-box">
-                        <div className="house-avatar">
+                      <div className='appearance-box'>
+                        <div className='house-avatar'>
                           {userProfile.profilePhoto ? (
-                            <div className="avatar">
+                            <div className='avatar'>
                               <img
                                 src={userProfile.profilePhoto}
-                                alt=""
-                                height="100%"
-                                title="Profile Photo"
+                                alt=''
+                                height='100%'
+                                title='Profile Photo'
                               />
                             </div>
                           ) : (
-                            <div className="avatar"> {initialsOnProfile}</div>
+                            <div className='avatar'> {initialsOnProfile}</div>
                           )}
-                          <div className="image-btns">
+                          <div className='image-btns'>
                             <label
-                              htmlFor="file-upload"
-                              className="cursor"
-                              title="Pick A Profile Photo"
-                            >
+                              htmlFor='file-upload'
+                              className='cursor'
+                              title='Pick A Profile Photo'>
                               <input
-                                type="file"
-                                name=""
-                                id="file-upload"
-                                className="custom-file-input"
+                                type='file'
+                                name=''
+                                id='file-upload'
+                                className='custom-file-input'
                                 onChange={(e) => {
                                   e.preventDefault();
                                   const newFormData = new FormData();
@@ -736,13 +705,12 @@ const DashBoard = (props) => {
                             </label>
                             {userProfile && userProfile.profilePhoto && (
                               <button
-                                className="primary-btn-inverse custom-btn-sm "
-                                title="Remove Profile Photo"
+                                className='primary-btn-inverse custom-btn-sm '
+                                title='Remove Profile Photo'
                                 onClick={(e) => {
                                   e.preventDefault();
                                   dispatch(deleteProfilePhoto());
-                                }}
-                              >
+                                }}>
                                 Remove
                               </button>
                             )}
@@ -772,14 +740,13 @@ const DashBoard = (props) => {
                             } else {
                               console.log("no changes");
                             }
-                          }}
-                        >
+                          }}>
                           <input
-                            type="text"
-                            placeholder="Profile Title"
-                            className="add-profile-title"
-                            title="Change Profile Title"
-                            name="profileTitle"
+                            type='text'
+                            placeholder='Profile Title'
+                            className='add-profile-title'
+                            title='Change Profile Title'
+                            name='profileTitle'
                             defaultValue={userProfile.profileTitle}
                             onChange={(e) => {
                               // dispatch(
@@ -795,12 +762,12 @@ const DashBoard = (props) => {
                             }}
                           />
                           <textarea
-                            name="bio"
-                            id="bio"
-                            cols="60"
-                            rows="10"
-                            title="Change Bio"
-                            placeholder="Bio"
+                            name='bio'
+                            id='bio'
+                            cols='60'
+                            rows='10'
+                            title='Change Bio'
+                            placeholder='Bio'
                             defaultValue={userProfile.bio}
                             onChange={(e) => {
                               // dispatch(
@@ -808,20 +775,19 @@ const DashBoard = (props) => {
                               // );
                               setBio(e.target.value);
                             }}
-                            maxLength="80"
-                          ></textarea>
-                          <div className="textarea-count">
+                            maxLength='80'></textarea>
+                          <div className='textarea-count'>
                             <span>{targetTextareaLength || 0}/80</span>
                           </div>
                           <input
-                            type="submit"
-                            value="Update"
-                            className="primary-btn-inverse custom-btn-sm"
+                            type='submit'
+                            value='Update'
+                            className='primary-btn-inverse custom-btn-sm'
                           />
                         </form>
                       </div>
 
-                      <h2>Link display style</h2>
+                      {/* <h2>Link display style</h2>
                       <div className="appearance-box">
                         <div className="style-items">
                           <label className="style-item" htmlFor="stackStyle">
@@ -901,24 +867,24 @@ const DashBoard = (props) => {
                             </div>
                           </label>
                         </div>
-                      </div>
+                      </div> */}
 
                       <h2>Themes</h2>
-                      <div className="appearance-box">
+                      <div className='appearance-box'>
                         {themes.length === 0 && (
-                          <div className="no-visitors-details">
+                          <div className='no-visitors-details'>
                             <h2>Nothing here yet</h2>
-                            <p className="custom-p">
+                            <p className='custom-p'>
                               You will see list of themes to select here
                             </p>
                           </div>
                         )}
-                        <div className="style-items">
+                        <div className='style-items'>
                           {themes.map((theme) => (
-                            <label className="style-item " htmlFor={theme._id}>
+                            <label className='style-item ' htmlFor={theme._id}>
                               <input
-                                type="radio"
-                                name="themeSelect"
+                                type='radio'
+                                name='themeSelect'
                                 id={theme._id}
                                 value={theme._id}
                                 checked={
@@ -932,45 +898,39 @@ const DashBoard = (props) => {
                                   );
                                 }}
                               />
-                              <span class="checkmark"></span>
-                              <div class="input-container">{theme.name}</div>
+                              <span class='checkmark'></span>
+                              <div class='input-container'>{theme.name}</div>
                               <div
-                                className="phone theme-item-one"
+                                className='phone theme-item-one'
                                 style={{
                                   // backgroundImage: `url("https://via.placeholder.com/500")`,
                                   backgroundImage: `url(${theme.backgroundImage})`,
-                                }}
-                              >
+                                }}>
                                 <div
-                                  className="phone-stack"
+                                  className='phone-stack'
                                   style={{
                                     backgroundColor: theme.backgroundColor,
-                                  }}
-                                ></div>
+                                  }}></div>
                                 <div
-                                  className="phone-stack"
+                                  className='phone-stack'
                                   style={{
                                     backgroundColor: theme.backgroundColor,
-                                  }}
-                                ></div>
+                                  }}></div>
                                 <div
-                                  className="phone-stack"
+                                  className='phone-stack'
                                   style={{
                                     backgroundColor: theme.backgroundColor,
-                                  }}
-                                ></div>
+                                  }}></div>
                                 <div
-                                  className="phone-stack"
+                                  className='phone-stack'
                                   style={{
                                     backgroundColor: theme.backgroundColor,
-                                  }}
-                                ></div>
+                                  }}></div>
                                 <div
-                                  className="phone-stack"
+                                  className='phone-stack'
                                   style={{
                                     backgroundColor: theme.backgroundColor,
-                                  }}
-                                ></div>
+                                  }}></div>
                               </div>
                             </label>
                           ))}
@@ -982,12 +942,12 @@ const DashBoard = (props) => {
                   </div>
                 </Route>
                 <Route path={`${path}/settings`}>
-                  <div id="appearance">
+                  <div id='appearance'>
                     <h2>
                       Social media handles{" "}
-                      {socialLoading && <div className="loader"></div>}{" "}
+                      {socialLoading && <div className='loader'></div>}{" "}
                     </h2>
-                    <div className="appearance-box">
+                    <div className='appearance-box'>
                       {currentSocialMediaSamples.map((item) => (
                         <>
                           <ReUsableSocialInput
@@ -1008,9 +968,9 @@ const DashBoard = (props) => {
                       ))}
 
                       {currentSocialMediaSamples.length === 0 && (
-                        <div className="no-visitors-details">
+                        <div className='no-visitors-details'>
                           <h2>Nothing here yet</h2>
-                          <p className="custom-p">
+                          <p className='custom-p'>
                             You will see forms to add social media links here
                           </p>
                         </div>
@@ -1021,116 +981,108 @@ const DashBoard = (props) => {
                   <div style={{ height: "300px" }}></div>
                 </Route>
                 <Route path={`${path}/analytics`}>
-                  <div id="appearance">
-                    <div className="analytics-metrics">
-                      <div className="analytics-metrics-item">
-                        <p className="custom-p text-center">Total Visits</p>
+                  <div id='appearance'>
+                    <div className='analytics-metrics'>
+                      <div className='analytics-metrics-item'>
+                        <p className='custom-p text-center'>Total Visits</p>
                         <h2>{userProfile.viewCount || 0}</h2>
                       </div>
-                      <div className="analytics-metrics-item">
-                        <p className="custom-p text-center">Total Clicks</p>
+                      <div className='analytics-metrics-item'>
+                        <p className='custom-p text-center'>Total Clicks</p>
                         <h2>{userProfile.clickCount || 0}</h2>
                       </div>
-                      <div className="analytics-metrics-item">
-                        <p className="custom-p text-center">
+                      <div className='analytics-metrics-item'>
+                        <p className='custom-p text-center'>
                           Click Through Ratio
                         </p>
                         <h2>{clickThroughRatio(userProfile)}%</h2>
                       </div>
                     </div>
 
-                    <div className="">
+                    <div className=''>
                       <ul
-                        class="nav nav-pills mb-3 py-2"
-                        id="pills-tab"
-                        role="tablist"
-                      >
-                        <li class="" role="presentation">
+                        class='nav nav-pills mb-3 py-2'
+                        id='pills-tab'
+                        role='tablist'>
+                        <li class='' role='presentation'>
                           <button
-                            class="nav-link active"
-                            id="pills-map-tab"
-                            data-bs-toggle="pill"
-                            data-bs-target="#pills-map"
-                            type="button"
-                            role="tab"
-                            aria-controls="pills-map"
-                            aria-selected="true"
-                          >
+                            class='nav-link active'
+                            id='pills-map-tab'
+                            data-bs-toggle='pill'
+                            data-bs-target='#pills-map'
+                            type='button'
+                            role='tab'
+                            aria-controls='pills-map'
+                            aria-selected='true'>
                             All
                           </button>
                         </li>
-                        <li class="" role="presentation">
+                        <li class='' role='presentation'>
                           <button
-                            class="nav-link"
-                            id="pills-bars-tab"
-                            data-bs-toggle="pill"
-                            data-bs-target="#pills-bars"
-                            type="button"
-                            role="tab"
-                            aria-controls="pills-bars"
-                            aria-selected="false"
-                          >
+                            class='nav-link'
+                            id='pills-bars-tab'
+                            data-bs-toggle='pill'
+                            data-bs-target='#pills-bars'
+                            type='button'
+                            role='tab'
+                            aria-controls='pills-bars'
+                            aria-selected='false'>
                             Top Countries
                           </button>
                         </li>
                       </ul>
 
-                      <div class="tab-content" id="pills-tabContent">
+                      <div class='tab-content' id='pills-tabContent'>
                         <div
-                          class="tab-pane fade show active"
-                          id="pills-map"
-                          role="tabpanel"
-                          aria-labelledby="pills-map-tab"
-                        >
+                          class='tab-pane fade show active'
+                          id='pills-map'
+                          role='tabpanel'
+                          aria-labelledby='pills-map-tab'>
                           <DataMap />
                         </div>
                         <div
-                          class="tab-pane fade"
-                          id="pills-bars"
-                          role="tabpanel"
-                          aria-labelledby="pills-bars-tab"
-                        >
+                          class='tab-pane fade'
+                          id='pills-bars'
+                          role='tabpanel'
+                          aria-labelledby='pills-bars-tab'>
                           <ApexChart countries={countries} />
                         </div>
                       </div>
                     </div>
 
-                    <div className="row justify-content-between">
-                      <div className="col">
-                        <h2 className="py-2">Visitors</h2>
+                    <div className='row justify-content-between'>
+                      <div className='col'>
+                        <h2 className='py-2'>Visitors</h2>
                       </div>
-                      <div className="col">
-                        <h2 className="py-2 text-end">
+                      <div className='col'>
+                        <h2 className='py-2 text-end'>
                           {isSubscribed ? (
                             <Workbook
-                              filename="visitors.xlsx"
+                              filename='visitors.xlsx'
                               element={
-                                <button className="btn btn-success">
+                                <button className='btn btn-success'>
                                   Download
                                 </button>
-                              }
-                            >
+                              }>
                               <Workbook.Sheet
                                 data={visitorsData}
-                                name="Sheet A"
-                              >
-                                <Workbook.Column label="#" value="index" />
-                                <Workbook.Column label="City" value="city" />
+                                name='Sheet A'>
+                                <Workbook.Column label='#' value='index' />
+                                <Workbook.Column label='City' value='city' />
                                 <Workbook.Column
-                                  label="Country"
-                                  value="country"
+                                  label='Country'
+                                  value='country'
                                 />
                                 <Workbook.Column
-                                  label="Location"
-                                  value="location"
+                                  label='Location'
+                                  value='location'
                                 />
                               </Workbook.Sheet>
                             </Workbook>
                           ) : (
                             <button
-                              className="btn btn-success disabled"
-                              disabled
-                            >
+                              className='btn btn-success disabled'
+                              disabled>
                               Download
                             </button>
                           )}
@@ -1143,14 +1095,14 @@ const DashBoard = (props) => {
                   </div>
                 </Route>
                 <Route path={`${path}/pricing`}>
-                  <div id="appearance">
+                  <div id='appearance'>
                     <h2>Pricing</h2>
                     <Pricing />
                   </div>
                   <div style={{ height: "300px" }}></div>
                 </Route>
                 <Route path={`${path}/notifications`}>
-                  <div id="appearance">
+                  <div id='appearance'>
                     <h2>Notifications</h2>
                     <Notifications />
                   </div>
@@ -1159,30 +1111,28 @@ const DashBoard = (props) => {
               </div>
             </div>
           </div>
-          <div className="preview-screen">
-            <div className="top-bar">
-              <div className="user-link nav-p">
-                <span title="Your Monaly Link">
+          <div className='preview-screen'>
+            <div className='top-bar'>
+              <div className='user-link nav-p'>
+                <span title='Your Monaly Link'>
                   <b>My monaly: </b>
                   <a
-                    className="nav-p"
+                    className='nav-p'
                     href={`${siteUrl}${currentUser && currentUser.userName}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                    target='_blank'
+                    rel='noreferrer'>
                     <u>
                       {siteUrlMinusHttps}
                       {currentUser && currentUser.userName}
                     </u>
                   </a>
                 </span>
-                <div className="share-btn relative">
+                <div className='share-btn relative'>
                   <UncontrolledPopover
-                    trigger="legacy"
-                    placement="bottom-end"
-                    target="desktopPopShare"
-                  >
-                    <div className="popup">
+                    trigger='legacy'
+                    placement='bottom-end'
+                    target='desktopPopShare'>
+                    <div className='popup'>
                       <button
                         onClick={(e) => {
                           copyToClipboard(
@@ -1191,26 +1141,23 @@ const DashBoard = (props) => {
                           );
                           showSuccessAlert();
                           setShowPopup(false);
-                        }}
-                      >
+                        }}>
                         Copy your monaly URL
                       </button>
-                      <button
+                      {/* <button
                         onClick={() => {
                           toggleQrModal();
                           setShowPopup(false);
-                        }}
-                      >
+                        }}>
                         Download my monaly QR code
-                      </button>
+                      </button> */}
                     </div>
                   </UncontrolledPopover>
                   <button
-                    className="primary-btn-inverse custom-btn-sm share-button-toggler"
+                    className='primary-btn-inverse custom-btn-sm share-button-toggler'
                     onClick={togglePopUp}
-                    title="Share Your Monaly Link"
-                    id="desktopPopShare"
-                  >
+                    title='Share Your Monaly Link'
+                    id='desktopPopShare'>
                     Share
                   </button>
                   {/* {showPopup && ( */}
@@ -1218,7 +1165,7 @@ const DashBoard = (props) => {
                 </div>
               </div>
             </div>
-            <div className="phone-preview">
+            <div className='phone-preview'>
               <SmartPhone
                 customSocials={currentUserSocials}
                 customLinks={currentCustomLinks}
@@ -1228,15 +1175,15 @@ const DashBoard = (props) => {
           </div>
         </div>
       </div>
-      <div className="mobile-bottom-nav">
-        <BottomNavigationItem title="Links" to="links" icon={faLink} />
+      <div className='mobile-bottom-nav'>
+        <BottomNavigationItem title='Links' to='links' icon={faLink} />
 
         <BottomNavigationItem
-          title="Appearance"
-          to="appearance"
+          title='Appearance'
+          to='appearance'
           icon={faSmile}
         />
-        <BottomNavigationItem title="Settings" to="settings" icon={faCog} />
+        <BottomNavigationItem title='Settings' to='settings' icon={faCog} />
       </div>
     </div>
   );

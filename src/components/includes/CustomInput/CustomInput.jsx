@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useState } from "react";
 import show from "../../../assets/images/show.png";
 import hide from "../../../assets/images/hide.png";
@@ -14,24 +16,25 @@ const CustomInput = ({
   id,
   required,
   defaultValue,
+  ...props
 }) => {
   const [inputType, setInputType] = useState(type);
   const [showLabel, setShowLabel] = useState(false);
-  const [showClose, setShowClose] = useState(false);
-  const [error, setError] = useState(null);
+  const [error] = useState(null);
   const [secureTextImage, setSecureTextImage] = useState(hide);
 
   return (
     <>
-      <div className="custom-input" id={id}>
-        <div className="input-inner">
+      <div className='custom-input' id={id}>
+        <div className='input-inner'>
           {showLabel && <label htmlFor={placeholder}>{placeholder}</label>}
           <input
             defaultValue={defaultValue}
             type={inputType}
             placeholder={placeholder}
-            id={placeholder}
-            security="true"
+            id={`${id}Input`}
+            security='true'
+            // {...props}
             onChange={(e) => {
               onChange(e);
               if (e.target.value.length !== 0) {
@@ -67,9 +70,9 @@ const CustomInput = ({
             onClick={() => {
               document.querySelector(`#${id} input`).value = "";
             }}
-            id="close"
-            alt=""
-            className="cursor"
+            id='close'
+            alt=''
+            className='cursor'
           />
         ) : (
           <img
@@ -83,15 +86,14 @@ const CustomInput = ({
                 setSecureTextImage(show);
               }
             }}
-            alt=""
+            alt=''
           />
         )}
       </div>
       {error && (
         <div
-          className="notification"
-          style={{ textAlign: "left", width: "100%" }}
-        >
+          className='notification'
+          style={{ textAlign: "left", width: "100%" }}>
           <span>error</span>
         </div>
       )}

@@ -1,3 +1,5 @@
+/** @format */
+
 #dashboard {
   display: flex;
   flex-wrap: wrap;
@@ -1145,7 +1147,7 @@
   .custom-file-input::before {
     content: "Select some files";
     display: inline-block;
-    background: linear-gradient(top, #ef476f, #ef476f);
+    background: linear-gradient(to top, #ef476f, #ef476f);
     border: 1px solid #999;
     border-radius: 3px;
     padding: 5px 8px;

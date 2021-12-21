@@ -1,3 +1,5 @@
+/** @format */
+
 import React from "react";
 import "./css/style.css";
 import monaly_logo from "../../../assets/images/pinkLogo.svg";
@@ -32,25 +34,22 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
     return (
       <a
         href={`${link}`}
-        target="_blank"
-        rel="noreferrer"
+        target='_blank'
+        rel='noreferrer'
         onClick={() => {
           dispatch(viewCustomLink(_id));
-        }}
-      >
+        }}>
         <div
           className={`custom-link-btn mb-8 ${className}`}
-          style={{ color, backgroundColor, borderRadius }}
-        >
+          style={{ color, backgroundColor, borderRadius }}>
           <div
-            className="image"
+            className='image'
             style={{
               backgroundImage: `url('${backgroundImage}')`,
               backgroundPosition: "center",
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
-            }}
-          ></div>
+            }}></div>
           <span>{title}</span>
         </div>
       </a>
@@ -69,12 +68,11 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
     return (
       <a
         href={`${link}`}
-        target="_blank"
-        rel="noreferrer"
+        target='_blank'
+        rel='noreferrer'
         onClick={() => {
           dispatch(viewCustomLink(_id));
-        }}
-      >
+        }}>
         <div
           className={`custom-link-btn-with-img mb-8 ${className}`}
           style={{
@@ -85,8 +83,7 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
-          }}
-        >
+          }}>
           <span>{title}</span>
         </div>
       </a>
@@ -94,56 +91,53 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
   };
   return (
     <div
-      class="smartphone"
+      class='smartphone'
       style={{
         backgroundImage: `url(${
           userProfile.theme && userProfile.theme.backgroundImage
         })`,
-      }}
-    >
-      <div class="content">
+      }}>
+      <div class='content'>
         {userProfile.profilePhoto ? (
-          <div className="profile-pic mt-32">
+          <div className='profile-pic mt-32'>
             <img
               src={userProfile.profilePhoto}
-              title="Profile Photo"
-              width="100%"
+              alt='Profile'
+              title='Profile Photo'
+              width='100%'
             />
           </div>
         ) : (
           <div
-            className="profile-pic-sub mt-32"
-            title="Profile"
+            className='profile-pic-sub mt-32'
+            title='Profile'
             style={{
               color: userProfile.theme && userProfile.theme.color,
               backgroundColor:
                 userProfile.theme && userProfile.theme.backgroundColor,
-            }}
-          >
+            }}>
             {initialsOnProfile}
           </div>
         )}
         <p
-          className="profile-pic-p mb-8"
+          className='profile-pic-p mb-8'
           style={{
             color: userProfile.theme && userProfile.theme.backgroundColor,
-          }}
-        >
+          }}>
           {userProfile.profileTitle || "@" + userProfile.userName}
         </p>
         <p
-          className="small-p mb-24 text-center"
+          className='small-p mb-24 text-center'
           style={{
             color: userProfile.theme && userProfile.theme.backgroundColor,
-          }}
-        >
+          }}>
           {userProfile.bio}
         </p>
         {loadingLinks && (
           <div>
-            <PreviewButton className="loading" />
-            <PreviewButton className="loading" />
-            <PreviewButton className="loading" />
+            <PreviewButton className='loading' />
+            <PreviewButton className='loading' />
+            <PreviewButton className='loading' />
           </div>
         )}
         {customLinks.length > 0 ? (
@@ -156,7 +150,7 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
                       userProfile.theme && userProfile.theme.backgroundColor
                     }
                     color={userProfile.theme && userProfile.theme.color}
-                    borderRadius="4px"
+                    borderRadius='4px'
                     title={customLink.title}
                     link={customLink.link}
                     key={customLink._id}
@@ -171,7 +165,7 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
                       userProfile.theme && userProfile.theme.backgroundColor
                     }
                     color={userProfile.theme && userProfile.theme.color}
-                    borderRadius="4px"
+                    borderRadius='4px'
                     backgroundImage={customLink.image}
                     title={customLink.title}
                     link={customLink.link}
@@ -180,36 +174,35 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
                   />
                 );
               }
-            }
+            } else return null;
           })
         ) : (
           <div>
             {!loadingLinks && (
-              <div className="add-links-to-start">
-                <p className="custom-p">Add links to get started</p>
+              <div className='add-links-to-start'>
+                <p className='custom-p'>Add links to get started</p>
               </div>
             )}
           </div>
         )}
 
-        <div className="mtb-16">
+        <div className='mtb-16'>
           {customSocials.map((social, index) => (
             <a
               href={social.link}
               key={index}
-              target="_blank"
-              rel="noreferrer"
+              target='_blank'
+              rel='noreferrer'
               onClick={() => {
                 dispatch(viewsocialMedia(social._id));
-              }}
-            >
+              }}>
               <FontAwesomeIcon
                 icon={matchLightSocialIcon(
                   social &&
                     social.mediaPlatformSample &&
                     social.mediaPlatformSample.name
                 )}
-                className="icon"
+                className='icon'
                 title={
                   social &&
                   social.mediaPlatformSample &&
@@ -222,14 +215,14 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
         </div>
       </div>
 
-      <div className="red">
-        <Link to="/">
+      <div className='red'>
+        <Link to='/'>
           <img
             src={monaly_logo}
-            alt="Monaly Logo"
-            className="monaly-logo"
-            height="16px"
-            title="Get started with Monaly"
+            alt='Monaly Logo'
+            className='monaly-logo'
+            height='16px'
+            title='Get started with Monaly'
           />
         </Link>
       </div>

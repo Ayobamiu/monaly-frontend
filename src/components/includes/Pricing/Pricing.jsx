@@ -1,3 +1,5 @@
+/** @format */
+
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
@@ -33,23 +35,23 @@ const Pricing = () => {
   const handleFlutterPayment = useFlutterwave(config);
 
   return (
-    <section class="pricing ">
-      <div class="row py-2">
+    <section class='pricing '>
+      <div class='row py-2'>
         {/* <!-- Pro Tier --> */}
-        <div class="col-lg-6">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title text-muted text-uppercase text-center">
+        <div class='col-lg-6'>
+          <div class='card'>
+            <div class='card-body'>
+              <h5 class='card-title text-muted text-uppercase text-center'>
                 Pro
               </h5>
-              <h6 class="card-price text-center">
-                $5<span class="period">/month</span>
+              <h6 class='card-price text-center'>
+                $5<span class='period'>/month</span>
               </h6>
               <hr />
 
               {!isSubscribed && (
                 <button
-                  class="btn btn-block btn-primary text-uppercase my-2"
+                  class='btn btn-block btn-primary text-uppercase my-2'
                   onClick={() => {
                     handleFlutterPayment({
                       callback: (response) => {
@@ -60,15 +62,14 @@ const Pricing = () => {
                       },
                       onClose: () => {},
                     });
-                  }}
-                >
+                  }}>
                   Join the PROs
                 </button>
               )}
-              <ul class="fa-ul">
+              <ul class='fa-ul'>
                 {proPackages.map((item) => (
                   <li class={!item.available && "text-muted"}>
-                    <span class="fa-li">
+                    <span class='fa-li'>
                       {item.available ? (
                         <FontAwesomeIcon icon={faCheck} />
                       ) : (
@@ -81,7 +82,7 @@ const Pricing = () => {
               </ul>
               {!isSubscribed && (
                 <button
-                  class="btn btn-block btn-primary text-uppercase my-2"
+                  class='btn btn-block btn-primary text-uppercase my-2'
                   onClick={() => {
                     handleFlutterPayment({
                       callback: (response) => {
@@ -93,8 +94,7 @@ const Pricing = () => {
 
                       onClose: () => {},
                     });
-                  }}
-                >
+                  }}>
                   Join the PROs
                 </button>
               )}
@@ -103,20 +103,20 @@ const Pricing = () => {
         </div>
 
         {/* <!-- Free Tier --> */}
-        <div class="col-lg-6">
-          <div class="card mb-5 mb-lg-0">
-            <div class="card-body">
-              <h5 class="card-title text-muted text-uppercase text-center">
+        <div class='col-lg-6'>
+          <div class='card mb-5 mb-lg-0'>
+            <div class='card-body'>
+              <h5 class='card-title text-muted text-uppercase text-center'>
                 Free
               </h5>
-              <h6 class="card-price text-center">
-                $0<span class="period">/month</span>
+              <h6 class='card-price text-center'>
+                $0<span class='period'>/month</span>
               </h6>
               <hr />
-              <ul class="fa-ul">
+              <ul class='fa-ul'>
                 {freePackages.map((item) => (
                   <li class={!item.available && "text-muted"}>
-                    <span class="fa-li">
+                    <span class='fa-li'>
                       {item.available ? (
                         <FontAwesomeIcon icon={faCheck} />
                       ) : (
@@ -127,7 +127,9 @@ const Pricing = () => {
                   </li>
                 ))}
               </ul>
-              <a href="#" class="btn btn-block btn-primary text-uppercase">
+              <a
+                href='#Pricing'
+                class='btn btn-block btn-primary text-uppercase'>
                 Start now{" "}
               </a>
             </div>

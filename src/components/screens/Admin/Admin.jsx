@@ -1,10 +1,12 @@
+/** @format */
+
 import React, { useEffect } from "react";
 import monalydashboardlogo from "../../../assets/images/Vector.svg";
 import "./css/style.css";
 import { nFormatter } from "../../../assets/js/controls";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUsers } from "../../../store/userSlice";
-import { getLoggedInUser, loadLoggedInUser } from "../../../store/authSlice";
+import { loadLoggedInUser } from "../../../store/authSlice";
 import { getStatistics } from "../../../store/customLinkSlice";
 
 const Admin = () => {
@@ -14,14 +16,14 @@ const Admin = () => {
     dispatch(loadLoggedInUser());
     dispatch(getStatistics());
     document.title = "Admin | Monaly";
-  }, []);
+  }, [dispatch]);
   const users = useSelector((state) => state.app.users.list);
   const statistics = useSelector((state) => state.app.customLinks.statistics);
   return (
-    <div id="admin">
+    <div id='admin'>
       <nav>
-        <span className="custom-p">
-          <img src={monalydashboardlogo} alt="" /> Analytics
+        <span className='custom-p'>
+          <img src={monalydashboardlogo} alt='' /> Analytics
         </span>
         {/* <div className="admin-search-input">
           <CustomInput
@@ -80,15 +82,15 @@ const Admin = () => {
           </div>
         </div> */}
       {/* </section> */}
-      <section className="product-statistics p-2" id="product-statistics">
-        <h3 className="text-center">Users </h3>
+      <section className='product-statistics p-2' id='product-statistics'>
+        <h3 className='text-center'>Users </h3>
 
-        <div className="statistic-items">
-          <div className="statistic-item statistic-item-one">
+        <div className='statistic-items'>
+          <div className='statistic-item statistic-item-one'>
             <h3>{nFormatter(users.length, 1)}</h3>
             <small>Registered Users</small>
           </div>
-          <div className="statistic-item statistic-item-two">
+          <div className='statistic-item statistic-item-two'>
             <h3>{nFormatter(users.length, 1)}</h3>
             <small>Free Tier Accounts</small>
           </div>
@@ -102,47 +104,47 @@ const Admin = () => {
           </div> */}
         </div>
       </section>
-      <section className="product-statistics p-2" id="product-statistics">
-        <h3 className="text-center">Product Statistics</h3>
+      <section className='product-statistics p-2' id='product-statistics'>
+        <h3 className='text-center'>Product Statistics</h3>
 
-        <div className="statistic-items">
-          <div className="statistic-item statistic-item-one">
+        <div className='statistic-items'>
+          <div className='statistic-item statistic-item-one'>
             <h3>{statistics.customLinksCount}</h3>
             <small>Monalys Created</small>
           </div>
-          <div className="statistic-item statistic-item-two">
+          <div className='statistic-item statistic-item-two'>
             <h3>{statistics.noOfVisits}</h3>
             <small>Total Monaly Visits</small>
           </div>
-          <div className="statistic-item statistic-item-three">
+          <div className='statistic-item statistic-item-three'>
             <h3>{statistics.customLinksCount}</h3>
             <small>Urls Hosted</small>
           </div>
-          <div className="statistic-item statistic-item-four">
+          <div className='statistic-item statistic-item-four'>
             <h3>{statistics.noOfClicks}</h3>
             <small>Total URL Clicks</small>
           </div>
         </div>
       </section>
 
-      <div className="container">
-        <div class="table-responsive">
-          <table class="table table-hover">
+      <div className='container'>
+        <div class='table-responsive'>
+          <table class='table table-hover'>
             <thead>
               <tr>
-                <th scope="col">
+                <th scope='col'>
                   <small>Username</small>
                 </th>
-                <th scope="col">
+                <th scope='col'>
                   <small>Email</small>
                 </th>
-                <th scope="col">
+                <th scope='col'>
                   <small>links</small>
                 </th>
-                <th scope="col">
+                <th scope='col'>
                   <small>stores</small>
                 </th>
-                <th scope="col">
+                <th scope='col'>
                   <small>products</small>
                 </th>
               </tr>

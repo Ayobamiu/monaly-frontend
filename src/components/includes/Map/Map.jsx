@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useEffect, useState } from "react";
 import { VectorMap } from "@south-paw/react-vector-maps";
 import styled from "styled-components";
@@ -8,7 +10,7 @@ const DataMap = (props) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getMyVisitors());
-  }, []);
+  }, [dispatch]);
 
   const countries = useSelector((state) => state.app.user.countries);
   const below1000 = [];
@@ -28,10 +30,11 @@ const DataMap = (props) => {
       if (country.count > 100000) {
         above100000.push(country.id);
       }
+      return null;
     });
   const [hovered, setHovered] = useState("");
   const [focused, setFocused] = useState("");
-  const [clicked, setClicked] = useState("");
+  // const [clicked, setClicked] = useState("");
 
   const layerProps = {
     onMouseEnter: ({ target }) => {
@@ -44,7 +47,7 @@ const DataMap = (props) => {
     },
     onFocus: ({ target }) => setFocused(target.attributes.name.value),
     onBlur: ({ target }) => setFocused(""),
-    onClick: ({ target }) => setClicked(target.attributes.name.value),
+    // onClick: ({ target }) => setClicked(target.attributes.name.value),
   };
   const Map = styled.div`
     margin: 1rem auto;
@@ -83,7 +86,7 @@ const DataMap = (props) => {
   `;
 
   return (
-    <div className="datamap">
+    <div className='datamap'>
       <Map>
         <VectorMap
           {...countries}
@@ -93,9 +96,9 @@ const DataMap = (props) => {
         />
       </Map>
       {countries.length === 0 && (
-        <div className="no-visitors-details">
+        <div className='no-visitors-details'>
           <h2>Nothing here yet</h2>
-          <p className="custom-p">
+          <p className='custom-p'>
             You will see a map display of your visitors' location
           </p>
         </div>

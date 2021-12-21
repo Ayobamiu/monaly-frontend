@@ -1,4 +1,9 @@
-/* The device with borders */
+/**
+ * /* The device with borders
+ *
+ * @format
+ */
+
 #visitorsScreen {
   width: 100%;
   height: 100%;
@@ -169,7 +174,7 @@
 
   outline: none;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: flex-end;
 }
 @media screen and (max-width: 900px) {

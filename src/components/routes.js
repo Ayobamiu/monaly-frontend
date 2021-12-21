@@ -1,3 +1,5 @@
+/** @format */
+
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomePage from "./screens/HomePage/HomePage";
 import SignIn from "./screens/SignIn/SignIn";
@@ -22,34 +24,36 @@ import Stores from "./screens/Stores/Stores";
 import PayRedirect from "./screens/PayRedirect/PayRedirect";
 import CheckoutComplete from "./screens/CheckoutComplete/CheckoutComplete";
 import CartPlusCheckout from "./screens/CartPlusCheckout/CartPlusCheckout";
+import ReferralPage from "./screens/ReferralPage/ReferralPage";
 
 const MainRoute = () => {
   return (
     <Router>
       <Switch>
-        <Route component={StartResetPassword} path="/start-reset-password" />
-        <Route component={ResetPassword} path="/reset-password/:token" />
-        <Route component={SignIn} path="/sign-in" />
-        <Route component={SignUp} path="/sign-up" />
-        <Route component={DashBoard} path="/dashboard" />
-        <Route component={CheckoutComplete} path="/pay-success" />
-        <Route component={Pay} path="/pay" />
-        <Route component={Admin} path="/admin" />
-        <Route component={TrackSingleOrder} path="/orders/:orderId" />
-        <Route component={AddProduct} path="/add-product" />
-        <Route component={PayRedirect} path="/pay-redirect" />
-        <Route component={Stores} path="/stores" />
-        <Route component={CartPlusCheckout} path="/one-click" />
-        <Route component={WithdrawalPage} path="/withdraw" />
-        <Route component={Money} path="/money" />
-        <Route component={AddStore} path="/add-store" />
-        <Route component={OrdersPage} path="/orders" />
-        <Route component={CheckoutPage} path="/checkout" />
-        <Route component={CartPage} path="/cart" />
-        <Route component={ProductPage} path="/product/:productId" />
-        <Route component={ProductsPage} path="/store/:slug" />
-        <Route component={VisitorsScreen} path="/:userName" />
-        <Route component={HomePage} path="/" />
+        <Route component={ReferralPage} path='/referral' />
+        <Route component={StartResetPassword} path='/start-reset-password' />
+        <Route component={ResetPassword} path='/reset-password/:token' />
+        <Route component={SignIn} path='/sign-in' />
+        <Route component={SignUp} path='/sign-up' />
+        <Route component={DashBoard} path='/dashboard' />
+        <Route component={CheckoutComplete} path='/pay-success' />
+        <Route component={Pay} path='/pay' />
+        <Route component={Admin} path='/admin' />
+        <Route component={TrackSingleOrder} path='/orders/:orderId' />
+        <Route component={AddProduct} path='/add-product' />
+        <Route component={PayRedirect} path='/pay-redirect' />
+        <Route component={Stores} path='/stores' />
+        <Route component={CartPlusCheckout} path='/one-click' />
+        <Route component={WithdrawalPage} path='/withdraw' />
+        <Route component={Money} path='/money' />
+        <Route component={AddStore} path='/add-store' />
+        <Route component={OrdersPage} path='/orders' />
+        <Route component={CheckoutPage} path='/checkout' />
+        <Route component={CartPage} path='/cart' />
+        <Route component={ProductPage} path='/product/:productId' />
+        <Route component={ProductsPage} path='/store/:slug' />
+        <Route component={VisitorsScreen} path='/:userName' />
+        <Route component={HomePage} path='/' />
       </Switch>
     </Router>
   );

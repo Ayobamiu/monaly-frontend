@@ -1,3 +1,5 @@
+/** @format */
+
 import { createSlice } from "@reduxjs/toolkit";
 import { apiCallBegan } from "./api";
 import jwt from "jsonwebtoken";
@@ -24,6 +26,11 @@ const slice = createSlice({
     redirect: "",
     addAddressStatus: "",
     addStoreStatus: "",
+    suggestions: [],
+    loading: false,
+    signingUp: false,
+    signUpStatus: "pending",
+    signUpError: "",
   },
   reducers: {
     changeInput: (user, action) => {
@@ -91,6 +98,16 @@ const slice = createSlice({
       user.loading = false;
     },
     transactionsRequestFailed: (user, action) => {
+      user.loading = false;
+    },
+    suggestionsRequested: (user, action) => {
+      user.loading = true;
+    },
+    suggestionsReceived: (user, action) => {
+      user.suggestions = action.payload;
+      user.loading = false;
+    },
+    suggestionsRequestFailed: (user, action) => {
       user.loading = false;
     },
     visitorsRequested: (user, action) => {
@@ -199,6 +216,22 @@ const slice = createSlice({
       user.error = action.payload.response.data.error;
       user.status = { message: "Update failed", color: "#c30052" };
     },
+    signUpReferredStart: (user, action) => {
+      user.signingUp = true;
+      user.signUpStatus = "pending";
+      user.signUpError = "";
+    },
+    signUpReferredSuccess: (user, action) => {
+      user.signingUp = false;
+      user.profile = action.payload.user;
+      user.signUpStatus = "success";
+      localStorage.setItem("authToken", action.payload.token);
+    },
+    signUpReferredFailed: (user, action) => {
+      user.signingUp = false;
+      user.signUpStatus = "failed";
+      user.signUpError = action.payload.response.data.error;
+    },
     signUpStart: (user, action) => {
       user.loading = true;
       user.loggedIn = false;
@@ -297,6 +330,12 @@ export const {
   transactionsReceived,
   transactionsRequestFailed,
   transactionsRequested,
+  suggestionsReceived,
+  suggestionsRequestFailed,
+  suggestionsRequested,
+  signUpReferredFailed,
+  signUpReferredStart,
+  signUpReferredSuccess,
 } = slice.actions;
 
 export default slice.reducer;
@@ -332,6 +371,18 @@ export const checkUserNameAvailability = (userName) => (dispatch) => {
     })
   );
 };
+export const getUserNameSuggestions = (suggestions) => (dispatch) => {
+  dispatch(
+    apiCallBegan({
+      url: "/auth-lite/suggestions",
+      method: "post",
+      data: { suggestions },
+      onStart: suggestionsRequested.type,
+      onSuccess: suggestionsReceived.type,
+      onError: suggestionsRequestFailed.type,
+    })
+  );
+};
 export const signUserUp = (firstName, lastName, email, userName, password) => (
   dispatch
 ) => {
@@ -343,6 +394,18 @@ export const signUserUp = (firstName, lastName, email, userName, password) => (
       onStart: signUpStart.type,
       onSuccess: signUpSuccess.type,
       onError: signUpFailed.type,
+    })
+  );
+};
+export const signUserUpFromReferral = (data) => (dispatch) => {
+  dispatch(
+    apiCallBegan({
+      url: "/auth/sign-up",
+      method: "post",
+      data,
+      onStart: signUpReferredStart.type,
+      onSuccess: signUpReferredSuccess.type,
+      onError: signUpReferredFailed.type,
     })
   );
 };

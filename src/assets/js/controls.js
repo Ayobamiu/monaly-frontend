@@ -1,6 +1,7 @@
+/** @format */
+
 const html2canvas = require("html2canvas");
 const {
-  faFacebook,
   faFacebookSquare,
   faInstagramSquare,
   faLinkedin,
@@ -265,18 +266,5 @@ export const data1 = [
     foo: "aaa",
     bar: "bbb",
     baz: "ccc",
-  },
-];
-
-const data2 = [
-  {
-    aaa: 1,
-    bbb: 2,
-    ccc: 3,
-  },
-  {
-    aaa: 4,
-    bbb: 5,
-    ccc: 6,
   },
 ];

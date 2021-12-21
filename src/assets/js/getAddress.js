@@ -1,3 +1,5 @@
+/** @format */
+
 import axios from "axios";
 
 export const getAddressV2 = async (key, latitude, longitude) => {
@@ -24,7 +26,7 @@ export const getAddressV2 = async (key, latitude, longitude) => {
 
 var x = document.getElementById("demo");
 
-function getLocation() {
+export function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
   } else {
@@ -32,7 +34,7 @@ function getLocation() {
   }
 }
 
-function showPosition(position) {
+export function showPosition(position) {
   x.innerHTML =
     "Latitude: " +
     position.coords.latitude +
@@ -49,10 +51,6 @@ export const getLatLong = async (address) => {
     const data = result.data.data[index];
     confidences.push(data.confidence);
   }
-  var max_of_array = Math.max.apply(Math, confidences);
-  const target = result.data.data.find(
-    (item) => item.confidence === max_of_array
-  );
 };
 
 export const getCountries = async () => {

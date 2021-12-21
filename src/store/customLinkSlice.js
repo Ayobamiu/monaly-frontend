@@ -119,6 +119,10 @@ export const ChangefocusedLinkId = (focusedLinkId) => (dispatch, getState) => {
 };
 //Action creators
 export const loadcustomLinks = () => (dispatch, getState) => {
+  console.log(
+    'localStorage.getItem("authToken")',
+    localStorage.getItem("authToken")
+  );
   dispatch(
     apiCallBegan({
       url: "/custom-links",

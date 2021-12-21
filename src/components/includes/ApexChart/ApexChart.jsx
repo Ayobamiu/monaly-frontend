@@ -1,4 +1,6 @@
-import React, { useEffect } from "react";
+/** @format */
+
+import React from "react";
 import Chart from "react-apexcharts";
 import _ from "lodash";
 
@@ -102,13 +104,13 @@ const ApexChart = (props) => {
   };
 
   return (
-    <div id="chart">
+    <div id='chart'>
       {firstTenCountries.length > 0 ? (
-        <Chart options={options} series={series} type="bar" height={350} />
+        <Chart options={options} series={series} type='bar' height={350} />
       ) : (
-        <div className="no-visitors-details">
+        <div className='no-visitors-details'>
           <h2>Nothing here yet</h2>
-          <p className="custom-p">
+          <p className='custom-p'>
             You will see a chart display of your visitors' location
           </p>
         </div>
