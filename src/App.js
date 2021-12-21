@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import MainRoute from "./components/routes";
+import ComingSoon from "./components/screens/ComingSoon/ComingSoon";
 import CartContext from "./store/contexts/cartContext";
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
   return (
     <div>
       <CartContext.Provider value={{ carts, setCarts }}>
-        <MainRoute />
+        <ComingSoon />
       </CartContext.Provider>
     </div>
   );

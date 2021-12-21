@@ -1,0 +1,66 @@
+/** @format */
+
+#comingSoonSectionOne {
+  min-height: 100vh;
+}
+#comingSoonSectionOne input:focus {
+  outline: none;
+}
+#comingSoonSectionOne ul {
+  padding-left: 0;
+  list-style: none;
+}
+#comingSoonSectionOne li {
+  list-style: none;
+}
+.comingsoon-moving-images {
+  width: 100%;
+  height: 500px;
+  background-position: bottom;
+  background-size: 50%;
+  position: relative;
+}
+#comingSoonSectionOne .iconBadge {
+  width: 40px;
+  height: 40px;
+  background: #f3f3f3;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  color: #000000 !important;
+}
+#comingSoonSectionOne .iconBadge:first-child {
+  margin-left: 0;
+}
+#comingSoonSectionOne .countItemBox {
+  background-color: #fff;
+  display: flex;
+  max-width: 322px;
+  min-width: 222px;
+  min-height: 85px;
+  justify-content: center;
+  margin-bottom: 39px;
+}
+#comingSoonSectionOne .countItem {
+  position: relative;
+  margin: 20px;
+}
+
+#comingSoonSectionOne .countItem h1::after {
+  content: ":";
+  position: absolute;
+  right: -10px;
+}
+#comingSoonSectionOne .countItem h1.minusSign::after {
+  content: "";
+  position: absolute;
+  right: -10px;
+}
+#comingSoonSectionOne .countItem span {
+  transform: translateX(-50%);
+  bottom: -10px;
+  position: absolute;
+  left: 50%;
+}

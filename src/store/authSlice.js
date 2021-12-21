@@ -31,6 +31,9 @@ const slice = createSlice({
     signingUp: false,
     signUpStatus: "pending",
     signUpError: "",
+    addToWaitiListStatus: "pending",
+    addToWaitiListError: "",
+    addingToWaitList: false,
   },
   reducers: {
     changeInput: (user, action) => {
@@ -155,6 +158,18 @@ const slice = createSlice({
     checkUserNameFailed: (user, action) => {
       user.userName.loading = false;
       user.userName.status = { message: "Username taken", color: "#c30052" };
+    },
+    addToWaitingListStart: (user, action) => {
+      user.addingToWaitList = true;
+      user.addToWaitiListStatus = "pending";
+    },
+    addToWaitingListSuccess: (user, action) => {
+      user.addingToWaitList = false;
+      user.addToWaitiListStatus = "success";
+    },
+    addToWaitingListFailed: (user, action) => {
+      user.addingToWaitList = false;
+      user.addToWaitiListStatus = "failed";
     },
     resetInitializeStart: (user, action) => {
       user.startReset.loading = true;
@@ -336,6 +351,9 @@ export const {
   signUpReferredFailed,
   signUpReferredStart,
   signUpReferredSuccess,
+  addToWaitingListFailed,
+  addToWaitingListStart,
+  addToWaitingListSuccess,
 } = slice.actions;
 
 export default slice.reducer;
@@ -368,6 +386,18 @@ export const checkUserNameAvailability = (userName) => (dispatch) => {
       onStart: checkUserNameStart.type,
       onSuccess: checkUserNameSuccess.type,
       onError: checkUserNameFailed.type,
+    })
+  );
+};
+export const addUserToWaitingList = (email) => (dispatch) => {
+  dispatch(
+    apiCallBegan({
+      url: "/auth-lite/add-to-waiting-list",
+      method: "post",
+      data: { email },
+      onStart: addToWaitingListStart.type,
+      onSuccess: addToWaitingListSuccess.type,
+      onError: addToWaitingListFailed.type,
     })
   );
 };
