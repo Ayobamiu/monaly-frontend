@@ -22,6 +22,7 @@ import {
   addUserToWaitingList,
   changeAuthInput,
 } from "../../../store/authSlice";
+import AppButton from "../../includes/AppButton/AppButton";
 
 export default function ComingSoon() {
   const [email, setEmail] = useState("");
@@ -50,16 +51,17 @@ export default function ComingSoon() {
           <li className='mx-2'>
             <img src={monaly_logo} height='25px' alt='' />
           </li>
-          <li className='mx-2  ml-auto'>
+          {/* <li className='mx-2  ml-auto'>
             <a href='mailto:contact@monaly.co' className='link-x-small'>
               Contact us
             </a>
-          </li>
+          </li> */}
           <li className='mx-2 '>
             <a href='mailto:contact@monaly.co' className='link-x-small'>
-              <button className='link-x-small primary-btn-inverse custom-btn-xsm px-4'>
-                Help
-              </button>
+              {/* <button className='link-x-small primary-btn-inverse  px-4'>
+                Contact us
+              </button> */}
+              <AppButton text='Contact us' inverse small />
             </a>
           </li>
         </nav>
@@ -116,7 +118,7 @@ export default function ComingSoon() {
                 <input
                   type='submit'
                   value='Notify me'
-                  className='primary-btn custom-btn-sm'
+                  className='submitButton'
                   disabled={addingToWaitList}
                 />
               </form>

@@ -22,7 +22,8 @@
   background: #ffffff;
   border: 1px solid #d6d8e7;
   box-sizing: border-box;
-  color: #6e7191;
+  /* color: #6e7191; */
+  color: #ef476f;
 }
 #app-btn.app-btn-fullWidth {
   width: 100%;

@@ -6,6 +6,19 @@
 #comingSoonSectionOne input:focus {
   outline: none;
 }
+#comingSoonSectionOne .submitButton {
+  background: #ef476f;
+  border: 2px solid #ef476f;
+  border-radius: 40px;
+  color: #f7f7fc;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.75px;
+  text-align: center;
+  outline: none;
+}
 #comingSoonSectionOne ul {
   padding-left: 0;
   list-style: none;
@@ -63,4 +76,13 @@
   bottom: -10px;
   position: absolute;
   left: 50%;
+}
+@media screen and (max-width: 900px) {
+  #comingSoonSectionOne .submitButton {
+    font-size: 13px;
+  }
+  #comingSoonSectionOne .countItemBox {
+    margin: auto;
+    margin-bottom: 39px;
+  }
 }
