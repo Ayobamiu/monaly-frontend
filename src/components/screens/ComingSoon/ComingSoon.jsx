@@ -6,7 +6,7 @@ import SectionOne4 from "../../../assets/images/SectionOne4.svg";
 import SectionOne3 from "../../../assets/images/SectionOne3.svg";
 import SectionOne2 from "../../../assets/images/SectionOne2.svg";
 import SectionOne1 from "../../../assets/images/SectionOne1.svg";
-import monaly_logo from "../../../assets/images/monaly_logo.svg";
+import monaly_logo from "../../../assets/images/MonalyDashboardLogo.svg";
 
 import "./style.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
