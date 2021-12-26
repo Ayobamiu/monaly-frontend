@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useEffect, useState } from "react";
 import "./css/style.css";
 import monaly_logo from "../../../assets/images/monaly_logo.svg";
@@ -13,11 +15,18 @@ import {
   getLoggedInUser,
   changeAuthInput,
 } from "../../../store/authSlice";
+import { message } from "antd";
 
 const SignUp = (props) => {
   const redirect = props.match.params.redirect;
   const dispatch = useDispatch();
   const loggedInUser = useSelector(getLoggedInUser);
+  const error = useSelector((state) => state.app.user.error);
+  useEffect(() => {
+    if (error) {
+      message.error(error);
+    }
+  }, [error]);
 
   if (loggedInUser) {
     window.location = "/";
@@ -44,35 +53,35 @@ const SignUp = (props) => {
   };
 
   return (
-    <div id="signuppage">
-      <div className="form-box">
-        <Link to="/">
-          <img src={monaly_logo} alt="" className="mb-32 h-25-900" />
+    <div id='signuppage'>
+      <div className='form-box'>
+        <Link to='/'>
+          <img src={monaly_logo} alt='' className='mb-32 h-25-900' />
         </Link>
-        <p className="header-p mb-48 mb-32-900">
+        <p className='header-p mb-48 mb-32-900'>
           Let’s help you create an account!
         </p>
-        <form action="sign-up" onSubmit={handleSignUp}>
+        <form action='sign-up' onSubmit={handleSignUp}>
           <CustomInput
             onChange={(e) => setFirstName(e.target.value)}
-            placeholder="First Name"
-            type="text"
+            placeholder='First Name'
+            type='text'
             required={true}
-            id="firstName"
+            id='firstName'
           />
           <CustomInput
             onChange={(e) => setLastName(e.target.value)}
-            placeholder="Last Name"
-            type="text"
+            placeholder='Last Name'
+            type='text'
             required={true}
-            id="lastName"
+            id='lastName'
           />
           <CustomInput
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email Address"
-            type="email"
+            placeholder='Email Address'
+            type='email'
             required={true}
-            id="email"
+            id='email'
           />
           <CustomInput
             onChange={(e) => {
@@ -81,20 +90,19 @@ const SignUp = (props) => {
                 dispatch(checkUserNameAvailability(e.target.value));
               }
             }}
-            placeholder="Username"
-            type="text"
+            placeholder='Username'
+            type='text'
             required={true}
-            id="userName"
+            id='userName'
             defaultValue={signUpUserName}
           />
           {statusUsername && (
             <div style={{ display: "flex", margin: 0 }}>
               {loadingUserName && (
                 <div
-                  class="spinner-border spinner-border-sm monaly-primary"
-                  role="status"
-                >
-                  <span class="visually-hidden">Loading...</span>
+                  class='spinner-border spinner-border-sm monaly-primary'
+                  role='status'>
+                  <span class='visually-hidden'>Loading...</span>
                 </div>
               )}
               {statusUsername && signUpUserName && (
@@ -102,8 +110,7 @@ const SignUp = (props) => {
                   style={{
                     color: statusUsername && statusUsername.color,
                   }}
-                  className="notify-p"
-                >
+                  className='notify-p'>
                   &nbsp; {statusUsername && statusUsername.message}
                 </span>
               )}
@@ -112,32 +119,32 @@ const SignUp = (props) => {
           <CustomInput
             onChange={(e) => setPassword(e.target.value)}
             secured={true}
-            placeholder="Enter password"
-            type="password"
+            placeholder='Enter password'
+            type='password'
             required={true}
-            id="password"
+            id='password'
           />
-          <p className="small-p mb-48 mb-32-900">
+          <p className='small-p mb-48 mb-32-900'>
             By using this service you are agreeing to the terms of service and
             privacy policy.
           </p>
-          <button className="primary-btn mb-16" type="submit">
+          <button className='primary-btn mb-16' type='submit'>
             {!loadingUser ? (
               "Sign Up"
             ) : (
-              <div class="spinner-border text-light" role="status">
-                <span class="visually-hidden">Loading...</span>
+              <div class='spinner-border text-light' role='status'>
+                <span class='visually-hidden'>Loading...</span>
               </div>
             )}
           </button>
         </form>
-        <div className="mb-32 hide-900"></div>
+        <div className='mb-32 hide-900'></div>
         {/* <button className="primary-inverse-btn mb-32">
           Sign up with Google
         </button> */}
-        <p className="action-p">
+        <p className='action-p'>
           Already have an account? &nbsp;
-          <Link to={`/sign-in?redirect=${redirect}`} className="dark-action-p">
+          <Link to={`/sign-in?redirect=${redirect}`} className='dark-action-p'>
             Login here
           </Link>
         </p>

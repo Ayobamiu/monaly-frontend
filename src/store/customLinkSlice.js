@@ -1,3 +1,5 @@
+/** @format */
+
 import { createSlice } from "@reduxjs/toolkit";
 import { apiCallBegan } from "./api";
 

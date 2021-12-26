@@ -240,7 +240,7 @@ const slice = createSlice({
       user.signingUp = false;
       user.profile = action.payload.user;
       user.signUpStatus = "success";
-      localStorage.setItem("authToken", action.payload.token);
+      localStorage.setItem("authToken", action.payload);
     },
     signUpReferredFailed: (user, action) => {
       user.signingUp = false;
@@ -257,7 +257,9 @@ const slice = createSlice({
       user.loggedIn = true;
       user.profile = action.payload.user;
       user.status = { message: "Sign Up successful", color: "#00966d" };
-      localStorage.setItem("authToken", action.payload.token);
+      if (action.payload && action.payload !== undefined) {
+        localStorage.setItem("authToken", action.payload);
+      }
       if (user.redirect) {
         window.location = user.redirect;
       }
@@ -265,8 +267,11 @@ const slice = createSlice({
     signUpFailed: (user, action) => {
       user.loading = false;
       user.loggedIn = false;
-      user.error = action.payload.response.data.error;
-      user.status = { message: "Sign up failed", color: "#c30052" };
+      user.error = action.payload?.response?.data?.message;
+      user.status = {
+        message: action.payload?.response?.data?.message,
+        color: "#c30052",
+      };
     },
     authStart: (user, action) => {
       user.loading = true;
@@ -278,7 +283,9 @@ const slice = createSlice({
       user.loggedIn = true;
       user.profile = action.payload.user;
       user.status = { message: "Login successful", color: "#00966d" };
-      localStorage.setItem("authToken", action.payload.token);
+      if (action.payload && action.payload !== undefined) {
+        localStorage.setItem("authToken", action.payload);
+      }
       if (user.redirect) {
         window.location = user.redirect;
       }
@@ -286,8 +293,11 @@ const slice = createSlice({
     authFailed: (user, action) => {
       user.loading = false;
       user.loggedIn = false;
-      user.error = action.payload;
-      user.status = { message: "Login failed", color: "#c30052" };
+      user.error = action.payload?.response?.data?.message;
+      user.status = {
+        message: action.payload?.response?.data?.message,
+        color: "#c30052",
+      };
     },
     authRemoved: (user, action) => {
       user.loggedIn = false;

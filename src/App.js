@@ -18,7 +18,7 @@ function App() {
   return (
     <div>
       <CartContext.Provider value={{ carts, setCarts }}>
-        <ComingSoon />
+        <MainRoute />
       </CartContext.Provider>
     </div>
   );

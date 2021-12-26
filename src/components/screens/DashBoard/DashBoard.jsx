@@ -175,7 +175,8 @@ const DashBoard = (props) => {
 
     document.title = "Dashboard | Monaly";
   }, [dispatch]);
-  const currentUser = getLoggedInUser() && getLoggedInUser().user;
+  const currentUser = getLoggedInUser();
+  console.log("currentUser", currentUser);
   const [modal, setModal] = useState(false);
 
   const getSocialAvailable = (id) => {
@@ -787,16 +788,16 @@ const DashBoard = (props) => {
                         </form>
                       </div>
 
-                      {/* <h2>Link display style</h2>
-                      <div className="appearance-box">
-                        <div className="style-items">
-                          <label className="style-item" htmlFor="stackStyle">
+                      <h2>Link display style</h2>
+                      <div className='appearance-box'>
+                        <div className='style-items'>
+                          <label className='style-item' htmlFor='stackStyle'>
                             <input
-                              type="radio"
-                              name="styleSelect"
-                              id="stackStyle"
+                              type='radio'
+                              name='styleSelect'
+                              id='stackStyle'
                               checked={userProfile.stackStyle === "stacked"}
-                              value="stacked"
+                              value='stacked'
                               onChange={(e) => {
                                 e.preventDefault();
                                 dispatch(
@@ -806,22 +807,22 @@ const DashBoard = (props) => {
                                 );
                               }}
                             />
-                            <span class="checkmark"></span>
-                            <div class="input-container">Stacked</div>
-                            <div className="phone">
-                              <div className="phone-stack"></div>
-                              <div className="phone-stack"></div>
-                              <div className="phone-stack"></div>
-                              <div className="phone-stack"></div>
-                              <div className="phone-stack"></div>
+                            <span class='checkmark'></span>
+                            <div class='input-container'>Stacked</div>
+                            <div className='phone'>
+                              <div className='phone-stack'></div>
+                              <div className='phone-stack'></div>
+                              <div className='phone-stack'></div>
+                              <div className='phone-stack'></div>
+                              <div className='phone-stack'></div>
                             </div>
                           </label>
-                          <label className="style-item" htmlFor="galleryStyle">
+                          <label className='style-item' htmlFor='galleryStyle'>
                             <input
-                              type="radio"
-                              name="styleSelect"
-                              id="galleryStyle"
-                              value="cards"
+                              type='radio'
+                              name='styleSelect'
+                              id='galleryStyle'
+                              value='cards'
                               checked={userProfile.stackStyle === "cards"}
                               onChange={(e) => {
                                 e.preventDefault();
@@ -832,21 +833,21 @@ const DashBoard = (props) => {
                                 );
                               }}
                             />
-                            <span class="checkmark"></span>
-                            <div class="input-container">Gallery</div>
-                            <div className="phone phone-grids">
-                              <div className="phone-grid"></div>
-                              <div className="phone-grid"></div>
-                              <div className="phone-grid"></div>
-                              <div className="phone-grid"></div>
+                            <span class='checkmark'></span>
+                            <div class='input-container'>Gallery</div>
+                            <div className='phone phone-grids'>
+                              <div className='phone-grid'></div>
+                              <div className='phone-grid'></div>
+                              <div className='phone-grid'></div>
+                              <div className='phone-grid'></div>
                             </div>
                           </label>
-                          <label className="style-item" htmlFor="mixedStyle">
+                          <label className='style-item' htmlFor='mixedStyle'>
                             <input
-                              type="radio"
-                              name="styleSelect"
-                              id="mixedStyle"
-                              value="mixed"
+                              type='radio'
+                              name='styleSelect'
+                              id='mixedStyle'
+                              value='mixed'
                               checked={userProfile.stackStyle === "mixed"}
                               onChange={(e) => {
                                 e.preventDefault();
@@ -857,17 +858,17 @@ const DashBoard = (props) => {
                                 );
                               }}
                             />
-                            <span class="checkmark"></span>
-                            <div class="input-container">Mixed</div>
-                            <div className="phone phone-mixed">
-                              <div className="phone-grid"></div>
-                              <div className="phone-grid"></div>
-                              <div className="phone-stack"></div>
-                              <div className="phone-stack"></div>
+                            <span class='checkmark'></span>
+                            <div class='input-container'>Mixed</div>
+                            <div className='phone phone-mixed'>
+                              <div className='phone-grid'></div>
+                              <div className='phone-grid'></div>
+                              <div className='phone-stack'></div>
+                              <div className='phone-stack'></div>
                             </div>
                           </label>
                         </div>
-                      </div> */}
+                      </div>
 
                       <h2>Themes</h2>
                       <div className='appearance-box'>
