@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import MainRoute from "./components/routes";
-import ComingSoon from "./components/screens/ComingSoon/ComingSoon";
+// import ComingSoon from "./components/screens/ComingSoon/ComingSoon";
 import CartContext from "./store/contexts/cartContext";
 
 function App() {

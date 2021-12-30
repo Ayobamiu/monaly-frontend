@@ -3,7 +3,7 @@
 import axios from "axios";
 import * as actions from "../api";
 
-const localUrl = "http://localhost:3003/";
+// const localUrl = "http://localhost:3003/";
 const liveUrl = "https://monaly-backend.herokuapp.com/";
 const api = ({ dispatch }) => (next) => async (action) => {
   if (action.type !== actions.apiCallBegan.type) return next(action);

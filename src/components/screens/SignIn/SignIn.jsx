@@ -38,7 +38,7 @@ const SignIn = (props) => {
     if (redirect) {
       window.location = redirect;
     } else {
-      window.location = "/";
+      window.location = "/dashboard";
     }
   }
   const loadingUser = useSelector(loading);

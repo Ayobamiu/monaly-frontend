@@ -29,12 +29,11 @@ import {
   changeAuthInput,
   checkUserNameAvailability,
   getUserNameSuggestions,
-  signUserUp,
   signUserUpFromReferral,
   userNameloading,
 } from "../../../store/authSlice";
 import generateUsernames from "../../../assets/js/generateUsernames";
-import jobTitles from "../../../assets/jsons/jobTitles.json";
+// import jobTitles from "../../../assets/jsons/jobTitles.json";
 
 const { Step } = Steps;
 
@@ -63,7 +62,7 @@ export default function ReferralPage(props) {
   const signUpError = useSelector((state) => state.app.user.signUpError);
   const signUpStatus = useSelector((state) => state.app.user.signUpStatus);
 
-  const signUpUserName = useSelector((state) => state.app.user.signUpUserName);
+  // const signUpUserName = useSelector((state) => state.app.user.signUpUserName);
 
   const handleSignUp = () => {
     const data = {
@@ -94,7 +93,7 @@ export default function ReferralPage(props) {
   function updateOccupation(ish) {
     document.getElementById("occupationInput").value = ish;
   }
-  const occupationSuggestions = ["Content Developer", ""];
+  // const occupationSuggestions = ["Content Developer", ""];
   useEffect(() => {
     if (signUpStatus === "failed") {
       if (signUpError) {
@@ -108,7 +107,7 @@ export default function ReferralPage(props) {
       setShowing(3);
     }
     dispatch(changeAuthInput("signUpStatus", "pending"));
-  }, [dispatch, signUpStatus]);
+  }, [dispatch, signUpStatus, signUpError]);
 
   return (
     <div id='referralPage'>

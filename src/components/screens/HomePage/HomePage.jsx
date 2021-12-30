@@ -78,6 +78,10 @@ const HomePage = (props) => {
     );
   };
 
+  if (loggedInUser) {
+    window.location = "/dashboard";
+  }
+
   return (
     <div id='homepage'>
       <nav className='d-flex align-items-center justify-content-between p-3  bg-light '>
