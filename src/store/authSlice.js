@@ -31,6 +31,9 @@ const slice = createSlice({
     signingUp: false,
     signUpStatus: "pending",
     signUpError: "",
+    updatingUserProfile: false,
+    updatingUserStatus: "pending",
+    updatingUserError: "",
     addToWaitiListStatus: "pending",
     addToWaitiListError: "",
     addingToWaitList: false,
@@ -157,7 +160,14 @@ const slice = createSlice({
     },
     checkUserNameFailed: (user, action) => {
       user.userName.loading = false;
-      user.userName.status = { message: "Username taken", color: "#c30052" };
+      console.log(
+        "action.payload.response.data",
+        action.payload?.response?.data?.error
+      );
+      user.userName.status = {
+        message: action.payload?.response?.data?.error || "Username taken",
+        color: "#c30052",
+      };
     },
     addToWaitingListStart: (user, action) => {
       user.addingToWaitList = true;
@@ -215,19 +225,22 @@ const slice = createSlice({
       };
     },
     photoUploadStart: (user, action) => {
+      user.updatingUserProfile = true;
       user.loading = true;
-      // user.loadingUpdate = true;
+      user.updatingUserStatus = "pending";
       user.status = { message: "Updating profile", color: "blue" };
     },
     userProfileUpdated: (user, action) => {
+      user.updatingUserProfile = false;
       user.loading = false;
-      // user.loadingUpdate = false;
+      user.updatingUserStatus = "success";
       user.profile = action.payload;
       user.status = { message: "Updated user profile", color: "#00966d" };
     },
     photoUploadFailed: (user, action) => {
+      user.updatingUserProfile = false;
       user.loading = false;
-      // user.loadingUpdate = false;
+      user.updatingUserStatus = "failed";
       user.error = action.payload.response.data.error;
       user.status = { message: "Update failed", color: "#c30052" };
     },
@@ -665,7 +678,6 @@ export const getLoggedInUser = () => {
   const token = localStorage.getItem("authToken");
   if (token) {
     var decoded = jwt.verify(token, "myjwtsecretkey");
-    console.log("decoded", decoded);
     return decoded;
   }
   return null;

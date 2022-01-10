@@ -68,7 +68,10 @@ const Pricing = () => {
               )}
               <ul class='fa-ul'>
                 {proPackages.map((item) => (
-                  <li class={!item.available && "text-muted"}>
+                  <li
+                    class={`${!item.available && "text-muted"} ${
+                      item.bold && "bold"
+                    }`}>
                     <span class='fa-li'>
                       {item.available ? (
                         <FontAwesomeIcon icon={faCheck} />
@@ -127,11 +130,11 @@ const Pricing = () => {
                   </li>
                 ))}
               </ul>
-              <a
+              {/* <a
                 href='#Pricing'
                 class='btn btn-block btn-primary text-uppercase'>
                 Start now{" "}
-              </a>
+              </a> */}
             </div>
           </div>
         </div>

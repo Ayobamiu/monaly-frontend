@@ -1,12 +1,10 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
-import Workbook from "react-excel-workbook";
 import { UncontrolledPopover } from "reactstrap";
 import "./css/style.css";
 import monalydashboardlogo from "../../../assets/images/Vector.svg";
 import Comment from "../../../assets/images/Comment.svg";
-import ForwardArrow from "../../../assets/images/ForwardArrow.svg";
 import Close from "../../../assets/images/Close.svg";
 import shareLinkIconBox from "../../../assets/images/shareLinkIconBox.svg";
 import colorLinkedIn from "../../../assets/images/colorLinkedIn.svg";
@@ -14,32 +12,22 @@ import colorInstagram from "../../../assets/images/colorInstagram.svg";
 import colorWhatsapp from "../../../assets/images/colorWhatsapp.svg";
 import colorTwitter from "../../../assets/images/colorTwitter.svg";
 import colorFacebook from "../../../assets/images/colorFacebook.svg";
-// import Calandar from "../../../assets/images/Calandar.svg";
-
-import gallery from "../../../assets/images/gallery.svg";
-// import Heart from "../../../assets/images/Heart.svg";
 
 import {
   Link,
   NavLink,
-  Redirect,
   Route,
+  useLocation,
   useRouteMatch,
 } from "react-router-dom";
 import SmartPhone from "../../includes/SmartPhone/SmartPhone";
 import { Modal } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLink, faTimes, faCog } from "@fortawesome/free-solid-svg-icons";
-import {
-  // faArrowAltCircleRight,
-  faClone,
-  faSmile,
-} from "@fortawesome/free-regular-svg-icons";
+import { faClone, faSmile } from "@fortawesome/free-regular-svg-icons";
 import {
   loadcustomLinks,
   customLinks as Links,
-  addcustomLink,
-  loadingcustomLinks,
   loadingUpdateCustomLinks,
 } from "../../../store/customLinkSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -48,122 +36,48 @@ import {
   getMySubscription,
   getMyVisitors,
   logUserOut,
-  updateUserProfile,
-  uploadUserPhotos,
 } from "../../../store/authSlice";
-import PreviewScreen from "../../includes/PreviewScreen/PreviewScreen";
 import QRCode from "qrcode.react";
 import {
   copyToClipboard,
   downloadQR,
-  clickThroughRatio,
   siteUrl,
   siteUrlMinusHttps,
 } from "../../../assets/js/controls";
 
 import {
   loadsocialMediaSamples,
-  socialMediaSamples,
-  addsocialMedia,
   userSocials,
   loadUserSocials,
 } from "../../../store/sociaMediaSampleSlice";
-import {
-  loadLoggedInUser,
-  user,
-  deleteProfilePhoto,
-  loading,
-} from "../../../store/authSlice";
-import { loadthemes } from "../../../store/themeSlice";
+import { loadLoggedInUser, loading } from "../../../store/authSlice";
+import { loadMyThemes, loadthemes } from "../../../store/themeSlice";
 import Pricing from "../../includes/Pricing/Pricing";
 import Analytics from "../../includes/Analytics/Analytics";
 import { loadNotifications } from "../../../store/notificationSlice";
 import Notifications from "../../includes/Notifications/Notifications";
 import SmartPhoneContent from "../../includes/SmartPhoneContent/SmartPhoneContent";
-import DataMap from "../../includes/Map/Map";
-import ApexChart from "../../includes/ApexChart/ApexChart";
+
 import { message } from "antd";
+import AddNewTheme from "../../includes/AddNewTheme/AddNewTheme";
+import MyThemes from "../../includes/MyThemes/MyThemes";
+import MonalyThemes from "../../includes/MonalyThemes/MonalyThemes";
+import SocialMediaSettings from "../../includes/SocialMediaSettings/SocialMediaSettings";
+import ProfileSettings from "../../includes/ProfileSettings/ProfileSettings";
+import LinkDisplaySettings from "../../includes/LinkDisplaySettings/LinkDisplaySettings";
+import MyLinks from "../../includes/MyLinks/MyLinks";
+import EditTheme from "../../includes/AddNewTheme/EditTheme";
 
 const DashBoard = (props) => {
-  const ReUsableSocialInput = ({
-    onChange,
-    placeholder,
-    title,
-    defaultValue,
-    name,
-  }) => {
-    const [value, setValue] = useState("");
-    return (
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-
-          if (value === defaultValue) {
-            console.log("no changes");
-          } else {
-            console.log("value", value);
-            onChange(value);
-          }
-        }}
-        className='my-2'>
-        <label className='text-medium'>{placeholder}</label>
-        <input
-          type='url'
-          placeholder={placeholder}
-          required
-          className='add-profile-title is-valid'
-          title={title}
-          name={name}
-          defaultValue={defaultValue}
-          onChange={(e) => {
-            e.preventDefault();
-            // validate(e.target.value);
-            // onChange(e);
-            setValue(e.target.value);
-          }}
-          onBlur={(e) => {
-            if (e.target.value.length > 0) {
-            }
-          }}
-        />
-        <input
-          type='submit'
-          value='Update'
-          className='primary-btn-inverse custom-btn-sm'
-        />
-      </form>
-    );
-  };
-
   const dispatch = useDispatch();
-  const userProfile = useSelector(user);
+  const userProfile = useSelector((state) => state.app.user.profile);
   const currentCustomLinks = useSelector(Links);
-  const currentSocialMediaSamples = useSelector(socialMediaSamples);
-
-  const subscription = useSelector((state) => state.app.user.subscription);
-  const isSubscribed = subscription && subscription.status === "active";
-
   const currentUserSocials = useSelector(userSocials);
-  const loadingLinks = useSelector(loadingcustomLinks);
   const loadingLinksUpdate = useSelector(loadingUpdateCustomLinks);
   const authLoading = useSelector(loading);
-  const themes = useSelector((state) => state.app.themes.list);
-  const socialLoading = useSelector(
-    (state) => state.app.socialMediaSamples.loading
-  );
-  const visitors = useSelector((state) => state.app.user.visitors);
-  const countries = useSelector((state) => state.app.user.countries);
-
-  const visitorsData = visitors.map((visitor, index) => {
-    return {
-      index: index + 1,
-      city: visitor.city,
-      country: visitor.country,
-      location: visitor.visitorLocation,
-    };
-  });
 
   useEffect(() => {
+    dispatch(loadMyThemes());
     dispatch(loadthemes());
     dispatch(loadcustomLinks());
     dispatch(loadsocialMediaSamples());
@@ -176,19 +90,8 @@ const DashBoard = (props) => {
     document.title = "Dashboard | Monaly";
   }, [dispatch]);
   const currentUser = getLoggedInUser();
-  console.log("currentUser", currentUser);
   const [modal, setModal] = useState(false);
 
-  const getSocialAvailable = (id) => {
-    let result = null;
-    const resultSocial = currentUserSocials.find(
-      (social) =>
-        social.mediaPlatformSample && social.mediaPlatformSample._id === id
-    );
-    result = resultSocial;
-
-    return result;
-  };
   const toggle = () => setModal(!modal);
 
   const initialsOnProfile =
@@ -198,12 +101,6 @@ const DashBoard = (props) => {
 
   const [showPopup, setShowPopup] = useState(false);
   const [qrmodal, setQrmodal] = useState(false);
-  const [link, setLink] = useState("");
-  const [title, setTitle] = useState("");
-  const [image, setImage] = useState("");
-  const [profileTitle, setProfileTitle] = useState(userProfile.profileTitle);
-
-  const [bio, setBio] = useState(userProfile.bio);
 
   const togglePopUp = () => {
     setShowPopup(!showPopup);
@@ -213,13 +110,6 @@ const DashBoard = (props) => {
     setQrmodal(!qrmodal);
   };
 
-  const showSuccessAlert = () => {
-    message.success("Link copied to clipboard!");
-  };
-
-  const targetTextarea = document.querySelector(".edit-screen textarea");
-  const targetTextareaLength =
-    targetTextarea && targetTextarea.value && targetTextarea.value.length;
   let { path, url } = useRouteMatch();
 
   const NavigationItem = ({ title, to }) => {
@@ -253,6 +143,36 @@ const DashBoard = (props) => {
   };
   const [showPreview, setShowPreview] = useState(false);
 
+  const { pathname } = useLocation();
+
+  const testBackgroundImage = useSelector(
+    (state) => state.app.customLinks.testBackgroundImage
+  );
+  const testBlurPercent = useSelector(
+    (state) => state.app.customLinks.testBlurPercent
+  );
+  const testDarkPercent = useSelector(
+    (state) => state.app.customLinks.testDarkPercent
+  );
+  const testBackgroundColor = useSelector(
+    (state) => state.app.customLinks.testBackgroundColor
+  );
+  const addingTheme =
+    pathname === "/dashboard/add-theme" || pathname === "/dashboard/edit-theme";
+
+  const bgImage = addingTheme
+    ? testBackgroundImage
+    : userProfile.theme && userProfile.theme.backgroundImage;
+  const bgColor = addingTheme
+    ? testBackgroundColor
+    : userProfile.theme && userProfile.theme.backgroundColorImageReplace;
+  const blur = addingTheme
+    ? testBlurPercent
+    : userProfile.theme && userProfile.theme.blur;
+  const dark = addingTheme
+    ? testDarkPercent
+    : userProfile.theme && userProfile.theme.dark;
+
   return (
     <div id='mobile-holder'>
       <button
@@ -263,19 +183,19 @@ const DashBoard = (props) => {
         Preview
       </button>
       {showPreview && (
-        <div
-          className='mobile-offcanvas'
-          style={{
-            backgroundImage: `url(${
-              userProfile.theme && userProfile.theme.backgroundImage
-            })`,
-          }}>
+        <div class='mobile-offcanvas'>
+          <div
+            className={`bg-image f${blur}`}
+            style={{
+              background: bgImage
+                ? `linear-gradient(270deg, rgba(0, 0, 0, ${dark}) 0%, rgba(0, 0, 0, ${dark}) 100%),url('${bgImage}')`
+                : bgColor,
+            }}></div>
           <div
             className='close-mobile-offcanvas cursor'
             onClick={() => setShowPreview(false)}>
             <img src={Close} alt='' onClick={() => setShowPreview(false)} />
           </div>
-          {/* <div style={{ position: "relative" }}> */}
           <SmartPhoneContent
             customSocials={currentUserSocials}
             customLinks={currentCustomLinks}
@@ -307,12 +227,9 @@ const DashBoard = (props) => {
           className='user-round-avatar-small cursor'
           id='mobileShowUserProfilePopUp'
           data-bs-toggle='dropdown'
-          aria-expanded='false'>
-          {userProfile.profilePhoto ? (
-            <img src={userProfile.profilePhoto} height='100%' alt='' />
-          ) : (
-            initialsOnProfile
-          )}{" "}
+          aria-expanded='false'
+          style={{ backgroundImage: `url(${userProfile.profilePhoto})` }}>
+          {!userProfile.profilePhoto && initialsOnProfile}
         </div>
         <div
           // trigger=""
@@ -366,7 +283,7 @@ const DashBoard = (props) => {
                 e,
                 `${siteUrl}${currentUser && currentUser.userName}`
               );
-              showSuccessAlert();
+              message.success("Link copied to clipboard!");
             }}
           />
         </div>
@@ -441,7 +358,6 @@ const DashBoard = (props) => {
             </div>
             <div className='action-icons relative'>
               <a
-                // href="https://tawk.to/chat/608fed0e55debc1e9711b45e/1f4p3c0s7"
                 href='mailto: contact@monaly.co'
                 target='_blank'
                 rel='noreferrer'>
@@ -500,8 +416,6 @@ const DashBoard = (props) => {
 
               <div
                 className='link-to-user-profile mt-32 cursor'
-                // id="showSetProfilePopUp"
-
                 id='showSetProfilePopUp'
                 data-bs-toggle='dropdown'
                 aria-expanded='false'>
@@ -510,13 +424,8 @@ const DashBoard = (props) => {
               </div>
 
               <div
-                // trigger="legacy"
-                // placement="right"
-                // target="showSetProfilePopUp"
-
                 class='dropdown-menu popup-edit-profile'
                 aria-labelledby='showSetProfilePopUp'>
-                {/* <div className="popup-edit-profile"> */}
                 <div class='dark-action-p' onClick={() => {}}>
                   @{userProfile.userName}
                 </div>
@@ -534,7 +443,6 @@ const DashBoard = (props) => {
                   }}>
                   Logout
                 </button>
-                {/* </div> */}
               </div>
             </div>
           </div>
@@ -544,7 +452,7 @@ const DashBoard = (props) => {
                 <NavigationItem index='1' title='Links' to='links' />
                 <NavigationItem index='2' title='Appearance' to='appearance' />
 
-                <NavigationItem index='3' title='Settings' to='settings' />
+                <NavigationItem index='3' title='Socials' to='settings' />
                 <NavigationItem index='4' title='Pricing' to='pricing' />
                 <NavigationItem index='5' title='Analytics' to='analytics' />
                 {authLoading || loadingLinksUpdate ? (
@@ -556,543 +464,29 @@ const DashBoard = (props) => {
             </div>
             <div className='wider-content'>
               <div className='content tab-content'>
-                <Redirect from={`${path}`} to={`${path}/links`} />
-                <Route path={`${path}/links`}>
-                  <div>
-                    <div id='links'>
-                      <div className='metric'>
-                        <div
-                          className='metric-box'
-                          title='Count of all clicks on your links'>
-                          <p>Clicks</p>
-                          <h2>{userProfile.clickCount || 0}</h2>
-                        </div>
-                        <div
-                          className='metric-box'
-                          title='Percentage of visitors that clicks at least a link when visiting your page'>
-                          <p>CTR</p>
-                          <h2>{clickThroughRatio(userProfile)}%</h2>
-                        </div>
-                      </div>
-                      <NavLink
-                        to={`${url}/settings`}
-                        className='add-media-in-settings'>
-                        <span>Add social media handles in settings</span>
-                        <img
-                          src={ForwardArrow}
-                          alt='Forward Arrow'
-                          className='add-media-in-settings-arrow'
-                        />
-                      </NavLink>
-                      <form
-                        onSubmit={(e) => {
-                          e.preventDefault();
-                          const newFormData = new FormData();
-                          if (image) {
-                            newFormData.append("image", image);
-                          }
-                          newFormData.set("title", title);
-                          newFormData.set("link", link);
-                          dispatch(addcustomLink(newFormData));
-                        }}>
-                        <div className={`add-link-box`}>
-                          <div className='inputs-and-media w-100 space-between flex-column'>
-                            <div className=''>
-                              <input
-                                type='text'
-                                placeholder='Title'
-                                style={{ fontWeight: "bold" }}
-                                className='bg-light fsz-14-900 my-2 rounded-pill p-2 px-4  w-100 border-0 '
-                                required
-                                onChange={(e) => setTitle(e.target.value)}
-                              />
-                              <input
-                                type='url'
-                                placeholder='Paste link here'
-                                className='bg-light fsz-14-900 my-2 rounded-pill p-2 px-4  w-100 border-0 '
-                                required
-                                onChange={(e) => setLink(e.target.value)}
-                              />
-                            </div>
-                            <div className='align-end'>
-                              {/* <img
-                                className="mr-16 opaque"
-                                src={Calandar}
-                                alt=""
-                                title="Schedule"
-                              /> */}
-                              <label
-                                htmlFor='link-image-input-main'
-                                className='align-end mb-0'>
-                                <img
-                                  className='mr-16'
-                                  src={gallery}
-                                  alt=''
-                                  title='Add media'
-                                />
-                              </label>
-                              <input
-                                type='file'
-                                name='image'
-                                id='link-image-input-main'
-                                className='link-image-input'
-                                onChange={(e) => setImage(e.target.files[0])}
-                              />
-                              {/* <img
-                                className="mr-16 opaque"
-                                src={Heart}
-                                alt=""
-                                title="Favourite"
-                              /> */}
-                            </div>
-                          </div>
-                        </div>
-                        <button
-                          className='link-btn mb-32 mb-16-900'
-                          type='submit'>
-                          Add New Link
-                        </button>
-                      </form>
-                      {loadingLinks && (
-                        <>
-                          <div className='add-link-box loading'></div>
-                          <div className='add-link-box loading'></div>
-                          <div className='add-link-box loading'></div>
-                        </>
-                      )}
-                      <PreviewScreen data={currentCustomLinks} />
-                    </div>
-                  </div>
-                </Route>
+                {/* <Redirect from={`${path}`} to={`${path}/links`} /> */}
+
                 <Route path={`${path}/appearance`}>
                   <div>
                     <div id='appearance'>
-                      <h2>Profile settings</h2>
-                      <div className='appearance-box'>
-                        <div className='house-avatar'>
-                          {userProfile.profilePhoto ? (
-                            <div className='avatar'>
-                              <img
-                                src={userProfile.profilePhoto}
-                                alt=''
-                                height='100%'
-                                title='Profile Photo'
-                              />
-                            </div>
-                          ) : (
-                            <div className='avatar'> {initialsOnProfile}</div>
-                          )}
-                          <div className='image-btns'>
-                            <label
-                              htmlFor='file-upload'
-                              className='cursor'
-                              title='Pick A Profile Photo'>
-                              <input
-                                type='file'
-                                name=''
-                                id='file-upload'
-                                className='custom-file-input'
-                                onChange={(e) => {
-                                  e.preventDefault();
-                                  const newFormData = new FormData();
-                                  newFormData.append(
-                                    "profilePhoto",
-                                    e.target.files[0]
-                                  );
-                                  dispatch(uploadUserPhotos(newFormData));
-                                }}
-                              />
-                              Pick an image
-                            </label>
-                            {userProfile && userProfile.profilePhoto && (
-                              <button
-                                className='primary-btn-inverse custom-btn-sm '
-                                title='Remove Profile Photo'
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  dispatch(deleteProfilePhoto());
-                                }}>
-                                Remove
-                              </button>
-                            )}
-                          </div>
-                        </div>
-                        <form
-                          onSubmit={(e) => {
-                            e.preventDefault();
-                            const data = {};
-                            if (userProfile.profileTitle !== profileTitle) {
-                              data.profileTitle = profileTitle;
-                            }
-                            if (userProfile.bio !== bio) {
-                              data.bio = bio;
-                            }
-                            if (
-                              userProfile.profileTitle !== profileTitle ||
-                              userProfile.bio !== bio
-                            ) {
-                              console.log("data", data);
-                              dispatch(
-                                updateUserProfile({
-                                  profileTitle,
-                                  bio,
-                                })
-                              );
-                            } else {
-                              console.log("no changes");
-                            }
-                          }}>
-                          <input
-                            type='text'
-                            placeholder='Profile Title'
-                            className='add-profile-title'
-                            title='Change Profile Title'
-                            name='profileTitle'
-                            defaultValue={userProfile.profileTitle}
-                            onChange={(e) => {
-                              // dispatch(
-                              //   updateUserProfile({
-                              //     profileTitle: e.target.value,
-                              //   })
-                              // );
-                              setProfileTitle(e.target.value);
-                            }}
-                            onBlur={(e) => {
-                              if (e.target.value.length > 0) {
-                              }
-                            }}
-                          />
-                          <textarea
-                            name='bio'
-                            id='bio'
-                            cols='60'
-                            rows='10'
-                            title='Change Bio'
-                            placeholder='Bio'
-                            defaultValue={userProfile.bio}
-                            onChange={(e) => {
-                              // dispatch(
-                              //   updateUserProfile({ bio: e.target.value })
-                              // );
-                              setBio(e.target.value);
-                            }}
-                            maxLength='80'></textarea>
-                          <div className='textarea-count'>
-                            <span>{targetTextareaLength || 0}/80</span>
-                          </div>
-                          <input
-                            type='submit'
-                            value='Update'
-                            className='primary-btn-inverse custom-btn-sm'
-                          />
-                        </form>
-                      </div>
-
-                      <h2>Link display style</h2>
-                      <div className='appearance-box'>
-                        <div className='style-items'>
-                          <label className='style-item' htmlFor='stackStyle'>
-                            <input
-                              type='radio'
-                              name='styleSelect'
-                              id='stackStyle'
-                              checked={userProfile.stackStyle === "stacked"}
-                              value='stacked'
-                              onChange={(e) => {
-                                e.preventDefault();
-                                dispatch(
-                                  updateUserProfile({
-                                    stackStyle: e.target.value,
-                                  })
-                                );
-                              }}
-                            />
-                            <span class='checkmark'></span>
-                            <div class='input-container'>Stacked</div>
-                            <div className='phone'>
-                              <div className='phone-stack'></div>
-                              <div className='phone-stack'></div>
-                              <div className='phone-stack'></div>
-                              <div className='phone-stack'></div>
-                              <div className='phone-stack'></div>
-                            </div>
-                          </label>
-                          <label className='style-item' htmlFor='galleryStyle'>
-                            <input
-                              type='radio'
-                              name='styleSelect'
-                              id='galleryStyle'
-                              value='cards'
-                              checked={userProfile.stackStyle === "cards"}
-                              onChange={(e) => {
-                                e.preventDefault();
-                                dispatch(
-                                  updateUserProfile({
-                                    stackStyle: e.target.value,
-                                  })
-                                );
-                              }}
-                            />
-                            <span class='checkmark'></span>
-                            <div class='input-container'>Gallery</div>
-                            <div className='phone phone-grids'>
-                              <div className='phone-grid'></div>
-                              <div className='phone-grid'></div>
-                              <div className='phone-grid'></div>
-                              <div className='phone-grid'></div>
-                            </div>
-                          </label>
-                          <label className='style-item' htmlFor='mixedStyle'>
-                            <input
-                              type='radio'
-                              name='styleSelect'
-                              id='mixedStyle'
-                              value='mixed'
-                              checked={userProfile.stackStyle === "mixed"}
-                              onChange={(e) => {
-                                e.preventDefault();
-                                dispatch(
-                                  updateUserProfile({
-                                    stackStyle: e.target.value,
-                                  })
-                                );
-                              }}
-                            />
-                            <span class='checkmark'></span>
-                            <div class='input-container'>Mixed</div>
-                            <div className='phone phone-mixed'>
-                              <div className='phone-grid'></div>
-                              <div className='phone-grid'></div>
-                              <div className='phone-stack'></div>
-                              <div className='phone-stack'></div>
-                            </div>
-                          </label>
-                        </div>
-                      </div>
-
-                      <h2>Themes</h2>
-                      <div className='appearance-box'>
-                        {themes.length === 0 && (
-                          <div className='no-visitors-details'>
-                            <h2>Nothing here yet</h2>
-                            <p className='custom-p'>
-                              You will see list of themes to select here
-                            </p>
-                          </div>
-                        )}
-                        <div className='style-items'>
-                          {themes.map((theme) => (
-                            <label className='style-item ' htmlFor={theme._id}>
-                              <input
-                                type='radio'
-                                name='themeSelect'
-                                id={theme._id}
-                                value={theme._id}
-                                checked={
-                                  userProfile.theme &&
-                                  userProfile.theme._id === theme._id
-                                }
-                                onChange={(e) => {
-                                  e.preventDefault();
-                                  dispatch(
-                                    updateUserProfile({ theme: e.target.value })
-                                  );
-                                }}
-                              />
-                              <span class='checkmark'></span>
-                              <div class='input-container'>{theme.name}</div>
-                              <div
-                                className='phone theme-item-one'
-                                style={{
-                                  // backgroundImage: `url("https://via.placeholder.com/500")`,
-                                  backgroundImage: `url(${theme.backgroundImage})`,
-                                }}>
-                                <div
-                                  className='phone-stack'
-                                  style={{
-                                    backgroundColor: theme.backgroundColor,
-                                  }}></div>
-                                <div
-                                  className='phone-stack'
-                                  style={{
-                                    backgroundColor: theme.backgroundColor,
-                                  }}></div>
-                                <div
-                                  className='phone-stack'
-                                  style={{
-                                    backgroundColor: theme.backgroundColor,
-                                  }}></div>
-                                <div
-                                  className='phone-stack'
-                                  style={{
-                                    backgroundColor: theme.backgroundColor,
-                                  }}></div>
-                                <div
-                                  className='phone-stack'
-                                  style={{
-                                    backgroundColor: theme.backgroundColor,
-                                  }}></div>
-                              </div>
-                            </label>
-                          ))}
-                        </div>
-                      </div>
-
+                      <ProfileSettings />
+                      <LinkDisplaySettings />
+                      <MonalyThemes />
+                      <MyThemes />
                       <div style={{ height: "300px" }}></div>
                     </div>
                   </div>
                 </Route>
                 <Route path={`${path}/settings`}>
                   <div id='appearance'>
-                    <h2>
-                      Social media handles{" "}
-                      {socialLoading && <div className='loader'></div>}{" "}
-                    </h2>
-                    <div className='appearance-box'>
-                      {currentSocialMediaSamples.map((item) => (
-                        <>
-                          <ReUsableSocialInput
-                            onChange={(value) => {
-                              const dataToSubmit = {
-                                mediaPlatformSample: item._id,
-                                link: value,
-                              };
-                              dispatch(addsocialMedia(dataToSubmit));
-                            }}
-                            defaultValue={
-                              getSocialAvailable(item._id) &&
-                              getSocialAvailable(item._id).link
-                            }
-                            placeholder={`${item.name} URL`}
-                          />
-                        </>
-                      ))}
-
-                      {currentSocialMediaSamples.length === 0 && (
-                        <div className='no-visitors-details'>
-                          <h2>Nothing here yet</h2>
-                          <p className='custom-p'>
-                            You will see forms to add social media links here
-                          </p>
-                        </div>
-                      )}
-                    </div>
+                    <SocialMediaSettings />
                   </div>
 
                   <div style={{ height: "300px" }}></div>
                 </Route>
                 <Route path={`${path}/analytics`}>
                   <div id='appearance'>
-                    <div className='analytics-metrics'>
-                      <div className='analytics-metrics-item'>
-                        <p className='custom-p text-center'>Total Visits</p>
-                        <h2>{userProfile.viewCount || 0}</h2>
-                      </div>
-                      <div className='analytics-metrics-item'>
-                        <p className='custom-p text-center'>Total Clicks</p>
-                        <h2>{userProfile.clickCount || 0}</h2>
-                      </div>
-                      <div className='analytics-metrics-item'>
-                        <p className='custom-p text-center'>
-                          Click Through Ratio
-                        </p>
-                        <h2>{clickThroughRatio(userProfile)}%</h2>
-                      </div>
-                    </div>
-
-                    <div className=''>
-                      <ul
-                        class='nav nav-pills mb-3 py-2'
-                        id='pills-tab'
-                        role='tablist'>
-                        <li class='' role='presentation'>
-                          <button
-                            class='nav-link active'
-                            id='pills-map-tab'
-                            data-bs-toggle='pill'
-                            data-bs-target='#pills-map'
-                            type='button'
-                            role='tab'
-                            aria-controls='pills-map'
-                            aria-selected='true'>
-                            All
-                          </button>
-                        </li>
-                        <li class='' role='presentation'>
-                          <button
-                            class='nav-link'
-                            id='pills-bars-tab'
-                            data-bs-toggle='pill'
-                            data-bs-target='#pills-bars'
-                            type='button'
-                            role='tab'
-                            aria-controls='pills-bars'
-                            aria-selected='false'>
-                            Top Countries
-                          </button>
-                        </li>
-                      </ul>
-
-                      <div class='tab-content' id='pills-tabContent'>
-                        <div
-                          class='tab-pane fade show active'
-                          id='pills-map'
-                          role='tabpanel'
-                          aria-labelledby='pills-map-tab'>
-                          <DataMap />
-                        </div>
-                        <div
-                          class='tab-pane fade'
-                          id='pills-bars'
-                          role='tabpanel'
-                          aria-labelledby='pills-bars-tab'>
-                          <ApexChart countries={countries} />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className='row justify-content-between'>
-                      <div className='col'>
-                        <h2 className='py-2'>Visitors</h2>
-                      </div>
-                      <div className='col'>
-                        <h2 className='py-2 text-end'>
-                          {isSubscribed ? (
-                            <Workbook
-                              filename='visitors.xlsx'
-                              element={
-                                <button className='btn btn-success'>
-                                  Download
-                                </button>
-                              }>
-                              <Workbook.Sheet
-                                data={visitorsData}
-                                name='Sheet A'>
-                                <Workbook.Column label='#' value='index' />
-                                <Workbook.Column label='City' value='city' />
-                                <Workbook.Column
-                                  label='Country'
-                                  value='country'
-                                />
-                                <Workbook.Column
-                                  label='Location'
-                                  value='location'
-                                />
-                              </Workbook.Sheet>
-                            </Workbook>
-                          ) : (
-                            <button
-                              className='btn btn-success disabled'
-                              disabled>
-                              Download
-                            </button>
-                          )}
-                        </h2>
-                      </div>
-                    </div>
-
                     <Analytics />
-                    <div style={{ height: "300px" }}></div>
                   </div>
                 </Route>
                 <Route path={`${path}/pricing`}>
@@ -1109,6 +503,21 @@ const DashBoard = (props) => {
                   </div>
                   <div style={{ height: "300px" }}></div>
                 </Route>
+                <Route path={`${path}/add-theme`}>
+                  <AddNewTheme />
+                  <div style={{ height: "300px" }}></div>
+                </Route>
+                <Route path={`${path}/edit-theme`}>
+                  <EditTheme />
+                  <div style={{ height: "300px" }}></div>
+                </Route>
+                <Route path={`${path}/links`}>
+                  <MyLinks />
+                </Route>
+                <Route path={`${path}`} exact>
+                  <MyLinks />
+                </Route>
+                {/* <Route path={`${path}`} exact component={<MyLinks />} /> */}
               </div>
             </div>
           </div>
@@ -1140,7 +549,7 @@ const DashBoard = (props) => {
                             e,
                             `${siteUrl}${currentUser && currentUser.userName}`
                           );
-                          showSuccessAlert();
+                          message.success("Link copied to clipboard!");
                           setShowPopup(false);
                         }}>
                         Copy your monaly URL
@@ -1161,8 +570,6 @@ const DashBoard = (props) => {
                     id='desktopPopShare'>
                     Share
                   </button>
-                  {/* {showPopup && ( */}
-                  {/* )} */}
                 </div>
               </div>
             </div>
@@ -1184,7 +591,7 @@ const DashBoard = (props) => {
           to='appearance'
           icon={faSmile}
         />
-        <BottomNavigationItem title='Settings' to='settings' icon={faCog} />
+        <BottomNavigationItem title='Socials' to='settings' icon={faCog} />
       </div>
     </div>
   );

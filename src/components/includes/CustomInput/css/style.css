@@ -1,3 +1,5 @@
+/** @format */
+
 .custom-input {
   height: 63px;
   width: 100%;
@@ -13,12 +15,7 @@
   margin: 8px 0;
   text-align: left;
 }
-@media screen and (max-width: 900px) {
-  .custom-input {
-    height: 56px;
-    padding: 0 24px;
-  }
-}
+
 .custom-input label {
   /* Desktop / Text X-Small */
 
@@ -119,4 +116,14 @@
 }
 .show-close {
   display: block;
+}
+@media screen and (max-width: 900px) {
+  .custom-input {
+    height: 46px;
+    padding: 0 20px;
+  }
+  .custom-input input {
+    font-size: 13px;
+    line-height: 18px;
+  }
 }

@@ -8,9 +8,9 @@ export default function AppButton({
   rounded = true,
   secondary = false,
   small = false,
-  onPress = () => {},
   large = false,
   fullWidth = false,
+  disabled = false,
   inverse = false,
   IconComponent,
   className,
@@ -19,6 +19,7 @@ export default function AppButton({
 }) {
   return (
     <button
+      disabled={disabled}
       id='app-btn'
       className={`
       ${rounded && "app-btn-rounded"} 

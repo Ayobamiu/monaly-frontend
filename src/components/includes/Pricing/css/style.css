@@ -1,3 +1,5 @@
+/** @format */
+
 #pricing {
   padding: 100px 0;
 }
@@ -11,6 +13,9 @@ section.pricing {
   border-radius: 16px;
 }
 
+.bold {
+  font-weight: bold;
+}
 .pricing .card {
   border: none;
   border-radius: 1rem;

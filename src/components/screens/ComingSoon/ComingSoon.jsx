@@ -42,8 +42,6 @@ export default function ComingSoon() {
     }
     dispatch(changeAuthInput("addToWaitiListStatus", "pending"));
   }, [addToWaitiListStatus, dispatch]);
-  console.log("addingToWaitList", addingToWaitList);
-  console.log("addToWaitiListStatus", addToWaitiListStatus);
   return (
     <div>
       <section id='comingSoonSectionOne' className='bg-light'>

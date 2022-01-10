@@ -94,26 +94,7 @@ const CheckoutPage = (props) => {
     //     items: dispatchProducts,
     //   })
     // );
-    console.log("load sendbox", {
-      origin_name: storeAddress.name,
-      origin_phone: storeAddress.phoneOne,
-      origin_street: storeAddress?.location?.label,
-      origin_city: storeAddress?.location?.region,
-      origin_country: storeAddress?.location?.country,
-      origin_country_code: "NG",
-      origin_state: storeAddress?.location?.region,
-      origin_state_code: storeAddress?.location?.region_code,
-      destination_name: addressName,
-      destination_phone: addressPhone,
-      destination_street: addressAddress,
-      destination_city: addressCity,
-      destination_country: "NIGERIA",
-      destination_country_code: "NG",
-      destination_state: addressState,
-      destination_state_code: addressStateCode,
-      weight: "0.5",
-      items: dispatchProducts,
-    });
+
     dispatch(
       loadSandBox({
         origin_name: storeAddress.name,
@@ -354,40 +335,6 @@ const CheckoutPage = (props) => {
   };
   const handleFlutterPayment = useFlutterwave(config);
   const pay = () => {
-    console.log("Pay data", {
-      carts,
-      total: Number(total) + Number(shipping),
-      shippingFee: Number(shipping),
-      deliveryMethod,
-      deliveryMerchant,
-      dileveryAddress,
-      shippinData:
-        deliveryMethod === "pickUp"
-          ? null
-          : {
-              origin_name: storeAddress.name,
-              origin_phone: storeAddress.phoneOne,
-              origin_street: storeAddress?.location?.label,
-              origin_city: storeAddress?.location?.region,
-              origin_country: storeAddress?.location?.country,
-              origin_country_code: "NG",
-              origin_state: storeAddress?.location?.region,
-              origin_state_code: storeAddress?.location?.region_code,
-              destination_name: shippingAddress.name,
-              destination_phone: shippingAddress.phoneNumber,
-              destination_street: shippingAddress.address,
-              destination_city: shippingAddress.city,
-              destination_country: shippingAddress.country,
-              destination_country_code: "NG",
-              destination_state: shippingAddress.state,
-              destination_state_code: shippingAddress.state_code,
-              weight: "0.5",
-              items: dispatchProducts,
-              selected_courier_id: courier,
-              channel_code: "api",
-            },
-    });
-
     saveToLocalStorage("carts", []);
     handleFlutterPayment({
       callback: (response) => {

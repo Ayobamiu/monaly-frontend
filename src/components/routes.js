@@ -25,6 +25,12 @@ import PayRedirect from "./screens/PayRedirect/PayRedirect";
 import CheckoutComplete from "./screens/CheckoutComplete/CheckoutComplete";
 import CartPlusCheckout from "./screens/CartPlusCheckout/CartPlusCheckout";
 import ReferralPage from "./screens/ReferralPage/ReferralPage";
+import SelectEmailType from "./screens/Emails/SelectEmailType";
+import AddEmailRecepients from "./screens/Emails/AddEmailRecepients";
+import ComposeEmailScreen from "./screens/Emails/ComposeEmailScreen";
+import PreviewEmailDetails from "./screens/Emails/PreviewEmailDetails";
+import Drafts from "./screens/Emails/Drafts";
+import PrivacyPolicy from "./screens/PrivacyPolicy/PrivacyPolicy";
 
 const MainRoute = () => {
   return (
@@ -37,7 +43,13 @@ const MainRoute = () => {
         <Route component={SignUp} path='/sign-up' />
         <Route component={DashBoard} path='/dashboard' />
         <Route component={CheckoutComplete} path='/pay-success' />
+        <Route component={PrivacyPolicy} path='/privacy-policy' />
         <Route component={Pay} path='/pay' />
+        <Route component={PreviewEmailDetails} path='/admin/preview-email' />
+        <Route component={ComposeEmailScreen} path='/admin/compose-email' />
+        <Route component={AddEmailRecepients} path='/admin/email-recipients' />
+        <Route component={Drafts} path='/admin/draft-emails' />
+        <Route component={SelectEmailType} path='/admin/emails' />
         <Route component={Admin} path='/admin' />
         <Route component={TrackSingleOrder} path='/orders/:orderId' />
         <Route component={AddProduct} path='/add-product' />

@@ -162,15 +162,20 @@ const VisitorsScreen = (props) => {
     visitorData.customLinks.forEach((link) => {
       titles.push(`${link.title}`);
     });
-
+  const bgImage = visitorData.theme && visitorData.theme.backgroundImage;
+  const bgColor =
+    visitorData.theme && visitorData.theme.backgroundColorImageReplace;
+  const blur = visitorData.theme && visitorData.theme.blur;
+  const dark = visitorData.theme && visitorData.theme.dark;
   return (
-    <div
-      id='visitorsScreen'
-      style={{
-        backgroundImage: `url(${
-          visitorData.theme && visitorData.theme.backgroundImage
-        })`,
-      }}>
+    <div id='visitorsScreen'>
+      <div
+        className={`bg-image f${blur}`}
+        style={{
+          background: bgImage
+            ? `linear-gradient(270deg, rgba(0, 0, 0, ${dark}) 0%, rgba(0, 0, 0, ${dark}) 100%),url('${bgImage}')`
+            : bgColor,
+        }}></div>
       <Helmet>
         <meta charSet='utf-8' />
         <meta
@@ -230,7 +235,7 @@ const VisitorsScreen = (props) => {
               className='profile-pic-sub mt-32'
               title='Profile'
               style={{
-                color: visitorData.theme && visitorData.theme.backgroundColor,
+                color: visitorData.theme && visitorData.theme.color,
               }}>
               {initialsOnProfile}
             </div>
@@ -238,14 +243,14 @@ const VisitorsScreen = (props) => {
           <p
             className='profile-pic-p mb-16'
             style={{
-              color: visitorData.theme && visitorData.theme.backgroundColor,
+              color: visitorData.theme && visitorData.theme.color,
             }}>
             @{visitorData.userName}
           </p>
           <p
             className='custom-p bio-p mb-16'
             style={{
-              color: visitorData.theme && visitorData.theme.backgroundColor,
+              color: visitorData.theme && visitorData.theme.color,
             }}>
             {visitorData.bio}{" "}
           </p>
@@ -307,9 +312,7 @@ const VisitorsScreen = (props) => {
                       social.mediaPlatformSample &&
                       social.mediaPlatformSample.name
                     }
-                    color={
-                      visitorData.theme && visitorData.theme.backgroundColor
-                    }
+                    color={visitorData.theme && visitorData.theme.color}
                     style={{ fontSize: "24px" }}
                   />
                 </a>

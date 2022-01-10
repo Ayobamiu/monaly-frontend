@@ -5,8 +5,25 @@ import { apiCallBegan } from "./api";
 
 const slice = createSlice({
   name: "customLinks",
-  initialState: { list: [], customLink: {}, focusedLinkId: "", statistics: {} },
+  initialState: {
+    list: [],
+    customLink: {},
+    focusedLinkId: "",
+    statistics: {},
+    testThemeName: "Unnamed",
+    testBackgroundColor: "#ffffff",
+    testTextColor: "#dddddd",
+    testLinkColor: "#333333",
+    testBackgroundBlur: false,
+    testBackgroundImage: "",
+    testBackgroundImageFile: "",
+    testDarkPercent: 0.0,
+    testBlurPercent: 0,
+  },
   reducers: {
+    changeInput: (customLinks, action) => {
+      customLinks[action.payload.name] = action.payload.value;
+    },
     statisticsRequested: (customLinks, action) => {
       customLinks.focusedLinkId = action.payload;
       customLinks.loading = true;
@@ -94,6 +111,7 @@ const slice = createSlice({
 });
 
 export const {
+  changeInput,
   customLinkAdded,
   customLinksRequested,
   customLinksReceived,
@@ -116,15 +134,15 @@ export const {
 export default slice.reducer;
 
 //Action creators
+export const changeCustomLinkInput = (name, value) => (dispatch) => {
+  dispatch({ type: changeInput.type, payload: { name, value } });
+};
+
 export const ChangefocusedLinkId = (focusedLinkId) => (dispatch, getState) => {
   dispatch(changeFocusedLinkId(focusedLinkId));
 };
 //Action creators
 export const loadcustomLinks = () => (dispatch, getState) => {
-  console.log(
-    'localStorage.getItem("authToken")',
-    localStorage.getItem("authToken")
-  );
   dispatch(
     apiCallBegan({
       url: "/custom-links",

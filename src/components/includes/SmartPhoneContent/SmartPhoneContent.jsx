@@ -12,7 +12,7 @@ import {
 } from "../../../store/customLinkSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { matchLightSocialIcon } from "../../../assets/js/controls";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { viewsocialMedia } from "../../../store/sociaMediaSampleSlice";
 
 const SmartPhoneContent = ({
@@ -23,6 +23,22 @@ const SmartPhoneContent = ({
   const loadingLinks = useSelector(loadingcustomLinks);
   const userProfile = useSelector(user);
 
+  const testTextColor = useSelector(
+    (state) => state.app.customLinks.testTextColor
+  );
+  const testLinkColor = useSelector(
+    (state) => state.app.customLinks.testLinkColor
+  );
+
+  const { pathname } = useLocation();
+  const addingTheme =
+    pathname === "/dashboard/add-theme" || pathname === "/dashboard/edit-theme";
+  const color = addingTheme
+    ? testTextColor
+    : userProfile.theme && userProfile.theme.color;
+  const linkColor = addingTheme
+    ? testLinkColor
+    : userProfile.theme && userProfile.theme.backgroundColor;
   const dispatch = useDispatch();
 
   const PreviewButton = ({
@@ -93,6 +109,7 @@ const SmartPhoneContent = ({
       </a>
     );
   };
+
   return (
     <div id='phone-content'>
       <div class='content'>
@@ -109,26 +126,14 @@ const SmartPhoneContent = ({
           <div
             className='profile-pic-sub mt-32'
             title='Profile'
-            style={{
-              color: userProfile.theme && userProfile.theme.color,
-              backgroundColor:
-                userProfile.theme && userProfile.theme.backgroundColor,
-            }}>
+            style={{ color, backgroundColor: linkColor }}>
             {initialsOnProfile}
           </div>
         )}
-        <p
-          className='profile-pic-p mb-8'
-          style={{
-            color: userProfile.theme && userProfile.theme.backgroundColor,
-          }}>
+        <p className='profile-pic-p mb-8' style={{ color }}>
           {userProfile.profileTitle || "@" + userProfile.userName}
         </p>
-        <p
-          className='small-p mb-24 text-center'
-          style={{
-            color: userProfile.theme && userProfile.theme.backgroundColor,
-          }}>
+        <p className='small-p mb-24 text-center' style={{ color }}>
           {userProfile.bio}
         </p>
         {loadingLinks && (
@@ -144,10 +149,8 @@ const SmartPhoneContent = ({
               if (userProfile.stackStyle === "stacked") {
                 return (
                   <PreviewButton
-                    backgroundColor={
-                      userProfile.theme && userProfile.theme.backgroundColor
-                    }
-                    color={userProfile.theme && userProfile.theme.color}
+                    backgroundColor={linkColor}
+                    color={color}
                     borderRadius='4px'
                     title={customLink.title}
                     link={customLink.link}
@@ -159,10 +162,8 @@ const SmartPhoneContent = ({
               } else {
                 return (
                   <PreviewButtonWithBackground
-                    backgroundColor={
-                      userProfile.theme && userProfile.theme.backgroundColor
-                    }
-                    color={userProfile.theme && userProfile.theme.color}
+                    backgroundColor={linkColor}
+                    color={color}
                     borderRadius='4px'
                     backgroundImage={customLink.image}
                     title={customLink.title}
@@ -206,7 +207,7 @@ const SmartPhoneContent = ({
                   social.mediaPlatformSample &&
                   social.mediaPlatformSample.name
                 }
-                color={userProfile.theme && userProfile.theme.backgroundColor}
+                color={color}
               />
             </a>
           ))}

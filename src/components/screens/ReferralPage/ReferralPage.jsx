@@ -77,7 +77,6 @@ export default function ReferralPage(props) {
     if (params.refId) {
       data.refId = params.refId;
     }
-    console.log("data", data);
     // setSigningUp(true);
     // setTimeout(() => {
     // setSigningUp(false);

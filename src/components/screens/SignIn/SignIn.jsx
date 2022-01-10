@@ -15,6 +15,7 @@ import {
 } from "../../../store/authSlice";
 import queryString from "query-string";
 import { message } from "antd";
+import AppButton from "../../includes/AppButton/AppButton";
 
 const SignIn = (props) => {
   const params = queryString.parse(props.location.search);
@@ -77,7 +78,7 @@ const SignIn = (props) => {
             <img src={Checkbox} alt='' className='mr-8' />
             <p className='action-p m-0'>Remember me</p>
           </div>
-          <button className='primary-btn mb-16' type='submit'>
+          {/* <button className='primary-btn mb-16' type='submit'>
             {!loadingUser ? (
               "Sign In"
             ) : (
@@ -85,7 +86,20 @@ const SignIn = (props) => {
                 <span class='visually-hidden'>Loading...</span>
               </div>
             )}
-          </button>
+          </button> */}
+          <AppButton
+            text={
+              !loadingUser ? (
+                "Sign In"
+              ) : (
+                <div class='spinner-border text-light' role='status'>
+                  <span class='visually-hidden'>Loading...</span>
+                </div>
+              )
+            }
+            type='submit'
+            fullWidth
+          />
         </form>
         <div className='mb-32'></div>
         {/* <button className="primary-inverse-btn mb-32">
@@ -98,7 +112,9 @@ const SignIn = (props) => {
         </p>
         <p className='action-p mb-32'>
           Don’t have an account?&nbsp;
-          <Link to={`/sign-up?redirect=${redirect}`} className='dark-action-p'>
+          <Link
+            to={`/sign-up${redirect ? `?redirect=${redirect}` : ""}`}
+            className='dark-action-p'>
             Create one
           </Link>
         </p>

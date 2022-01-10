@@ -1,5 +1,15 @@
 /** @format */
-
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 #app-btn {
   background: #ef476f;
   border: 2px solid #ef476f;
@@ -14,6 +24,13 @@
   outline: none;
   padding: 10px 30px;
   display: block;
+}
+#app-btn:hover {
+  animation: bounce 3s infinite;
+  outline-offset: 1px;
+  outline-width: 3px;
+  outline-color: rgba(128, 128, 128, 0.151);
+  outline-style: solid;
 }
 #app-btn.app-btn-rounded {
   border-radius: 40px;
@@ -42,4 +59,21 @@
   font-weight: normal;
   font-size: 14px;
   line-height: 28px;
+}
+@media screen and (max-width: 900px) {
+  #app-btn {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 5px 15px;
+  }
+
+  #app-btn.app-btn-large {
+    padding: 10px 30px;
+  }
+
+  #app-btn.app-btn-small {
+    padding: 0px 7.5px;
+    font-size: 10px;
+    line-height: 18px;
+  }
 }

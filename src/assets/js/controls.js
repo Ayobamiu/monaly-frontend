@@ -58,6 +58,12 @@ export const freePackages = [
 ];
 export const proPackages = [
   { bold: false, available: true, text: "All free packages" },
+  {
+    bold: true,
+    available: true,
+    text:
+      "Use customized themes, customized background, text color and link color",
+  },
   { bold: false, available: true, text: "Add multiple monaly accounts⁣" },
   {
     bold: false,

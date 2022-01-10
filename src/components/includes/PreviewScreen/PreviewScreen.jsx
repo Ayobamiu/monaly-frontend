@@ -1,3 +1,5 @@
+/** @format */
+
 import React from "react";
 import { useDispatch } from "react-redux";
 import {
@@ -46,10 +48,9 @@ const PreviewScreen = ({ data }) => {
             justifyContent: "center",
             alignItems: "center",
             flexDirection: "column",
-          }}
-        >
-          <p className="custom-p">No links yet</p>
-          <p className="custom-p">Add a link to get started</p>
+          }}>
+          <p className='custom-p'>No links yet</p>
+          <p className='custom-p'>Add a link to get started</p>
         </div>
       )}
     </div>

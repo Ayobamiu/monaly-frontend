@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import "./css/style.css";
 import monaly_logo from "../../../assets/images/monaly_logo.svg";
 import CustomInput from "../../includes/CustomInput/CustomInput";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   loading,
@@ -16,6 +16,7 @@ import {
   changeAuthInput,
 } from "../../../store/authSlice";
 import { message } from "antd";
+import AppButton from "../../includes/AppButton/AppButton";
 
 const SignUp = (props) => {
   const redirect = props.match.params.redirect;
@@ -125,18 +126,28 @@ const SignUp = (props) => {
             id='password'
           />
           <p className='small-p mb-48 mb-32-900'>
-            By using this service you are agreeing to the terms of service and
-            privacy policy.
+            By using this service you are agreeing to the{" "}
+            <NavLink to='/privacy-policy'>
+              terms of service and privacy policy
+            </NavLink>
+            .
           </p>
-          <button className='primary-btn mb-16' type='submit'>
-            {!loadingUser ? (
-              "Sign Up"
-            ) : (
-              <div class='spinner-border text-light' role='status'>
-                <span class='visually-hidden'>Loading...</span>
-              </div>
-            )}
-          </button>
+          {/* <button className='primary-btn mb-16' type='submit'>
+            
+          </button> */}
+          <AppButton
+            text={
+              !loadingUser ? (
+                "Sign Up"
+              ) : (
+                <div class='spinner-border text-light' role='status'>
+                  <span class='visually-hidden'>Loading...</span>
+                </div>
+              )
+            }
+            type='submit'
+            fullWidth
+          />
         </form>
         <div className='mb-32 hide-900'></div>
         {/* <button className="primary-inverse-btn mb-32">
@@ -144,7 +155,9 @@ const SignUp = (props) => {
         </button> */}
         <p className='action-p'>
           Already have an account? &nbsp;
-          <Link to={`/sign-in?redirect=${redirect}`} className='dark-action-p'>
+          <Link
+            to={`/sign-in${redirect ? `?redirect=${redirect}` : ""}`}
+            className='dark-action-p'>
             Login here
           </Link>
         </p>

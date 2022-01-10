@@ -1,0 +1,31 @@
+/** @format */
+
+#selectEmailScreen {
+  background-color: #f8f5f5;
+  width: 100vw;
+  height: 100vh;
+}
+.selectEmailScreenBox {
+  /* width: 40%; */
+  margin: auto;
+  padding-top: 100px;
+}
+.ComposeEmailScreenBox {
+  width: 50%;
+  margin: auto;
+  padding-top: 100px;
+}
+.preview-box {
+  width: 100%;
+  padding: 20px;
+  background-color: #ddd;
+  border-radius: 20px;
+}
+
+@media screen and (max-width: 900px) {
+  .selectEmailScreenBox,
+  .ComposeEmailScreenBox {
+    width: 100%;
+    padding: 20px;
+  }
+}

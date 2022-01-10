@@ -1,3 +1,5 @@
+/** @format */
+
 @keyframes rotate {
   0% {
     transform: rotate(-360deg);
@@ -65,7 +67,6 @@ code {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  position: static;
   width: 75px;
   height: 75px;
   max-width: 75px;
@@ -73,6 +74,14 @@ code {
   min-width: 75px;
   min-height: 75px;
   border-radius: 50%;
+}
+.avatar.sm {
+  width: 40px;
+  height: 40px;
+  max-width: 40px;
+  max-height: 40px;
+  min-width: 40px;
+  min-height: 40px;
 }
 .display-large-bold {
   font-family: Poppins;
@@ -357,7 +366,7 @@ code {
   /* line-height: 32px; */
   /* or 133% */
 
-  text-align: center;
+  /* text-align: center; */
   letter-spacing: 1px;
 
   /* gray active */
@@ -523,24 +532,20 @@ code {
   margin-bottom: 48px;
 }
 .primary-btn {
-  width: 100%;
-  height: 56px;
-  /* Monaly primary */
-
   background: #ef476f;
   border: 2px solid #ef476f;
   box-sizing: border-box;
-  border-radius: 40px;
   color: #f7f7fc;
-  /* //styleName: Desktop / Link Small; */
   font-family: Poppins;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
-  /* line-height: 28px; */
   letter-spacing: 0.75px;
   text-align: center;
   outline: none;
+  padding: 10px 30px;
+  display: block;
+  border-radius: 40px;
 }
 .primary-btn-inverse {
   width: 100%;
@@ -597,7 +602,7 @@ code {
   height: unset;
   width: unset;
   border-radius: 40px;
-  padding: 0.2rem 2rem;
+  padding: 0px 15px;
 }
 .custom-btn-xsm {
   /* Grayscale / Line */
@@ -886,11 +891,18 @@ a {
   border-style: solid;
 }
 @media screen and (max-width: 900px) {
+  .primary-btn {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 5px 15px;
+  }
   .primary-btn-inverse {
     font-size: 13px;
   }
   .custom-btn-sm {
     width: 100% !important;
+    padding: 0px 7.5px;
+    font-size: 13px;
   }
 
   .display-large,
@@ -985,4 +997,35 @@ a {
     background-color: transparent;
     border: none;
   }
+}
+
+.bg-image.f1 {
+  filter: blur(1px);
+}
+.bg-image.f2 {
+  filter: blur(2px);
+}
+.bg-image.f3 {
+  filter: blur(3px);
+}
+.bg-image.f4 {
+  filter: blur(4px);
+}
+.bg-image.f5 {
+  filter: blur(5px);
+}
+.bg-image.f6 {
+  filter: blur(6px);
+}
+.bg-image.f7 {
+  filter: blur(7px);
+}
+.bg-image.f8 {
+  filter: blur(8px);
+}
+.bg-image.f9 {
+  filter: blur(9px);
+}
+.bg-image.f10 {
+  filter: blur(10px);
 }
