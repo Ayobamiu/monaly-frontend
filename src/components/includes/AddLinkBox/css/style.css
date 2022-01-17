@@ -87,3 +87,41 @@
     width: 100%;
   }
 }
+.add-link-selected-media {
+  height: 80px;
+  width: 80px;
+  border: 1px solid rgb(175, 175, 175);
+  border-radius: 10px;
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.add-link-selected-media.sm {
+  height: 30px;
+  width: 30px;
+  border-radius: 3px;
+}
+.add-link-icon {
+  height: 50px;
+  width: 50px;
+  border: 1px solid rgb(175, 175, 175);
+  border-radius: 10px;
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.add-link-selected-media-box .ant-upload-picture-card-wrapper {
+  display: inline-block;
+  width: auto;
+}
+.add-link-selected-media-close {
+  position: absolute;
+  top: 0px;
+  right: 5px;
+}

@@ -17,6 +17,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { matchLightSocialIcon, siteUrl } from "../../../assets/js/controls";
 import { viewCustomLink } from "../../../store/customLinkSlice";
 import { Helmet } from "react-helmet";
+import {
+  getAddressV2,
+  getDeviceType,
+  ipLookUp,
+} from "../../../assets/js/getAddress";
 
 const VisitorsScreen = (props) => {
   const dispatch = useDispatch();
@@ -24,59 +29,28 @@ const VisitorsScreen = (props) => {
   const divRref = useRef(null);
 
   useEffect(() => {
-    // document.title = "@" + props.match.params.userName + " | Monaly";
-
     dispatch(loadVisitorScreen(props.match.params.userName));
     divRref.current.scrollIntoView({ behavior: "smooth" });
-    dispatch(storeVisitorLocation(props.match.params.userName));
-    // if ("geolocation" in navigator) {
-    //   // check if geolocation is supported/enabled on current browser
-    //   navigator.geolocation.getCurrentPosition(
-    //     async function success(position) {
-    //       // for when getting location is a success
-    //       // getAddress(position.coords.latitude, position.coords.longitude);
-    //       const latitude = position.coords.latitude;
-    //       const longitude = position.coords.longitude;
-    //       const addressFrom = await getAddress(latitude, longitude);
-    //       dispatch(
-    //         storeVisitorLocation(
-    //           props.match.params.userName,
-    //           addressFrom.currentLocation,
-    //           addressFrom.country,
-    //           addressFrom.city
-    //         )
-    //       );
-    //     },
-    //     async function error(error_message) {
-    //       // for when getting location results in an error
-    //       const getIp = await ipLookUp();
-    //       const latitude = getIp.data.lat;
-    //       const longitude = getIp.data.lon;
-    //       const addressFrom = await getAddress(latitude, longitude);
-    //       dispatch(
-    //         storeVisitorLocation(
-    //           props.match.params.userName,
-    //           addressFrom.currentLocation,
-    //           addressFrom.country,
-    //           addressFrom.city
-    //         )
-    //       );
-    //     }
-    //   );
-    // } else {
-    //   const getIp = await ipLookUp();
-    //   const latitude = getIp.data.lat;
-    //   const longitude = getIp.data.lon;
-    //   const addressFrom = await getAddress(latitude, longitude);
-    //   dispatch(
-    //     storeVisitorLocation(
-    //       props.match.params.userName,
-    //       addressFrom.currentLocation,
-    //       addressFrom.country,
-    //       addressFrom.city
-    //     )
-    //   );
-    // }
+    (async () => {
+      const getIp = await ipLookUp();
+      const latitude = getIp.data.lat;
+      const longitude = getIp.data.lon;
+      const addressFrom = await getAddressV2(
+        "3b4c10a64fff96eaf6167a0c4c3926d5",
+        latitude,
+        longitude
+      );
+      dispatch(
+        storeVisitorLocation(props.match.params.userName, {
+          currentLocation: addressFrom.currentLocation,
+          country: addressFrom.country,
+          city: addressFrom.city,
+          longitude,
+          latitude,
+          deviceType: getDeviceType(),
+        })
+      );
+    })();
   }, [props.match.params.userName, dispatch]);
 
   const visitorData = useSelector(visitorViewData);
@@ -116,7 +90,9 @@ const VisitorsScreen = (props) => {
               backgroundPosition: "center",
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
-            }}></div>
+            }}>
+            <i className={`fa ${backgroundImage} fa-3x `}></i>
+          </div>
           <span className='text'>{title}</span>
         </button>
       </a>

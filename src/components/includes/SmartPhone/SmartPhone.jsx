@@ -71,7 +71,9 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
               backgroundPosition: "center",
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
-            }}></div>
+            }}>
+            <i className={`fa ${backgroundImage} fa-3x `}></i>
+          </div>
           <span>{title}</span>
         </div>
       </a>
@@ -139,122 +141,120 @@ const SmartPhone = ({ customLinks, initialsOnProfile, customSocials }) => {
             ? `linear-gradient(270deg, rgba(0, 0, 0, ${dark}) 0%, rgba(0, 0, 0, ${dark}) 100%),url('${bgImage}')`
             : bgColor,
         }}></div>
-      <div>
-        <div class='content'>
-          {userProfile.profilePhoto ? (
-            <div className='profile-pic mt-32'>
-              <img
-                src={userProfile.profilePhoto}
-                alt='Profile'
-                title='Profile Photo'
-                width='100%'
-              />
-            </div>
-          ) : (
-            <div
-              className='profile-pic-sub mt-32'
-              title='Profile'
-              style={{ color, backgroundColor: linkColor }}>
-              {initialsOnProfile}
-            </div>
-          )}
-          <p
-            className='profile-pic-p mb-8'
-            style={{
-              color: color,
-            }}>
-            {userProfile.profileTitle || "@" + userProfile.userName}
-          </p>
-          <p className='small-p mb-24 text-center' style={{ color }}>
-            {userProfile.bio}
-          </p>
-          {loadingLinks && (
-            <div>
-              <PreviewButton className='loading' />
-              <PreviewButton className='loading' />
-              <PreviewButton className='loading' />
-            </div>
-          )}
-          {customLinks.length > 0 ? (
-            customLinks.map((customLink) => {
-              if (customLink.visible) {
-                if (userProfile.stackStyle === "stacked") {
-                  return (
-                    <PreviewButton
-                      backgroundColor={linkColor}
-                      color={color}
-                      borderRadius='4px'
-                      title={customLink.title}
-                      link={customLink.link}
-                      key={customLink._id}
-                      _id={customLink._id}
-                      backgroundImage={customLink.image}
-                    />
-                  );
-                } else {
-                  return (
-                    <PreviewButtonWithBackground
-                      backgroundColor={linkColor}
-                      color={color}
-                      borderRadius='4px'
-                      backgroundImage={customLink.image}
-                      title={customLink.title}
-                      link={customLink.link}
-                      key={customLink._id}
-                      _id={customLink._id}
-                    />
-                  );
-                }
-              } else return null;
-            })
-          ) : (
-            <div>
-              {!loadingLinks && (
-                <div className='add-links-to-start'>
-                  <p className='custom-p'>Add links to get started</p>
-                </div>
-              )}
-            </div>
-          )}
-          <div className='mtb-16'>
-            {customSocials.map((social, index) => (
-              <a
-                href={social.link}
-                key={index}
-                target='_blank'
-                rel='noreferrer'
-                onClick={() => {
-                  dispatch(viewsocialMedia(social._id));
-                }}>
-                <FontAwesomeIcon
-                  icon={matchLightSocialIcon(
-                    social &&
-                      social.mediaPlatformSample &&
-                      social.mediaPlatformSample.name
-                  )}
-                  className='icon'
-                  title={
-                    social &&
+      <div class='content'>
+        {userProfile.profilePhoto ? (
+          <div className='profile-pic mt-32'>
+            <img
+              src={userProfile.profilePhoto}
+              alt='Profile'
+              title='Profile Photo'
+              width='100%'
+            />
+          </div>
+        ) : (
+          <div
+            className='profile-pic-sub mt-32'
+            title='Profile'
+            style={{ color, backgroundColor: linkColor }}>
+            {initialsOnProfile}
+          </div>
+        )}
+        <p
+          className='profile-pic-p mb-8'
+          style={{
+            color: color,
+          }}>
+          {userProfile.profileTitle || "@" + userProfile.userName}
+        </p>
+        <p className='small-p mb-24 text-center' style={{ color }}>
+          {userProfile.bio}
+        </p>
+        {loadingLinks && (
+          <div>
+            <PreviewButton className='loading' />
+            <PreviewButton className='loading' />
+            <PreviewButton className='loading' />
+          </div>
+        )}
+        {customLinks.length > 0 ? (
+          customLinks.map((customLink) => {
+            if (customLink.visible) {
+              if (userProfile.stackStyle === "stacked") {
+                return (
+                  <PreviewButton
+                    backgroundColor={linkColor}
+                    color={color}
+                    borderRadius='4px'
+                    title={customLink.title}
+                    link={customLink.link}
+                    key={customLink._id}
+                    _id={customLink._id}
+                    backgroundImage={customLink.image}
+                  />
+                );
+              } else {
+                return (
+                  <PreviewButtonWithBackground
+                    backgroundColor={linkColor}
+                    color={color}
+                    borderRadius='4px'
+                    backgroundImage={customLink.image}
+                    title={customLink.title}
+                    link={customLink.link}
+                    key={customLink._id}
+                    _id={customLink._id}
+                  />
+                );
+              }
+            } else return null;
+          })
+        ) : (
+          <div>
+            {!loadingLinks && (
+              <div className='add-links-to-start'>
+                <p className='custom-p'>Add links to get started</p>
+              </div>
+            )}
+          </div>
+        )}
+        <div className='mtb-16'>
+          {customSocials.map((social, index) => (
+            <a
+              href={social.link}
+              key={index}
+              target='_blank'
+              rel='noreferrer'
+              onClick={() => {
+                dispatch(viewsocialMedia(social._id));
+              }}>
+              <FontAwesomeIcon
+                icon={matchLightSocialIcon(
+                  social &&
                     social.mediaPlatformSample &&
                     social.mediaPlatformSample.name
-                  }
-                  color={color}
-                />
-              </a>
-            ))}
-          </div>
+                )}
+                className='icon'
+                title={
+                  social &&
+                  social.mediaPlatformSample &&
+                  social.mediaPlatformSample.name
+                }
+                color={color}
+              />
+            </a>
+          ))}
         </div>
-        <div className='red'>
-          <Link to='/'>
-            <img
-              src={monaly_logo}
-              alt='Monaly Logo'
-              className='monaly-logo'
-              height='16px'
-              title='Get started with Monaly'
-            />
-          </Link>
-        </div>
+      </div>
+      <div className='red pt-3'>
+        <Link to='/'>
+          <img
+            src={monaly_logo}
+            alt='Monaly Logo'
+            className='monaly-logo'
+            height='16px'
+            title='Get started with Monaly'
+          />
+        </Link>
       </div>
     </div>
   );

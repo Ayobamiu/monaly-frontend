@@ -15,7 +15,7 @@ import { message, Spin, Upload } from "antd";
 import { addMyTheme, changeThemesInput } from "../../../store/themeSlice";
 import { useHistory } from "react-router-dom";
 import { Modal, Slider, InputNumber, Row, Col, notification } from "antd";
-import { updateUserProfile } from "../../../store/authSlice";
+import { changeAuthInput, updateUserProfile } from "../../../store/authSlice";
 
 export default function AddNewTheme() {
   const dispatch = useDispatch();
@@ -47,6 +47,9 @@ export default function AddNewTheme() {
 
   const updatingUserProfile = useSelector(
     (state) => state.app.user.updatingUserProfile
+  );
+  const updatingUserStatus = useSelector(
+    (state) => state.app.user.updatingUserStatus
   );
   const newTheme = useSelector((state) => state.app.themes.newTheme);
   const addingMyTheme = useSelector((state) => state.app.themes.addingMyTheme);
@@ -96,6 +99,16 @@ export default function AddNewTheme() {
     });
   }, [newTheme._id, dispatch, history]);
 
+  useEffect(() => {
+    if (updatingUserStatus === "success") {
+      message.success("Profile updated!");
+      history.goBack();
+    }
+    if (updatingUserStatus === "failed") {
+      message.error("Error Updating profile. Try Again!");
+    }
+    dispatch(changeAuthInput("updatingUserStatus", "pending"));
+  }, [updatingUserStatus, dispatch, history]);
   useEffect(() => {
     if (addingMyThemeStatus === "success") {
       openNotification();

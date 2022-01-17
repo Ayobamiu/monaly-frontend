@@ -8,7 +8,7 @@ import { NavLink } from "react-router-dom";
 
 export default function PreviewEmailDetails() {
   let emailList = [];
-  for (let index = 0; index < 50; index++) {
+  for (let index = 0; index < 20; index++) {
     emailList.push(index);
   }
   const [showAll, setShowAll] = useState(false);

@@ -1029,3 +1029,9 @@ a {
 .bg-image.f10 {
   filter: blur(10px);
 }
+.br-16 {
+  border-radius: 16px;
+}
+.blur {
+  filter: blur(6px);
+}

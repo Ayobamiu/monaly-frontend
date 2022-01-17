@@ -69,7 +69,9 @@ const SmartPhoneContent = ({
               backgroundPosition: "center",
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
-            }}></div>
+            }}>
+            <i className={`fa ${backgroundImage} fa-3x `}></i>
+          </div>
           <span>{title}</span>
         </div>
       </a>

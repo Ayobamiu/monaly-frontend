@@ -7,6 +7,8 @@ const slice = createSlice({
   name: "customLinks",
   initialState: {
     list: [],
+    addLinkStatus: "pending",
+    addingLink: false,
     customLink: {},
     focusedLinkId: "",
     statistics: {},
@@ -19,10 +21,27 @@ const slice = createSlice({
     testBackgroundImageFile: "",
     testDarkPercent: 0.0,
     testBlurPercent: 0,
+    analytics: {
+      deviceType: [],
+      customLinks: [],
+      countries: [],
+      cities: [],
+    },
+    loadingAnalytics: false,
   },
   reducers: {
     changeInput: (customLinks, action) => {
       customLinks[action.payload.name] = action.payload.value;
+    },
+    analyticsRequested: (customLinks, action) => {
+      customLinks.loadingAnalytics = true;
+    },
+    analyticsReceived: (customLinks, action) => {
+      customLinks.analytics = action.payload;
+      customLinks.loadingAnalytics = false;
+    },
+    analyticsRequestFailed: (customLinks, action) => {
+      customLinks.loadingAnalytics = false;
     },
     statisticsRequested: (customLinks, action) => {
       customLinks.focusedLinkId = action.payload;
@@ -61,16 +80,22 @@ const slice = createSlice({
     },
     customLinkAddStart: (customLinks, action) => {
       customLinks.loadingUpdate = true;
+      customLinks.addLinkStatus = "pending";
+      customLinks.addingLink = true;
       customLinks.status = "loading";
     },
     customLinkAdded: (customLinks, action) => {
-      customLinks.list = [action.payload, ...customLinks.list];
+      customLinks.list.unshift(action.payload);
       customLinks.loadingUpdate = false;
+      customLinks.addLinkStatus = "success";
+      customLinks.addingLink = false;
       customLinks.status = "Added successfully";
       window.location.reload();
     },
     customLinkAddFailed: (customLinks, action) => {
       customLinks.loadingUpdate = false;
+      customLinks.addLinkStatus = "failed";
+      customLinks.addingLink = false;
       customLinks.status = "Failed";
     },
     customLinkUpdateStart: (customLinks, action) => {
@@ -102,7 +127,7 @@ const slice = createSlice({
         (customLink) => customLink._id !== action.payload._id
       );
       customLinks.loadingUpdate = false;
-      window.location.reload();
+      // window.location.reload();
     },
     customLinkRemoveFailed: (customLinks, action) => {
       customLinks.loadingUpdate = false;
@@ -129,6 +154,11 @@ export const {
   statisticsRequested,
   statisticsReceived,
   requestStatisticsFailed,
+  analyticsReceived,
+  analyticsRequestFailed,
+  analyticsRequested,
+  customLinkRemoveFailed,
+  customLinkRemoveStart,
 } = slice.actions;
 
 export default slice.reducer;
@@ -142,6 +172,21 @@ export const ChangefocusedLinkId = (focusedLinkId) => (dispatch, getState) => {
   dispatch(changeFocusedLinkId(focusedLinkId));
 };
 //Action creators
+export const getAnalytics = (data) => (dispatch, getState) => {
+  dispatch(
+    apiCallBegan({
+      url: "/custom-links/analytics",
+      method: "post",
+      data,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("authToken"),
+      },
+      onStart: analyticsRequested.type,
+      onSuccess: analyticsReceived.type,
+      onError: analyticsRequestFailed.type,
+    })
+  );
+};
 export const loadcustomLinks = () => (dispatch, getState) => {
   dispatch(
     apiCallBegan({

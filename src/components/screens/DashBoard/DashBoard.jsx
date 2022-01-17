@@ -1,7 +1,6 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
-import { UncontrolledPopover } from "reactstrap";
 import "./css/style.css";
 import monalydashboardlogo from "../../../assets/images/Vector.svg";
 import Comment from "../../../assets/images/Comment.svg";
@@ -11,20 +10,14 @@ import colorLinkedIn from "../../../assets/images/colorLinkedIn.svg";
 import colorInstagram from "../../../assets/images/colorInstagram.svg";
 import colorWhatsapp from "../../../assets/images/colorWhatsapp.svg";
 import colorTwitter from "../../../assets/images/colorTwitter.svg";
+// import Notification from "../../../assets/images/Notification.svg";
 import colorFacebook from "../../../assets/images/colorFacebook.svg";
 
-import {
-  Link,
-  NavLink,
-  Route,
-  useLocation,
-  useRouteMatch,
-} from "react-router-dom";
-import SmartPhone from "../../includes/SmartPhone/SmartPhone";
+import { Link, useLocation, useRouteMatch } from "react-router-dom";
 import { Modal } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLink, faTimes, faCog } from "@fortawesome/free-solid-svg-icons";
-import { faClone, faSmile } from "@fortawesome/free-regular-svg-icons";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faClone } from "@fortawesome/free-regular-svg-icons";
 import {
   loadcustomLinks,
   customLinks as Links,
@@ -52,21 +45,14 @@ import {
 } from "../../../store/sociaMediaSampleSlice";
 import { loadLoggedInUser, loading } from "../../../store/authSlice";
 import { loadMyThemes, loadthemes } from "../../../store/themeSlice";
-import Pricing from "../../includes/Pricing/Pricing";
-import Analytics from "../../includes/Analytics/Analytics";
 import { loadNotifications } from "../../../store/notificationSlice";
-import Notifications from "../../includes/Notifications/Notifications";
 import SmartPhoneContent from "../../includes/SmartPhoneContent/SmartPhoneContent";
 
 import { message } from "antd";
-import AddNewTheme from "../../includes/AddNewTheme/AddNewTheme";
-import MyThemes from "../../includes/MyThemes/MyThemes";
-import MonalyThemes from "../../includes/MonalyThemes/MonalyThemes";
-import SocialMediaSettings from "../../includes/SocialMediaSettings/SocialMediaSettings";
-import ProfileSettings from "../../includes/ProfileSettings/ProfileSettings";
-import LinkDisplaySettings from "../../includes/LinkDisplaySettings/LinkDisplaySettings";
-import MyLinks from "../../includes/MyLinks/MyLinks";
-import EditTheme from "../../includes/AddNewTheme/EditTheme";
+import DashboardPreviewSection from "../../includes/DashboardComponents/DashboardPreviewSection";
+import DashboardEditSection from "../../includes/DashboardComponents/DashboardEditSection";
+import DashboardSideBar from "../../includes/DashboardComponents/DashboardSideBar";
+import DashboardBottomNav from "../../includes/DashboardComponents/DashboardBottomNav";
 
 const DashBoard = (props) => {
   const dispatch = useDispatch();
@@ -99,12 +85,7 @@ const DashBoard = (props) => {
     currentUser.firstName &&
     currentUser.firstName.slice(0, 2).toUpperCase();
 
-  const [showPopup, setShowPopup] = useState(false);
   const [qrmodal, setQrmodal] = useState(false);
-
-  const togglePopUp = () => {
-    setShowPopup(!showPopup);
-  };
 
   const toggleQrModal = () => {
     setQrmodal(!qrmodal);
@@ -112,35 +93,6 @@ const DashBoard = (props) => {
 
   let { path, url } = useRouteMatch();
 
-  const NavigationItem = ({ title, to }) => {
-    return (
-      <NavLink
-        to={`${url}/${to}`}
-        activeClassName='active'
-        className='nav-item mb-32 mb-16-900 mrl-16 cursor nav-p'
-        title={title}>
-        {title}
-      </NavLink>
-    );
-  };
-
-  const BottomNavigationItem = ({ title, to, icon }) => {
-    return (
-      <NavLink
-        to={`${url}/${to}`}
-        activeClassName='active'
-        title={title}
-        className='mobile-bottom-nav-item'>
-        <FontAwesomeIcon
-          icon={icon}
-          alt={title}
-          title={title}
-          className='mobile-bottom-nav-item-icon'
-        />
-        <span>{title}</span>
-      </NavLink>
-    );
-  };
   const [showPreview, setShowPreview] = useState(false);
 
   const { pathname } = useLocation();
@@ -220,7 +172,7 @@ const DashBoard = (props) => {
           <img src={Comment} alt='' title='Chat with Us' />
         </a>
         {/* <Link to={`${path}/notifications`}>
-          <img src={Notification} alt="" title="Notification" />
+          <img src={Notification} alt='' title='Notification' />
         </Link> */}
 
         <div
@@ -344,255 +296,13 @@ const DashBoard = (props) => {
               Download QR code
             </button>
           </Modal>
-          <div className='side-bar'>
-            <div className='top-bar'>
-              <div className='logo'>
-                <Link to='/'>
-                  <img
-                    src={monalydashboardlogo}
-                    alt='Monaly logo'
-                    title='Go to Homepage'
-                  />
-                </Link>
-              </div>
-            </div>
-            <div className='action-icons relative'>
-              <a
-                href='mailto: contact@monaly.co'
-                target='_blank'
-                rel='noreferrer'>
-                <img src={Comment} alt='' title='Comment' />
-              </a>
-              {/* <img
-                src={Notification}
-                alt=""
-                title="Notification"
-                id="showNotificationsPopUp"
-                className="cursor"
-              />
-              <UncontrolledPopover
-                trigger="legacy"
-                placement="right"
-                target="showNotificationsPopUp"
-              >
-                <div className="popup-notifications">
-                  <div className="see-all-notifications-button">
-                    <NavLink to={`${url}/notifications`}>
-                      <span>See all notifications</span>
-                      <img
-                        src={ForwardArrow}
-                        alt="Forward Arrow"
-                        className="add-media-in-settings-arrow"
-                      />
-                    </NavLink>
-                  </div>
-                  {notifications.map((item) => (
-                    <div className="popup-notifications-item">
-                      <header>
-                        {item.title && item.title.slice(0, 45)}
-                        {item.title && item.title.length > 45 && "..."}
-                      </header>
-                      <body>
-                        <div
-                          className="image"
-                          style={{ backgroundImage: `url(${item.image})` }}
-                        ></div>
-                        <div className="text">
-                          {item.body && item.body.slice(0, 130)}
-                          {item.body && item.body.length > 130 && "..."}
-                        </div>
-                      </body>
-                      <a href={item.link} target="_blank" rel="noreferrer">
-                        <FontAwesomeIcon
-                          icon={faArrowAltCircleRight}
-                          className="click-notification"
-                          color="#4e4b66"
-                        />
-                      </a>
-                    </div>
-                  ))}
-                </div>
-              </UncontrolledPopover> */}
 
-              <div
-                className='link-to-user-profile mt-32 cursor'
-                id='showSetProfilePopUp'
-                data-bs-toggle='dropdown'
-                aria-expanded='false'>
-                {initialsOnProfile}
-                <span className='new-notification'></span>
-              </div>
-
-              <div
-                class='dropdown-menu popup-edit-profile'
-                aria-labelledby='showSetProfilePopUp'>
-                <div class='dark-action-p' onClick={() => {}}>
-                  @{userProfile.userName}
-                </div>
-
-                <Link
-                  to={`${path}/appearance`}
-                  onClick={() => {}}
-                  className='no-underline'>
-                  <button class='nav-item active'>Edit your profile</button>
-                </Link>
-                <button
-                  class='nav-item active'
-                  onClick={() => {
-                    dispatch(logUserOut());
-                  }}>
-                  Logout
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className='edit-screen'>
-            <div className='top-bar'>
-              <div className='nav hide-at-900'>
-                <NavigationItem index='1' title='Links' to='links' />
-                <NavigationItem index='2' title='Appearance' to='appearance' />
-
-                <NavigationItem index='3' title='Socials' to='settings' />
-                <NavigationItem index='4' title='Pricing' to='pricing' />
-                <NavigationItem index='5' title='Analytics' to='analytics' />
-                {authLoading || loadingLinksUpdate ? (
-                  <div className='loader'></div>
-                ) : (
-                  ""
-                )}
-              </div>
-            </div>
-            <div className='wider-content'>
-              <div className='content tab-content'>
-                {/* <Redirect from={`${path}`} to={`${path}/links`} /> */}
-
-                <Route path={`${path}/appearance`}>
-                  <div>
-                    <div id='appearance'>
-                      <ProfileSettings />
-                      <LinkDisplaySettings />
-                      <MonalyThemes />
-                      <MyThemes />
-                      <div style={{ height: "300px" }}></div>
-                    </div>
-                  </div>
-                </Route>
-                <Route path={`${path}/settings`}>
-                  <div id='appearance'>
-                    <SocialMediaSettings />
-                  </div>
-
-                  <div style={{ height: "300px" }}></div>
-                </Route>
-                <Route path={`${path}/analytics`}>
-                  <div id='appearance'>
-                    <Analytics />
-                  </div>
-                </Route>
-                <Route path={`${path}/pricing`}>
-                  <div id='appearance'>
-                    <h2>Pricing</h2>
-                    <Pricing />
-                  </div>
-                  <div style={{ height: "300px" }}></div>
-                </Route>
-                <Route path={`${path}/notifications`}>
-                  <div id='appearance'>
-                    <h2>Notifications</h2>
-                    <Notifications />
-                  </div>
-                  <div style={{ height: "300px" }}></div>
-                </Route>
-                <Route path={`${path}/add-theme`}>
-                  <AddNewTheme />
-                  <div style={{ height: "300px" }}></div>
-                </Route>
-                <Route path={`${path}/edit-theme`}>
-                  <EditTheme />
-                  <div style={{ height: "300px" }}></div>
-                </Route>
-                <Route path={`${path}/links`}>
-                  <MyLinks />
-                </Route>
-                <Route path={`${path}`} exact>
-                  <MyLinks />
-                </Route>
-                {/* <Route path={`${path}`} exact component={<MyLinks />} /> */}
-              </div>
-            </div>
-          </div>
-          <div className='preview-screen'>
-            <div className='top-bar'>
-              <div className='user-link nav-p'>
-                <span title='Your Monaly Link'>
-                  <b>My monaly: </b>
-                  <a
-                    className='nav-p'
-                    href={`${siteUrl}${currentUser && currentUser.userName}`}
-                    target='_blank'
-                    rel='noreferrer'>
-                    <u>
-                      {siteUrlMinusHttps}
-                      {currentUser && currentUser.userName}
-                    </u>
-                  </a>
-                </span>
-                <div className='share-btn relative'>
-                  <UncontrolledPopover
-                    trigger='legacy'
-                    placement='bottom-end'
-                    target='desktopPopShare'>
-                    <div className='popup'>
-                      <button
-                        onClick={(e) => {
-                          copyToClipboard(
-                            e,
-                            `${siteUrl}${currentUser && currentUser.userName}`
-                          );
-                          message.success("Link copied to clipboard!");
-                          setShowPopup(false);
-                        }}>
-                        Copy your monaly URL
-                      </button>
-                      {/* <button
-                        onClick={() => {
-                          toggleQrModal();
-                          setShowPopup(false);
-                        }}>
-                        Download my monaly QR code
-                      </button> */}
-                    </div>
-                  </UncontrolledPopover>
-                  <button
-                    className='primary-btn-inverse custom-btn-sm share-button-toggler'
-                    onClick={togglePopUp}
-                    title='Share Your Monaly Link'
-                    id='desktopPopShare'>
-                    Share
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className='phone-preview'>
-              <SmartPhone
-                customSocials={currentUserSocials}
-                customLinks={currentCustomLinks}
-                initialsOnProfile={initialsOnProfile}
-              />
-            </div>
-          </div>
+          <DashboardSideBar path={path} url={url} />
+          <DashboardEditSection path={path} url={url} />
+          {pathname !== "/dashboard/analytics" && <DashboardPreviewSection />}
         </div>
       </div>
-      <div className='mobile-bottom-nav'>
-        <BottomNavigationItem title='Links' to='links' icon={faLink} />
-
-        <BottomNavigationItem
-          title='Appearance'
-          to='appearance'
-          icon={faSmile}
-        />
-        <BottomNavigationItem title='Socials' to='settings' icon={faCog} />
-      </div>
+      <DashboardBottomNav url={url} />
     </div>
   );
 };

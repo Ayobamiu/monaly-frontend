@@ -44,7 +44,7 @@ const slice = createSlice({
     },
     updateThemeSuccess: (themes, action) => {
       const updatedThemeIndex = themes.myThemes.findIndex(
-        (item) => item._id !== action.payload._id
+        (item) => item._id === action.payload._id
       );
       themes.myThemes.splice(updatedThemeIndex, 1, action.payload);
       themes.updatingTheme = false;

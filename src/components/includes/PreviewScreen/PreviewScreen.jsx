@@ -15,6 +15,7 @@ const PreviewScreen = ({ data }) => {
       {data.length > 0 ? (
         data.map((customLink, index) => (
           <AddLinkBox
+            image={customLink.image}
             title={customLink.title}
             _id={customLink._id}
             link={customLink.link}

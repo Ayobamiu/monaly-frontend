@@ -184,6 +184,9 @@
   top: 50%;
   border-radius: 4px;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .custom-link-btn span {
   width: 60%;

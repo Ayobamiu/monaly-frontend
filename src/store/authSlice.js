@@ -160,10 +160,7 @@ const slice = createSlice({
     },
     checkUserNameFailed: (user, action) => {
       user.userName.loading = false;
-      console.log(
-        "action.payload.response.data",
-        action.payload?.response?.data?.error
-      );
+
       user.userName.status = {
         message: action.payload?.response?.data?.error || "Username taken",
         color: "#c30052",
@@ -659,17 +656,15 @@ export const loadVisitorScreen = (userName) => (dispatch, getState) => {
   );
 };
 
-export const storeVisitorLocation = (
-  userName,
-  visitorLocation,
-  country,
-  city
-) => (dispatch, getState) => {
+export const storeVisitorLocation = (userName, data) => (
+  dispatch,
+  getState
+) => {
   dispatch(
     apiCallBegan({
       url: `users/${userName}/save-visitor-location`,
       method: "post",
-      data: { visitorLocation, country, city },
+      data,
     })
   );
 };

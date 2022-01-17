@@ -162,6 +162,9 @@
   top: 50%;
   border-radius: 16px;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 #visitorsScreen .visitors-link-btn .text {
   width: 70%;

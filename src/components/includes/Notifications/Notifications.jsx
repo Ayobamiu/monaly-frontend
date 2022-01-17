@@ -18,11 +18,11 @@ const Notifications = () => {
     <div id='notifications'>
       {notifications.map((item) => (
         <div className='notification-item'>
-          <div
+          {/* <div
             className='notification-item-image'
             style={{
               backgroundImage: `url(${item.image})`,
-            }}></div>
+            }}></div> */}
           <div className='notification-item-text'>
             <header>{item.title}</header>
             <p>{item.body}</p>

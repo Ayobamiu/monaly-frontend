@@ -86,14 +86,14 @@ export default function MyThemes() {
           </div>
         )}
         {myThemes.length === 0 && (
-          <div className='no-visitors-details'>
+          <div className={`no-visitors-details ${!isSubscribed && "blur"}`}>
             <h2>Nothing here yet</h2>
             <p className='custom-p'>
               You will see list of your customized themes to select here
             </p>
           </div>
         )}
-        <div className='style-items'>
+        <div className={`style-items ${!isSubscribed && "blur"}`}>
           <NavLink
             to={`/dashboard/add-theme`}
             activeClassName='active'

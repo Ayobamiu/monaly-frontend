@@ -1,6 +1,7 @@
 /** @format */
 
-import { message } from "antd";
+import { message, Upload } from "antd";
+import ImgCrop from "antd-img-crop";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,6 +10,7 @@ import {
   updateUserProfile,
   uploadUserPhotos,
 } from "../../../store/authSlice";
+import AppButton from "../AppButton/AppButton";
 
 export default function ProfileSettings() {
   const dispatch = useDispatch();
@@ -24,7 +26,25 @@ export default function ProfileSettings() {
   const targetTextarea = document.querySelector("textarea");
   const targetTextareaLength =
     targetTextarea && targetTextarea.value && targetTextarea.value.length;
-
+  const onPreview = async (file) => {
+    let src = file.url;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj);
+        reader.onload = () => resolve(reader.result);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow.document.write(image.outerHTML);
+  };
+  const handleChange = (info) => {
+    const newFormData = new FormData();
+    newFormData.append("profilePhoto", info.file.originFileObj);
+    dispatch(uploadUserPhotos(newFormData));
+  };
   return (
     <div>
       <h2>Profile settings</h2>
@@ -44,8 +64,9 @@ export default function ProfileSettings() {
           ) : (
             <div className='avatar'> {initialsOnProfile}</div>
           )}
-          <div className='image-btns'>
-            <label
+          <div className='image-btns '>
+            {/* <label
+
               htmlFor='file-upload'
               className='cursor'
               title='Pick A Profile Photo'>
@@ -62,17 +83,34 @@ export default function ProfileSettings() {
                 }}
               />
               Pick an image
-            </label>
+            </label> */}
+            <ImgCrop rotate shape='round'>
+              <Upload
+                name='profile_image'
+                listType='picture-card'
+                showUploadList={false}
+                onPreview={onPreview}
+                onChange={handleChange}>
+                <AppButton text='Pick an Image' small className='mr-2' />
+              </Upload>
+            </ImgCrop>
             {userProfile && userProfile.profilePhoto && (
-              <button
-                className='primary-btn-inverse custom-btn-sm '
-                title='Remove Profile Photo'
+              // <button
+              //   className='primary-btn-inverse custom-btn-sm '
+              //   title='Remove Profile Photo'
+              //  >
+              //   Remove
+              // </button>
+              <AppButton
+                inverse
+                text='Remove'
+                small
+                className='my-2 my-md-0'
                 onClick={(e) => {
                   e.preventDefault();
                   dispatch(deleteProfilePhoto());
-                }}>
-                Remove
-              </button>
+                }}
+              />
             )}
           </div>
         </div>
